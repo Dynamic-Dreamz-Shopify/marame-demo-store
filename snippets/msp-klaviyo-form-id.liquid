@@ -1,0 +1,18 @@
+{%- comment -%}
+  Resolves Klaviyo form ID from settings or pasted embed HTML.
+  Outputs the ID only (e.g. ShK72R).
+  @param form_id {String}
+  @param embed_code {String}
+{%- endcomment -%}
+{%- liquid
+  assign resolved_id = form_id | strip
+  assign embed_clean = embed_code | strip
+  if embed_clean != blank and embed_clean contains 'klaviyo-form-'
+    assign id_fragment = embed_clean | split: 'klaviyo-form-' | last
+    assign resolved_id = id_fragment | split: '"' | first | split: "'" | first | split: ' ' | first | split: '<' | first | split: '>' | first | strip
+  endif
+  if resolved_id == blank
+    assign resolved_id = 'ShK72R'
+  endif
+-%}
+{{- resolved_id -}}

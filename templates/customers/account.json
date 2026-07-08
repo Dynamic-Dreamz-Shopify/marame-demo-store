@@ -1,0 +1,143 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-account",
+      "settings": {
+        "welcome_title": "welcome back,",
+        "welcome_message": "",
+        "quiz_title": "tailor your experience",
+        "quiz_content": "<p>Take our short quiz to get tailored fit recommendations and bespoke suggestions for products we know you’ll love.</p>",
+        "quiz_btn": "Get Started",
+        "quiz_btn_url": "",
+        "you_love_title": "",
+        "products_list": []
+      }
+    },
+    "featured_fullscreen_FyULMx": {
+      "type": "featured-fullscreen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "Men’s autumn lookbook ‘24",
+        "banner_image": "shopify://shop_images/dashboard_fullscreen.webp",
+        "description": "",
+        "btn_label": "View the lookbook",
+        "btn_link": "",
+        "content_color": "#ffffff"
+      }
+    },
+    "split_screen_F9zkiY": {
+      "type": "split-screen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Knitwear",
+        "collection_1_image": "shopify://shop_images/splitscreen1.jpg",
+        "collection_1_link": "#",
+        "button_1_text": "View all",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#ffffff",
+        "collection_2": "",
+        "collection_2_title": "Shirts",
+        "collection_2_image": "shopify://shop_images/shirt.jpg",
+        "collection_2_link": "#",
+        "button_2_text": "view all",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#ffffff"
+      }
+    },
+    "dashboard_image_slider_h7qnXf": {
+      "type": "dashboard-image-slider",
+      "blocks": {
+        "block_QCcVjx": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": "shopify://collections"
+          }
+        },
+        "block_nkttWK": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/detail_look_3.webp",
+            "link": ""
+          }
+        },
+        "block_PEeLVj": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": ""
+          }
+        },
+        "block_CxbDa8": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": "shopify://collections"
+          }
+        },
+        "block_hJbzEA": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/detail_look_3.webp",
+            "link": ""
+          }
+        },
+        "block_pweXPN": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_QCcVjx",
+        "block_nkttWK",
+        "block_PEeLVj",
+        "block_CxbDa8",
+        "block_hJbzEA",
+        "block_pweXPN"
+      ],
+      "disabled": true,
+      "name": "Dashboard image slider",
+      "settings": {
+        "heading": "SUGGESTED FOR YOU"
+      }
+    },
+    "dashboard_fullscreen_9qhWrX": {
+      "type": "dashboard-fullscreen",
+      "disabled": true,
+      "name": "Dashboard Fullscreen",
+      "settings": {
+        "image": "shopify://shop_images/marame-magasin_9b345dd5-1b94-42e2-9e0a-c41a9011c72b.webp",
+        "heading": "MENS SUMMER 25 LOOKBOOK",
+        "button_lable": "Discover",
+        "button_url": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_fullscreen_FyULMx",
+    "split_screen_F9zkiY",
+    "dashboard_image_slider_h7qnXf",
+    "dashboard_fullscreen_9qhWrX"
+  ]
+}

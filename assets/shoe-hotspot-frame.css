@@ -1,0 +1,78 @@
+.shoe-hotspot-frame {
+    padding: 64px 30px 75px;
+}
+
+.shoe-hotspot-frame .shoe-image-wrapper {
+    width: 44.954%;
+    margin: 0 auto;
+}
+
+.shoe-hotspot-frame .shoe-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.shoe-hotspot-frame .shoe-hotspot-inner {
+    position: relative;
+}
+
+.shoe-hotspot-frame .shoe-hotspot-inner a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.shoe-hotspot-frame .hotspot {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-bottom: 35px;
+}
+
+.shoe-hotspot-frame .hotspot-left {
+    left: 25.194%;
+}
+
+.shoe-hotspot-frame .hotspot-right {
+    right: 25.194%;
+}
+
+.shoe-hotspot-frame .hotspot .label {
+    font-family: 'HelveticaNowDisplayRegular';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    padding: 0;
+    color: #2A2A2D;
+    background-color: transparent;
+}
+
+@media (max-width: 767px) {
+    .shoe-hotspot-frame {
+        padding: 51px 30px 33px;
+    }
+
+    .shoe-hotspot-frame .hotspot {
+        padding-bottom: 15px;
+    }
+
+    .shoe-hotspot-frame .hotspot-left {
+        left: 0;
+    }
+
+    .shoe-hotspot-frame .hotspot-right {
+        right: 0;
+    }
+
+    .shoe-hotspot-frame .shoe-image-wrapper {
+        width: 100%;
+        padding: 0 40px;
+    }
+
+    .shoe-hotspot-frame .hotspot .label {
+        font-size: 12px;
+    }
+}

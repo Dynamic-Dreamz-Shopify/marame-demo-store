@@ -1,0 +1,1088 @@
+{% render 'msp-assets' %}
+
+{%- liquid
+  assign has_visible_row = false
+  assign zone_key = section.settings.logo_zone_key | default: 'signup_checkerboard'
+
+  assign sec_headline_lh_mobile = section.settings.headline_line_height_mobile
+  if sec_headline_lh_mobile == 0
+    assign sec_headline_lh_mobile = section.settings.headline_line_height
+  endif
+  if sec_headline_lh_mobile == 0
+    assign sec_headline_lh_mobile = 100
+  endif
+  assign sec_headline_lh_desktop = section.settings.headline_line_height_desktop
+  if sec_headline_lh_desktop == 0
+    assign sec_headline_lh_desktop = section.settings.headline_line_height
+  endif
+  if sec_headline_lh_desktop == 0
+    assign sec_headline_lh_desktop = sec_headline_lh_mobile
+  endif
+
+  assign sec_body_lh_mobile = section.settings.body_line_height_mobile
+  if sec_body_lh_mobile == 0
+    assign sec_body_lh_mobile = section.settings.body_line_height
+  endif
+  if sec_body_lh_mobile == 0
+    assign sec_body_lh_mobile = 18
+  endif
+  assign sec_body_lh_desktop = section.settings.body_line_height_desktop
+  if sec_body_lh_desktop == 0
+    assign sec_body_lh_desktop = section.settings.body_line_height
+  endif
+  if sec_body_lh_desktop == 0
+    assign sec_body_lh_desktop = sec_body_lh_mobile
+  endif
+
+  assign sec_body_lb_gap_mobile = section.settings.body_line_break_gap | plus: 0
+  assign sec_body_lb_gap_desktop = section.settings.body_line_break_gap_desktop | plus: 0
+  if sec_body_lb_gap_desktop == 0
+    assign sec_body_lb_gap_desktop = sec_body_lb_gap_mobile
+  endif
+-%}
+
+{% style %}
+  #msp-checkerboard-{{ section.id }} {
+    --msp-section-gap-mobile: {{ section.settings.gap_bottom_mobile }}px;
+    --msp-section-gap-desktop: {{ section.settings.gap_bottom_desktop }}px;
+    --msp-checkerboard-scale-mobile: {{ section.settings.scale_mobile | divided_by: 100.0 }};
+    --msp-checkerboard-scale-desktop: {{ section.settings.scale_desktop | divided_by: 100.0 }};
+    --msp-checkerboard-text-pad-x-mobile: {{ section.settings.text_pad_x_mobile }}px;
+    --msp-checkerboard-text-pad-y-mobile: {{ section.settings.text_pad_y_mobile }}px;
+    --msp-checkerboard-text-pad-x-desktop: {{ section.settings.text_pad_x_desktop }}px;
+    --msp-checkerboard-text-pad-y-desktop: {{ section.settings.text_pad_y_desktop }}px;
+    --msp-checkerboard-media-min-mobile: {{ section.settings.media_min_height_mobile }}px;
+    --msp-checkerboard-media-min-desktop: {{ section.settings.media_min_height_desktop }}px;
+    --msp-checkerboard-headline-size-mobile: {{ section.settings.headline_size_mobile }}px;
+    --msp-checkerboard-headline-size-desktop: {{ section.settings.headline_size_desktop }}px;
+    --msp-checkerboard-headline-tracking-mobile: {% render 'msp-tracking-px', value: section.settings.headline_tracking_mobile %}px;
+    --msp-checkerboard-headline-tracking-desktop: {% render 'msp-tracking-px', value: section.settings.headline_tracking_desktop %}px;
+    --msp-checkerboard-headline-line-height-mobile: {% render 'msp-line-height-value', value: sec_headline_lh_mobile %};
+    --msp-checkerboard-headline-line-height-desktop: {% render 'msp-line-height-value', value: sec_headline_lh_desktop %};
+    --msp-checkerboard-headline-body-gap-mobile: {{ section.settings.headline_body_gap_mobile }}px;
+    --msp-checkerboard-headline-body-gap-desktop: {{ section.settings.headline_body_gap_desktop }}px;
+    --msp-checkerboard-body-size-mobile: {{ section.settings.body_size_mobile }}px;
+    --msp-checkerboard-body-size-desktop: {{ section.settings.body_size_desktop }}px;
+    --msp-checkerboard-body-line-height-mobile: {% render 'msp-line-height-value', value: sec_body_lh_mobile %};
+    --msp-checkerboard-body-line-height-desktop: {% render 'msp-line-height-value', value: sec_body_lh_desktop %};
+    --msp-checkerboard-body-line-height: var(--msp-checkerboard-body-line-height-mobile);
+    --msp-checkerboard-body-tracking-mobile: {% render 'msp-tracking-px', value: section.settings.body_tracking_mobile %}px;
+    --msp-checkerboard-body-tracking-desktop: {% render 'msp-tracking-px', value: section.settings.body_tracking_desktop %}px;
+    {% render 'msp-checkerboard-body-spacing-vars',
+      line_break_mobile: sec_body_lb_gap_mobile,
+      line_break_desktop: sec_body_lb_gap_desktop
+    %}
+    --msp-checkerboard-headline-transform: {{ section.settings.headline_text_transform }};
+    --msp-checkerboard-body-transform: {{ section.settings.body_text_transform }};
+    {% render 'msp-headline-weight-vars', weight: section.settings.headline_font_weight %}
+    --msp-checkerboard-body-max-width: {% if section.settings.body_max_width_mobile > 0 %}{{ section.settings.body_max_width_mobile }}px{% else %}100%{% endif %};
+    --msp-checkerboard-body-max-width-desktop: {% if section.settings.body_max_width_desktop > 0 %}{{ section.settings.body_max_width_desktop }}px{% else %}100%{% endif %};
+  }
+{% endstyle %}
+
+<section
+  id="msp-checkerboard-{{ section.id }}"
+  class="msp msp-section msp-section--checkerboard msp-section-gap{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: zone_key, zone_label: section.settings.logo_zone_label %}
+>
+  <div class="msp-checkerboard{% if section.settings.enable_scroll_animations %} msp-checkerboard--reveal{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'row' -%}
+        {%- liquid
+          assign show_row = false
+          if block.settings.show_mobile or block.settings.show_desktop
+            assign show_row = true
+          endif
+          assign has_text = false
+          if block.settings.headline != blank or block.settings.body != blank
+            assign has_text = true
+          endif
+          assign has_image = false
+          if block.settings.image != blank or block.settings.fallback_asset != blank
+            assign has_image = true
+          endif
+          unless has_text or has_image
+            assign show_row = false
+          endunless
+        -%}
+        {%- if show_row -%}
+          {%- assign has_visible_row = true -%}
+          {%- capture object_position -%}{% render 'msp-object-position', image: block.settings.image, use_manual_focal: block.settings.use_manual_focal, focal_x: block.settings.focal_x, focal_y: block.settings.focal_y %}{%- endcapture -%}
+          {%- assign layout_class = 'msp-checkerboard__row--text-left' -%}
+          {%- if block.settings.image_layout == 'image_left' -%}
+            {%- assign layout_class = 'msp-checkerboard__row--image-left' -%}
+          {%- endif -%}
+          {%- liquid
+            assign row_body_size_mobile = block.settings.body_size_mobile
+            if row_body_size_mobile == 0
+              assign row_body_size_mobile = section.settings.body_size_mobile
+            endif
+            if row_body_size_mobile == 0
+              assign row_body_size_mobile = 11
+            endif
+            assign row_body_size_desktop = block.settings.body_size_desktop
+            if row_body_size_desktop == 0
+              assign row_body_size_desktop = section.settings.body_size_desktop
+            endif
+            if row_body_size_desktop == 0
+              assign row_body_size_desktop = 15
+            endif
+          -%}
+          {%- capture row_vars -%}
+            --msp-object-position: {{ object_position | strip }};
+            {%- if block.settings.media_min_height_mobile > 0 -%}
+              --msp-checkerboard-media-min-mobile: {{ block.settings.media_min_height_mobile }}px;
+            {%- endif -%}
+            {%- if block.settings.media_min_height_desktop > 0 -%}
+              --msp-checkerboard-media-min-desktop: {{ block.settings.media_min_height_desktop }}px;
+            {%- endif -%}
+            {%- if block.settings.text_pad_x_mobile > 0 -%}
+              --msp-checkerboard-text-pad-x-mobile: {{ block.settings.text_pad_x_mobile }}px;
+            {%- endif -%}
+            {%- if block.settings.text_pad_y_mobile > 0 -%}
+              --msp-checkerboard-text-pad-y-mobile: {{ block.settings.text_pad_y_mobile }}px;
+            {%- endif -%}
+            {%- if block.settings.text_pad_x_desktop > 0 -%}
+              --msp-checkerboard-text-pad-x-desktop: {{ block.settings.text_pad_x_desktop }}px;
+            {%- endif -%}
+            {%- if block.settings.text_pad_y_desktop > 0 -%}
+              --msp-checkerboard-text-pad-y-desktop: {{ block.settings.text_pad_y_desktop }}px;
+            {%- endif -%}
+            {% render 'msp-checkerboard-row-headline-vars', block: block, section: section %}
+            {%- if block.settings.headline_body_gap_mobile > 0 -%}
+              --msp-checkerboard-headline-body-gap-mobile: {{ block.settings.headline_body_gap_mobile }}px;
+            {%- endif -%}
+            {%- if block.settings.headline_body_gap_desktop > 0 -%}
+              --msp-checkerboard-headline-body-gap-desktop: {{ block.settings.headline_body_gap_desktop }}px;
+            {%- endif -%}
+            --msp-checkerboard-body-size-mobile: {{ row_body_size_mobile }}px;
+            --msp-checkerboard-body-size-desktop: {{ row_body_size_desktop }}px;
+            {% render 'msp-checkerboard-row-body-vars', block: block, section: section %}
+            {% render 'msp-checkerboard-row-spacing-vars', block: block %}
+            {%- if block.settings.body_max_width_mobile > 0 -%}
+              --msp-checkerboard-body-max-width: {{ block.settings.body_max_width_mobile }}px;
+            {%- endif -%}
+            {%- if block.settings.body_max_width_desktop > 0 -%}
+              --msp-checkerboard-body-max-width-desktop: {{ block.settings.body_max_width_desktop }}px;
+            {%- endif -%}
+            {%- if block.settings.headline_text_transform != blank and block.settings.headline_text_transform != 'inherit' -%}
+              --msp-checkerboard-headline-transform: {{ block.settings.headline_text_transform }};
+            {%- endif -%}
+            {%- if block.settings.body_text_transform != blank and block.settings.body_text_transform != 'inherit' -%}
+              --msp-checkerboard-body-transform: {{ block.settings.body_text_transform }};
+            {%- endif -%}
+            {%- if block.settings.headline_font_weight != blank and block.settings.headline_font_weight != 'inherit' -%}
+              {% render 'msp-headline-weight-vars', weight: block.settings.headline_font_weight %}
+            {%- endif -%}
+          {%- endcapture -%}
+          <div
+            class="msp-checkerboard__row {{ layout_class }}{% unless block.settings.show_mobile %} msp-checkerboard__row--hide-mobile{% endunless %}{% unless block.settings.show_desktop %} msp-checkerboard__row--hide-desktop{% endunless %}{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}"
+            style="{{ row_vars | strip }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="msp-checkerboard__text">
+              {%- if block.settings.headline != blank -%}
+                <h2 class="msp-checkerboard__headline">{{ block.settings.headline | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="msp-checkerboard__body rte">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </div>
+            <div class="msp-checkerboard__media">
+              {% render 'msp-image',
+                image: block.settings.image,
+                fallback_asset: block.settings.fallback_asset,
+                alt: block.settings.image_alt,
+                object_position: object_position | strip,
+                sizes: '(min-width: 990px) 50vw, 100vw'
+              %}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- unless has_visible_row -%}
+  <style>
+    #msp-checkerboard-{{ section.id }} {
+      display: none;
+    }
+  </style>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Signup checkerboard",
+  "tag": "section",
+  "class": "marame-signup-checkerboard",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll reveal animation",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Adaptive header logo zone"
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_key",
+      "label": "Zone key",
+      "default": "signup_checkerboard",
+      "info": "Match a zone in Signup header control (optional)."
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_label",
+      "label": "Zone label (editor)",
+      "default": "Checkerboard"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_mobile",
+      "label": "Gap after section — mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_desktop",
+      "label": "Gap after section — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Scale"
+    },
+    {
+      "type": "range",
+      "id": "scale_mobile",
+      "label": "Overall scale — mobile",
+      "min": 70,
+      "max": 130,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "scale_desktop",
+      "label": "Overall scale — desktop",
+      "min": 70,
+      "max": 130,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "text_pad_x_mobile",
+      "label": "Text padding left/right — mobile",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "text_pad_y_mobile",
+      "label": "Text padding top/bottom — mobile",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "text_pad_x_desktop",
+      "label": "Text padding left/right — desktop",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "text_pad_y_desktop",
+      "label": "Text padding top/bottom — desktop",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "media_min_height_mobile",
+      "label": "Image frame min height — mobile",
+      "min": 180,
+      "max": 480,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "media_min_height_desktop",
+      "label": "Image frame min height — desktop",
+      "min": 200,
+      "max": 640,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "paragraph",
+      "content": "These settings apply to all rows unless a row has “Match section” turned off. If Save does nothing, check for red errors at the bottom of the editor — they block every save on this page."
+    },
+    {
+      "type": "select",
+      "id": "headline_text_transform",
+      "label": "Headline letter case",
+      "options": [
+        { "value": "uppercase", "label": "ALL CAPS" },
+        { "value": "none", "label": "Normal (as typed)" },
+        { "value": "capitalize", "label": "Capitalize each word" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "body_text_transform",
+      "label": "Paragraph letter case (all rows)",
+      "options": [
+        { "value": "none", "label": "Sentence case" },
+        { "value": "uppercase", "label": "ALL CAPS" },
+        { "value": "capitalize", "label": "Capitalize each word" }
+      ],
+      "default": "none",
+      "info": "Applies to every row unless a row overrides below."
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "label": "Headline size — mobile (all rows)",
+      "min": 0,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "info": "Shared by every text row unless a row turns off “Match section headline typography”."
+    },
+    {
+      "type": "range",
+      "id": "headline_size_desktop",
+      "label": "Headline size — desktop (all rows)",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "headline_tracking_mobile",
+      "label": "Headline letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "info": "0–100px. Old saved values like 420 are read as 4.2px on the storefront."
+    },
+    {
+      "type": "range",
+      "id": "headline_tracking_desktop",
+      "label": "Headline letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 7
+    },
+    {
+      "type": "select",
+      "id": "headline_font_weight",
+      "label": "Headline weight (all rows)",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "regular", "label": "Regular" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "bold", "label": "Bold" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "range",
+      "id": "headline_line_height_mobile",
+      "label": "Headline space between lines — mobile (px)",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "info": "Applies to all rows unless a row overrides typography below."
+    },
+    {
+      "type": "range",
+      "id": "headline_line_height_desktop",
+      "label": "Headline space between lines — desktop (px)",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "headline_line_height",
+      "label": "Headline line height (legacy)",
+      "min": 80,
+      "max": 180,
+      "step": 5,
+      "default": 100,
+      "info": "Legacy ×0.01 scale. Used only if mobile/desktop above are 0."
+    },
+    {
+      "type": "range",
+      "id": "headline_body_gap_mobile",
+      "label": "Gap headline to body — mobile",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "headline_body_gap_desktop",
+      "label": "Gap headline to body — desktop",
+      "min": 8,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body size — mobile",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body size — desktop",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_line_height",
+      "label": "Body line height (legacy — use mobile/desktop below)",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "body_line_height_mobile",
+      "label": "Body line height — mobile (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = use legacy “Body line height” above (default 20px). Lower = tighter lines."
+    },
+    {
+      "type": "range",
+      "id": "body_line_height_desktop",
+      "label": "Body line height — desktop (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = same as mobile."
+    },
+    {
+      "type": "range",
+      "id": "body_tracking_mobile",
+      "label": "Body letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = no extra spacing. Values above 100 are treated as legacy (e.g. 130 → 1.3px)."
+    },
+    {
+      "type": "range",
+      "id": "body_tracking_desktop",
+      "label": "Body letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "body_line_break_gap",
+      "label": "Gap between lines — mobile (px)",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 6,
+      "info": "Leading within body copy. Gap between text blocks (paragraph breaks in the editor) is automatically 2× this value."
+    },
+    {
+      "type": "range",
+      "id": "body_line_break_gap_desktop",
+      "label": "Gap between lines — desktop (px)",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = same as mobile. Text-block breaks stay at 2× this value."
+    },
+    {
+      "type": "range",
+      "id": "body_max_width_mobile",
+      "label": "Body max width — mobile",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "body_max_width_desktop",
+      "label": "Body max width — desktop",
+      "min": 280,
+      "max": 560,
+      "step": 10,
+      "unit": "px",
+      "default": 420
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Text + image row",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_mobile",
+          "label": "Show on mobile",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_desktop",
+          "label": "Show on desktop",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "image_layout",
+          "label": "Desktop layout",
+          "options": [
+            { "value": "text_left", "label": "Text left, image right" },
+            { "value": "image_left", "label": "Image left, text right" }
+          ],
+          "default": "text_left",
+          "info": "On mobile, text always stacks above the image."
+        },
+        {
+          "type": "header",
+          "content": "Block height"
+        },
+        {
+          "type": "range",
+          "id": "media_min_height_mobile",
+          "label": "Image frame min height — mobile (0 = use section default)",
+          "min": 0,
+          "max": 700,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "media_min_height_desktop",
+          "label": "Image frame min height — desktop (0 = use section default)",
+          "min": 0,
+          "max": 900,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Text block padding (white area)"
+        },
+        {
+          "type": "range",
+          "id": "text_pad_x_mobile",
+          "label": "Padding left/right — mobile (0 = use section default)",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_pad_y_mobile",
+          "label": "Padding top/bottom — mobile (0 = use section default)",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_pad_x_desktop",
+          "label": "Padding left/right — desktop (0 = use section default)",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_pad_y_desktop",
+          "label": "Padding top/bottom — desktop (0 = use section default)",
+          "min": 0,
+          "max": 240,
+          "step": 4,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Body typography (this row)"
+        },
+        {
+          "type": "paragraph",
+          "content": "If changes don’t appear after Save: turn OFF the two “Match section” checkboxes below, or edit the parent “Text + image rows” section (not this row). Red errors at the bottom of the editor block all saves."
+        },
+        {
+          "type": "checkbox",
+          "id": "body_use_section_spacing",
+          "label": "Match section spacing (lines & text blocks)",
+          "default": true,
+          "info": "When on, gap between lines uses the section settings. Turn off only to override spacing for this row."
+        },
+        {
+          "type": "checkbox",
+          "id": "body_use_section_typography",
+          "label": "Match section body typography",
+          "default": true,
+          "info": "When on, letter-spacing and line height use section settings. Turn off to customize this row."
+        },
+        {
+          "type": "range",
+          "id": "headline_body_gap_mobile",
+          "label": "Gap headline to body — mobile (0 = section default)",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "headline_body_gap_desktop",
+          "label": "Gap headline to body — desktop (0 = section default)",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_line_height_mobile",
+          "label": "Body line height — mobile (px)",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section” is off. 0 = section default."
+        },
+        {
+          "type": "range",
+          "id": "body_line_height_desktop",
+          "label": "Body line height — desktop (px)",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_tracking_mobile",
+          "label": "Body letter-spacing — mobile (px)",
+          "min": 0,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section” is off."
+        },
+        {
+          "type": "range",
+          "id": "body_tracking_desktop",
+          "label": "Body letter-spacing — desktop (px)",
+          "min": 0,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_line_break_gap",
+          "label": "Gap between lines — mobile (px)",
+          "min": 0,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section spacing” is off. Text-block breaks = 2× this value."
+        },
+        {
+          "type": "range",
+          "id": "body_line_break_gap_desktop",
+          "label": "Gap between lines — desktop (px)",
+          "min": 0,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section spacing” is off. 0 = same as mobile."
+        },
+        {
+          "type": "range",
+          "id": "body_line_height",
+          "label": "Body line height (legacy, 0 = section)",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_max_width_mobile",
+          "label": "Body max width — mobile (0 = inherit)",
+          "min": 0,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_max_width_desktop",
+          "label": "Body max width — desktop (0 = inherit)",
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Copy"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline (max 3 lines)",
+          "default": "A new signature to celebrate our new style director"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>We are delighted to announce our new Marame Collection range launching this June, co-designed with Melissa Murrell</p>"
+        },
+        {
+          "type": "select",
+          "id": "headline_text_transform",
+          "label": "Headline letter case",
+          "options": [
+            { "value": "inherit", "label": "Use section default" },
+            { "value": "uppercase", "label": "ALL CAPS" },
+            { "value": "none", "label": "Sentence case" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "select",
+          "id": "body_text_transform",
+          "label": "Paragraph letter case",
+          "options": [
+            { "value": "inherit", "label": "Use section default" },
+            { "value": "none", "label": "Sentence case" },
+            { "value": "uppercase", "label": "ALL CAPS" }
+          ],
+          "default": "none",
+          "info": "Choose Sentence case for normal paragraph styling. If text still looks like caps, retype the body in normal case in the editor above."
+        },
+        {
+          "type": "header",
+          "content": "Headline typography (this row)"
+        },
+        {
+          "type": "checkbox",
+          "id": "headline_use_section_typography",
+          "label": "Match section headline typography",
+          "default": true,
+          "info": "When on, this row uses the section’s headline size, letter-spacing, and line height so every row can match. Turn off to customize this row only."
+        },
+        {
+          "type": "range",
+          "id": "headline_size_mobile",
+          "label": "Headline size — mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "0 = use section default. Lower px = smaller text."
+        },
+        {
+          "type": "range",
+          "id": "headline_size_desktop",
+          "label": "Headline size — desktop",
+          "min": 0,
+          "max": 56,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_size_mobile",
+          "label": "Paragraph size — mobile",
+          "min": 0,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "body_size_desktop",
+          "label": "Paragraph size — desktop",
+          "min": 0,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Headline spacing (this row)"
+        },
+        {
+          "type": "range",
+          "id": "headline_tracking_mobile",
+          "label": "Headline letter spacing — mobile (px)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section” is off. Same px scale as Signup — Intro (0–100)."
+        },
+        {
+          "type": "range",
+          "id": "headline_tracking_desktop",
+          "label": "Headline letter spacing — desktop (px)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0,
+          "info": "Only when “Match section” is off."
+        },
+        {
+          "type": "select",
+          "id": "headline_font_weight",
+          "label": "Headline weight",
+          "options": [
+            { "value": "inherit", "label": "Use section default" },
+            { "value": "light", "label": "Light" },
+            { "value": "regular", "label": "Regular" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "bold", "label": "Bold" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "range",
+          "id": "headline_line_height_mobile",
+          "label": "Space between headline lines — mobile (px)",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0,
+          "info": "0 = section default. Only when “Match section” is off."
+        },
+        {
+          "type": "range",
+          "id": "headline_line_height_desktop",
+          "label": "Space between headline lines — desktop (px)",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Paragraph size (this row)"
+        },
+        {
+          "type": "range",
+          "id": "headline_line_height",
+          "label": "Headline line height — fallback (×0.01)",
+          "min": 0,
+          "max": 180,
+          "step": 5,
+          "default": 0,
+          "info": "Only used if mobile/desktop above are 0."
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback asset filename",
+          "info": "Used when no image is picked (e.g. marame-signup-grid-embroidery.png)."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_manual_focal",
+          "label": "Set focal point manually",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "focal_x",
+          "label": "Focal point horizontal",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "focal_y",
+          "label": "Focal point vertical",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Signup checkerboard",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "image_layout": "text_left",
+            "headline": "A new signature to celebrate our new style director",
+            "fallback_asset": "marame-signup-grid-embroidery.png"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "image_layout": "image_left",
+            "headline": "Attention to every detail from 30 years experience",
+            "fallback_asset": "marame-signup-grid-fabric-white.png"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

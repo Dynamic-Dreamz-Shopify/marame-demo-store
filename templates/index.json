@@ -1,0 +1,463 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "home_header_control": {
+      "type": "marame-signup-header-control",
+      "blocks": {
+        "logo_zone_mRP4iW": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "logo_zone_YHJQpp": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "footer_nav",
+            "zone_label": "",
+            "logo_style_mobile": "black",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_hero": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "home_hero",
+            "zone_label": "Hero carousel",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_categories": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "home_categories",
+            "zone_label": "Menswear / Womenswear",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_portugal": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "home_portugal",
+            "zone_label": "Portugal video",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "logo_zone_mRP4iW",
+        "logo_zone_YHJQpp",
+        "zone_hero",
+        "zone_categories",
+        "zone_portugal"
+      ],
+      "settings": {
+        "enable_adaptive_header": true,
+        "header_bar_style": "transparent",
+        "dark_ratio_threshold_mobile": 40,
+        "pixel_dark_max_mobile": 85,
+        "switch_offset_mobile": 0,
+        "dark_ratio_threshold_desktop": 45,
+        "pixel_dark_max_desktop": 70,
+        "switch_offset_desktop": 0
+      }
+    },
+    "home_hero": {
+      "type": "marame-home-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Marame_-_red_outfit_on_beach_home_page.jpg",
+            "image_desktop": "shopify://shop_images/Marame_-_red_outfit_on_beach_home_page.jpg",
+            "image_alt": "",
+            "focal_point": "center center 50%"
+          }
+        },
+        "slide_G9ekRV": {
+          "type": "slide",
+          "settings": {
+            "image_mobile": "shopify://shop_images/marame-signup-grid-portrait-brown.jpg",
+            "image_desktop": "shopify://shop_images/Marame_home_page.jpg",
+            "image_alt": "",
+            "focal_point": "center top"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Marame_-_white_outfit_on_beach_homepage.jpg",
+            "image_desktop": "shopify://shop_images/Marame_-_white_outfit_on_beach_homepage.jpg",
+            "image_alt": "",
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_G9ekRV",
+        "slide_2"
+      ],
+      "settings": {
+        "carousel_height_mobile": 0,
+        "carousel_height_desktop": 0,
+        "carousel_interval": 5,
+        "carousel_transition": "swipe",
+        "headline_line1": "SS26 COLLECTION\nx MELISSA MURRELL",
+        "headline_line2": "PRE-ORDER NOW",
+        "line1_size_mobile": 16,
+        "line2_size_mobile": 28,
+        "line1_letter_spacing_mobile": 30,
+        "line2_letter_spacing_mobile": 30,
+        "line1_max_width_mobile": 272,
+        "line1_offset_y_mobile": -10,
+        "line_gap_mobile": 12,
+        "headline_offset_y_mobile": 0,
+        "line1_size_desktop": 15,
+        "line2_size_desktop": 36,
+        "line1_letter_spacing_desktop": 21,
+        "line2_letter_spacing_desktop": 21,
+        "line1_max_width_desktop": 360,
+        "line1_offset_y_desktop": -8,
+        "line_gap_desktop": 0,
+        "headline_offset_y_desktop": 0,
+        "line2_delay": 0.4,
+        "line1_duration": 0.9,
+        "line2_duration": 1,
+        "line1_animation": "fade",
+        "line2_animation": "swipe-dissolve",
+        "find_out_more_label": "View collection",
+        "find_out_more_page_handle": "",
+        "find_out_more_page": "",
+        "find_out_more_url": "shopify://collections/ss26-x-melissa-murrell",
+        "signup_button_label": "Sign up for updates",
+        "signup_button_page_handle": "marame-x-melissa-murrell-ss26",
+        "signup_button_page": "",
+        "signup_button_url": "",
+        "cta_border_radius": 400,
+        "cta_bg_mobile": "#ffffff57",
+        "cta_text_color_mobile": "#ffffff",
+        "cta_bg_desktop": "#ffffff57",
+        "cta_text_color_desktop": "#ffffff",
+        "cta_border_color": "#2d2c2a26",
+        "cta_font_size_mobile": 15,
+        "cta_letter_spacing_mobile": 12,
+        "cta_gap_after_headline_mobile": 20,
+        "cta_offset_y_mobile": 96,
+        "cta_gap_after_headline_desktop": 24,
+        "cta_offset_y_desktop": 0
+      }
+    },
+    "home_categories": {
+      "type": "marame-home-categories",
+      "settings": {
+        "menswear_image_mobile": "shopify://shop_images/HALF-ZIP-JUMPER-11.jpg",
+        "menswear_image_desktop": "shopify://shop_images/HALF-ZIP-JUMPER-11.jpg",
+        "menswear_use_manual_focal": true,
+        "menswear_focal_x_mobile": 50,
+        "menswear_focal_y_mobile": 50,
+        "menswear_focal_x_desktop": 79,
+        "menswear_focal_y_desktop": 50,
+        "menswear_label": "menswear",
+        "menswear_link": "shopify://collections/mens",
+        "menswear_label_position": "bottom",
+        "menswear_label_size_mobile": 16,
+        "menswear_label_size_desktop": 28,
+        "menswear_label_spacing_mobile": 12,
+        "menswear_label_spacing_desktop": 12,
+        "menswear_offset_left_mobile": 16,
+        "menswear_offset_bottom_mobile": 16,
+        "menswear_offset_top_mobile": 16,
+        "menswear_offset_left_desktop": 80,
+        "menswear_offset_bottom_desktop": 80,
+        "menswear_offset_top_desktop": 80,
+        "womenswear_image_mobile": "shopify://shop_images/Short-Sleeve-VNeck-LightTaupe-3_75f565ec-5026-497c-87ff-4bebf7c8c1ff.jpg",
+        "womenswear_image_desktop": "shopify://shop_images/Short-Sleeve-VNeck-LightTaupe-3_75f565ec-5026-497c-87ff-4bebf7c8c1ff.jpg",
+        "womenswear_use_manual_focal": true,
+        "womenswear_focal_x_mobile": 50,
+        "womenswear_focal_y_mobile": 50,
+        "womenswear_focal_x_desktop": 50,
+        "womenswear_focal_y_desktop": 50,
+        "womenswear_label": "Womenswear",
+        "womenswear_link": "shopify://collections/womens",
+        "womenswear_label_position": "bottom",
+        "womenswear_label_size_mobile": 16,
+        "womenswear_label_size_desktop": 28,
+        "womenswear_label_spacing_mobile": 12,
+        "womenswear_label_spacing_desktop": 12,
+        "womenswear_offset_left_mobile": 16,
+        "womenswear_offset_bottom_mobile": 16,
+        "womenswear_offset_top_mobile": 16,
+        "womenswear_offset_left_desktop": 80,
+        "womenswear_offset_bottom_desktop": 80,
+        "womenswear_offset_top_desktop": 80
+      }
+    },
+    "home_portugal": {
+      "type": "marame-home-portugal",
+      "settings": {
+        "heading": "hand made in Portugal",
+        "heading_size_mobile": 14,
+        "heading_letter_spacing_mobile": 2,
+        "heading_size_desktop": 26,
+        "heading_letter_spacing_desktop": 7,
+        "heading_animation": "fade",
+        "heading_animation_duration": 1,
+        "heading_animation_delay": 1.3,
+        "video": "shopify://files/videos/Video | Landscape | Unisex | In The Factory | v2.mp4",
+        "video_mobile": "shopify://files/videos/Video | Landscape | Unisex | In The Factory | v2.mp4",
+        "video_poster": "shopify://shop_images/Nano_Banana_Pro___create_a_abstract_campaign_photo__model1_as_model_reference__outfit_colour_as_the_1__3.jpg",
+        "video_max_width_mobile": 354,
+        "video_max_width_desktop": 1072,
+        "video_offset_y_mobile": 80,
+        "video_offset_y_desktop": 120,
+        "video_offset_x_mobile": 0,
+        "video_offset_x_desktop": 0,
+        "heading_video_gap_mobile": 40,
+        "heading_video_gap_desktop": 32,
+        "section_height_mobile": 608,
+        "section_height_desktop": 1440,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 72,
+        "padding_top_desktop": 160,
+        "padding_bottom_desktop": 88,
+        "gradient_inner_color": "#444242",
+        "gradient_outer_color": "#000000",
+        "parallax_video_strength": 148,
+        "parallax_gradient_strength": 66,
+        "video_glow_color": "#ffffff",
+        "video_shadow_opacity": 100
+      }
+    },
+    "1778083789a14684bd": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_18a9452_9G3UMF": {
+          "type": "ai_gen_block_18a9452",
+          "disabled": true,
+          "settings": {
+            "autoplay": true,
+            "autoplay_delay": 5000,
+            "show_arrows": true,
+            "show_dots": true,
+            "desktop_horizontal_position": "left",
+            "desktop_horizontal_offset": 5,
+            "desktop_vertical_position": "bottom",
+            "desktop_vertical_offset": 5,
+            "desktop_link_gap": 10,
+            "desktop_link_padding": 10,
+            "desktop_link_margin": 0,
+            "mobile_horizontal_position": "center",
+            "mobile_horizontal_offset": 5,
+            "mobile_vertical_position": "bottom",
+            "mobile_vertical_offset": 5,
+            "mobile_link_gap": 10,
+            "mobile_link_padding": 10,
+            "mobile_link_margin": 0,
+            "link_color": "#ffffff",
+            "link_font_size": 16,
+            "mobile_link_color": "#ffffff",
+            "mobile_link_font_size": 14,
+            "link_font_weight": "400",
+            "link_letter_spacing": 0,
+            "link_text_transform": "none",
+            "link_hover_color": "#cccccc",
+            "link_underline": false,
+            "slide_1_enabled": true,
+            "slide_2_enabled": false,
+            "slide_3_enabled": false,
+            "slide_4_enabled": false,
+            "slide_5_enabled": false,
+            "slide_6_enabled": false,
+            "slide_7_enabled": false,
+            "slide_8_enabled": false,
+            "slide_9_enabled": false,
+            "slide_10_enabled": false,
+            "link_1_enabled": false,
+            "link_1_label": "Shop now",
+            "link_1_url": "",
+            "link_1_slides": "1",
+            "link_2_enabled": false,
+            "link_2_label": "Learn more",
+            "link_2_url": "",
+            "link_2_slides": "1",
+            "link_3_enabled": false,
+            "link_3_label": "",
+            "link_3_url": "",
+            "link_3_slides": "1",
+            "link_4_enabled": false,
+            "link_4_label": "",
+            "link_4_url": "",
+            "link_4_slides": "1",
+            "link_5_enabled": false,
+            "link_5_label": "",
+            "link_5_url": "",
+            "link_5_slides": "1",
+            "link_6_enabled": false,
+            "link_6_label": "",
+            "link_6_url": "",
+            "link_6_slides": "1",
+            "link_7_enabled": false,
+            "link_7_label": "",
+            "link_7_url": "",
+            "link_7_slides": "1",
+            "link_8_enabled": false,
+            "link_8_label": "",
+            "link_8_url": "",
+            "link_8_slides": "1",
+            "link_9_enabled": false,
+            "link_9_label": "",
+            "link_9_url": "",
+            "link_9_slides": "1",
+            "link_10_enabled": false,
+            "link_10_label": "",
+            "link_10_url": "",
+            "link_10_slides": "1"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_18a9452_9G3UMF"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "1774020832daeb20c6": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_391de2c_RfYFQM": {
+          "type": "ai_gen_block_391de2c",
+          "disabled": true,
+          "settings": {
+            "title": "",
+            "title_position": "relative",
+            "title_font": "sans_serif_n4",
+            "title_color": "#121212",
+            "title_text_transform": "none",
+            "title_text_shadow_enabled": false,
+            "title_text_shadow_color": "#00000080",
+            "title_text_shadow_x": 0,
+            "title_text_shadow_y": 2,
+            "title_text_shadow_blur": 4,
+            "title_z_index": 10,
+            "title_size_desktop": 48,
+            "title_letter_spacing_desktop": 0,
+            "title_line_height_desktop": 1.2,
+            "title_alignment_desktop": "center",
+            "title_top_desktop": 50,
+            "title_left_desktop": 50,
+            "title_right_desktop": 50,
+            "title_margin_top_desktop": 0,
+            "title_margin_bottom_desktop": 30,
+            "title_padding_left_desktop": 0,
+            "title_padding_right_desktop": 0,
+            "title_max_width_enabled": false,
+            "title_max_width_desktop": 800,
+            "title_size_mobile": 32,
+            "title_letter_spacing_mobile": 0,
+            "title_line_height_mobile": 1.2,
+            "title_alignment_mobile": "center",
+            "title_top_mobile": 30,
+            "title_left_mobile": 20,
+            "title_right_mobile": 20,
+            "title_margin_top_mobile": 0,
+            "title_margin_bottom_mobile": 20,
+            "title_padding_left_mobile": 0,
+            "title_padding_right_mobile": 0,
+            "title_max_width_mobile": 600,
+            "youtube_url": "",
+            "aspect_ratio": "16:9",
+            "lazy_load": true,
+            "open_in_modal": false,
+            "video_width_desktop": 100,
+            "video_max_width_desktop": 1200,
+            "video_width_mobile": 100,
+            "video_max_width_mobile": 600,
+            "play_button_style": "circle-filled",
+            "play_button_size_desktop": 80,
+            "play_button_size_mobile": 60,
+            "play_button_bg_color": "#ffffff",
+            "play_button_hover_color": "#121212",
+            "play_button_icon_color": "#121212",
+            "play_button_icon_hover_color": "#ffffff",
+            "border_radius_desktop": 0,
+            "border_enabled": false,
+            "border_color": "#121212",
+            "border_width": 1,
+            "border_radius_mobile": 0,
+            "shadow_preset": "none",
+            "shadow_color": "#00000033",
+            "shadow_x": 0,
+            "shadow_y": 4,
+            "shadow_blur": 10,
+            "shadow_spread": 0,
+            "padding_top_desktop": 0,
+            "padding_right_desktop": 0,
+            "padding_bottom_desktop": 0,
+            "padding_left_desktop": 0,
+            "padding_top_mobile": 0,
+            "padding_right_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0,
+            "background_type": "none",
+            "background_color": "#f4f4f4",
+            "background_position": "center",
+            "background_size": "cover",
+            "background_size_custom": 100,
+            "background_overlay_enabled": false,
+            "background_overlay_color": "#000000",
+            "background_overlay_opacity": 0.5,
+            "background_height_desktop": 600,
+            "background_height_mobile": 400,
+            "horizontal_alignment": "center",
+            "full_width": false,
+            "z_index": 1,
+            "vertical_offset_desktop": 0,
+            "vertical_offset_mobile": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_391de2c_RfYFQM"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "home_splitscreen_7YmLcx": {
+      "type": "home-splitscreen",
+      "disabled": true,
+      "settings": {
+        "text_color": "#2a2a2d"
+      }
+    }
+  },
+  "order": [
+    "home_header_control",
+    "home_hero",
+    "home_categories",
+    "home_portugal",
+    "1778083789a14684bd",
+    "1774020832daeb20c6",
+    "home_splitscreen_7YmLcx"
+  ]
+}

@@ -1,0 +1,491 @@
+{{ 'new-footer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'marame-footer-newsletter.js' | asset_url }}" defer></script>
+{%- assign klaviyo_form_id = section.settings.klaviyo_form_id | default: 'U8Y5hR' | strip -%}
+{%- capture fn_klaviyo -%}#footer-newsletter-{{ section.id }} .footer-newsletter__form-bar{%- endcapture -%}
+{%- assign fn_inset_x = section.settings.padding_left -%}
+{%- assign fn_inset_x_mobile = section.settings.padding_left_mobile -%}
+{%- assign fn_uniform_desktop = section.settings.email_field_max_width -%}
+{%- assign mfn_font_regular = 'HelveticaNowDisplayRegular, Helvetica Now Display, sans-serif' -%}
+{%- assign mfn_font_light = 'HelveticaNowDisplayLight, Helvetica Now Display, sans-serif' -%}
+<style>
+#footer-newsletter-{{ section.id }} {
+  {% if section.settings.section_background_transparent %}
+    background-color: transparent;
+  {% else %}
+    background-color: {{ section.settings.background_color }};
+  {% endif %}
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  padding-left: {{ fn_inset_x }}px;
+  padding-right: {{ fn_inset_x }}px;
+  margin-top: {{ section.settings.margin_top }}px;
+  margin-bottom: {{ section.settings.margin_bottom }}px;
+  margin-left: {{ section.settings.margin_left }}px;
+  margin-right: {{ section.settings.margin_left }}px;
+  text-align: {{ section.settings.alignment }};
+  box-sizing: border-box;
+  width: 100%;
+}
+#footer-newsletter-{{ section.id }} .footer-newsletter__inner {
+  width: 100%;
+  {% if section.settings.content_max_width > 0 %}
+    max-width: {{ section.settings.content_max_width }}px;
+  {% else %}
+    max-width: 100%;
+  {% endif %}
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
+#footer-newsletter-{{ section.id }}[data-text-align='right'] .footer-newsletter__inner {
+  margin-left: auto;
+  margin-right: 0;
+}
+#footer-newsletter-{{ section.id }}[data-text-align='left'] .footer-newsletter__inner {
+  margin-left: 0;
+  margin-right: auto;
+}
+#footer-newsletter-{{ section.id }}[data-text-align='center'] .footer-newsletter__inner {
+  margin-left: auto;
+  margin-right: auto;
+}
+#footer-newsletter-{{ section.id }} .newsletter-heading {
+  display: block !important;
+  visibility: visible !important;
+  color: {{ section.settings.heading_color }} !important;
+  font-family: {{ mfn_font_regular }} !important;
+  font-size: {{ section.settings.heading_font_size }}px !important;
+  font-weight: {{ section.settings.heading_font_weight }} !important;
+  letter-spacing: {{ section.settings.heading_letter_spacing }}px !important;
+  text-transform: {{ section.settings.heading_text_transform }} !important;
+  margin-bottom: {{ section.settings.heading_gap_below }}px !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+#footer-newsletter-{{ section.id }} .newsletter-description {
+  display: block !important;
+  visibility: visible !important;
+  color: {{ section.settings.description_color }} !important;
+  font-family: {{ mfn_font_light }} !important;
+  font-size: {{ section.settings.description_font_size }}px !important;
+  font-weight: {{ section.settings.description_font_weight }} !important;
+  letter-spacing: {{ section.settings.description_letter_spacing }}px !important;
+  text-transform: {{ section.settings.description_text_transform }} !important;
+  margin-bottom: 16px !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+{{ fn_klaviyo }},
+{{ fn_klaviyo }} form,
+{{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) {
+  width: 100% !important;
+  max-width: 100% !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+#footer-newsletter-{{ section.id }} .footer-newsletter__form-bar,
+#footer-newsletter-{{ section.id }} .klaviyo-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+}
+@media screen and (min-width: 769px) {
+  #footer-newsletter-{{ section.id }} .footer-newsletter__uniform-block {
+    width: 100% !important;
+    max-width: {{ fn_uniform_desktop }}px !important;
+    box-sizing: border-box !important;
+  }
+  #footer-newsletter-{{ section.id }} .footer-newsletter__uniform-block .newsletter-description,
+  #footer-newsletter-{{ section.id }} .footer-newsletter__uniform-block .footer-newsletter__form-bar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align='right'] .footer-newsletter__uniform-block {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align='left'] .footer-newsletter__uniform-block {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align='center'] .footer-newsletter__uniform-block {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+{{ fn_klaviyo }} h1,
+{{ fn_klaviyo }} h2,
+{{ fn_klaviyo }} h3,
+{{ fn_klaviyo }} h4,
+{{ fn_klaviyo }} h5,
+{{ fn_klaviyo }} h6 {
+  font-family: {{ mfn_font_regular }} !important;
+  font-size: {{ section.settings.klaviyo_title_font_size }}px !important;
+  text-align: {{ section.settings.alignment }} !important;
+  line-height: 1.2 !important;
+  color: {{ section.settings.klaviyo_title_color }} !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) p,
+{{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) label,
+{{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) span {
+  font-family: {{ mfn_font_light }} !important;
+  font-size: {{ section.settings.klaviyo_body_font_size }}px !important;
+  line-height: 1.35 !important;
+  color: {{ section.settings.klaviyo_body_color }} !important;
+  text-align: {{ section.settings.alignment }} !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child > div {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  position: relative !important;
+  inset: auto !important;
+  overflow: visible !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child > div.needsclick:first-child,
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child > div:first-child {
+  order: 1 !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child > div.needsclick:last-child:not(:only-child) {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child button[type='button'],
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child button[type='submit'],
+{{ fn_klaviyo }} [data-testid='submit-button'],
+{{ fn_klaviyo }} [data-testid='submit-button'] button {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#footer-newsletter-{{ section.id }} .footer-newsletter__form-bar {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+#footer-newsletter-{{ section.id }} .footer-newsletter__submit {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: {{ section.settings.submit_gap_below }}px 0 0 !important;
+  padding: 0 {{ section.settings.submit_padding_x }}px !important;
+  height: {{ section.settings.submit_height }}px !important;
+  min-height: {{ section.settings.submit_height }}px !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: {{ section.settings.submit_border_radius }}px !important;
+  background: {{ section.settings.submit_background }} !important;
+  color: {{ section.settings.submit_text_color }} !important;
+  font-family: {{ mfn_font_light }} !important;
+  font-size: {{ section.settings.submit_font_size }}px !important;
+  letter-spacing: {{ section.settings.submit_letter_spacing }}px !important;
+  font-weight: {{ section.settings.submit_font_weight }} !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
+  cursor: not-allowed !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+#footer-newsletter-{{ section.id }}.is-email-active .footer-newsletter__submit:not(:disabled) {
+  background: {{ section.settings.submit_background_active }} !important;
+  color: {{ section.settings.submit_text_color_active }} !important;
+  cursor: pointer !important;
+}
+#footer-newsletter-{{ section.id }} .footer-newsletter__submit:focus,
+#footer-newsletter-{{ section.id }} .footer-newsletter__submit:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+{{ fn_klaviyo }} input[type='email'],
+{{ fn_klaviyo }} input[type='text'] {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  right: auto !important;
+  top: auto !important;
+  left: auto !important;
+  height: {{ section.settings.input_height }}px !important;
+  min-height: {{ section.settings.input_height }}px !important;
+  padding: 0 {{ section.settings.input_padding_x }}px !important;
+  margin: 0 !important;
+  border-radius: {{ section.settings.input_border_radius }}px !important;
+  border: 1px solid {{ section.settings.input_border_color }} !important;
+  background: {{ section.settings.input_background }} !important;
+  color: {{ section.settings.input_text_color }} !important;
+  font-family: {{ mfn_font_light }} !important;
+  font-size: {{ section.settings.input_font_size }}px !important;
+  letter-spacing: {{ section.settings.input_letter_spacing }}px !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+}
+{{ fn_klaviyo }} input[type='email']::placeholder,
+{{ fn_klaviyo }} input[type='text']::placeholder {
+  color: {{ section.settings.input_placeholder_color }} !important;
+  opacity: 1 !important;
+}
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child button[type='button']:before,
+{{ fn_klaviyo }} div[data-testid='form-row']:last-child button[type='submit']:before {
+  display: none !important;
+}
+@media screen and (max-width: 768px) {
+  #footer-newsletter-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px !important;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px !important;
+    padding-left: {{ fn_inset_x_mobile }}px !important;
+    padding-right: {{ fn_inset_x_mobile }}px !important;
+    margin-top: {{ section.settings.margin_top_mobile }}px !important;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px !important;
+    margin-left: {{ section.settings.margin_left_mobile }}px !important;
+    margin-right: {{ section.settings.margin_left_mobile }}px !important;
+    text-align: {{ section.settings.alignment_mobile }};
+  }
+  #footer-newsletter-{{ section.id }} .footer-newsletter__inner {
+    {% if section.settings.content_max_width_mobile > 0 %}
+      max-width: {{ section.settings.content_max_width_mobile }}px;
+    {% else %}
+      max-width: 100%;
+    {% endif %}
+    margin-left: 0;
+    margin-right: 0;
+  }
+  #footer-newsletter-{{ section.id }} .newsletter-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px !important;
+    font-weight: {{ section.settings.heading_font_weight_mobile }} !important;
+    letter-spacing: {{ section.settings.heading_letter_spacing_mobile }}px !important;
+    margin-bottom: {{ section.settings.heading_gap_below_mobile }}px !important;
+  }
+  #footer-newsletter-{{ section.id }} .newsletter-description {
+    font-size: {{ section.settings.description_font_size_mobile }}px !important;
+    letter-spacing: {{ section.settings.description_letter_spacing_mobile }}px !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='right'] .footer-newsletter__inner,
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='right'] .footer-newsletter__form-bar {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='left'] .footer-newsletter__inner,
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='left'] .footer-newsletter__form-bar {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='center'] .footer-newsletter__inner,
+  #footer-newsletter-{{ section.id }}[data-text-align-mobile='center'] .footer-newsletter__form-bar {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  {{ fn_klaviyo }} h1,
+  {{ fn_klaviyo }} h2,
+  {{ fn_klaviyo }} h3,
+  {{ fn_klaviyo }} h4,
+  {{ fn_klaviyo }} h5,
+  {{ fn_klaviyo }} h6 {
+    font-size: {{ section.settings.klaviyo_title_font_size_mobile }}px !important;
+  }
+  {{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) p,
+  {{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) label,
+  {{ fn_klaviyo }} div[data-testid='form-row']:not(:last-child) span {
+    font-size: {{ section.settings.klaviyo_body_font_size_mobile }}px !important;
+  }
+  #footer-newsletter-{{ section.id }} .footer-newsletter__form-bar {
+    max-width: {{ section.settings.email_field_max_width_mobile }}px !important;
+  }
+  #footer-newsletter-{{ section.id }} .footer-newsletter__submit {
+    margin-top: {{ section.settings.submit_gap_below_mobile }}px !important;
+    height: {{ section.settings.submit_height_mobile }}px !important;
+    min-height: {{ section.settings.submit_height_mobile }}px !important;
+    font-size: {{ section.settings.submit_font_size_mobile }}px !important;
+    border-radius: {{ section.settings.submit_border_radius_mobile }}px !important;
+  }
+  {{ fn_klaviyo }} input[type='email'],
+  {{ fn_klaviyo }} input[type='text'] {
+    height: {{ section.settings.input_height_mobile }}px !important;
+    min-height: {{ section.settings.input_height_mobile }}px !important;
+    font-size: {{ section.settings.input_font_size_mobile }}px !important;
+    letter-spacing: {{ section.settings.input_letter_spacing }}px !important;
+    border-radius: {{ section.settings.input_border_radius_mobile }}px !important;
+  }
+}
+</style>
+
+<section
+  id="footer-newsletter-{{ section.id }}"
+  class="footer-newsletter-section"
+  data-footer-newsletter
+  data-text-align="{{ section.settings.alignment }}"
+  data-text-align-mobile="{{ section.settings.alignment_mobile }}"
+>
+  <div class="footer-newsletter__inner">
+    {% if section.settings.heading != blank %}
+      <span class="newsletter-heading">{{ section.settings.heading }}</span>
+    {% endif %}
+    <div class="footer-newsletter__uniform-block">
+      {% if section.settings.description != blank %}
+        <span class="newsletter-description">{{ section.settings.description }}</span>
+      {% endif %}
+      <div
+        class="klaviyo-wrapper klaviyo-form-wrap footer-newsletter__form-bar"
+        data-klaviyo-form-id="{{ klaviyo_form_id }}"
+      >
+        <div class="footer-newsletter__klaviyo-mount klaviyo-form-{{ klaviyo_form_id }}"></div>
+        <button
+          type="button"
+          class="footer-newsletter__submit"
+          data-fn-newsletter-submit
+          disabled
+        >
+          {{ section.settings.submit_label | default: 'SUBMIT' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Footer Newsletter",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "section_background_transparent", "label": "Transparent section background", "info": "On = no box behind the newsletter column. Email field background is set separately below.", "default": true },
+    { "type": "color", "id": "background_color", "label": "Section background colour", "default": "#ffffff", "info": "Only used when transparent section background is off." },
+    { "type": "paragraph", "content": "Typography uses Helvetica Now Display (same as the rest of the site). Red Hat Display in the editor font picker is ignored here." },
+    { "type": "header", "content": "Footer row layout (desktop)" },
+    { "type": "paragraph", "content": "Controls the shared row with Footer Nav (left) and newsletter (right). Use row padding for equal inset from the screen edges." },
+    { "type": "range", "id": "row_max_width", "label": "Max row width", "min": 960, "max": 1920, "step": 10, "unit": "px", "default": 1440 },
+    { "type": "range", "id": "row_padding_left", "label": "Row inset from left edge", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 70 },
+    { "type": "range", "id": "row_padding_right", "label": "Row inset from right edge", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 70 },
+    { "type": "range", "id": "newsletter_column_width", "label": "Newsletter column width", "min": 28, "max": 55, "step": 1, "unit": "%", "default": 42 },
+    { "type": "range", "id": "column_gap", "label": "Gap between nav and newsletter", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "header", "content": "Footer row layout (mobile)" },
+    { "type": "range", "id": "row_padding_left_mobile", "label": "Row inset from left (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "row_padding_right_mobile", "label": "Row inset from right (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 20 },
+    { "type": "header", "content": "Newsletter section — desktop spacing" },
+    { "type": "select", "id": "alignment", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "right" },
+    { "type": "range", "id": "content_max_width", "label": "Content max width (0 = full column)", "min": 0, "max": 900, "step": 10, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_left", "label": "Column inset (left & right)", "info": "Same inset on both sides at every screen size. Right padding always matches this value.", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "Column padding right (legacy)", "info": "Ignored — right inset mirrors Column inset above.", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top", "label": "Margin top", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom", "label": "Margin bottom", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_left", "label": "Margin left", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_right", "label": "Margin right", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Newsletter section — mobile spacing" },
+    { "type": "select", "id": "alignment_mobile", "label": "Content Alignment (mobile)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding Top (mobile)", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding Bottom (mobile)", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "content_max_width_mobile", "label": "Content max width (mobile, 0 = full)", "min": 0, "max": 900, "step": 10, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left_mobile", "label": "Column inset (mobile, left & right)", "info": "Same inset on both sides on phones. Right always matches this value.", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right_mobile", "label": "Extra padding right (mobile, legacy)", "info": "Ignored — mirrors mobile column inset above.", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Margin top (mobile)", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Margin bottom (mobile)", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_left_mobile", "label": "Margin left (mobile)", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_right_mobile", "label": "Margin right (mobile)", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Heading — Desktop" },
+    { "type": "text", "id": "heading", "label": "Heading Text" },
+    { "type": "color", "id": "heading_color", "label": "Heading Colour", "default": "#ffffff" },
+    { "type": "range", "id": "heading_font_size", "label": "Heading Font Size", "min": 10, "max": 60, "step": 1, "unit": "px", "default": 18 },
+    { "type": "select", "id": "heading_font_weight", "label": "Heading Font Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }], "default": "600" },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading Letter Spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "select", "id": "heading_text_transform", "label": "Heading Text Transform", "options": [{ "value": "none", "label": "None" }, { "value": "uppercase", "label": "Uppercase" }, { "value": "lowercase", "label": "Lowercase" }, { "value": "capitalize", "label": "Capitalize" }], "default": "uppercase" },
+    { "type": "range", "id": "heading_gap_below", "label": "Space below heading (before description)", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 8 },
+    { "type": "header", "content": "Heading — Mobile" },
+    { "type": "range", "id": "heading_font_size_mobile", "label": "Heading Font Size (mobile)", "min": 10, "max": 60, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "heading_font_weight_mobile", "label": "Heading Font Weight (mobile)", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }], "default": "600" },
+    { "type": "range", "id": "heading_letter_spacing_mobile", "label": "Heading Letter Spacing (mobile)", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "heading_gap_below_mobile", "label": "Space below heading (mobile)", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 8 },
+    { "type": "header", "content": "Description — Desktop" },
+    { "type": "textarea", "id": "description", "label": "Description Text" },
+    { "type": "color", "id": "description_color", "label": "Description Colour", "default": "#aaaaaa" },
+    { "type": "range", "id": "description_font_size", "label": "Description Font Size", "min": 8, "max": 48, "step": 1, "unit": "px", "default": 13 },
+    { "type": "select", "id": "description_font_weight", "label": "Description Font Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }], "default": "400" },
+    { "type": "range", "id": "description_letter_spacing", "label": "Description Letter Spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "select", "id": "description_text_transform", "label": "Description Text Transform", "options": [{ "value": "none", "label": "None" }, { "value": "uppercase", "label": "Uppercase" }, { "value": "lowercase", "label": "Lowercase" }, { "value": "capitalize", "label": "Capitalize" }], "default": "none" },
+    { "type": "header", "content": "Description — Mobile" },
+    { "type": "range", "id": "description_font_size_mobile", "label": "Description Font Size (mobile)", "min": 8, "max": 48, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "description_letter_spacing_mobile", "label": "Description Letter Spacing (mobile)", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Klaviyo form" },
+    { "type": "text", "id": "klaviyo_form_id", "label": "Klaviyo Form ID", "info": "The 6-character code from your Klaviyo embed snippet e.g. U8Y5hR", "default": "U8Y5hR" },
+    { "type": "header", "content": "Klaviyo embed text (inside form)" },
+    { "type": "paragraph", "content": "Controls copy rendered by Klaviyo (headings and labels above the email field). Theme heading/description above only apply when those fields are filled in this section." },
+    { "type": "range", "id": "klaviyo_title_font_size", "label": "Klaviyo title size — desktop", "min": 10, "max": 60, "step": 1, "unit": "px", "default": 30 },
+    { "type": "range", "id": "klaviyo_title_font_size_mobile", "label": "Klaviyo title size — mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 20 },
+    { "type": "color", "id": "klaviyo_title_color", "label": "Klaviyo title colour", "default": "#ffffff" },
+    { "type": "range", "id": "klaviyo_body_font_size", "label": "Klaviyo body text size — desktop", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "klaviyo_body_font_size_mobile", "label": "Klaviyo body text size — mobile", "min": 8, "max": 28, "step": 1, "unit": "px", "default": 11 },
+    { "type": "color", "id": "klaviyo_body_color", "label": "Klaviyo body text colour", "default": "#ffffff" },
+    { "type": "header", "content": "Uniform block — desktop" },
+    { "type": "paragraph", "content": "One width for description, email field and submit so they line up. Mobile width is set separately below." },
+    { "type": "range", "id": "email_field_max_width", "label": "Uniform content width (desktop)", "info": "Description, email and submit share this exact width on screens 769px and wider.", "min": 200, "max": 560, "step": 4, "unit": "px", "default": 360 },
+    { "type": "header", "content": "Email + submit — desktop" },
+    { "type": "paragraph", "content": "Grey submit button always shows below the email field; turns dark when the visitor starts typing (same as pre-access page)." },
+    { "type": "range", "id": "input_font_size", "label": "Email text size", "min": 8, "max": 24, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "input_letter_spacing", "label": "Email letter spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "input_height", "label": "Field height", "min": 28, "max": 64, "step": 1, "unit": "px", "default": 37 },
+    { "type": "range", "id": "input_padding_x", "label": "Email horizontal padding", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "input_border_radius", "label": "Email corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 },
+    { "type": "color", "id": "input_background", "label": "Email background", "default": "#ffffff" },
+    { "type": "color", "id": "input_border_color", "label": "Email border colour", "default": "#e0e0e0" },
+    { "type": "color", "id": "input_text_color", "label": "Email text colour", "default": "#2a2a2d" },
+    { "type": "color", "id": "input_placeholder_color", "label": "Email placeholder colour", "default": "#a1a1a5" },
+    { "type": "text", "id": "submit_label", "label": "Submit button label", "default": "SUBMIT" },
+    { "type": "header", "content": "Submit button — desktop" },
+    { "type": "range", "id": "submit_height", "label": "Submit height", "min": 28, "max": 64, "step": 1, "unit": "px", "default": 37 },
+    { "type": "range", "id": "submit_gap_below", "label": "Space below email field", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "submit_font_size", "label": "Submit text size", "min": 8, "max": 20, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "submit_letter_spacing", "label": "Submit letter spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+    { "type": "select", "id": "submit_font_weight", "label": "Submit font weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }], "default": "400" },
+    { "type": "range", "id": "submit_padding_x", "label": "Submit horizontal padding", "min": 4, "max": 24, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "submit_border_radius", "label": "Submit corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 },
+    { "type": "color", "id": "submit_background", "label": "Submit background (before typing)", "default": "#ececec" },
+    { "type": "color", "id": "submit_text_color", "label": "Submit text colour (before typing)", "default": "#2a2a2d" },
+    { "type": "color", "id": "submit_background_active", "label": "Submit background (while typing)", "default": "#2a2a2d" },
+    { "type": "color", "id": "submit_text_color_active", "label": "Submit text colour (while typing)", "default": "#ffffff" },
+    { "type": "header", "content": "Email + submit — mobile" },
+    { "type": "range", "id": "email_field_max_width_mobile", "label": "Email field width (mobile)", "min": 200, "max": 560, "step": 4, "unit": "px", "default": 320 },
+    { "type": "range", "id": "input_font_size_mobile", "label": "Email text size (mobile)", "min": 8, "max": 24, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "input_height_mobile", "label": "Field height (mobile)", "min": 28, "max": 64, "step": 1, "unit": "px", "default": 37 },
+    { "type": "range", "id": "input_border_radius_mobile", "label": "Email corner radius (mobile)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 },
+    { "type": "range", "id": "submit_height_mobile", "label": "Submit height (mobile)", "min": 28, "max": 64, "step": 1, "unit": "px", "default": 37 },
+    { "type": "range", "id": "submit_gap_below_mobile", "label": "Space below email (mobile)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "submit_font_size_mobile", "label": "Submit text size (mobile)", "min": 8, "max": 20, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "submit_border_radius_mobile", "label": "Submit corner radius (mobile)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 }
+  ],
+  "presets": [{ "name": "Footer Newsletter" }]
+}
+{% endschema %}

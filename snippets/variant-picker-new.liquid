@@ -1,0 +1,347 @@
+{% assign preorder_enabled_raw = product.selected_or_first_available_variant.metafields.custom.preorder_enabled.value | default: product.selected_or_first_available_variant.metafields.custom.preorder_enabled %}
+
+{% assign preorder_enabled = false %}
+
+{% if preorder_enabled_raw == true or preorder_enabled_raw == 'true' or preorder_enabled_raw == 'True' %}
+  {% assign preorder_enabled = true %}
+{% endif %}
+
+<script src="{{ "variant-picker.js" | asset_url }}" defer></script>
+
+<variant-picker data-section-id="{{ section_id }}">
+  <div class="meta_product_inner">
+    {% assign selected_variant = product.selected_or_first_available_variant %}
+
+    {% for option in product.options_with_values %}
+      {% assign option_name = option.name | downcase %}
+
+      {% if option_name == 'color' or option_name == 'colour' or option_name == 'colours' or option_name == 'colors' %}
+        {% assign index = forloop.index0 %}
+
+        <div class="meta-color-value">
+          {{ selected_variant.options[index] }}
+        </div>
+
+        <div class="meta-color-select">
+          <div class="meta-color-select__options  for_pdp">
+            {% for option_value in option.values %}
+
+            {% assign variant_alt = option_value.variant.featured_image.alt | default: '' %}
+
+            {% if variant_alt contains '|' %}
+              {% assign alt_parts = variant_alt | split: '|' %}
+              {% assign color_key = alt_parts[1] | strip | downcase %}
+            {% else %}
+              {% assign color_key = variant_alt | strip | downcase %}
+            {% endif %}
+
+            {% assign matched_media = null %}
+
+            {% for media in product.media %}
+              {% assign media_alt = media.alt | default: '' %}
+
+              {% if media_alt contains '|' %}
+                {% assign media_parts = media_alt | split: '|' %}
+                {% assign media_key = media_parts[1] | strip | downcase %}
+              {% else %}
+                {% assign media_key = media_alt | strip | downcase %}
+              {% endif %}
+               
+              {% if media_key == color_key %}
+                {% assign matched_media = media %}
+              {% endif %}
+            {% endfor %}
+
+               <span class="hidden">{{matched_media }}</span>
+
+              <div
+                class="product-variant-swatch{% if selected_variant.options[index] == option_value %} active{% endif %}"
+                data-variant="{{ option_value.variant.id }}"
+                data-alt="{{last_alt }}"
+
+                {% if option_value.swatch and option_value.variant.image == blank %}
+                  {% if option_value.swatch.image %}
+                    style="background-image: url({{ option_value.swatch.image | image_url }}); background-size: cover;"
+                  {% elsif option_value.swatch.color %}
+                    style="background-color: rgba({{ option_value.swatch.color.rgba }});"
+                  {% endif %}
+                {% endif %}
+              >
+                {% if matched_media %}
+                  <img
+                    src="{{ matched_media.preview_image | image_url: width: 100, height: 100 }}"
+                    alt="{{ matched_media.alt }}"
+                    width=""
+                    height=""
+                  >
+                {% elsif option_value.swatch.image %}
+                  <img
+                    src="{{ option_value.swatch.image.src | image_url: width: 100, height: 100 }}"
+                    width=""
+                    height=""
+                  >
+                {% elsif option_value.variant.image %}
+                  <img
+                    src="{{ option_value.variant.image.src | image_url: width: 100, height: 100 }}"
+                    width=""
+                    height=""
+                  >
+                {% endif %}
+                <span class="option_name">{{ option_value | replace: '/', ' / ' }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      {% else %}
+        {% comment %}
+          <div class="detail__sidebar__sizes option_index">
+            <div class="size-select">
+              <select
+                name="{{ option.name }}"
+                class="product-variant-select"
+                {% if option_name == 'size' -%}
+                  placeholder="Please select a size"
+                {%- endif %}
+              >
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value.variant.id }}"
+                    {% if selected_variant.id == value.variant.id %}selected{% endif %}
+                  >
+                     {% unless value.available %}
+                      <s>{{ option.name }} {{ value }}</s> - out of stock <u>notify me when available</u>
+                    {% endunless %}
+                   {{ option.name }} {{ value }}
+                    {%- if value.variant.inventory_quantity <= 5 and value.variant.inventory_quantity > 0 %}
+                      - only {{ value.variant.inventory_quantity }} left
+                    {%- endif %}
+                  </option>
+                {%- endfor -%}
+                <span class="product-variant-select--icon">
+                  {% render 'icon-chevron-down' %}
+                </span>
+              </select>
+            </div>
+          </div>
+        {% endcomment %}
+
+        {% if product.template_suffix == 'dd_swatch-size-picker' %}
+          <div class="meta-color-head">{{ option_name }}</div>
+          <div class="meta-color-value">{{ option.selected_value }}</div>
+          <div class="meta-color-select">
+            <div class="meta-color-select__options">
+              {%- for value in option.values -%}
+                <div
+                  class="product-variant-swatch product-variant-size-swatch {% if selected_variant.id == value.variant.id %} active {% endif %}"
+                  data_handle="{{ product.handle }}"
+                  data-style=""
+                  data-variant="{{ value.variant.id }}"
+                  data-alt="{{ value.variant.image.alt }}"
+                >
+                  {{ value }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <div class="detail__sidebar__sizes option_index" data-option="option2">
+            <div class="pro-custom-select" data-custom-select-option="{{ option_name }}" data-pro-custom-select>
+              <button class="pro-custom-select-button custm" data-pro-custom-select-btn>
+                <!-- Please select a size -->
+                {% comment %} <span class="s-text s-label"> Select A Size</span>  {% endcomment %}
+                 {% assign current_variant = product.selected_or_first_available_variant %}
+                <span class="s-text s-label{% if preorder_enabled %} pre-order-now{% endif %}">
+
+                  {% if current_variant.metafields.custom.coming_soon %}
+                    <span class="coming_soon_text">Coming Soon - Sign Up For Updates</span>
+
+                  {% elsif preorder_enabled %}
+                    Pre-Order Now
+                    {% if current_variant.metafields.custom.preorder_shipping_date_info != blank %}
+                    <span class="shiiping_date">
+                      {{ current_variant.metafields.custom.preorder_shipping_date_info }}
+                    </span>
+                  {% endif %}
+
+                  {% else %}
+                    {% if product.handle contains 'gift-card-marame' %}
+                      Choose Your Value
+                    {% else %}
+                    Select A Size
+                    {% endif %}
+                  {% endif %}
+               </span>
+              
+               
+               <span class="s-text s-opt-label">
+
+                    {% if selected_variant.metafields.custom.coming_soon %}
+                      <span class="coming_soon_text">
+                        Coming Soon - Sign Up For Updates
+                      </span>
+
+                    {% elsif preorder_enabled %}
+                        Pre-Order Now
+                        {% if selected_variant.metafields.custom.preorder_shipping_date_info != blank %}
+                        <span class="shiiping_date">
+                          {{ selected_variant.metafields.custom.preorder_shipping_date_info }}
+                        </span>
+                      {% endif %}
+                      
+                    {% else %}
+                      <span class="opt-value"
+                      ><b>
+                        {{- option.name }}
+                        {{ option.selected_value -}}
+                      </b>
+                      {%- if selected_variant.inventory_quantity <= 5 and selected_variant.inventory_quantity > 0 %}
+                        - only {{ selected_variant.inventory_quantity }} left
+                      {%- endif -%}
+                    </span>
+                    {% endif %}
+                    {%- unless selected_variant.available -%}
+                      <span class="opt-oos">
+                        - out of stock
+                        <a class="button klaviyo-bis-trigger" href="#" data-klaviyo-handle="{{ product.handle }}"
+                          >notify me when available</a
+                        ></span
+                      >
+                    {%- endunless -%}
+                  </span>
+               
+
+                <span class="s-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="6" height="13" viewBox="0 0 6 13" fill="none">
+                    <path d="M0.177734 0.479492L4.79655 6.866L0.177734 12.7963" stroke="#939393" stroke-width="0.461881"/>
+                  </svg>
+                </span>
+              </button>
+              <ul class="pro-custom-select-list lenis" data-pro-custom-select-list>
+                {% comment %} <li class="pro-custom-select-list-item disabled">Please select a size</li> {% endcomment %}
+                {%- for value in option.values -%}
+                  <li
+                    class="pro-custom-select-list-item c-option{%- unless value.available %} c-option--out-of-stock{% endunless %} {% if selected_variant.id == value.variant.id %} active {% endif %}"
+                    data-value="{{- value -}}"
+                    data-pro-custom-select-list-item
+                    data-variant="{{ value.variant.id }}"
+                  >
+                    <span class="opt-value"
+                      ><b>
+                        {% comment %} {{- option.name }} {% endcomment %}
+                        {{ value -}}
+                      </b>
+                      {%- if value.variant.inventory_quantity <= 5 and value.variant.inventory_quantity > 0 %}
+                        <div class="only-left">
+                          only {{ value.variant.inventory_quantity }} left
+                          <svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.856 11.96H10.28L10.032 9.464V8H11.128V9.464L10.856 11.96ZM11.152 13.696H10V12.584H11.152V13.696Z" fill="#F5ACAC"/>
+                            <path d="M9.95117 2.01758C10.1353 1.64848 10.6616 1.64848 10.8457 2.01758L18.2354 16.8311C18.4007 17.1634 18.1584 17.5537 17.7871 17.5537H3.00977C2.63848 17.5537 2.39622 17.1634 2.56152 16.8311L9.95117 2.01758Z" stroke="#F39696"/>
+                          </svg>
+                        </div>
+                      {%- endif -%}
+                    </span>
+                    {%- unless value.available -%}
+                      <span class="opt-oos">
+                        {% comment %} - out of stock {% endcomment %}
+                        <a class="button klaviyo-bis-trigger" href="#" data-klaviyo-handle="{{ product.handle }}">
+                          TELL ME WHEN IT’S BACK
+                          <svg width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.25 0.25V7.75H16.25V0.25M0.25 0.25H16.25M0.25 0.25L8.25 4L16.25 0.25" stroke="#504C4C" stroke-width="0.5"/>
+                          </svg>
+                        </a>
+                      </span>
+                    {%- endunless -%}
+                  </li>
+                {%- endfor -%}
+
+                
+              </ul>
+
+              {% assign arrow_pos = section.settings.arrow_selector | downcase %}
+              {% if arrow_pos != blank %}
+              <div class="custom_arrow_selector">
+                
+                <span class="fits_title">{{ section.settings.fits_label }}</span>
+                <div class="fits_range">
+                  <span>{{section.settings.fits_tight }}</span>
+                  <span>{{ section.settings.fits_middle }}</span>
+                  <span>{{ section.settings.fits_loose }}</span>
+                  <div class="arrow_possition" style="--left: {% if arrow_pos contains 'runs small' %}1{% elsif arrow_pos contains 'runs very small' %}2{% elsif arrow_pos contains 'slightly small' %}3{% elsif arrow_pos contains 'true to size' %}4{% elsif arrow_pos contains 'slightly large' %}5{% elsif arrow_pos contains 'runs large' %}6{% elsif arrow_pos contains 'runs very large large' %}7{% endif %};" data-color="{% if arrow_pos contains 'runs small' %}1{% elsif arrow_pos contains 'runs very small' %}2{% elsif arrow_pos contains 'slightly small' %}3{% elsif arrow_pos contains 'true to size' %}4{% elsif arrow_pos contains 'slightly large' %}5{% elsif arrow_pos contains 'runs large' %}6{% elsif arrow_pos contains 'runs very large large' %}7{% endif %}">
+                    {{ arrow_pos }}
+                    {% comment %} <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.7367 0.999999C4.5065 -0.333335 6.431 -0.333333 7.2008 1L10.6649 7C11.4347 8.33333 10.4725 10 8.93285 10H2.00465C0.465046 10 -0.497203 8.33333 0.272598 7L3.7367 0.999999Z" fill="#262525"/>
+                    </svg> {% endcomment %}
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.21094 8.9082L0.382812 0.25H8.70581L4.21094 8.9082Z" fill="#2A2A2C" stroke="#504C4C" stroke-width="0.5"/>
+                    </svg>
+                  </div>
+                </div>
+                <span class="filt_info">{{ product.metafields.custom.fits_info }}</span>
+                
+              </div>
+              {% endif %}
+
+            </div>
+            <span class="save_item">Save item</span>            
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</variant-picker>
+
+
+{% style %}
+  .product-variant-swatch{
+    width: 87.475px !important;
+    height: 87.475px !important;
+    border-radius: 4.604px;
+    border: 1px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .product-variant-swatch.active{
+    outline: unset;
+    border: 1px solid #000 !important;
+  }
+
+  .product-variant-select{
+    width: 100%;
+    border-radius: 4.64px;
+    background-color: #faf7f5;
+    border: .31px solid #000000;
+    padding: 7px 15px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: none;
+    color: #939393;
+    position:relative;
+  }
+
+  .product-variant-select--icon{
+    position: absolute;
+    right: 0%;
+    top: 0%;
+  }
+
+  .product-variant-size-swatch.active{
+    outline: none !important;
+    border-width: 1px !important;
+    background-color: #000;
+    color: #fff;
+  }
+
+  .product-variant-size-swatch{
+    width: 75px !important;
+    height: 35px !important;
+    border-radius: 4.604px;
+    border: 1px solid transparent;
+    overflow: hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+{% endstyle %}

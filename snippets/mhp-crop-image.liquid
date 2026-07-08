@@ -1,0 +1,24 @@
+{%- comment -%}
+  Cropped image inside a fixed frame (object-fit: cover).
+  @param image {Image}
+  @param alt {String}
+  @param object_position {String} e.g. "50% 30%"
+  @param sizes {String} optional — passed to msp-image
+  @param widths {String} optional — passed to msp-image
+  @param max_width {Number} optional — passed to msp-image
+  @param loading {String} optional — passed to msp-image
+  @param fetchpriority {String} optional — passed to msp-image
+{%- endcomment -%}
+<div class="mhp-media-frame"{% if object_position != blank %} style="--mhp-object-position: {{ object_position }};"{% endif %}>
+  {% render 'msp-image',
+    image: image,
+    fallback_asset: '',
+    alt: alt,
+    object_position: object_position,
+    sizes: sizes,
+    widths: widths,
+    max_width: max_width,
+    loading: loading,
+    fetchpriority: fetchpriority
+  %}
+</div>

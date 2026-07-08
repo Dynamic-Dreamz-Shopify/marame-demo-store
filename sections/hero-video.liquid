@@ -1,0 +1,44 @@
+{{ 'hero-video.css' | asset_url | stylesheet_tag }}
+
+<section class="hero-video-section">
+  <div class="hero-video-wrapper">
+
+    {% if section.settings.desktop_video %}
+      <div class="hero-video-desktop">
+        {{ section.settings.desktop_video | video_tag: autoplay: true, muted: true, loop: true, controls: false, playsinline: true }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.mobile_video %}
+      <div class="hero-video-mobile">
+        {{ section.settings.mobile_video | video_tag: autoplay: true, muted: true, loop: true, controls: false, playsinline: true }}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{{ 'hero-video.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Hero Video",
+  "settings": [
+    {
+      "type": "video",
+      "id": "desktop_video",
+      "label": "Desktop Video"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "Mobile Video"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Video"
+    }
+  ]
+}
+{% endschema %}

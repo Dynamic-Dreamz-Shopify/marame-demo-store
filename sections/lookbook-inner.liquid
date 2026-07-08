@@ -1,0 +1,223 @@
+{% if section.blocks.size > 0 %}
+  <section class="lookbook-three">
+    {% if section.settings.title != blank %}
+      <h2 class="h4 lookbook-three__title lookbook-three__title--{{ section.settings.title_position }}">
+        {{ section.settings.title }}
+      </h2>
+    {% endif %}
+    <div class="lookbook-three__list">
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <div class="lookbook-three__item">
+            <a href="javascript:void(0)" class="lookbook-three__item__bg js_popup">
+              {% assign image = block.settings.image %}
+              <img
+                loading="lazy"
+                src="{{ image | img_url: 'master' }}"
+                alt="{{ image.alt }}"
+                data-p-speed="0.15"
+                width="{{ image.width }}"
+                height="{{ image.height }}"
+              >
+            </a>
+            <div class="hidden popup_content_data">
+
+            <div class="lookbook-product">
+              <div class="lookbook-breadcrumb">
+                <a href="/pages/lookbook">LOOKBOOK</a> /
+
+                {% if template.suffix contains 'lookbook-mens' %}
+                  <a href="/pages/lookbook-mens">MENS</a> /
+                {% elsif template.suffix contains 'lookbook-womens' %}
+                  <a href="/pages/lookbook-womens">WOMENS</a> /
+                {% endif %}
+
+                {% if section.settings.title != blank %}
+                  <span class="lookbook-product-title">{{ section.settings.title }}</span>
+                {% endif %}
+              </div>
+
+              <div class="lookbook-product__content">
+                <div class="lookbook-product__content__full">
+                    <img
+                      loading="lazy"
+                      src="{{ image | img_url: "master" }}"
+                      alt="{{ image.alt }}"
+                      width="{{ image.width }}"
+                      height="{{ image.height }}"
+                    >
+                </div>
+                
+                <div class="lookbook-product__content__details">
+                  {% if block.settings.product != blank %}
+                    {% assign product = block.settings.product %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name
+                    %}
+                  {% endif %}
+                  {% if block.settings.product_2 != blank %}
+                    {% assign product = block.settings.product_2 %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name_2
+                    %}
+                  {% endif %}
+                  {% if block.settings.product_3 != blank %}
+                    {% assign product = block.settings.product_3 %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name_3
+                    %}
+                  {% endif %}
+                  {% if block.settings.product_4 != blank %}
+                    {% assign product = block.settings.product_4 %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name_4
+                    %}
+                  {% endif %}
+                  {% if block.settings.product_5 != blank %}
+                    {% assign product = block.settings.product_5 %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name_5
+                    %}
+                  {% endif %}
+                  {% if block.settings.product_6 != blank %}
+                    {% assign product = block.settings.product_6 %}
+                    {% render 'lookbook-product-data',
+                      product: product,
+                      color_name: block.settings.color_name_6
+                    %}
+                  {% endif %}
+                </div>
+              </div>
+              </div>
+
+            </div>
+          
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+  
+  <div class="lookbook_popup_main lenis lenis-scrolling hydrated" style="display: none;">
+    <div class="popup_inner">
+      <span class="close">{% render 'icon-close' %}</span>
+      <div class="popup_render_data"></div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Lookbook Inner",
+  "class": "lookbook-quick-popup",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title"
+    },
+     {
+      "type": "radio",
+      "label": "Title Position",
+      "id": "title_position",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "label": "Product 1",
+          "id": "product"
+        },
+        {
+          "type": "text",
+          "id": "color_name",
+          "label": "Color Name 1"
+        },
+        {
+          "type": "product",
+          "label": "Product 2",
+          "id": "product_2"
+        },
+        {
+          "type": "text",
+          "id": "color_name_2",
+          "label": "Color Name 2"
+        },
+        {
+          "type": "product",
+          "label": "Product 3",
+          "id": "product_3"
+        },
+        {
+          "type": "text",
+          "id": "color_name_3",
+          "label": "Color Name 3"
+        },
+        {
+          "type": "product",
+          "label": "Product 4",
+          "id": "product_4"
+        },
+        {
+          "type": "text",
+          "id": "color_name_4",
+          "label": "Color Name 4"
+        },
+        {
+          "type": "product",
+          "label": "Product 5",
+          "id": "product_5"
+        },
+        {
+          "type": "text",
+          "id": "color_name_5",
+          "label": "Color Name 5"
+        },
+        {
+          "type": "product",
+          "label": "Product 6",
+          "id": "product_6"
+        },
+        {
+          "type": "text",
+          "id": "color_name_6",
+          "label": "Color Name 6"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook Inner"
+    }
+  ]
+}
+{% endschema %}
+
+

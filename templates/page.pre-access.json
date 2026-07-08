@@ -1,0 +1,1237 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "signup_header_control": {
+      "type": "marame-signup-header-control",
+      "blocks": {
+        "logo_zone_QXfppG": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "footer_nav",
+            "zone_label": "",
+            "logo_style_mobile": "hidden",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "logo_zone_wQRnNx": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_hero": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "Hero",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_duo_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_duo_mobile",
+            "zone_label": "Images — mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "logo_zone_KQw6R7": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_intro": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_intro",
+            "zone_label": "Intro text",
+            "logo_style_mobile": "hidden",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "zone_trio_desktop": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_trio_desktop",
+            "zone_label": "Images — desktop trio",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_video_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_video_mobile",
+            "zone_label": "Video — mobile",
+            "logo_style_mobile": "black",
+            "logo_style_desktop": "black"
+          }
+        },
+        "zone_form": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_form",
+            "zone_label": "Register form",
+            "logo_style_mobile": "hidden",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "zone_lower_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_lower_mobile",
+            "zone_label": "Lower mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "zone_embroidery": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_embroidery_mobile",
+            "zone_label": "Embroidery",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "zone_desktop_lower": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_desktop_lower",
+            "zone_label": "Desktop close-up + video",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "logo_zone_QXfppG",
+        "logo_zone_wQRnNx",
+        "zone_hero",
+        "zone_duo_mobile",
+        "logo_zone_KQw6R7",
+        "zone_intro",
+        "zone_trio_desktop",
+        "zone_video_mobile",
+        "zone_form",
+        "zone_lower_mobile",
+        "zone_embroidery",
+        "zone_desktop_lower"
+      ],
+      "settings": {
+        "enable_adaptive_header": true,
+        "header_bar_style": "transparent",
+        "dark_ratio_threshold_mobile": 45,
+        "pixel_dark_max_mobile": 150,
+        "switch_offset_mobile": 0,
+        "dark_ratio_threshold_desktop": 50,
+        "pixel_dark_max_desktop": 165,
+        "switch_offset_desktop": 0
+      }
+    },
+    "signup_hero": {
+      "type": "marame-signup-hero",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "enable_scroll_animations": true,
+        "block_height_mobile": 0,
+        "block_height_desktop": 0,
+        "hero_image_desktop": "shopify://shop_images/Marame_-_white_outfit_on_beach_homepage.jpg",
+        "hero_image_mobile": "shopify://shop_images/Marame_-_white_outfit_on_beach_homepage.jpg",
+        "hero_image_alt_desktop": "Marame collection campaign",
+        "hero_image_alt_mobile": "Marame collection campaign",
+        "hero_video_desktop": "shopify://files/videos/Seedance 2_0 - can you animate this logo so it looks like it is hand written but there must not be a (1).mp4",
+        "hero_video_mobile": "shopify://files/videos/Seedance 2_0 - can you animate this logo so it looks like it is hand written but there must not be a (1).mp4",
+        "hero_overlay_blend_mode": "lighten"
+      }
+    },
+    "signup_media_duo_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "img_fabric": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "img_brown": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": false,
+            "image": "shopify://shop_images/MARAME_SUMMER_COLLECTION_TWO_PIECE.jpg",
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "use_manual_focal": false,
+            "focal_x": 24,
+            "focal_y": 6,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "img_fabric",
+        "img_brown"
+      ],
+      "settings": {
+        "row_label": "Image row",
+        "show_mobile": true,
+        "show_desktop": false,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 0,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 0,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "38-62",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_intro": {
+      "type": "marame-signup-intro",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "enable_scroll_animations": true,
+        "headline": "launching Mid-june / july 26",
+        "description": "Shaped by over two decades of styling experience and inspired by a community of more than 700,000 women, Melissa’s debut collection for Marame has been designed to solve real wardrobe challenges. \n\nExpect versatile, beautifully crafted pieces that work with your body, your lifestyle and the way you actually dress.",
+        "color_text": "#212121",
+        "color_body": "#262525",
+        "block_height_mobile": 0,
+        "block_height_desktop": 0,
+        "intro_pad_top_mobile": 120,
+        "intro_pad_bottom_mobile": 120,
+        "intro_pad_top_desktop": 200,
+        "intro_pad_bottom_desktop": 160,
+        "gap_after_intro_mobile": 0,
+        "gap_after_intro_desktop": 0,
+        "headline_text_transform": "uppercase",
+        "body_text_transform": "none",
+        "headline_size_mobile": 16,
+        "headline_size_desktop": 32,
+        "headline_tracking_mobile": 6,
+        "headline_tracking_desktop": 10,
+        "headline_font_weight": "light",
+        "headline_body_gap_mobile": 28,
+        "headline_body_gap_desktop": 18,
+        "body_size_mobile": 11,
+        "body_size_desktop": 15,
+        "body_tracking_mobile": 1.3,
+        "body_tracking_desktop": 2.2,
+        "body_line_height": 18,
+        "body_max_width_mobile": 336,
+        "body_max_width_desktop": 688
+      }
+    },
+    "signup_media_trio_desktop": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "trio_fabric": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_texture.jpg",
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall_desktop",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "trio_brown": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame-signup-grid-portrait-brown.jpg",
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 28,
+            "frame_preset": "portrait",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "trio_polo": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/Marame_blue_knit_polo_summer2.jpg",
+            "fallback_asset": "marame-signup-grid-portrait-polo.png",
+            "alt": "marame womenswear knit polo",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 25,
+            "frame_preset": "portrait",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "trio_fabric",
+        "trio_brown",
+        "trio_polo"
+      ],
+      "settings": {
+        "row_label": "Image row",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_trio_desktop",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "side_by_side",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 0,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 0,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "trio",
+        "duo_ratio": "38-62",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_video_mobile": {
+      "type": "marame-signup-video",
+      "disabled": true,
+      "settings": {
+        "show_mobile": false,
+        "show_desktop": false,
+        "logo_zone_key": "signup_video_mobile",
+        "logo_zone_label": "",
+        "enable_scroll_animations": true,
+        "media_mode": "image",
+        "block_height_mobile": 0,
+        "block_height_desktop": 0,
+        "video": "shopify://files/videos/women running (1).mp4",
+        "alt": "Campaign video",
+        "show_controls": false,
+        "frame_preset": "wide",
+        "frame_width": 390,
+        "frame_height": 218,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_landscape_image_gCTgTH": {
+      "type": "marame-signup-landscape-image",
+      "disabled": true,
+      "name": "Signup — Landscape image",
+      "settings": {
+        "row_label": "Landscape image",
+        "show_mobile": true,
+        "show_desktop": false,
+        "logo_zone_key": "signup_landscape_image",
+        "logo_zone_label": "",
+        "enable_scroll_animations": true,
+        "image": "shopify://shop_images/Marame_-_red_outfit_on_beach.jpg",
+        "image_mobile": "shopify://shop_images/Marame_-_red_outfit_on_beach.jpg",
+        "fallback_asset": "",
+        "alt": "Landscape image",
+        "use_manual_focal": false,
+        "focal_x": 50,
+        "focal_y": 50,
+        "frame_preset": "landscape",
+        "frame_width": 16,
+        "frame_height": 9,
+        "block_height_mobile": 0,
+        "block_vh_mobile": 0,
+        "block_height_desktop": 0,
+        "block_vh_desktop": 0,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_media_izygnT": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "image_bYmGDa": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection_-_white_outfit.jpg",
+            "fallback_asset": "",
+            "alt": "Image 1",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "square",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "image_yz4YRW": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/Marame_-_red_outfit_on_beach__2.jpg",
+            "fallback_asset": "",
+            "alt": "Image 2",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_bYmGDa",
+        "image_yz4YRW"
+      ],
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "side_by_side",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 280,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 640,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_form": {
+      "type": "marame-signup-form",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "enable_scroll_animations": true,
+        "signup_glass": true,
+        "form_mode": "klaviyo_embed",
+        "klaviyo_form_id": "T4cYNL",
+        "klaviyo_embed_code": "<div class=\"klaviyo-form-T4cYNL\"></div>",
+        "signup_heading": "REGISTER YOUR INTEREST FOR PRE-ORDER",
+        "email_placeholder": "ENTER YOUR EMAIL ADDRESS",
+        "submit_label": "SUBMIT",
+        "success_message": "Thank you for registering.",
+        "klaviyo_company_id": "RuBV9d",
+        "klaviyo_list_id": "TDQcHE",
+        "terms_button_label": "Terms and conditions",
+        "terms_modal_title": "Terms & conditions",
+        "terms_content": "<p>By submitting your email you agree to receive marketing communications from Marame. You can unsubscribe at any time.</p>",
+        "color_border": "#303030",
+        "color_placeholder": "#828282",
+        "color_input_bg": "#ffffff",
+        "color_signup_glass": "#ffffff",
+        "color_signup_heading": "#000000",
+        "color_button_bg": "#2a2a2c",
+        "color_button_text": "#ffffff",
+        "color_button_bg_inactive": "#c9c5c5",
+        "color_button_text_inactive": "#2a2a2d",
+        "block_height_mobile": 0,
+        "block_height_desktop": 0,
+        "gap_before_signup_mobile": 0,
+        "gap_before_signup_desktop": 8,
+        "signup_pad_top_mobile": 44,
+        "signup_pad_bottom_mobile": 44,
+        "signup_pad_top_desktop": 28,
+        "signup_pad_bottom_desktop": 64,
+        "signup_heading_size_mobile": 15,
+        "signup_heading_tracking_mobile": 4,
+        "signup_heading_line_height_mobile": 20,
+        "signup_heading_align_mobile": "left",
+        "signup_heading_size_desktop": 32,
+        "signup_heading_tracking_desktop": 5,
+        "signup_heading_line_height_desktop": 46,
+        "signup_heading_align_desktop": "center",
+        "signup_heading_font_weight": "medium",
+        "signup_heading_transform": "capitalize",
+        "signup_align_mobile": "flex-start",
+        "signup_align_desktop": "center",
+        "input_font_size_mobile": 15,
+        "submit_font_size_mobile": 15,
+        "message_font_size_mobile": 12,
+        "input_font_size_desktop": 15,
+        "submit_font_size_desktop": 15,
+        "message_font_size_desktop": 12,
+        "signup_heading_size": 15,
+        "signup_heading_tracking": 2,
+        "signup_heading_align": "center",
+        "signup_align": "center",
+        "signup_max_width": 390,
+        "input_field_height_mobile": 48,
+        "input_field_height_desktop": 48,
+        "submit_field_height_mobile": 0,
+        "submit_field_height_desktop": 0,
+        "input_field_height": 48,
+        "input_padding_x": 16,
+        "input_padding_right": 44,
+        "input_border_radius": 4,
+        "input_line_height_mobile": 20,
+        "input_line_height_desktop": 20,
+        "input_font_size": 15,
+        "input_line_height": 20,
+        "input_letter_spacing_mobile": 3,
+        "input_letter_spacing_desktop": 3,
+        "input_letter_spacing": 2,
+        "input_text_align_mobile": "left",
+        "input_text_align_desktop": "center",
+        "input_text_align": "center",
+        "input_text_transform": "capitalize",
+        "color_input_text": "#000000",
+        "submit_line_height_mobile": 20,
+        "submit_line_height_desktop": 20,
+        "submit_font_size": 15,
+        "submit_line_height": 20,
+        "submit_letter_spacing_mobile": 3,
+        "submit_letter_spacing_desktop": 3,
+        "submit_letter_spacing": 2,
+        "submit_text_align_mobile": "left",
+        "submit_text_align_desktop": "center",
+        "submit_text_align": "center",
+        "submit_text_transform": "uppercase",
+        "message_font_size": 12
+      }
+    },
+    "marame_signup_landscape_image_FNegQB": {
+      "type": "marame-signup-landscape-image",
+      "disabled": true,
+      "name": "Signup — Landscape image",
+      "settings": {
+        "row_label": "Landscape image",
+        "show_mobile": true,
+        "show_desktop": false,
+        "logo_zone_key": "signup_landscape_image",
+        "logo_zone_label": "",
+        "enable_scroll_animations": true,
+        "fallback_asset": "",
+        "alt": "Landscape image",
+        "use_manual_focal": false,
+        "focal_x": 50,
+        "focal_y": 50,
+        "frame_preset": "landscape",
+        "frame_width": 16,
+        "frame_height": 9,
+        "block_height_mobile": 0,
+        "block_vh_mobile": 0,
+        "block_height_desktop": 0,
+        "block_vh_desktop": 0,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_media_lower_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "sq": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": false,
+            "image": "shopify://shop_images/marame_summer_collection_knit_top.jpg",
+            "fallback_asset": "marame-signup-grid-result-square.png",
+            "alt": "Collection portrait",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "square",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "skirt": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-orange-skirt.png",
+            "alt": "Orange skirt detail",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "sq",
+        "skirt"
+      ],
+      "settings": {
+        "row_label": "Image row",
+        "show_mobile": true,
+        "show_desktop": false,
+        "logo_zone_key": "signup_media_lower_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 0,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 0,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "59-41",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_media_embroidery_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "emb": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": false,
+            "image": "shopify://shop_images/Marame_collection_The_Varo_Knit_Funnel_Neck.jpg",
+            "fallback_asset": "marame-signup-grid-embroidery.png",
+            "alt": "Marame embroidery detail",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "full",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "emb"
+      ],
+      "settings": {
+        "row_label": "Image row",
+        "show_mobile": true,
+        "show_desktop": false,
+        "logo_zone_key": "signup_media_embroidery_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 0,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 0,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "single",
+        "duo_ratio": "38-62",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "signup_media_desktop_lower": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "d_closeup": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "fallback_asset": "marame-signup-grid-closeup.png",
+            "alt": "Campaign close-up",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "desktop_closeup",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "d_video": {
+          "type": "video",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "poster": "shopify://shop_images/marame_summer_collection_blue_skirt.jpg",
+            "alt": "Campaign video",
+            "show_controls": false,
+            "frame_preset": "desktop_video",
+            "frame_width": 1049,
+            "frame_height": 585
+          }
+        }
+      },
+      "block_order": [
+        "d_closeup",
+        "d_video"
+      ],
+      "disabled": true,
+      "settings": {
+        "row_label": "Image row",
+        "show_mobile": false,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_desktop_lower",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 0,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 0,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "48-52",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_media_dWnXCH": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "image_JVpfUr": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection_-_white_outfit.jpg",
+            "fallback_asset": "",
+            "alt": "Image 1",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "image_UUUECX": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection-_V-neck_knit_polo.jpg",
+            "fallback_asset": "",
+            "alt": "Image 2",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_JVpfUr",
+        "image_UUUECX"
+      ],
+      "disabled": true,
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 600,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 600,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_media_hkwnCi": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "image_mCgGfJ": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection-_V-neck_knit_polo.jpg",
+            "fallback_asset": "",
+            "alt": "Image 1",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "image_XUUha9": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame-signup-grid-portrait-polo..jpg",
+            "fallback_asset": "",
+            "alt": "Image 2",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_mCgGfJ",
+        "image_XUUha9"
+      ],
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "side_by_side",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 256,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 600,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 70,
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_media_QRYdJJ": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "image_qcCyKF": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection-_V-neck_knit_polo.jpg",
+            "fallback_asset": "",
+            "alt": "Image 1",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "image_4Q48hy": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image": "shopify://shop_images/marame_summer_collection_-_white_outfit.jpg",
+            "fallback_asset": "",
+            "alt": "Image 2",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_qcCyKF",
+        "image_4Q48hy"
+      ],
+      "disabled": true,
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "side_by_side",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 280,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 400,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    },
+    "marame_signup_checkerboard_dtKjBy": {
+      "type": "marame-signup-checkerboard",
+      "blocks": {
+        "row_yYkYET": {
+          "type": "row",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image_layout": "text_left",
+            "media_min_height_mobile": 0,
+            "media_min_height_desktop": 0,
+            "text_pad_x_mobile": 38,
+            "text_pad_y_mobile": 104,
+            "text_pad_x_desktop": 102,
+            "text_pad_y_desktop": 240,
+            "body_use_section_spacing": true,
+            "body_use_section_typography": true,
+            "headline_body_gap_mobile": 0,
+            "headline_body_gap_desktop": 0,
+            "body_line_height_mobile": 0,
+            "body_line_height_desktop": 0,
+            "body_tracking_mobile": 0,
+            "body_tracking_desktop": 0,
+            "body_line_break_gap": 0,
+            "body_line_break_gap_desktop": 0,
+            "body_line_height": 0,
+            "body_max_width_mobile": 0,
+            "body_max_width_desktop": 940,
+            "headline": "A NEW CHAPTER",
+            "body": "<p>In collaboration with Melissa, we’re introducing a softer, handwritten signature embroidered across selected pieces. <br/><br/>A subtle shift from our traditional mark, it reflects a shared belief in effortless, personal style shaped by confidence, individuality and knowing what works for you.</p>",
+            "headline_text_transform": "inherit",
+            "body_text_transform": "none",
+            "headline_use_section_typography": true,
+            "headline_size_mobile": 0,
+            "headline_size_desktop": 19,
+            "body_size_mobile": 0,
+            "body_size_desktop": 0,
+            "headline_tracking_mobile": 10,
+            "headline_tracking_desktop": 0,
+            "headline_font_weight": "inherit",
+            "headline_line_height_mobile": 0,
+            "headline_line_height_desktop": 0,
+            "headline_line_height": 0,
+            "image": "shopify://shop_images/Nano_Banana_Pro_-_Can_you_create_a_close_up_studio_detail_shot_of_the_embroidery_shown_on_the_item-2.jpg",
+            "fallback_asset": "marame-signup-grid-embroidery.png",
+            "image_alt": "",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 50
+          }
+        },
+        "row_T97mgi": {
+          "type": "row",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "image_layout": "image_left",
+            "media_min_height_mobile": 0,
+            "media_min_height_desktop": 0,
+            "text_pad_x_mobile": 38,
+            "text_pad_y_mobile": 104,
+            "text_pad_x_desktop": 102,
+            "text_pad_y_desktop": 240,
+            "body_use_section_spacing": true,
+            "body_use_section_typography": true,
+            "headline_body_gap_mobile": 16,
+            "headline_body_gap_desktop": 0,
+            "body_line_height_mobile": 0,
+            "body_line_height_desktop": 0,
+            "body_tracking_mobile": 0,
+            "body_tracking_desktop": 0,
+            "body_line_break_gap": 0,
+            "body_line_break_gap_desktop": 0,
+            "body_line_height": 0,
+            "body_max_width_mobile": 0,
+            "body_max_width_desktop": 940,
+            "headline": "Detail in every layer",
+            "body": "<p>Melissa believes great style is about more than how clothing looks. It’s about how it works for the woman wearing it. <br/><br/>From removable shoulder pads to adjustable trouser hems, each detail has been thoughtfully designed to adapt to different bodies, proportions and lifestyles, helping every piece feel more personal, practical and effortless.</p>",
+            "headline_text_transform": "inherit",
+            "body_text_transform": "none",
+            "headline_use_section_typography": true,
+            "headline_size_mobile": 0,
+            "headline_size_desktop": 28,
+            "body_size_mobile": 0,
+            "body_size_desktop": 0,
+            "headline_tracking_mobile": 0,
+            "headline_tracking_desktop": 5,
+            "headline_font_weight": "inherit",
+            "headline_line_height_mobile": 20,
+            "headline_line_height_desktop": 0,
+            "headline_line_height": 0,
+            "image": "shopify://shop_images/GPT_Image_2_-_Can_you_produce_a_highly_professional_shot_of_this__feature__that_we_ve_introduced_int_1-3.jpg",
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "image_alt": "",
+            "use_manual_focal": false,
+            "focal_x": 90,
+            "focal_y": 100
+          }
+        }
+      },
+      "block_order": [
+        "row_yYkYET",
+        "row_T97mgi"
+      ],
+      "name": "Signup checkerboard",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "enable_scroll_animations": true,
+        "logo_zone_key": "signup_checkerboard",
+        "logo_zone_label": "Checkerboard",
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0,
+        "scale_mobile": 100,
+        "scale_desktop": 100,
+        "text_pad_x_mobile": 28,
+        "text_pad_y_mobile": 40,
+        "text_pad_x_desktop": 48,
+        "text_pad_y_desktop": 64,
+        "media_min_height_mobile": 260,
+        "media_min_height_desktop": 320,
+        "headline_text_transform": "uppercase",
+        "body_text_transform": "none",
+        "headline_size_mobile": 20,
+        "headline_size_desktop": 32,
+        "headline_tracking_mobile": 4,
+        "headline_tracking_desktop": 7,
+        "headline_font_weight": "light",
+        "headline_line_height_mobile": 100,
+        "headline_line_height_desktop": 100,
+        "headline_line_height": 100,
+        "headline_body_gap_mobile": 28,
+        "headline_body_gap_desktop": 16,
+        "body_size_mobile": 11,
+        "body_size_desktop": 15,
+        "body_line_height": 20,
+        "body_line_height_mobile": 0,
+        "body_line_height_desktop": 0,
+        "body_tracking_mobile": 130,
+        "body_tracking_desktop": 180,
+        "body_line_break_gap": 6,
+        "body_line_break_gap_desktop": 0,
+        "body_max_width_mobile": 320,
+        "body_max_width_desktop": 420
+      }
+    },
+    "blocks_k3RUTh": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6b95e7b_tKicK9": {
+          "type": "ai_gen_block_6b95e7b",
+          "settings": {
+            "aspect_ratio_desktop": 40,
+            "aspect_ratio_mobile": 100,
+            "slide_1_enabled": true,
+            "slide_1_desktop_image": "shopify://shop_images/Marame_summer_collection_blue_knit.jpg",
+            "slide_1_text": "",
+            "slide_1_link": "",
+            "slide_2_enabled": true,
+            "slide_2_desktop_image": "shopify://shop_images/Marame_-_red_outfit_on_beach.jpg",
+            "slide_2_text": "",
+            "slide_2_link": "",
+            "slide_3_enabled": false,
+            "slide_3_text": "",
+            "slide_3_link": "",
+            "slide_4_enabled": false,
+            "slide_4_text": "",
+            "slide_4_link": "",
+            "slide_5_enabled": false,
+            "slide_5_text": "",
+            "slide_5_link": "",
+            "slide_6_enabled": false,
+            "slide_6_text": "",
+            "slide_6_link": "",
+            "text_position_mobile_top": 50,
+            "text_position_mobile_left": 50,
+            "text_position_desktop_top": 50,
+            "text_position_desktop_left": 50,
+            "text_font": "sans_serif_n4",
+            "text_size_mobile": 24,
+            "text_size_desktop": 48,
+            "text_line_height": 1.2,
+            "text_letter_spacing": 0,
+            "text_color": "#ffffff",
+            "text_shadow_x": 0,
+            "text_shadow_y": 2,
+            "text_shadow_blur": 4,
+            "text_shadow_color": "#00000080",
+            "transition_speed": 600,
+            "autoplay": true,
+            "autoplay_speed": 5000,
+            "show_arrows": true,
+            "arrow_size": 50,
+            "arrow_background": "#ffffffcc",
+            "arrow_color": "#121212",
+            "arrow_opacity": 0.7,
+            "show_dots": true,
+            "dot_size": 10,
+            "dot_color": "#ffffff",
+            "dot_opacity_active": 1,
+            "dot_opacity_inactive": 0.5
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6b95e7b_tKicK9"
+      ],
+      "disabled": true,
+      "name": "Image carousel",
+      "settings": {}
+    },
+    "marame_signup_media_yYg67H": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "image_DAYFGb": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "fallback_asset": "",
+            "alt": "Image 1",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        },
+        "image_j84eUk": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": true,
+            "fallback_asset": "",
+            "alt": "Image 2",
+            "use_manual_focal": false,
+            "focal_x": 50,
+            "focal_y": 35,
+            "frame_preset": "tall",
+            "frame_width": 1,
+            "frame_height": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_DAYFGb",
+        "image_j84eUk"
+      ],
+      "disabled": true,
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "show_mobile": true,
+        "show_desktop": true,
+        "logo_zone_key": "signup_media_duo_mobile",
+        "logo_zone_label": "",
+        "duo_layout_mobile": "stack",
+        "duo_ratio_mobile": "50-50",
+        "row_height_mobile": 280,
+        "row_height_mobile_stacked": 0,
+        "row_vh_mobile": 0,
+        "duo_layout_desktop": "side_by_side",
+        "row_height_desktop": 400,
+        "row_height_desktop_stacked": 0,
+        "row_vh_desktop": 0,
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "enable_scroll_animations": true,
+        "gap_bottom_mobile": 0,
+        "gap_bottom_desktop": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "signup_header_control",
+    "signup_hero",
+    "signup_media_duo_mobile",
+    "signup_intro",
+    "signup_media_trio_desktop",
+    "signup_video_mobile",
+    "marame_signup_landscape_image_gCTgTH",
+    "marame_signup_media_izygnT",
+    "signup_form",
+    "marame_signup_landscape_image_FNegQB",
+    "signup_media_lower_mobile",
+    "signup_media_embroidery_mobile",
+    "signup_media_desktop_lower",
+    "marame_signup_media_dWnXCH",
+    "marame_signup_media_hkwnCi",
+    "marame_signup_media_QRYdJJ",
+    "marame_signup_checkerboard_dtKjBy",
+    "blocks_k3RUTh",
+    "marame_signup_media_yYg67H"
+  ]
+}

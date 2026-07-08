@@ -1,0 +1,81 @@
+<div>
+  {%- liquid
+    case section.settings.sort
+      when 'products_high', 'products_low'
+        assign collections = collections | sort: 'all_products_count'
+      when 'date', 'date_reversed'
+        assign collections = collections | sort: 'published_at'
+    endcase
+
+    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+      assign collections = collections | reverse
+    endif
+
+  -%}
+  {%- paginate collections by 50 -%}
+    <div class="splitscreen collection-list">
+      {%- for collection in collections -%}
+        <div class="splitscreen__item">
+          <div class="splitscreen__item__bg">
+              <img src="{{ collection.featured_image | img_url: 'master' }}" alt="{{ collection.featured_image.alt }}" loading="lazy" data-p-speed="0.15" >
+          </div>
+          <div class="splitscreen__item__content">
+            <h2 class="h1">{{ collection.title }}</h2>
+            <div class="splitscreen__item__content__ctas">
+              <a href="{{ collection.url }}"  class="btn btn--underline btn--dark">
+                <h4>View All</h4>
+              </a>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+</div>
+{% schema %}
+{
+  "name": "t:sections.main-list-collections.name",
+  "class": "section detail",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:sections.main-list-collections.settings.title.label",
+      "default": "t:sections.main-list-collections.settings.title.default"
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "options": [
+        {
+          "value": "alphabetical",
+          "label": "t:sections.main-list-collections.settings.sort.options__1.label"
+        },
+        {
+          "value": "alphabetical_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__2.label"
+        },
+        {
+          "value": "date_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__3.label"
+        },
+        {
+          "value": "date",
+          "label": "t:sections.main-list-collections.settings.sort.options__4.label"
+        },
+        {
+          "value": "products_high",
+          "label": "t:sections.main-list-collections.settings.sort.options__5.label"
+        },
+        {
+          "value": "products_low",
+          "label": "t:sections.main-list-collections.settings.sort.options__6.label"
+        }
+      ],
+      "default": "alphabetical",
+      "label": "t:sections.main-list-collections.settings.sort.label"
+    }
+  ]
+}
+{% endschema %}

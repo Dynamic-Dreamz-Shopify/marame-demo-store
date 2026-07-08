@@ -1,0 +1,79 @@
+{% if section.settings.men_collection != blank and section.settings.women_collection != blank %}
+{{ 'cart-you-might-like.css' | asset_url | stylesheet_tag }}
+
+{% assign mensCount = 0 %}
+{% assign womensCount = 0 %}
+{% for item in cart.items %}
+  {% if item.product.type contains "Women" %}
+    {% assign womensCount = womensCount | plus: 1 %}
+  {% elsif item.product.type contains "Men" %}
+    {% assign mensCount = mensCount | plus: 1 %}
+  {% endif %}
+{% endfor %}
+<div class="section-wrap">
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+    <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+ 
+    <div class="product-list-wrap"> 
+      <ul class="cart-product-list">
+        {% assign counter = 0 %}
+        {% assign collection = section.settings.women_collection %}
+        {% if mensCount > womensCount %}
+          {% assign collection = section.settings.men_collection %}
+        {% endif %}
+        {%- for product in collection.products -%}
+          {% assign allowToShow = true %}
+          {% for item in cart.items %}
+            {% if product.id == item.product.id %}
+              {% assign allowToShow = false %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          {% if allowToShow %}
+            {% assign counter = counter | plus: 1 %}
+            {% if counter <= 12 %}
+            {% render 'card-product', card_product: product, show_count: section.settings.show_variant_count %}
+            {% endif %}
+            {% if counter == 12 %}{% break %}{% endif %}
+          {% endif %}
+          
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "You might also like",
+  "class": "cart-yml-section",
+  "tag": "section",
+  "settings": [
+    {
+     "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "YOU MIGHT ALSO LIKE"
+    },
+    {
+      "type": "collection",
+      "id": "men_collection",
+      "label": "Collection for Men"
+    },
+    {
+      "type": "collection",
+      "id": "women_collection",
+      "label": "Collection for Women"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_count",
+      "default": true,
+      "label": "Show Variants count"
+    }
+  ]
+}
+{% endschema %}

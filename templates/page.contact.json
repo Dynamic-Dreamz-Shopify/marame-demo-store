@@ -1,0 +1,147 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "blocks_6bNyV9": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1257a9e_KkewBP": {
+          "type": "ai_gen_block_1257a9e",
+          "name": "Customizable title",
+          "settings": {
+            "row_1_text": "Contact Us",
+            "row_2_text": "We’re here to help.",
+            "row_3_text": "",
+            "max_width": 1000,
+            "row_1_font": "sans_serif_n4",
+            "row_1_font_size": 36,
+            "row_1_font_weight": "500",
+            "row_1_letter_spacing": 10,
+            "row_1_text_transform": "none",
+            "row_1_text_align": "left",
+            "row_1_color": "#121212",
+            "row_1_padding_top": 145,
+            "row_1_padding_bottom": 0,
+            "row_1_padding_left": 20,
+            "row_1_padding_right": 0,
+            "row_1_spacing": 20,
+            "row_2_font": "sans_serif_n4",
+            "row_2_font_size": 20,
+            "row_2_font_weight": "100",
+            "row_2_letter_spacing": 0,
+            "row_2_text_transform": "none",
+            "row_2_text_align": "left",
+            "row_2_color": "#121212",
+            "row_2_padding_top": 0,
+            "row_2_padding_bottom": 0,
+            "row_2_padding_left": 20,
+            "row_2_padding_right": 0,
+            "row_2_spacing": 10,
+            "row_3_font": "sans_serif_n4",
+            "row_3_font_size": 18,
+            "row_3_font_weight": "400",
+            "row_3_letter_spacing": 0,
+            "row_3_text_transform": "none",
+            "row_3_text_align": "left",
+            "row_3_color": "#121212",
+            "row_3_padding_top": 0,
+            "row_3_padding_bottom": 0,
+            "row_3_padding_left": 0,
+            "row_3_padding_right": 0,
+            "row_3_spacing": 10,
+            "row_1_mobile_font": "sans_serif_n4",
+            "row_1_mobile_font_size": 20,
+            "row_1_mobile_font_weight": "400",
+            "row_1_mobile_letter_spacing": 0,
+            "row_1_mobile_text_transform": "none",
+            "row_1_mobile_text_align": "left",
+            "row_1_mobile_color": "#121212",
+            "row_1_mobile_padding_top": 85,
+            "row_1_mobile_padding_bottom": 0,
+            "row_1_mobile_padding_left": 25,
+            "row_1_mobile_padding_right": 0,
+            "row_1_mobile_spacing": 5,
+            "row_2_mobile_font": "sans_serif_n4",
+            "row_2_mobile_font_size": 12,
+            "row_2_mobile_font_weight": "100",
+            "row_2_mobile_letter_spacing": 0,
+            "row_2_mobile_text_transform": "none",
+            "row_2_mobile_text_align": "left",
+            "row_2_mobile_color": "#121212",
+            "row_2_mobile_padding_top": 0,
+            "row_2_mobile_padding_bottom": 0,
+            "row_2_mobile_padding_left": 25,
+            "row_2_mobile_padding_right": 0,
+            "row_2_mobile_spacing": 10,
+            "row_3_mobile_font": "sans_serif_n4",
+            "row_3_mobile_font_size": 14,
+            "row_3_mobile_font_weight": "400",
+            "row_3_mobile_letter_spacing": 0,
+            "row_3_mobile_text_transform": "none",
+            "row_3_mobile_text_align": "left",
+            "row_3_mobile_color": "#121212",
+            "row_3_mobile_padding_top": 0,
+            "row_3_mobile_padding_bottom": 0,
+            "row_3_mobile_padding_left": 0,
+            "row_3_mobile_padding_right": 0,
+            "row_3_mobile_spacing": 10
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1257a9e_KkewBP"
+      ],
+      "name": "Customizable title",
+      "settings": {}
+    },
+    "contact_W6VHMp": {
+      "type": "contact",
+      "blocks": {
+        "block_zG6CYD": {
+          "type": "block",
+          "settings": {
+            "heading": "ORDER UPDATES AND RETURNS",
+            "description": "<p>go to your account to view updates on your order, or process returns and exchanges</p>",
+            "butto_lable": "VISIT MY ACCOUNT",
+            "button_link": "https://if8qmv-y9.myshopify.com/account/login"
+          }
+        },
+        "block_GxtQrE": {
+          "type": "block",
+          "settings": {
+            "heading": "CUSTOMER SERVICE EMAIL",
+            "description": "<p>FOR ALL GENERAL ENQUIRIES PLEASE EMAIL us at <a href=\"mailto:help@marame.com\" title=\"mailto:help@marame.com\">help@marame.com</a> and we will get back to you within 24 hours.</p>",
+            "butto_lable": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_zG6CYD",
+        "block_GxtQrE"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "blocks_6bNyV9",
+    "contact_W6VHMp"
+  ]
+}

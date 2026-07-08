@@ -1,0 +1,86 @@
+<section class="lookbook-two">
+  <div class="lookbook-two__intro">
+      <h1 class="h2">Lookbooks</h1>
+  </div>
+  <div class="lookbook-two__list">
+    {% for block in section.blocks %}
+      {% if block.settings.image != blank %}
+        <div class="lookbook-two__item">
+          <a href="{{ block.settings.button_link | default: 'javascript:void(0)' }}" class="lookbook-two__item__bg">
+            {% assign image = block.settings.image %}
+            <img
+              class="small_hide"
+              src="{{ image | img_url: 'master' }}"
+              alt="{{ image.alt }}"
+              data-p-speed="0.15"            
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+              loading="lazy"
+            />
+            {% if block.settings.mb_image != blank %}
+              {% assign image = block.settings.mb_image %}
+            {% endif %}
+            <img
+              class="large_hide"
+              src="{{ image | img_url: 'master' }}"
+              alt="{{ image.alt }}"
+              data-p-speed="0.15"            
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+              loading="lazy"
+            />
+          </a>
+          {% if block.settings.button_label != blank %}
+            <div class="lookbook-two__item__content">
+              <div class="lookbook-two__item__content__ctas">
+                <a href="{{ block.settings.button_link | default: 'javascript:void(0)' }}" class="btn btn--underline">
+                  <h4>{{ block.settings.button_label }}</h4>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook Two",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image"
+        },
+        {
+          "type": "image_picker",
+          "label": "Mobile Image",
+          "id": "mb_image"
+        },
+        {
+          "type": "text",
+          "label": "Button Label",
+          "id": "button_label"
+        },
+        {
+          "type": "url",
+          "label": "Button Link",
+          "id": "button_link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook Two"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+.hero-video-section {
+  overflow: hidden;
+  max-height: calc(100vh - 36px);
+}
+
+.hero-video-desktop video,
+.hero-video-mobile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-video-desktop {
+  display: flex;
+}
+
+.hero-video-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .hero-video-desktop {
+    display: none;
+  }
+
+  .hero-video-mobile {
+    display: flex;
+  }
+}

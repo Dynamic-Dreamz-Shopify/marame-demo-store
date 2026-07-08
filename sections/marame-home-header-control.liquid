@@ -1,0 +1,275 @@
+{% render 'mhp-assets' %}
+
+{%- liquid
+  assign adaptive_on = section.settings.enable_adaptive_header
+  assign header_bar_style = section.settings.header_bar_style | default: 'transparent'
+-%}
+
+{%- comment -%} Homepage header bar background (transparent/white/black/blur). {%- endcomment -%}
+{%- if request.page_type == 'index' -%}
+  <script>
+    (function () {
+      var style = {{ header_bar_style | json }};
+      var valid = ['transparent', 'white', 'black', 'blur'];
+      if (valid.indexOf(style) < 0) style = 'transparent';
+      document.documentElement.setAttribute('data-msp-header-bar', style);
+      document.body.setAttribute('data-msp-header-bar', style);
+      var header = document.querySelector('.header');
+      if (!header) return;
+      valid.forEach(function (name) {
+        header.classList.remove('header--msp-bar-' + name);
+      });
+      header.classList.add('header--msp-bar-' + style);
+    })();
+  </script>
+{%- endif -%}
+
+{%- capture header_zones_json -%}
+[
+{%- assign zone_count = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'header_zone' and block.settings.zone_key != blank -%}
+    {%- unless zone_count == 0 -%},{%- endunless -%}
+    {
+      "zoneKey": {{ block.settings.zone_key | json }},
+      "label": {{ block.settings.zone_label | default: block.settings.zone_key | json }},
+      "styleMobile": {{ block.settings.header_style_mobile | default: 'auto' | json }},
+      "styleDesktop": {{ block.settings.header_style_desktop | default: 'auto' | json }}
+    }
+    {%- assign zone_count = zone_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+]
+{%- endcapture -%}
+
+<div
+  data-msp-header-config
+  data-marame-home-section
+  data-enabled="{{ adaptive_on }}"
+  data-header-bar-style="{{ header_bar_style }}"
+  data-switch-offset-mobile="{{ section.settings.switch_offset_mobile }}"
+  data-switch-offset-desktop="{{ section.settings.switch_offset_desktop }}"
+  data-dark-ratio-threshold-mobile="{{ section.settings.dark_ratio_threshold_mobile | times: 0.01 }}"
+  data-dark-ratio-threshold-desktop="{{ section.settings.dark_ratio_threshold_desktop | times: 0.01 }}"
+  data-pixel-dark-max-mobile="{{ section.settings.pixel_dark_max_mobile }}"
+  data-pixel-dark-max-desktop="{{ section.settings.pixel_dark_max_desktop }}"
+  hidden
+  aria-hidden="true"
+>
+  <script type="application/json" data-msp-header-zones-json>
+    {{- header_zones_json | strip -}}
+  </script>
+</div>
+
+{%- if request.design_mode -%}
+  <div class="msp-section msp-header-control-panel">
+    <p class="msp-section__placeholder msp-header-control-panel__title">
+      <strong>Homepage header colours</strong> — logo, menu, search, cart &amp; announcement bar (per section block)
+    </p>
+    {%- if section.blocks.size == 0 -%}
+      <p class="msp-section__placeholder">Add blocks below. Use Auto, White, Black, or Hidden for mobile and desktop separately.</p>
+    {%- else -%}
+      <ul class="msp-header-control-panel__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'header_zone' -%}
+            <li>
+              <span>{{ block.settings.zone_label | default: block.settings.zone_key }}</span>
+              — mobile:
+              <strong>{{ block.settings.header_style_mobile | default: 'auto' }}</strong>,
+              desktop:
+              <strong>{{ block.settings.header_style_desktop | default: 'auto' }}</strong>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home — Header colours",
+  "tag": "section",
+  "class": "section-marame-home-header-control mhp-header-control-section",
+  "enabled_on": { "templates": ["index"] },
+  "limit": 1,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Controls logo, navigation, search, cart, menu icon, and top announcement bar. Add a block for each homepage section below. Auto samples the content behind the header."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_adaptive_header",
+      "label": "Enable adaptive header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Top bar background"
+    },
+    {
+      "type": "select",
+      "id": "header_bar_style",
+      "label": "Header bar background",
+      "info": "Behind the logo, menu icon, search, and cart.",
+      "options": [
+        { "value": "transparent", "label": "Transparent" },
+        { "value": "white", "label": "Solid white" },
+        { "value": "black", "label": "Solid black" },
+        { "value": "blur", "label": "Frosted blur" }
+      ],
+      "default": "transparent"
+    },
+    {
+      "type": "header",
+      "content": "Auto detect — mobile"
+    },
+    {
+      "type": "range",
+      "id": "dark_ratio_threshold_mobile",
+      "label": "Dark area → white header (%)",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "pixel_dark_max_mobile",
+      "label": "Pixel counts as dark below",
+      "min": 70,
+      "max": 220,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "switch_offset_mobile",
+      "label": "Switch position offset",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Auto detect — desktop"
+    },
+    {
+      "type": "range",
+      "id": "dark_ratio_threshold_desktop",
+      "label": "Dark area → white header (%)",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "pixel_dark_max_desktop",
+      "label": "Pixel counts as dark below",
+      "min": 70,
+      "max": 220,
+      "step": 5,
+      "default": 165
+    },
+    {
+      "type": "range",
+      "id": "switch_offset_desktop",
+      "label": "Switch position offset",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header_zone",
+      "name": "Page section",
+      "settings": [
+        {
+          "type": "select",
+          "id": "zone_key",
+          "label": "Homepage section",
+          "options": [
+            { "value": "home_hero", "label": "Hero carousel" },
+            { "value": "home_categories", "label": "Menswear / Womenswear" },
+            { "value": "home_portugal", "label": "Portugal video" },
+            { "value": "footer_nav", "label": "Footer navigation (menu)" }
+          ],
+          "default": "home_hero"
+        },
+        {
+          "type": "text",
+          "id": "zone_label",
+          "label": "Label (optional)"
+        },
+        {
+          "type": "select",
+          "id": "header_style_mobile",
+          "label": "Header — mobile",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "white", "label": "White" },
+            { "value": "black", "label": "Black" },
+            { "value": "hidden", "label": "Hidden" }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "select",
+          "id": "header_style_desktop",
+          "label": "Header — desktop",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "white", "label": "White" },
+            { "value": "black", "label": "Black" },
+            { "value": "hidden", "label": "Hidden" }
+          ],
+          "default": "auto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Header colours",
+      "blocks": [
+        {
+          "type": "header_zone",
+          "settings": {
+            "zone_key": "home_hero",
+            "zone_label": "Hero carousel",
+            "header_style_mobile": "auto",
+            "header_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "header_zone",
+          "settings": {
+            "zone_key": "home_categories",
+            "zone_label": "Menswear / Womenswear",
+            "header_style_mobile": "auto",
+            "header_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "header_zone",
+          "settings": {
+            "zone_key": "home_portugal",
+            "zone_label": "Portugal video",
+            "header_style_mobile": "white",
+            "header_style_desktop": "white"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

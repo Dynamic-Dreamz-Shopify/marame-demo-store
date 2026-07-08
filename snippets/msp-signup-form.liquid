@@ -1,0 +1,65 @@
+{%- comment -%}
+  @param section {Section}
+  @param use_klaviyo_embed {Boolean}
+  @param klaviyo_form_id {String}
+{%- endcomment -%}
+
+<div class="msp-signup{% if section.settings.signup_glass %} msp-signup--glass{% endif %}">
+  {%- if section.settings.signup_heading != blank -%}
+    <p class="msp-signup__heading">{{ section.settings.signup_heading | escape | newline_to_br }}</p>
+  {%- endif -%}
+
+  {%- if use_klaviyo_embed and klaviyo_form_id != blank -%}
+    <div
+      class="msp-signup__embed{% if request.design_mode %} is-email-active{% endif %}"
+      data-msp-klaviyo-embed
+      data-klaviyo-form-id="{{ klaviyo_form_id }}"
+      data-email-placeholder="{{ section.settings.email_placeholder | escape }}"
+      data-success-message="{{ section.settings.success_message | escape }}"
+    >
+      <div class="msp-klaviyo-sr-only" aria-hidden="true">
+        <div class="klaviyo-form-{{ klaviyo_form_id }}" data-msp-klaviyo-mount></div>
+      </div>
+
+      <div class="msp-signup__field msp-signup__field--klaviyo">
+        <input
+          type="email"
+          class="msp-signup__input msp-signup__input--overlay"
+          data-msp-email-overlay
+          placeholder="{{ section.settings.email_placeholder }}"
+          autocomplete="email"
+          inputmode="email"
+        >
+      </div>
+
+      <button type="button" class="msp-signup__submit msp-signup__submit--klaviyo" data-msp-klaviyo-submit>
+        {{ section.settings.submit_label }}
+      </button>
+      <p class="msp-signup__message msp-signup__message--klaviyo" data-msp-klaviyo-message aria-live="polite"></p>
+
+      {%- if request.design_mode -%}
+        <p class="msp-signup__klaviyo-hint">
+          Klaviyo form <code>{{ klaviyo_form_id }}</code> runs in the background; the field above matches your design.
+        </p>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <form class="msp-signup__form" data-msp-signup-form novalidate>
+      <div class="msp-signup__field">
+        <input
+          class="msp-signup__input"
+          type="email"
+          name="email"
+          data-msp-email
+          placeholder="{{ section.settings.email_placeholder }}"
+          autocomplete="email"
+          required
+        >
+      </div>
+      <button type="submit" class="msp-signup__submit" data-msp-submit>
+        {{ section.settings.submit_label }}
+      </button>
+      <p class="msp-signup__message" data-msp-message aria-live="polite"></p>
+    </form>
+  {%- endif -%}
+</div>

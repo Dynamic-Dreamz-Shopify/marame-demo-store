@@ -1,0 +1,2091 @@
+{
+  "profiles": [
+    {
+      "handle": "the-arla-cashmere-blend-v-neck",
+      "spreadsheet_tab": "SHORT SLEEVE V NECK JUMPER",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height",
+        "upper_chest"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "UPPER CHEST",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH",
+        "FRONT NECK DROP"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Soft knit with natural ease. Choose your usual size for the intended fit, or size up for a looser drape.",
+      "algorithm_notes": "Compare customer bust to CHEST \u00d7 2 using knit/top ease. Shoulder answer can nudge only if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": true
+    },
+    {
+      "handle": "the-arla-cashmere-blend-crew-neck",
+      "spreadsheet_tab": "SHORT SLEEVE CREW NECK JUMPER",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height",
+        "upper_chest"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "UPPER CHEST",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Soft knit with natural ease. Choose your usual size for the intended fit, or size up for a looser drape.",
+      "algorithm_notes": "Compare customer bust to CHEST \u00d7 2. Do not use waist or hips. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": true
+    },
+    {
+      "handle": "the-varo-knit-funnel-neck",
+      "spreadsheet_tab": "KNIT CO-ORD TOP LOUNGE SET",
+      "garment_type": "top",
+      "fit_type": "relaxed",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "COLLAR HEIGHT",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 10
+      },
+      "size_up_if": [
+        "between_sizes",
+        "prefers_oversized_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "combined_sizes",
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Relaxed knit co-ord fit. If you are between sizes, choose the smaller combined size for a neater look or the larger for more drape.",
+      "algorithm_notes": "Product uses combined UK sizes 8-10, 12-14, 16-18. Fit preference matters more than precise grading. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-luma-rope-neck-top",
+      "spreadsheet_tab": "ADJUSTABLE ROPE NECK TOP",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "shoulders",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "CENTRE FRONT LENGTH",
+        "CHEST",
+        "HEM WIDTH"
+      ],
+      "ease_overrides": {
+        "bust": 6
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "no_shoulder_row",
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Adjustable neckline. Bust/chest is the key fit area; size up for more coverage or a softer drape.",
+      "algorithm_notes": "No shoulder row. Compare bust to CHEST \u00d7 2. Use centre front length only as a height/coverage note. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-elevated-t-shirt-crew",
+      "spreadsheet_tab": "ELEVATED CREW T-SHIRT",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Regular elevated T-shirt fit. Choose your usual size for a clean shape; size up for a more relaxed look.",
+      "algorithm_notes": "Compare bust to CHEST \u00d7 2. Shoulder profile can nudge if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-varo-knit-pant",
+      "spreadsheet_tab": "KNIT CO-ORD TROUSER LOUNGE SET",
+      "garment_type": "trouser",
+      "fit_type": "relaxed",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "waist",
+        "hip"
+      ],
+      "secondary_measurements": [
+        "inside_leg",
+        "height"
+      ],
+      "ignore_measurements": [
+        "bust",
+        "bra_size",
+        "shoulders"
+      ],
+      "available_chart_rows": [
+        "INSEAM",
+        "WAIST",
+        "HIP",
+        "THIGH",
+        "LEG OPENING"
+      ],
+      "ease_overrides": {
+        "waist": 3,
+        "hip": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_hips",
+        "prefers_relaxed_fit",
+        "waistband_tight"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "waistband_loose"
+      ],
+      "hard_warnings": [
+        "combined_sizes"
+      ],
+      "optional_fields": [
+        "waist",
+        "hip",
+        "inside_leg"
+      ],
+      "fit_notes": "Relaxed knit trouser. Waist and hip are the key measurements; choose the larger size if you want more ease through the hip.",
+      "algorithm_notes": "Combined sizes. Compare waist and hip to WAIST/HIP \u00d7 2. Inseam can create a note or nudge only if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": false,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-eden-shoulder-pad-blazer",
+      "spreadsheet_tab": "BLAZER",
+      "garment_type": "outerwear",
+      "fit_type": "structured",
+      "fabric_stretch": "low",
+      "fabric_structure": "structured",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "sleeve",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 12
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "no_shoulder_row",
+        "structured_broad_shoulders_warning",
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Structured blazer with shoulder pads. If you have broad shoulders or prefer layering, consider the larger size.",
+      "algorithm_notes": "No shoulder-to-shoulder row. Broad shoulders should nudge up and reduce confidence. Compare bust to CHEST \u00d7 2 with outerwear ease. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-alora-bandeau-top",
+      "spreadsheet_tab": "BANDEAU TOP",
+      "garment_type": "top",
+      "fit_type": "close",
+      "fabric_stretch": "medium",
+      "fabric_structure": "structured",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "shoulders",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "CENTRE FRONT LENGTH",
+        "CHEST",
+        "HEM WIDTH",
+        "ZIP LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 3
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "fitted_top",
+        "no_shoulder_row"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Designed to fit closer to the body. If your bust is usually hard to fit, consider the larger size.",
+      "algorithm_notes": "Use lower bust ease than standard tops. Do not apply standard 8cm top ease or it may oversize the recommendation. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-cala-shirt",
+      "spreadsheet_tab": "CHEESE CLOTH SHIRT",
+      "garment_type": "top",
+      "fit_type": "relaxed",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 10
+      },
+      "size_up_if": [
+        "between_sizes",
+        "broad_shoulders",
+        "larger_bust",
+        "prefers_oversized_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Relaxed cheesecloth shirt. Choose your usual size for the intended relaxed fit; size down if you prefer it neater.",
+      "algorithm_notes": "Relaxed shirt: avoid double-sizing up for relaxed preference. Shoulder profile matters if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-amara-linen-trouser",
+      "spreadsheet_tab": "LINEN LOOSE TROUSER",
+      "garment_type": "trouser",
+      "fit_type": "relaxed",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft_structured",
+      "length_profile": "long",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "waist",
+        "hip"
+      ],
+      "secondary_measurements": [
+        "inside_leg",
+        "height"
+      ],
+      "ignore_measurements": [
+        "bust",
+        "bra_size",
+        "shoulders"
+      ],
+      "available_chart_rows": [
+        "INSEAM",
+        "WAIST",
+        "LEG OPENING",
+        "HIP",
+        "THIGH"
+      ],
+      "ease_overrides": {
+        "waist": 3,
+        "hip": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_hips",
+        "waistband_tight",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "waistband_loose",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "length_check_inseam"
+      ],
+      "optional_fields": [
+        "waist",
+        "hip",
+        "inside_leg"
+      ],
+      "fit_notes": "Loose linen trouser. Waist and hip decide the size; length should be shown as a fit note rather than forcing a size change.",
+      "algorithm_notes": "Inseam grades from 83cm to 88cm. Taller customers may prefer the larger size only if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": false,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-elor-jumpsuit",
+      "spreadsheet_tab": "JUMPSUIT",
+      "garment_type": "jumpsuit",
+      "fit_type": "regular",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft_structured",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust",
+        "waist",
+        "hip"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "inside_leg",
+        "height"
+      ],
+      "ignore_measurements": [],
+      "available_chart_rows": [
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "WAIST",
+        "SLEEVE LENGTH",
+        "INSEAM",
+        "HIP"
+      ],
+      "ease_overrides": {
+        "bust": 7,
+        "waist": 5,
+        "hip": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "larger_hips",
+        "long_torso",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "multi_area_fit",
+        "length_check_inseam"
+      ],
+      "optional_fields": [
+        "bust",
+        "waist",
+        "hip",
+        "inside_leg",
+        "bra_size"
+      ],
+      "fit_notes": "Jumpsuits need to work across bust, waist, hip and length. If you are between sizes, the larger size is usually safer.",
+      "algorithm_notes": "Use the largest required size among bust/waist/hip as a strong signal. Length can warn or nudge only if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-lior-bias-skirt",
+      "spreadsheet_tab": "LINEN BIAS MAXI SKIRT",
+      "garment_type": "skirt",
+      "fit_type": "regular",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft_structured",
+      "length_profile": "maxi",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "waist",
+        "hip"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "bust",
+        "bra_size",
+        "shoulders",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "WAIST",
+        "HEM WIDTH",
+        "SIDE SPLIT",
+        "HIP"
+      ],
+      "ease_overrides": {
+        "waist": 3,
+        "hip": 7
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_hips",
+        "waistband_tight",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "waistband_loose",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "maxi_length_warning_only"
+      ],
+      "optional_fields": [
+        "waist",
+        "hip"
+      ],
+      "fit_notes": "Bias maxi skirt. Waist and hip decide the size; height affects where the hem sits.",
+      "algorithm_notes": "Use waist and hip. Use length only for customer-facing hem-position warnings. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": false,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-bria-knit-polo",
+      "spreadsheet_tab": "SUMMER KNIT POLO",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Soft knit polo. Choose your usual size for a regular fit, or size up for a looser shape.",
+      "algorithm_notes": "Compare bust to CHEST \u00d7 2. Shoulder profile is secondary. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-laurel-cashmere-blend-jumper",
+      "spreadsheet_tab": "LONG SLEEVE CREW NECK JUMPER",
+      "garment_type": "top",
+      "fit_type": "relaxed",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "sleeve",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "shoulders",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "FRONT LENGTH",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 10
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "prefers_oversized_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "no_shoulder_row",
+        "sleeve_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Relaxed long-sleeve knit. Choose your usual size for soft ease, or size down if you want a neater fit.",
+      "algorithm_notes": "No shoulder row. Compare bust to CHEST \u00d7 2. Sleeve length can warn, not force. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-elevated-t-shirt-v-neck",
+      "spreadsheet_tab": "ELEVATED V NECK T-SHIRT",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH",
+        "FRONT NECK DROP"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Regular elevated V-neck T-shirt. Choose your usual size for a clean shape; size up for more ease.",
+      "algorithm_notes": "Compare bust to CHEST \u00d7 2. Front neck drop is display-only, not recommendation logic. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-riva-dress",
+      "spreadsheet_tab": "CHEESE CLOTH DRESS",
+      "garment_type": "dress",
+      "fit_type": "relaxed",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft",
+      "length_profile": "long",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust",
+        "waist"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "WAIST",
+        "SLEEVE LENGTH",
+        "SIDE SPLIT",
+        "FRONT NECK DROP",
+        "HEM"
+      ],
+      "ease_overrides": {
+        "bust": 8,
+        "waist": 6
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "no_hip_row",
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "waist",
+        "bra_size"
+      ],
+      "fit_notes": "Relaxed cheesecloth dress. Bust and waist are the main fit points; length affects where it falls.",
+      "algorithm_notes": "No HIP row. Do not calculate hip fit. Explain lower confidence if customer says hips are hardest to fit. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-melange-t-shirt-v-neck",
+      "spreadsheet_tab": "REGULAR V NECK T-SHIRT",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH",
+        "FRONT NECK DROP"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Regular T-shirt fit. Choose your usual size for the intended shape; size up for a looser look.",
+      "algorithm_notes": "Compare bust to CHEST \u00d7 2. Do not use waist or hips. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-cala-skirt",
+      "spreadsheet_tab": "CHEESE CLOTH SKIRT",
+      "garment_type": "skirt",
+      "fit_type": "regular",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft",
+      "length_profile": "long",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "waist"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "bust",
+        "bra_size",
+        "shoulders",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "WAIST",
+        "SIDE SPLIT"
+      ],
+      "ease_overrides": {
+        "waist": 3
+      },
+      "size_up_if": [
+        "between_sizes",
+        "waistband_tight",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "waistband_loose",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "no_hip_row",
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "waist"
+      ],
+      "fit_notes": "Waist is the key size point. This chart does not include hip, so hip fit should be treated as a note rather than a calculation.",
+      "algorithm_notes": "Do not ask for hip measurement by default. If customer says hips are usually tight, lower confidence and suggest larger size if between sizes. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": false,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-melange-t-shirt-crew",
+      "spreadsheet_tab": "REGULAR CREW T-SHIRT",
+      "garment_type": "top",
+      "fit_type": "regular",
+      "fabric_stretch": "medium",
+      "fabric_structure": "soft",
+      "length_profile": "regular",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_bust",
+        "broad_shoulders",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Regular crew neck T-shirt fit. Choose your usual size for the intended shape; size up for a looser look.",
+      "algorithm_notes": "Compare bust to CHEST \u00d7 2. Do not use waist or hips. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "size_up"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-amara-linen-short",
+      "spreadsheet_tab": "LINEN LOOSE SHORT",
+      "garment_type": "short",
+      "fit_type": "relaxed",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft_structured",
+      "length_profile": "cropped",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "waist",
+        "hip"
+      ],
+      "secondary_measurements": [
+        "height"
+      ],
+      "ignore_measurements": [
+        "bust",
+        "bra_size",
+        "shoulders"
+      ],
+      "available_chart_rows": [
+        "INSEAM",
+        "WAIST",
+        "LEG OPENING",
+        "HIP",
+        "THIGH"
+      ],
+      "ease_overrides": {
+        "waist": 3,
+        "hip": 8
+      },
+      "size_up_if": [
+        "between_sizes",
+        "larger_hips",
+        "waistband_tight",
+        "prefers_relaxed_fit"
+      ],
+      "size_down_if": [
+        "between_sizes",
+        "waistband_loose",
+        "prefers_close_fit"
+      ],
+      "hard_warnings": [
+        "short_length_warning_only"
+      ],
+      "optional_fields": [
+        "waist",
+        "hip"
+      ],
+      "fit_notes": "Loose linen short. Waist and hip decide the size; choose larger if you want more room through the seat and thigh.",
+      "algorithm_notes": "Use waist and hip. Inseam/length should not force a larger size. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "no_change",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": false,
+      "upper_chest_check": false
+    },
+    {
+      "handle": "the-maya-beach-dress",
+      "spreadsheet_tab": "SWIMWEAR COVER UP",
+      "garment_type": "cover_up",
+      "fit_type": "oversized",
+      "fabric_stretch": "low",
+      "fabric_structure": "soft",
+      "length_profile": "maxi",
+      "runs_large_small": "true_to_size",
+      "recommendation_adjustment": 0,
+      "priority_measurements": [
+        "bust"
+      ],
+      "secondary_measurements": [
+        "shoulders",
+        "height"
+      ],
+      "ignore_measurements": [
+        "waist",
+        "hips",
+        "inside_leg"
+      ],
+      "available_chart_rows": [
+        "LENGTH",
+        "SHOULDER TO SHOULDER",
+        "CHEST",
+        "HEM WIDTH",
+        "SLEEVE LENGTH"
+      ],
+      "ease_overrides": {
+        "bust": 14
+      },
+      "size_up_if": [
+        "larger_bust",
+        "prefers_very_oversized_fit"
+      ],
+      "size_down_if": [
+        "prefers_close_fit",
+        "narrow_shoulders"
+      ],
+      "hard_warnings": [
+        "two_size_product",
+        "maxi_length_warning_only"
+      ],
+      "optional_fields": [
+        "bust",
+        "bra_size"
+      ],
+      "fit_notes": "Oversized beach cover-up available in S/M and L/XL. Choose based on how much volume and length you want.",
+      "algorithm_notes": "Two-size logic only. Do not try to map exactly to UK 8-18. Height creates length note. v3: usual size is weak anchor; category-critical measurements and bra-derived bust beat usual size. Shoulder profile applies chart check only where SHOULDER TO SHOULDER exists; otherwise use shoulder_fit_rule as between-size soft nudge.",
+      "shoulder_fit_rule": {
+        "narrow": "size_down",
+        "regular": "no_change",
+        "broad": "no_change"
+      },
+      "bra_enabled": true,
+      "upper_chest_check": false
+    }
+  ],
+  "bra_conversion": {
+    "formula": "estimated_bust_cm = (uk_band_inches + cup_increment_inches) * 2.54",
+    "cup_increment_inches": {
+      "AA": 0.5,
+      "A": 1,
+      "B": 2,
+      "C": 3,
+      "D": 4,
+      "DD": 5,
+      "E": 6,
+      "F": 7,
+      "FF": 8,
+      "G": 9,
+      "GG": 10,
+      "H": 11
+    },
+    "common_band_table_cm": {
+      "28": {
+        "AA": 72.4,
+        "A": 73.7,
+        "B": 76.2,
+        "C": 78.7,
+        "D": 81.3,
+        "DD": 83.8,
+        "E": 86.4,
+        "F": 88.9,
+        "FF": 91.4,
+        "G": 94.0,
+        "GG": 96.5,
+        "H": 99.1
+      },
+      "30": {
+        "AA": 77.5,
+        "A": 78.7,
+        "B": 81.3,
+        "C": 83.8,
+        "D": 86.4,
+        "DD": 88.9,
+        "E": 91.4,
+        "F": 94.0,
+        "FF": 96.5,
+        "G": 99.1,
+        "GG": 101.6,
+        "H": 104.1
+      },
+      "32": {
+        "AA": 82.5,
+        "A": 83.8,
+        "B": 86.4,
+        "C": 88.9,
+        "D": 91.4,
+        "DD": 94.0,
+        "E": 96.5,
+        "F": 99.1,
+        "FF": 101.6,
+        "G": 104.1,
+        "GG": 106.7,
+        "H": 109.2
+      },
+      "34": {
+        "AA": 87.6,
+        "A": 88.9,
+        "B": 91.4,
+        "C": 94.0,
+        "D": 96.5,
+        "DD": 99.1,
+        "E": 101.6,
+        "F": 104.1,
+        "FF": 106.7,
+        "G": 109.2,
+        "GG": 111.8,
+        "H": 114.3
+      },
+      "36": {
+        "AA": 92.7,
+        "A": 94.0,
+        "B": 96.5,
+        "C": 99.1,
+        "D": 101.6,
+        "DD": 104.1,
+        "E": 106.7,
+        "F": 109.2,
+        "FF": 111.8,
+        "G": 114.3,
+        "GG": 116.8,
+        "H": 119.4
+      },
+      "38": {
+        "AA": 97.8,
+        "A": 99.1,
+        "B": 101.6,
+        "C": 104.1,
+        "D": 106.7,
+        "DD": 109.2,
+        "E": 111.8,
+        "F": 114.3,
+        "FF": 116.8,
+        "G": 119.4,
+        "GG": 121.9,
+        "H": 124.5
+      },
+      "40": {
+        "AA": 102.9,
+        "A": 104.1,
+        "B": 106.7,
+        "C": 109.2,
+        "D": 111.8,
+        "DD": 114.3,
+        "E": 116.8,
+        "F": 119.4,
+        "FF": 121.9,
+        "G": 124.5,
+        "GG": 127.0,
+        "H": 129.5
+      },
+      "42": {
+        "AA": 108.0,
+        "A": 109.2,
+        "B": 111.8,
+        "C": 114.3,
+        "D": 116.8,
+        "DD": 119.4,
+        "E": 121.9,
+        "F": 124.5,
+        "FF": 127.0,
+        "G": 129.5,
+        "GG": 132.1,
+        "H": 134.6
+      },
+      "44": {
+        "AA": 113.0,
+        "A": 114.3,
+        "B": 116.8,
+        "C": 119.4,
+        "D": 121.9,
+        "DD": 124.5,
+        "E": 127.0,
+        "F": 129.5,
+        "FF": 132.1,
+        "G": 134.6,
+        "GG": 137.2,
+        "H": 139.7
+      }
+    },
+    "rules": {
+      "if_bust_cm_and_bra_size": "Use max(bustCm, estimated_bust_cm) as bust_source for CHEST; explain if bra_source is larger and drives size up.",
+      "if_bra_only": "Use estimated_bust_cm as bust_source. Confidence can still be high if it clearly maps to one size, medium if close to boundary.",
+      "if_bust_only": "Use bustCm. Do not infer cup volume. Confidence high only if chart pass is clear.",
+      "if_neither": "Fall back to usual size + fit preference. Confidence low for tops/dresses/outerwear.",
+      "upper_chest_estimate": "For products with UPPER CHEST, derive upper_chest_body_cm = min(bust_source_cm - 8, band_cm + 4). Use 0cm ease for this row. Use max(CHEST index, UPPER CHEST index)."
+    }
+  },
+  "combined_size_mapping_uk": {
+    "6": "8-10",
+    "8": "8-10",
+    "10": "8-10",
+    "12": "12-14",
+    "14": "12-14",
+    "16": "16-18",
+    "18": "16-18"
+  },
+  "maya_beach_dress_rules": {
+    "product_handle": "the-maya-beach-dress",
+    "sizes": [
+      "S/M",
+      "L/XL"
+    ],
+    "chart_cm": {
+      "S/M": {
+        "length": 137,
+        "shoulder_to_shoulder": 45.5,
+        "chest_flat": 56,
+        "chest_circ": 112,
+        "hem_flat": 66,
+        "sleeve_length": 27
+      },
+      "L/XL": {
+        "length": 139,
+        "shoulder_to_shoulder": 48.5,
+        "chest_flat": 60,
+        "chest_circ": 120,
+        "hem_flat": 70,
+        "sleeve_length": 29
+      }
+    },
+    "usual_uk_mapping": {
+      "6": "S/M",
+      "8": "S/M",
+      "10": "S/M",
+      "12": "S/M",
+      "14": "L/XL",
+      "16": "L/XL",
+      "18": "L/XL"
+    },
+    "chest_thresholds_cm": {
+      "close": {
+        "S/M_max_bust": 106,
+        "L/XL_max_bust": 114
+      },
+      "regular": {
+        "S/M_max_bust": 102,
+        "L/XL_max_bust": 110
+      },
+      "relaxed": {
+        "S/M_max_bust": 98,
+        "L/XL_max_bust": 106
+      },
+      "oversized": {
+        "S/M_max_bust": 98,
+        "L/XL_max_bust": 106
+      }
+    },
+    "rule": "Compute bust_source=max(bustCm, braEstimatedBustCm). Use selected fit preference ease: close 6, regular 10, relaxed 14, oversized 14 because product is already a cover-up. If bust_source <= S/M threshold and usual size <= UK12, recommend S/M. If usual size >= UK14 or bust_source exceeds S/M threshold, recommend L/XL. If bust_source exceeds L/XL threshold, still recommend L/XL but confidence low with chest warning."
+  },
+  "tag_glossary": {
+    "between_sizes": "Top two valid sizes are adjacent and score gap is below configured threshold; use preference/product rules to choose.",
+    "larger_bust": "Bra-derived or measured bust requires a larger CHEST size than usual-size anchor.",
+    "broad_shoulders": "Customer selected broad shoulders; chart row is used if available, otherwise shoulder_fit_rule applies as a soft nudge.",
+    "narrow_shoulders": "Customer selected narrow shoulders; chart row is used if available, otherwise shoulder_fit_rule applies as a soft nudge.",
+    "prefers_relaxed_fit": "Customer selected relaxed; choose larger adjacent option only when critical measurements do not fail smaller size.",
+    "prefers_close_fit": "Customer selected close; choose smaller adjacent option only when critical measurements still pass.",
+    "prefers_oversized_fit": "Customer selected oversized; size up unless product is already relaxed/oversized and measurements pass.",
+    "larger_hips": "Hip measurement or hip-fit question indicates larger hip need for bottoms/dresses.",
+    "waist_tight": "Customer says waistbands usually feel tight; nudge up on bottoms/skirts only.",
+    "waist_loose": "Customer says waistbands usually feel loose; nudge down only if hip still passes.",
+    "tall_and_cropped": "Customer is tall and product length_profile is cropped; warn or nudge up only if inseam/length grades meaningfully.",
+    "short_length_if_tall": "Warn taller customers that garment may sit shorter; do not size up unless length grades and they are between sizes.",
+    "two_size_product": "Product has only S/M and L/XL; use threshold and bucket logic, not UK 8-18 step logic.",
+    "combined_sizes": "Product uses combined UK buckets such as 8-10, 12-14, 16-18.",
+    "no_hip_row": "Product does not contain HIP row; do not score hip measurement, lower confidence if customer reports hip fit issues.",
+    "upper_chest_check": "Product has UPPER CHEST row; require both CHEST and derived UPPER CHEST checks to pass and use larger required index."
+  },
+  "question_flow": {
+    "shared_required": [
+      {
+        "id": "region",
+        "question": "Which sizing do you usually shop in?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "UK",
+          "US",
+          "EU",
+          "IT",
+          "FR",
+          "AU",
+          "INT"
+        ]
+      },
+      {
+        "id": "usual_size",
+        "question": "What size do you usually wear?",
+        "type": "size_select",
+        "required": true
+      },
+      {
+        "id": "height_cm",
+        "question": "How tall are you?",
+        "type": "number_cm",
+        "required": true
+      },
+      {
+        "id": "fit_preference",
+        "question": "How do you want this piece to fit?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "close",
+          "regular",
+          "relaxed",
+          "oversized"
+        ]
+      }
+    ],
+    "top": [
+      {
+        "id": "bra_size",
+        "question": "What bra size do you usually wear?",
+        "type": "bra_select_uk",
+        "required": true,
+        "logic": "feeds estimated bust for CHEST row"
+      },
+      {
+        "id": "shoulder_profile",
+        "question": "Would you describe your shoulders as narrow, regular, or broad?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "narrow",
+          "regular",
+          "broad"
+        ]
+      },
+      {
+        "id": "bust_cm",
+        "question": "Do you know your bust measurement?",
+        "type": "number_cm",
+        "required": false
+      }
+    ],
+    "trousers": [
+      {
+        "id": "waist_fit",
+        "question": "Do waistbands usually feel tight, loose, or about right?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "tight",
+          "about_right",
+          "loose"
+        ]
+      },
+      {
+        "id": "hip_fit",
+        "question": "Do trousers usually feel tight around your hips?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "yes",
+          "sometimes",
+          "no"
+        ]
+      },
+      {
+        "id": "waist_cm",
+        "question": "Do you know your waist measurement?",
+        "type": "number_cm",
+        "required": false
+      },
+      {
+        "id": "hip_cm",
+        "question": "Do you know your hip measurement?",
+        "type": "number_cm",
+        "required": false
+      },
+      {
+        "id": "trouser_length_issue",
+        "question": "Do trousers usually feel too short, too long, or about right?",
+        "type": "single_select",
+        "required": false,
+        "options": [
+          "too_short",
+          "about_right",
+          "too_long"
+        ]
+      }
+    ],
+    "skirt": [
+      {
+        "id": "waist_fit",
+        "question": "Do waistbands usually feel tight, loose, or about right?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "tight",
+          "about_right",
+          "loose"
+        ]
+      },
+      {
+        "id": "hip_fit",
+        "question": "Do skirts usually feel tight around your hips?",
+        "type": "single_select",
+        "required": false,
+        "options": [
+          "yes",
+          "sometimes",
+          "no"
+        ]
+      },
+      {
+        "id": "waist_cm",
+        "question": "Do you know your waist measurement?",
+        "type": "number_cm",
+        "required": false
+      },
+      {
+        "id": "hip_cm",
+        "question": "Do you know your hip measurement?",
+        "type": "number_cm",
+        "required": false,
+        "only_if_chart_row_exists": "HIP"
+      }
+    ],
+    "dress_or_jumpsuit": [
+      {
+        "id": "bra_size",
+        "question": "What bra size do you usually wear?",
+        "type": "bra_select_uk",
+        "required": true
+      },
+      {
+        "id": "fit_issue",
+        "question": "Which area is usually hardest to fit?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "bust",
+          "waist",
+          "hips",
+          "shoulders",
+          "legs",
+          "none"
+        ]
+      },
+      {
+        "id": "shoulder_profile",
+        "question": "Would you describe your shoulders as narrow, regular, or broad?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "narrow",
+          "regular",
+          "broad"
+        ]
+      },
+      {
+        "id": "bust_cm",
+        "question": "Do you know your bust measurement?",
+        "type": "number_cm",
+        "required": false
+      },
+      {
+        "id": "waist_cm",
+        "question": "Do you know your waist measurement?",
+        "type": "number_cm",
+        "required": false
+      },
+      {
+        "id": "hip_cm",
+        "question": "Do you know your hip measurement?",
+        "type": "number_cm",
+        "required": false
+      }
+    ],
+    "outerwear": [
+      {
+        "id": "bra_size",
+        "question": "What bra size do you usually wear?",
+        "type": "bra_select_uk",
+        "required": true
+      },
+      {
+        "id": "shoulder_profile",
+        "question": "Would you describe your shoulders as narrow, regular, or broad?",
+        "type": "single_select",
+        "required": true,
+        "options": [
+          "narrow",
+          "regular",
+          "broad"
+        ]
+      },
+      {
+        "id": "sleeve_issue",
+        "question": "Do sleeves usually feel too short, too long, or about right?",
+        "type": "single_select",
+        "required": false,
+        "options": [
+          "too_short",
+          "about_right",
+          "too_long"
+        ]
+      },
+      {
+        "id": "bust_cm",
+        "question": "Do you know your bust measurement?",
+        "type": "number_cm",
+        "required": false
+      }
+    ]
+  },
+  "unit_tests": [
+    {
+      "id": "T01_bra_drives_arla_v_neck_up",
+      "product_handle": "the-arla-cashmere-blend-v-neck",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "10",
+        "height_cm": 168,
+        "fit_preference": "regular",
+        "bra_size": "34D",
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "14",
+        "confidence": "high",
+        "secondary_size": "12"
+      },
+      "chart_refs": [
+        "SHORT SLEEVE V NECK JUMPER CHEST: 47.5/49.5/51.5/53.5/55.5/57.5 flat",
+        "UPPER CHEST: 38.5/40.5/42.5/44.5/46.5/48.5 flat"
+      ],
+      "why": "34D estimated bust 96.5cm; required chest 104.5cm with 8cm top ease; UK14 chest circumference 107cm is first pass. Upper-chest derived check also passes at UK14."
+    },
+    {
+      "id": "T02_large_bra_arla_crew",
+      "product_handle": "the-arla-cashmere-blend-crew-neck",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 170,
+        "fit_preference": "regular",
+        "bra_size": "36DD",
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "high",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "SHORT SLEEVE CREW NECK JUMPER CHEST UK18 flat 57.5 = 115cm circumference",
+        "UPPER CHEST UK18 flat 48.5 = 97cm circumference"
+      ],
+      "why": "36DD estimated bust 104.1cm; +8cm ease requires 112.1cm chest, first pass UK18."
+    },
+    {
+      "id": "T03_bust_measure_beats_bra_elevated_crew",
+      "product_handle": "the-elevated-t-shirt-crew",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "10",
+        "height_cm": 165,
+        "fit_preference": "regular",
+        "bra_size": "34B",
+        "bust_cm": 100,
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "14",
+        "confidence": "high",
+        "secondary_size": "12"
+      },
+      "chart_refs": [
+        "ELEVATED CREW T-SHIRT CHEST UK12 flat 53.5 = 107cm; UK14 flat 55.5 = 111cm"
+      ],
+      "why": "max(bustCm 100, bra estimate 91.4) = 100; +8cm ease requires 108cm; UK14 first pass."
+    },
+    {
+      "id": "T04_bandeau_fitted_low_ease",
+      "product_handle": "the-alora-bandeau-top",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "10",
+        "height_cm": 164,
+        "fit_preference": "regular",
+        "bra_size": "32B",
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "medium",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "BANDEAU TOP CHEST UK18 flat 45.5 = 91cm circumference"
+      ],
+      "why": "32B estimated bust 86.4cm; bandeau ease 3cm requires 89.4cm; UK18 is first pass. Confidence medium because bandeau chest is fitted/low-ease and usual size conflicts."
+    },
+    {
+      "id": "T05_cala_shirt_broad_shoulders_between_sizes",
+      "product_handle": "the-cala-shirt",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 171,
+        "fit_preference": "regular",
+        "bra_size": "34C",
+        "bust_cm": 100,
+        "shoulder_profile": "broad"
+      },
+      "expected": {
+        "recommended_size": "12",
+        "confidence": "high",
+        "secondary_size": "14"
+      },
+      "chart_refs": [
+        "CHEESE CLOTH SHIRT CHEST UK8 flat 54 = 108cm; UK12 flat 58 = 116cm; SHOULDER TO SHOULDER exists"
+      ],
+      "why": "Bust passes in UK8, but usual-size anchor and broad-shoulder soft rule keep UK12 as intended fit; UK14 is alternate for more shoulder room."
+    },
+    {
+      "id": "T06_regular_v_neck_close_fit_size_down",
+      "product_handle": "the-melange-t-shirt-v-neck",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 166,
+        "fit_preference": "close",
+        "bra_size": "34B",
+        "shoulder_profile": "narrow"
+      },
+      "expected": {
+        "recommended_size": "10",
+        "confidence": "medium",
+        "secondary_size": "12"
+      },
+      "chart_refs": [
+        "REGULAR V NECK T-SHIRT CHEST UK10 flat 51.5 = 103cm"
+      ],
+      "why": "Bra-derived bust 91.4cm plus close-fit ease 5cm requires 96.4cm, so UK8 technically passes; usual UK12, narrow shoulders and close preference produce UK10 as a conservative size-down, not UK8."
+    },
+    {
+      "id": "T07_amara_linen_trouser_measurements",
+      "product_handle": "the-amara-linen-trouser",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "10",
+        "height_cm": 172,
+        "fit_preference": "regular",
+        "waist_cm": 70,
+        "hip_cm": 104,
+        "trouser_length_issue": "about_right"
+      },
+      "expected": {
+        "recommended_size": "16",
+        "confidence": "high",
+        "secondary_size": "14"
+      },
+      "chart_refs": [
+        "LINEN LOOSE TROUSER WAIST UK16 flat 37 = 74cm; HIP UK14 flat 57 = 114cm"
+      ],
+      "why": "Waist requirement 72cm with 2cm ease first passes at UK16; hip requirement 110cm with 6cm ease passes at UK14; max critical size is UK16."
+    },
+    {
+      "id": "T08_amara_linen_short_hip_drives",
+      "product_handle": "the-amara-linen-short",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 160,
+        "fit_preference": "regular",
+        "waist_cm": 68,
+        "hip_cm": 111
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "high",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "LINEN LOOSE SHORT HIP UK18 flat 62 = 124cm"
+      ],
+      "why": "Hip requirement 117cm with 6cm ease first passes at UK18; hip beats usual size."
+    },
+    {
+      "id": "T09_varo_knit_pant_combined_bucket",
+      "product_handle": "the-varo-knit-pant",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "14",
+        "height_cm": 176,
+        "fit_preference": "regular",
+        "waist_cm": 72,
+        "hip_cm": 94,
+        "trouser_length_issue": "too_short"
+      },
+      "expected": {
+        "recommended_size": "12-14",
+        "confidence": "medium",
+        "secondary_size": "16-18"
+      },
+      "chart_refs": [
+        "KNIT CO-ORD TROUSER LOUNGE SET bucket 12-14: WAIST flat 35 = 70cm, HIP flat 49 = 98cm, INSEAM 78cm"
+      ],
+      "why": "Usual UK14 maps to 12-14 bucket. Waist sits just above relaxed flat waist; length issue shows 16-18 as alternate because inseam grades to 80cm."
+    },
+    {
+      "id": "T10_lior_bias_skirt_waist_and_hip",
+      "product_handle": "the-lior-bias-skirt",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 170,
+        "fit_preference": "regular",
+        "waist_cm": 75,
+        "hip_cm": 100
+      },
+      "expected": {
+        "recommended_size": "14",
+        "confidence": "high",
+        "secondary_size": "12"
+      },
+      "chart_refs": [
+        "LINEN BIAS MAXI SKIRT WAIST UK14 flat 41 = 82cm; HIP UK12 flat 53 = 106cm"
+      ],
+      "why": "Waist requirement 77cm with 2cm ease first passes UK14; hip requirement 106cm passes UK12; max critical size UK14."
+    },
+    {
+      "id": "T11_cala_skirt_no_hip_row",
+      "product_handle": "the-cala-skirt",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 168,
+        "fit_preference": "regular",
+        "waist_cm": 70,
+        "hip_cm": 108
+      },
+      "expected": {
+        "recommended_size": "16",
+        "confidence": "medium",
+        "secondary_size": "14"
+      },
+      "chart_refs": [
+        "CHEESE CLOTH SKIRT WAIST UK16 flat 37 = 74cm; no HIP row"
+      ],
+      "why": "Waist requirement 72cm first passes UK16. Hip is ignored for scoring because no HIP row exists, lowering confidence and showing no-hip-row warning."
+    },
+    {
+      "id": "T12_riva_dress_bust_waist_conflict",
+      "product_handle": "the-riva-dress",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 169,
+        "fit_preference": "regular",
+        "bra_size": "34D",
+        "bust_cm": 98,
+        "waist_cm": 78,
+        "hip_cm": 100,
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "high",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "CHEESE CLOTH DRESS CHEST UK18 flat 50 = 100cm; WAIST UK16 flat 44 = 88cm"
+      ],
+      "why": "Dress bust is restrictive: bust requirement 106cm with 8cm ease exceeds max chest 100cm, so largest size UK18 is recommended with fit warning; waist would pass UK16."
+    },
+    {
+      "id": "T13_elor_jumpsuit_hip_drives",
+      "product_handle": "the-elor-jumpsuit",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "10",
+        "height_cm": 174,
+        "fit_preference": "regular",
+        "bra_size": "34B",
+        "bust_cm": 92,
+        "waist_cm": 74,
+        "hip_cm": 104,
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "high",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "JUMPSUIT HIP UK18 flat 57 = 114cm; CHEST UK14 flat 50 = 100cm"
+      ],
+      "why": "Hip requirement 112cm with 8cm dress/jumpsuit ease first passes UK18; hip beats usual size."
+    },
+    {
+      "id": "T14_eden_blazer_structured_broad_shoulders",
+      "product_handle": "the-eden-shoulder-pad-blazer",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "12",
+        "height_cm": 173,
+        "fit_preference": "regular",
+        "bra_size": "36C",
+        "shoulder_profile": "broad"
+      },
+      "expected": {
+        "recommended_size": "18",
+        "confidence": "medium",
+        "secondary_size": "16"
+      },
+      "chart_refs": [
+        "BLAZER CHEST UK18 flat 59 = 118cm; no SHOULDER TO SHOULDER row"
+      ],
+      "why": "36C estimated bust 99.1cm plus 12cm outerwear ease requires 111.1cm, first pass UK16; broad-shoulder stylist rule nudges structured blazer to UK18 between sizes."
+    },
+    {
+      "id": "T15_maya_beach_dress_two_size",
+      "product_handle": "the-maya-beach-dress",
+      "inputs": {
+        "region": "UK",
+        "usual_size": "14",
+        "height_cm": 171,
+        "fit_preference": "regular",
+        "bra_size": "36D",
+        "shoulder_profile": "regular"
+      },
+      "expected": {
+        "recommended_size": "L/XL",
+        "confidence": "high",
+        "secondary_size": "S/M"
+      },
+      "chart_refs": [
+        "SWIMWEAR COVER UP CHEST S/M flat 56 = 112cm; L/XL flat 60 = 120cm"
+      ],
+      "why": "36D estimated bust 101.6cm plus 10cm cover-up regular ease requires 111.6cm; S/M technically just passes, but usual UK14 maps to L/XL and two-size threshold puts UK14 into L/XL styling."
+    }
+  ],
+  "changelog": [
+    "v3 adds bra_enabled and bra-derived bust logic for tops/dresses/outerwear.",
+    "v3 removes weight from required questions and scoring.",
+    "v3 adds shoulder_fit_rule per product as stylist-controlled soft nudge.",
+    "v3 adds upper_chest_check for Arla V-Neck and Arla Crew where UPPER CHEST row exists.",
+    "v3 defines exact UK combined-size mapping for Varo top/pant.",
+    "v3 defines Maya Beach Dress S/M vs L/XL rules.",
+    "v3 resolves Eden blazer fit_type by adding structured to enum."
+  ]
+}

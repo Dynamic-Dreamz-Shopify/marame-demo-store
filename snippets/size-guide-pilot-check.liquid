@@ -1,0 +1,12 @@
+{%- comment -%}
+  Draft pilot: Arla V Neck on oli sizing test 120625 only.
+  Remove once product metafields are live in Admin.
+{%- endcomment -%}
+{%- liquid
+  assign size_guide_pilot = false
+  if product.handle == 'the-arla-cashmere-blend-v-neck'
+    if theme.role == 'unpublished' or theme.role == 'development' or request.design_mode
+      assign size_guide_pilot = true
+    endif
+  endif
+-%}

@@ -1,0 +1,93 @@
+<style>
+.color_drawer-main_layer{
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 0;
+    background: #FFFFFF3D;
+    backdrop-filter: blur(2px);
+    transition: all 0.4s ease-in-out; 
+}
+.color_drawer-main_layer.hidden{display: none;}
+.d-color_li:not(.active){order:1;}
+
+.color_drawer-main {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 55vh;
+  background: #fff;
+  box-shadow: 0px -3px 13px 0px #0000002B;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.4s ease-in-out;
+}
+.color_drawer-main.active {
+  transform: translateY(0);
+}
+
+.color_drawer{height: 100%;padding: 23px 17px;width: 100%;}
+.drawer-color-list{display: flex;flex-wrap: wrap;gap: 15px;}
+.d-color_li span{width: 27px;height: 27px;border: 1px solid #0000;display: block;vertical-align: top;margin: auto;background-size: cover;background-repeat: no-repeat;background-position: center;}
+.d-color_li span[color_name="White"]{border: 1px solid #000000;}
+.d-color_li{padding: 9px;border: 1px solid #0000;border-radius: 5px;transition: all 0.3s ease-in-out;cursor: pointer;}
+.d-color_li.active{border-color: rgb(143 143 143 / 80%);}
+.color_drawer_title {font-family: 'HelveticaNowProDisplayBold' !important;margin-bottom: 6px;color: #000000;font-size: 15px;font-weight: 700;line-height: 1.2;letter-spacing: 2px !important;text-transform: none !important;}
+.color_drawer_sub {font-family: 'HelveticaNowDisplayLight' !important;color: #000000;font-size: 15px;font-weight: 300;line-height: 1.5;text-transform: none !important;letter-spacing: 2px !important;}
+.color_drawer_head{margin-bottom: 37px;display: flex;justify-content: space-between;gap: 15px;}
+.color_close {
+    line-height: 0;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    position: relative;
+}
+.color_close:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+}
+.color_close svg{width: 24px;height: 24px;}
+@media only screen and (min-width: 768px){
+    .color_drawer-main{display: none;}
+}
+@media only screen and (max-width: 767px){
+    .meta-color-select__options .d-color_li{display: none;}
+}
+</style>
+<div class="color_drawer-main_layer hidden"></div>
+<div class="color_drawer-main" data-lenis-prevent>
+    <div class="color_drawer">
+        <div class="color_drawer_head">
+            <div class="color_drawer_content">
+                <p class="color_drawer_title">Change Colour</p>
+                <span class="color_drawer_sub"></span>
+            </div>
+            <span class="color_close">
+                <svg class="icon icon-close" xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24" fill="none">
+                    <path d="M19.2988 21.9397L0.283008 2.9239" stroke="#2A2A2C" stroke-width="0.8"/>
+                    <path d="M0.283175 21.9397L19.299 2.92391" stroke="#2A2A2C" stroke-width="0.8"/>
+                    </svg>
+            </span>
+        </div>
+        <div class="color_swatch-wrapper">
+            <div class="drawer-color-list">
+                <div class="d-color_li">
+                    <span style=""></span>
+                </div>
+                {% comment %} <li class="d-color_li"><span style="background-color: #000000"></span></li>
+                <li class="d-color_li"><span style="background-color: #ffffff"></span></li>
+                <li class="d-color_li active"><span style="background-color: #C9B5C7"></span></li>
+                <li class="d-color_li"><span style="background-color: #535252"></span></li>
+                <li class="d-color_li"><span style="background-color: #473B2C"></span></li>
+                <li class="d-color_li"><span style="background-color: #B5C9B6"></span></li> {% endcomment %}
+            </div>
+        </div>
+    </div>
+</div>

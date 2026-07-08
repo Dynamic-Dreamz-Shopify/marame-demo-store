@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-order",
+      "settings": {}
+    },
+    "featured_fullscreen_RgGz7t": {
+      "type": "featured-fullscreen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "Men’s autumn lookbook ‘24",
+        "description": "",
+        "btn_label": "View the lookbook",
+        "btn_link": "",
+        "content_color": "#ffffff"
+      }
+    },
+    "split_screen_xDaDUk": {
+      "type": "split-screen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Shop the Look",
+        "collection_1_image": "shopify://shop_images/splitscreen1.jpg",
+        "collection_1_link": "",
+        "button_1_text": "SHOP THE LOOK",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#ffffff",
+        "collection_2": "",
+        "collection_2_title": "Shop the Look",
+        "collection_2_image": "shopify://shop_images/shirt.jpg",
+        "collection_2_link": "",
+        "button_2_text": "SHOP THE LOOK",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_fullscreen_RgGz7t",
+    "split_screen_xDaDUk"
+  ]
+}

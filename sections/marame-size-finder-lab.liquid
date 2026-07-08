@@ -1,0 +1,107 @@
+{% comment %}
+  MARAME Size Finder Algorithm Lab — staging tool for stylists & QA.
+  Create a page in Shopify Admin, assign template "size-finder-lab", publish on draft theme only.
+{% endcomment %}
+{{ 'size-finder-lab.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="sflab"
+  id="MarameSizeFinderLab"
+  data-bundle-url="{{ 'ss26-size-guides.json' | asset_url }}"
+  data-tests-url="{{ 'size_finder_v3_unit_tests.json' | asset_url }}"
+>
+  <header class="sflab__bar">
+    <div>
+      <div class="sflab__bar-title">Size Finder Algorithm Lab</div>
+      <span class="sflab__badge" data-lab-engine-version>Engine</span>
+    </div>
+    <div>Staging only — not linked from storefront navigation</div>
+  </header>
+
+  <div class="sflab__layout">
+    <section class="sflab__panel">
+      <h2>Test scenario</h2>
+      <p class="sflab__intro">
+        Pick a product, enter customer details, and run the recommendation engine.
+        Use example test cases to load known QA scenarios, or share a link with your stylist.
+      </p>
+
+      <div class="sflab__row sflab__row--2">
+        <div>
+          <label class="sflab__label" for="lab-product">Product</label>
+          <select id="lab-product" class="sflab__input" data-lab-product></select>
+        </div>
+        <div>
+          <label class="sflab__label" for="lab-preset">Example test case</label>
+          <select id="lab-preset" class="sflab__input" data-lab-preset></select>
+          <p class="sflab__hint sflab__hint--tight">Optional — loads a pre-filled customer + product from QA tests (not live customer data).</p>
+        </div>
+      </div>
+
+      <div class="sflab__zone sflab__zone--product">
+        <h3 class="sflab__zone-title">Product &amp; size chart</h3>
+        <p class="sflab__intro sflab__intro--zone">Rules and measurements from the SS26 spreadsheet — what the engine compares against.</p>
+        <div data-lab-profile-summary></div>
+        <div data-lab-chart></div>
+        <div data-lab-overrides></div>
+      </div>
+
+      <form data-lab-form class="sflab__zone sflab__zone--customer">
+        <h3 class="sflab__zone-title">Customer scenario</h3>
+        <p class="sflab__intro sflab__intro--zone">Details about the person you are fitting — change these, then run.</p>
+        <div data-lab-shared-fields></div>
+        <div data-lab-category-fields></div>
+        <div class="sflab__actions">
+          <button type="submit" class="sflab__btn" data-lab-run>Run recommendation</button>
+          <button type="button" class="sflab__btn sflab__btn--ghost" data-lab-share>Copy share link</button>
+        </div>
+        <p class="sflab__status" data-lab-status></p>
+      </form>
+    </section>
+
+    <section class="sflab__panel">
+      <h2>Result</h2>
+      <div data-lab-result>
+        <p class="sflab__placeholder">Run a scenario to see the recommendation.</p>
+      </div>
+      <h2 style="margin-top: 1.5rem;">How we calculated this</h2>
+      <div data-lab-debug></div>
+      <div data-lab-feedback style="margin-top: 1.5rem;"></div>
+    </section>
+
+    <section class="sflab__panel sflab__layout--wide">
+      <h2>Saved stylist feedback</h2>
+      <p class="sflab__intro">Feedback is stored in this browser. Export and send the JSON file to your dev team.</p>
+      <button type="button" class="sflab__btn sflab__btn--ghost" data-lab-export-feedback>Export all feedback</button>
+      <div data-lab-feedback-log style="margin-top: 1rem;"></div>
+    </section>
+
+    <section class="sflab__panel sflab__layout--wide">
+      <h2>All preset tests</h2>
+      <p class="sflab__intro">
+        Runs all 15 v3 unit-test scenarios against the current engine.
+      </p>
+      <button type="button" class="sflab__btn sflab__btn--ghost" data-lab-run-all>Run all 15 tests</button>
+      <div data-lab-tests style="margin-top: 1rem;"></div>
+    </section>
+  </div>
+</div>
+
+<script src="{{ 'size-guide-finder-engine-v3.js' | asset_url }}" defer></script>
+<script src="{{ 'size-finder-lab-adapter.js' | asset_url }}" defer></script>
+<script src="{{ 'size-finder-lab-feedback.js' | asset_url }}" defer></script>
+<script src="{{ 'size-finder-lab.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Size Finder Lab",
+  "tag": "section",
+  "class": "marame-size-finder-lab",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Size Finder Lab"
+    }
+  ]
+}
+{% endschema %}

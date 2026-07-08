@@ -1,0 +1,20 @@
+{%- comment -%}
+  Checkerboard body spacing: paragraph / text-block gap is always 2× line-break gap.
+  @param line_break_mobile {Number}
+  @param line_break_desktop {Number}
+{%- endcomment -%}
+{%- liquid
+  assign lb_m = line_break_mobile | default: 0 | plus: 0
+  assign lb_d = line_break_desktop | default: 0 | plus: 0
+  if lb_d == 0
+    assign lb_d = lb_m
+  endif
+  assign para_m = lb_m | times: 2
+  assign para_d = lb_d | times: 2
+-%}
+--msp-checkerboard-body-line-break-gap-mobile: {{ lb_m }}px;
+--msp-checkerboard-body-line-break-gap-desktop: {{ lb_d }}px;
+--msp-checkerboard-body-line-break-gap: {{ lb_m }}px;
+--msp-checkerboard-body-paragraph-gap-mobile: {{ para_m }}px;
+--msp-checkerboard-body-paragraph-gap-desktop: {{ para_d }}px;
+--msp-checkerboard-body-paragraph-gap: {{ para_m }}px;

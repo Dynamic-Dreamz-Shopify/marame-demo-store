@@ -1,0 +1,260 @@
+{% if card_product.type contains "Fragranc" or card_product.type contains "gift" %}
+  {% render 'card-product-new', card_product: card_product %}
+{% else %}
+{%- if card_product and card_product != empty -%}
+  {% assign size_option = 'size' %}
+  {% assign size_option_available = false %}
+  {%- for option in card_product.options_with_values -%}
+    {% assign option_name = option.name | downcase %}
+    {% if option_name == "shoe size" %}
+      {% assign size_option = 'shoe size' %}
+    {% endif %}
+    {% if option_name == size_option %}
+      {% assign size_option_available = true %}
+    {% endif %}
+  {%- endfor -%}
+
+  {% unless card_product.available %}
+    {% assign size_option_available = false %}
+  {% endunless %}
+  
+  <li class="listing__item default-card-product">
+    <div class="product-card product--grid--main" data-available="true">
+      {% comment %}
+        <button class="heartBtn" aria-label="Favorite item">
+          {% render 'icon-heart' %}
+        </button>
+      {% endcomment %}
+      {% for tag in card_product.tags %}
+        {% if tag contains "badge_" %}
+        <div class="product-card__badge pc-{{ tag | handle }}">{{ tag | remove: "badge_" | capitalize }}</div>
+        {% break %}
+        {% endif %}
+      {% endfor %}
+      {% render 'wishlist-app-links', linkType: 'list-product', product: card_product  %}
+      <div class="product-card__img-new-slider swiper">
+        <div class="swiper-wrapper" onclick="location.href='{{ card_product.url }}'">
+          {%- for media in card_product.media -%}
+            {% case media.media_type %}
+              {% when 'image' %}
+                <a href="{{ card_product.url }}" class="product-card__img swiper-slide" data_alt="{{ media.alt | escape }}" aria-label="Read more about {{ media.alt }}">
+                  <img
+                    {% if forloop.index0 < 2 %}
+                      src="{{ media | image_url: width: 2000, format: 'webp' }}"
+                      srcset="
+                        {{ media | image_url: width: 500, format: 'webp' }} 400w,
+                        {{ media | image_url: width: 1000, format: 'webp' }} 600w,
+                        {{ media | image_url: width: 2000, format: 'webp' }} 800w"
+                    {% else %}
+                      src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                      data-src="{{ media | image_url: width: 2000, format: 'webp' }}"
+                      data-srcset="
+                        {{ media | image_url: width: 500, format: 'webp' }} 400w,
+                        {{ media | image_url: width: 1000, format: 'webp' }} 600w,
+                        {{ media | image_url: width: 2000, format: 'webp' }} 800w"
+                    {% endif %}
+                    sizes="(max-width: 767px) 100vw, 544px"
+                    alt="{{ media.alt | escape }}"
+                    width="{{ media.width }}"
+                    height="{{ media.height }}"
+                    {% if forloop.first %}
+                      loading="eager" fetchpriority="high"
+                    {% else %}
+                      loading="lazy"
+                    {% endif %}>
+                </a>
+            {% endcase %}
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-button-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+            <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+          </svg>
+        </div>
+        <div class="swiper-button-next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+            <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+          </svg>
+        </div>
+        {% comment %} <div class="pro-card-colors_list_custom">
+          {% render "metafield-products", card_product: card_product, query_para: '?view=for-metafield-color' %}
+        </div> {% endcomment %}
+      </div>
+      <div class="product-card__content">
+        <div class="product-card__content__infos">
+          <a href="{{ card_product.url }}" class="product-card__content__infos__deets">
+            <h5 class="desc">{{ card_product.title }}</h5>
+            <div class="pro-card-colors_list_custom">
+              {% render "metafield-products", card_product: card_product, query_para: '?view=for-metafield-color' %}
+            </div>
+            <div class="product-card-pricebox">
+              {% if card_product.compare_at_price %}<p class="compare_at_price price">{%if card_product.compare_at_price != 0 %}{{ card_product.compare_at_price | money_without_trailing_zeros }}{% endif %}</p>{% endif %}
+              <p class="price">{{ card_product.price | money_without_trailing_zeros }}</p>
+            </div>
+          </a>
+          
+          
+         
+        
+
+          {% comment %}
+          {%- assign color_option_index = -1 -%}
+          {%- for option_name in card_product.options -%}
+            {%- if option_name == 'Color' or option_name == 'Colour' -%}
+              {%- assign color_option_index = forloop.index0 -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if color_option_index != -1 and show_count -%}
+            {%- assign color_list = '' -%}
+
+            {%- for variant in card_product.variants -%}
+              {%- assign color_value = variant.options[color_option_index] | strip -%}
+              {%- unless color_list contains color_value -%}
+                {%- assign color_list = color_list | append: color_value | append: ',' -%}
+              {%- endunless -%}
+            {%- endfor -%}
+
+            {%- assign unique_colors = color_list | split: ',' | compact -%}
+            {%- assign color_count = unique_colors | size -%}
+            {%- assign color_count = color_count | minus: 1 -%}
+
+            <div class="product-card__content__infos__colors">
+              <p>in {{ unique_colors.first }}</p>
+              <button aria-label="Select color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10">
+                  <circle cx="5.00008" cy="5.00008" r="5.00008" fill="currentColor" stroke="none" />
+                  <circle cx="9.9996" cy="5.00008" r="4.50008" stroke="currentColor" fill="none" />
+                </svg>
+              </button>
+              {% if card_product.metafields.custom.similar_products != blank %}
+                {% assign color_count = 0 %}
+                {% for meta_product in card_product.metafields.custom.similar_products.value %}
+                  {% unless meta_product.handle == card_product.handle %}
+                    {% assign color_count = color_count | plus: 1 %}
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+              {% if color_count > 0 %}
+                <p>+{{ color_count }}</p>
+              {% endif %}
+            </div>
+          {%- endif -%}
+          {% endcomment %}
+        </div>
+
+        <div class="pdp-card-option-wrap hidden">
+          <div class="product-card__content__add-to-cart">
+            {% comment %}
+            <div class="product-card__content__add-to-cart__colors hide_add_remove show">
+                {% render "metafield-products", card_product: card_product, query_para: '?view=for-metafield-color' %}
+                <div class="card-select-size-button-wrap">
+                  <button class="product-card__content__infos__add  option_control {{ card_product.type }}">Add to cart</button>
+                </div>
+            </div>
+            {% endcomment %}
+            {% comment %}
+              <div class="product-card__content__add-to-cart__quick{% unless size_option_available %} size_option_not_available{% endunless %}{% unless size_option_available or card_product.available %} hide{% endunless %}">
+                <button class="btn btn--dark"><small>QUICK ADD TO CART</small></button>
+              </div>
+            {% endcomment %}
+            <div class="product-card__content__add-to-cart__available show_add_remove show{% comment %}{% unless size_option_available or card_product.available %} show{% endunless %}{% endcomment %}">
+              <div class="product-card__content__add-to-cart__available__sizes pdp-card-sizeslist">
+                
+                <div class="size-select" data-recommended="10">
+                    <select class="size-select__select" name="size" aria-label="Select size">
+                      <option value="6">6</option>
+                      <option value="8">8</option>
+                      <option value="10" selected>10</option>
+                      <option value="12">12</option>
+                      <option value="14" disabled>14</option>
+                      <option value="16" disabled>16</option>
+                    </select>
+                  <div class="size-select__options{% unless card_product.available %} product_not_available hidden{% endunless %}">
+                    {% render 'grid-option-size', card_product: card_product %}
+                    <div class="successfully_ATC"></div>
+                    <div class="pro-card-notify_me hidden">OUT OF STOCK<span class="pro-card-notify_me-btn">NOTIFY ME</span></div>
+                  </div>
+                  <button class="btn btn--outline hidden"><small>RECOMMENDED SIZE</small></button>
+                </div>
+                {% comment %} <button class="btn btn--dark temp-atc-btn"><small>ADD TO CART</small></button> {% endcomment %}
+                <a href="{{ card_product.url }}" class="btn btn--dark atc_JS hidden{% unless card_product.available %} button_disabled{% endunless %}" disabled><small>{% if size_option_available or card_product.available %}ADD TO CART{% else %}OUT OF STOCK - NOTIFY ME{% endif %}</small></a>
+                {%- comment -%}
+                  <p class="price">{{ card_product.price | money_without_trailing_zeros }}</p>
+                {%- endcomment -%}
+              </div>
+              
+            </div>
+
+            <div class="product-card__content__add-to-cart__out-of-stock">
+              <button class="btn btn--dark button_disabled"><small>OUT OF STOCK - NOTIFY ME</small></button>
+            </div>
+          </div>
+        </div>
+      </div>     
+      
+    </div>
+  </li>
+{% endif %}
+
+{% endif %}
+
+{% comment %}
+  {%- if card_product and card_product != empty -%}
+    <li class="{{ class }} product-card">
+      <a href="{{ card_product.url | within: collection }}">
+        {%- if card_product.featured_media -%}
+          <div class="product-card__img">
+            <img src="{{ card_product.featured_media | img_url: 'master' }}"
+                 alt="{{ card_product.featured_media.alt | escape }}"
+                 width="{{ card_product.featured_media.width }}"
+                 height="{{ card_product.featured_media.height }}"
+                 loading="lazy" />
+          </div>
+        {%- endif -%}
+
+        <div class="product-card__content">
+          {%- if title_small -%}
+            <small class="product-card__content__desc">{{ card_product.title }}</small>
+          {%- else -%}
+            <h4 class="product-card__content__desc">{{ card_product.title }}</h4>
+          {%- endif -%}
+
+          {%- assign color_option_index = -1 -%}
+          {%- for option_name in card_product.options -%}
+            {%- if option_name == "Color" or option_name == "Colour" -%}
+              {%- assign color_option_index = forloop.index0 -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if color_option_index != -1 and show_count -%}
+            {%- assign color_list = '' -%}
+
+            {%- for variant in card_product.variants -%}
+              {%- assign color_value = variant.options[color_option_index] | strip -%}
+              {%- unless color_list contains color_value -%}
+                {%- assign color_list = color_list | append: color_value | append: ',' -%}
+              {%- endunless -%}
+            {%- endfor -%}
+
+            {%- assign unique_colors = color_list | split: ',' | compact -%}
+            {%- assign color_count = unique_colors | size -%}
+
+            <div class="product-card__content__colors product-card__content__colors--active">
+              <button aria-label="Select color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10">
+                  <circle cx="5.00008" cy="5.00008" r="5.00008" fill="currentColor" stroke="none" />
+                  <circle cx="9.9996" cy="5.00008" r="4.50008" stroke="currentColor" fill="none" />
+                </svg>
+              </button>
+              <p>+{{ color_count }}</p>
+            </div>
+          {%- endif -%}
+          <p class="product-card__content__price">{{ card_product.price | money }}</p>
+        </div>
+      </a>
+    </li>
+  {%- endif -%}
+{% endcomment %}

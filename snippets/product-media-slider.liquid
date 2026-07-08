@@ -1,0 +1,905 @@
+{% assign dd_template_name = product.template_suffix | split: '-' | first %}
+{% assign show_model_selector_raw = product.metafields.custom.show_model_selector.value | default: product.metafields.custom.show_model_selector %}
+
+{% assign show_model_selector = false %}
+
+{% if show_model_selector_raw == true or show_model_selector_raw == 'true' or show_model_selector_raw == 'True' %}
+  {% assign show_model_selector = true %}
+{% endif %}
+
+{% comment %} ============ GENDER FILTER SETUP ============ {% endcomment %}
+{% comment %}
+  Adjust the source of "unisex" here if it's not product.type.
+  e.g. product.tags contains 'unisex', or a metafield like
+  product.metafields.custom.gender
+{% endcomment %}
+{% assign product_type_lower = product.type | downcase %}
+{% if product_type_lower contains 'unisex' %}
+{% assign is_unisex_product = true %}
+{% endif %}
+
+
+{% assign collection_handle_lower = collection.handle | downcase %}
+{% assign collection_title_lower = collection.title | downcase %}
+
+{% comment %}
+  Women's collections: handle/title contains 'women', or handle is 'eyewear'
+  (add more handles to this list as needed, comma separated, no spaces)
+{% endcomment %}
+{% assign womens_collection_handles = 'eyewear' | split: ',' %}
+{% assign is_womens_collection = false %}
+{% if collection_handle_lower contains 'women' or collection_title_lower contains 'women' or womens_collection_handles contains collection_handle_lower %}
+  {% assign is_womens_collection = true %}
+{% endif %}
+
+{% comment %}
+  Men's collections: handle/title contains 'men' (checked only when not already
+  matched as women's, since 'women' contains 'men'), or handle is 'eyewear-1'
+  (add more handles to this list as needed, comma separated, no spaces)
+{% endcomment %}
+{% assign mens_collection_handles = 'eyewear-1' | split: ',' %}
+{% assign is_mens_collection = false %}
+{% if is_womens_collection == false %}
+  {% if collection_handle_lower contains 'men' or collection_title_lower contains 'men' or mens_collection_handles contains collection_handle_lower %}
+    {% assign is_mens_collection = true %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Unisex product in a women's collection -> hide men's images {% endcomment %}
+{% assign hide_mens_images = false %}
+{% if is_unisex_product and is_womens_collection %}
+  {% assign hide_mens_images = true %}
+{% endif %}
+
+{% comment %} Unisex product in a men's collection -> hide women's images {% endcomment %}
+{% assign hide_womens_images = false %}
+{% if is_unisex_product and is_mens_collection %}
+  {% assign hide_womens_images = true %}
+{% endif %}
+{% comment %} ============ END GENDER FILTER SETUP ============ {% endcomment %}
+
+{% if product.template_suffix == 'variant-selector' or dd_template_name == 'dd_swatch' %}
+  {% assign colors = 'color,colors,colour,colours,Color,Colors,Colour,Colours' | split: ',' %}
+  {% liquid
+    assign selected_value = blank
+    for option in product.options_with_values
+      if colors contains option.name
+        assign selected_value = option.selected_value | downcase
+        break
+      elsif option.name == 'Size'
+        assign selected_value = option.selected_value | downcase
+      endif
+    endfor
+  %}
+
+  <div class="detail__sliders product col--6 col--md--4 col--lg--6">
+
+    {% assign model_keys = '' %}
+    {% assign first_model_title = '' %}
+
+    {% for media in product.media %}
+      {% if media.media_type == 'image' and media.alt contains '|' and media.alt contains 'Size' %}
+        {% assign alt_parts = media.alt | split: '|' %}
+        {% assign option_value = alt_parts[0] | strip | downcase %}
+        {% assign model_title = alt_parts[1] | strip %}
+        {% assign model_key = model_title | downcase | handleize %}
+
+        {% unless model_keys contains model_key %}
+          {% assign model_keys = model_keys | append: model_key | append: ',' %}
+          {% if first_model_title == blank %}
+            {% assign first_model_title = model_title %}
+          {% endif %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign model_keys = '' %}
+    {% assign first_model_title = '' %}
+
+    {% for media in product.media %}
+      {% if media.media_type == 'image' and media.alt contains '|' and media.alt contains 'Size' %}
+        {% assign alt_parts = media.alt | split: '|' %}
+        {% assign option_value = alt_parts[0] | strip | downcase %}
+        {% assign model_title = alt_parts[1] | strip %}
+        {% assign model_key = model_title | downcase | handleize %}
+
+        {% assign alt_lower = media.alt | downcase %}
+        {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+        {% assign is_mens_image = false %}
+        {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+          {% assign is_mens_image = true %}
+        {% endif %}
+
+        {% if selected_value == blank or option_value == selected_value %}
+          {% assign should_hide_media = false %}
+          {% if hide_mens_images and is_mens_image %}
+            {% assign should_hide_media = true %}
+          {% endif %}
+          {% if hide_womens_images and is_womens_image %}
+            {% assign should_hide_media = true %}
+          {% endif %}
+          {% unless should_hide_media %}
+            {% unless model_keys contains model_key %}
+              {% assign model_keys = model_keys | append: model_key | append: ',' %}
+              {% if first_model_title == blank %}
+                {% assign first_model_title = model_title %}
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign current_variant = product.selected_or_first_available_variant %}
+    {% assign default_fit_content = current_variant.metafields.custom.fit_and_fabric_accordion_3_content 
+      | default: current_variant.metafields.custom.fit_and_fabric_accordion_3_contents 
+      | default: product.metafields.custom.accordion_3_content 
+    %}
+    {% assign default_fit_text_full = default_fit_content | metafield_text | default: default_fit_content | strip_html | strip %}
+    {% assign default_fit_text = default_fit_text_full %}
+
+    {% if default_fit_text_full contains 'wearing a Size' %}
+      {% assign default_fit_text_parts = default_fit_text_full | split: 'wearing a Size' %}
+      {% assign before_wearing_size = default_fit_text_parts[0] | split: '.' %}
+      {% assign last_sentence_start = before_wearing_size | last | strip %}
+      {% assign size_part = default_fit_text_parts[1] | split: '.' | first | strip %}
+      {% assign default_fit_text = last_sentence_start | append: ' wearing a Size ' | append: size_part | append: '.' %}
+    {% endif %}
+
+    {% assign default_model_size_raw = default_fit_text | split: 'Size' | last | remove: '.' | strip %}
+    {% assign default_model_size = default_model_size_raw | split: ' ' | first | strip %}
+    {% assign default_model_name = default_fit_text | split: ' is ' | first | strip %}
+
+    {% assign has_default_model_info = false %}
+
+    {% if default_fit_text contains ' is ' and default_fit_text contains 'Size' and default_model_size != blank and default_model_name != blank %}
+      {% assign has_default_model_info = true %}
+      {% assign default_model_title = default_model_name | append: ' is a UK Size ' | append: default_model_size %}
+      {% assign default_model_label = 'Size ' | append: default_model_size %}
+    {% endif %}
+
+    {% if show_model_selector %}
+      <div class="model-size-popover" data-model-switcher data-current-color="{{ selected_value | escape }}">
+        <div class="model-size-popover__header">
+          <div class="model-size-popover__header_inner">
+            <div class="model-size-popover__title">{{ default_fit_text }}</div>
+            <button type="button" class="model-size-popover__change">Change Model</button>
+          </div>
+          <button type="button" class="model-size-popover__close" aria-label="Close">×</button>
+        </div>
+
+        <div class="model-size-popover__list">
+          {% assign default_color_keys = '' %}
+
+          {% for media in product.media %}
+            {% if media.media_type == 'image' %}
+              {% assign alt_parts = media.alt | split: '|' %}
+              {% assign first_part = alt_parts[0] | strip %}
+              {% assign second_part = alt_parts[1] | strip %}
+              {% assign option_value = '' %}
+              {% assign is_model_image = false %}
+
+              {% if media.alt contains '|' %}
+                {% if second_part contains 'Size' %}
+                  {% assign option_value = first_part | downcase | strip %}
+                  {% assign is_model_image = true %}
+                {% else %}
+                  {% assign option_value = second_part | downcase | strip %}
+                {% endif %}
+              {% else %}
+                {% assign option_value = media.alt | downcase | strip %}
+              {% endif %}
+
+              {% assign default_color_key = 'default-model-' | append: option_value | handleize %}
+
+              {% assign alt_lower = media.alt | downcase %}
+              {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+              {% assign is_mens_image = false %}
+              {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+                {% assign is_mens_image = true %}
+              {% endif %}
+
+              {% unless is_model_image %}
+                {% assign should_hide_media = false %}
+                {% if hide_mens_images and is_mens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {% if hide_womens_images and is_womens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {% unless should_hide_media %}
+                  {% unless default_color_keys contains default_color_key %}
+                    {% assign default_color_keys = default_color_keys | append: default_color_key | append: ',' %}
+                    {% if has_default_model_info %}
+                      <button
+                        type="button"
+                        class="different-model-item default-model-item{% if option_value == selected_value %} active{% endif %}"
+                        data-model-trigger="{{ default_color_key }}"
+                        data-model-title="{{ default_model_title | escape }}"
+                        data-model-fit-text="{{ default_fit_text | escape }}"
+                        data-model-color="{{ option_value | escape }}"
+                        data-default-model="true"
+                      >
+                        <div class="different-model-image">
+                          <img src="{{ media | img_url: '300x' }}" alt="{{ default_fit_text | escape }}">
+                        </div>
+                        <span>{{ default_model_label }}</span>
+                      </button>
+                    {%endif %}
+                  {% endunless %}
+                {% endunless %}
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+
+          {% assign model_keys = '' %}
+
+          {% for media in product.media %}
+            {% if media.media_type == 'image' and media.alt contains '|' and media.alt contains 'Size' %}
+              {% assign alt_parts = media.alt | split: '|' %}
+              {% assign option_value = alt_parts[0] | strip | downcase %}
+              {% assign model_title = alt_parts[1] | strip %}
+              {% assign model_fit_text = alt_parts[2] | strip %}
+              {% assign model_key = model_title | downcase | handleize %}
+              {% assign model_size_raw = model_title | split: 'Size' | last | strip %}
+              {% assign model_size = model_size_raw | split: ' ' | first | strip %}
+              {% assign model_label = 'Size ' | append: model_size %}
+
+              {% assign alt_lower = media.alt | downcase %}
+              {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+              {% assign is_mens_image = false %}
+              {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+                {% assign is_mens_image = true %}
+              {% endif %}
+
+              {% assign should_hide_media = false %}
+              {% if hide_mens_images and is_mens_image %}
+                {% assign should_hide_media = true %}
+              {% endif %}
+              {% if hide_womens_images and is_womens_image %}
+                {% assign should_hide_media = true %}
+              {% endif %}
+              {% unless should_hide_media %}
+                {% unless model_keys contains model_key %}
+                  {% assign model_keys = model_keys | append: model_key | append: ',' %}
+
+                  <button
+                    type="button"
+                    class="different-model-item"
+                    data-model-trigger="{{ model_key }}"
+                    data-model-title="{{ model_title | escape }}"
+                    data-model-fit-text="{{ model_fit_text | escape }}"
+                    data-model-color="{{ option_value | escape }}"
+                  >
+                    <div class="different-model-image">
+                      <img src="{{ media | img_url: '300x' }}" alt="{{ model_title | escape }}">
+                    </div>
+                    <span>{{ model_label }}</span>
+                  </button>
+                {% endunless %}
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="detail__sliders__main desk-only">
+      {%- for media in product.media -%}
+        {%- case media.media_type -%}
+          {%- when 'image' -%}
+            {% assign alt_parts = media.alt | split: '|' %}
+            {% assign option_value = '' %}
+            {% assign model_title = '' %}
+            {% assign model_fit_text = '' %}
+            {% assign model_key = '' %}
+
+            {% if media.alt contains '|' %}
+              {% assign first_part = alt_parts[0] | strip %}
+              {% assign second_part = alt_parts[1] | strip %}
+              {% assign third_part = alt_parts[2] | strip %}
+
+              {% if second_part contains 'Size' %}
+                {% assign option_value = first_part | downcase %}
+                {% assign model_title = second_part %}
+                {% assign model_fit_text = third_part %}
+                {% assign model_key = model_title | downcase | handleize %}
+              {% else %}
+                {% assign option_value = second_part | downcase %}
+              {% endif %}
+            {% else %}
+              {% assign option_value = media.alt | strip | downcase %}
+            {% endif %}
+
+            {% assign alt_lower = media.alt | downcase %}
+            {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+            {% assign is_mens_image = false %}
+            {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+              {% assign is_mens_image = true %}
+            {% endif %}
+
+            {%- if selected_value == blank or option_value == selected_value or show_model_selector and media.alt contains 'Size' -%}
+              {% assign should_hide_media = false %}
+              {% if hide_mens_images and is_mens_image %}
+                {% assign should_hide_media = true %}
+              {% endif %}
+              {% if hide_womens_images and is_womens_image %}
+                {% assign should_hide_media = true %}
+              {% endif %}
+              {%- unless should_hide_media -%}
+                {% if model_key == blank %}
+                  {% assign model_key = 'default-model-' | append: option_value | handleize %}
+                  {% assign model_title = default_fit_text %}
+                  {% assign model_fit_text = default_fit_text %}
+                {% endif %}
+                <div
+                  class="zoom-element"
+                  media_ID="{{ media.id }}"
+                  data_alt="{{ media.alt | escape }}"
+                  data-model="{{ model_key }}"
+                  data-model-title="{{ model_title | escape }}"
+                  data-model-fit-text="{{ model_fit_text | escape }}"
+                  data-model-color="{{ option_value | escape }}"
+                >
+                  <picture>
+                    <source
+                      srcset="{{ media | img_url: '1000x' }}"
+                      media="(max-width: 767px)"
+                      type="image/webp"
+                    >
+
+                    <source
+                      srcset="{{ media | img_url: '2000x' }}"
+                      media="(min-width: 768px)"
+                      type="image/webp"
+                    >
+
+                    <img
+                      src="{{ media | img_url: '1000x' }}"
+                      width="{{ media.width }}"
+                      height="{{ media.height }}"
+                      alt="{{ media.alt | escape }}"
+                      loading="lazy"
+                      data-zoom-src="{{ media | img_url: 'master' }}"
+                      class="responsive-product-image"
+                    >
+                  </picture>
+                </div>
+              {%- endunless -%}
+            {% endif %}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {% if section.settings.show_video %}
+        {% assign video_file = product.selected_or_first_available_variant.metafields.custom.product_video %}
+        {% if video_file != blank %}
+          <div class="custom-variant-video" data-custom-video>
+            <video 
+              playsinline 
+              preload="metadata"
+              style="width:100%; height:auto;"
+            >
+              <source src="{{ video_file | file_url }}" type="video/mp4">
+            </video>
+            <button class="video-play-button" aria-label="Play video">
+              <svg width="94" height="107" viewBox="0 0 94 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <foreignObject x="-6.6" y="-6.6" width="106.458" height="119.35"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(3.3px);clip-path:url(#bgblur_0_2671_2845_clip_path);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="6.6" d="M90.7578 48.7459C94.0911 50.6704 94.0911 55.4817 90.7578 57.4062L7.50218 105.474C4.16885 107.398 0.00217687 104.993 0.00217704 101.144L0.00218124 5.00836C0.00218141 1.15936 4.16885 -1.24627 7.50218 0.67823L90.7578 48.7459Z" fill="white" fill-opacity="0.54"/>
+                <defs>
+                <clipPath id="bgblur_0_2671_2845_clip_path" transform="translate(6.6 6.6)"><path d="M90.7578 48.7459C94.0911 50.6704 94.0911 55.4817 90.7578 57.4062L7.50218 105.474C4.16885 107.398 0.00217687 104.993 0.00217704 101.144L0.00218124 5.00836C0.00218141 1.15936 4.16885 -1.24627 7.50218 0.67823L90.7578 48.7459Z"/>
+                </clipPath></defs>
+              </svg>
+            </button>
+            {% if section.settings.media_text != blank %}
+              <span class="media_text">{{ section.settings.media_text }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+
+    </div>
+    <div class="mob-only">
+      <a href="{{routes.root_url }}" class="back-btn" id="back-btn">
+        ← Back
+      </a>
+      <div class="detail__sliders__main-slider">
+        <div class="swiper-wrapper">
+          {%- for media in product.media -%}
+            {% assign alt_parts = media.alt | split: '|' %}
+            {% assign option_value = '' %}
+            {% assign model_title = '' %}
+            {% assign model_fit_text = '' %}
+            {% assign model_key = '' %}
+
+            {% if media.alt contains '|' %}
+              {% assign first_part = alt_parts[0] | strip %}
+              {% assign second_part = alt_parts[1] | strip %}
+              {% assign third_part = alt_parts[2] | strip %}
+
+              {% if second_part contains 'Size' %}
+                {% assign option_value = first_part | downcase %}
+                {% assign model_title = second_part %}
+                {% assign model_fit_text = third_part %}
+                {% assign model_key = model_title | downcase | handleize %}
+              {% else %}
+                {% assign option_value = second_part | downcase %}
+              {% endif %}
+            {% else %}
+              {% assign option_value = media.alt | strip | downcase %}
+            {% endif %}
+
+            {% assign alt_lower = media.alt | downcase %}
+            {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+            {% assign is_mens_image = false %}
+            {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+              {% assign is_mens_image = true %}
+            {% endif %}
+
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                {%- if selected_value == blank or option_value == selected_value or show_model_selector and media.alt contains 'Size' -%}
+                  {% assign should_hide_media = false %}
+                  {% if hide_mens_images and is_mens_image %}
+                    {% assign should_hide_media = true %}
+                  {% endif %}
+                  {% if hide_womens_images and is_womens_image %}
+                    {% assign should_hide_media = true %}
+                  {% endif %}
+                  {%- unless should_hide_media -%}
+                    {% if model_key == blank %}
+                      {% assign model_key = 'default-model-' | append: option_value | handleize %}
+                      {% assign model_title = default_fit_text %}
+                      {% assign model_fit_text = default_fit_text %}
+                    {% endif %}
+                    <div
+                      class="zoom-element swiper-slide"
+                      media_ID="{{ media.id }}"
+                      data_alt="{{ media.alt | escape }}"
+                      data-model="{{ model_key }}"
+                      data-model-title="{{ model_title | escape }}"
+                      data-model-fit-text="{{ model_fit_text | escape }}"
+                      data-model-color="{{ option_value | escape }}"
+                    >
+                      <picture>
+                        <source
+                          srcset="{{ media | img_url: '1000x' }}"
+                          media="(max-width: 767px)"
+                          type="image/webp"
+                        >
+
+                        <source
+                          srcset="{{ media | img_url: '2000x' }}"
+                          media="(min-width: 768px)"
+                          type="image/webp"
+                        >
+
+                        <img
+                          src="{{ media | img_url: '1000x' }}"
+                          width="{{ media.width }}"
+                          height="{{ media.height }}"
+                          alt="{{ media.alt | escape }}"
+                          loading="lazy"
+                          data-zoom-src="{{ media | img_url: 'master' }}"
+                          class="responsive-product-image"
+                        >
+                      </picture>
+                    </div>
+                  {%- endunless -%}
+                {% endif %}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        <div class="swiper-button-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+            <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"></path>
+          </svg>
+        </div>
+        <div class="swiper-button-next">          
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+            <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"></path>
+          </svg>
+        </div>
+        <div class="swiper-pagination main-pagination"></div>
+      </div>
+      <div class="detail__sliders__thumb-slider">
+        <div class="swiper-wrapper">
+          {%- for media in product.media -%}
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                {% assign alt_parts = media.alt | split: '|' %}
+                {% assign option_value = '' %}
+                {% assign model_title = '' %}
+                {% assign model_fit_text = '' %}
+                {% assign model_key = '' %}
+
+                {% if media.alt contains '|' %}
+                  {% assign first_part = alt_parts[0] | strip %}
+                  {% assign second_part = alt_parts[1] | strip %}
+                  {% assign third_part = alt_parts[2] | strip %}
+
+                  {% if second_part contains 'Size' %}
+                    {% assign option_value = first_part | downcase %}
+                    {% assign model_title = second_part %}
+                    {% assign model_fit_text = third_part %}
+                    {% assign model_key = model_title | downcase | handleize %}
+                  {% else %}
+                    {% assign option_value = second_part | downcase %}
+                  {% endif %}
+                {% else %}
+                  {% assign option_value = media.alt | strip | downcase %}
+                {% endif %}
+
+                {% assign alt_lower = media.alt | downcase %}
+                {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+                {% assign is_mens_image = false %}
+                {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+                  {% assign is_mens_image = true %}
+                {% endif %}
+
+                {%- if selected_value == blank or option_value == selected_value or show_model_selector and media.alt contains 'Size' -%}
+                  {% assign should_hide_media = false %}
+                  {% if hide_mens_images and is_mens_image %}
+                    {% assign should_hide_media = true %}
+                  {% endif %}
+                  {% if hide_womens_images and is_womens_image %}
+                    {% assign should_hide_media = true %}
+                  {% endif %}
+                  {%- unless should_hide_media -%}
+                    <div
+                      class="detail__sliders__img swiper-slide"
+                      data_alt="{{ media.alt | escape }}"
+                      data-model="{{ model_key }}"
+                      data-model-title="{{ model_title | escape }}"
+                      data-model-fit-text="{{ model_fit_text | escape }}"
+                      data-model-color="{{ option_value | escape }}"
+                    >
+                      <picture>
+                        <!-- Mobile only -->
+                        <source
+                          srcset="{{ media | img_url: '200x' }}"
+                          media="(max-width: 767px)"
+                          type="image/webp"
+                        >
+
+                        <!-- Fallback image (only loads on mobile) -->
+                        <img
+                          src="{{ media | img_url: '200x' }}"
+                          width="400"
+                          height="auto"
+                          alt="{{ media.alt | escape }}"
+                          loading="lazy"
+                          class="mobile-only"
+                        >
+                      </picture>
+                    </div>
+                  {%- endunless -%}
+                {% endif %}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        <div class="swiper-button-prev">
+          {{ swiper-button-prev }}
+        </div>
+        <div class="swiper-button-next">
+          {{ swiper-button-next }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="detail__sliders product col--6 col--md--4 col--lg--6">
+    <div class="detail__sliders__main desk-only">
+      {%- for media in product.media -%}
+        {%- case media.media_type -%}
+          {%- when 'image' -%}
+            {% assign alt_parts = media.alt | split: '|' %}
+            {% assign option_value = '' %}
+            {% assign model_title = '' %}
+            {% assign model_fit_text = '' %}
+            {% assign model_key = '' %}
+
+            {% if media.alt contains '|' %}
+              {% assign first_part = alt_parts[0] | strip %}
+              {% assign second_part = alt_parts[1] | strip %}
+              {% assign third_part = alt_parts[2] | strip %}
+
+              {% if second_part contains 'Size' %}
+                {% assign option_value = first_part | downcase %}
+                {% assign model_title = second_part %}
+                {% assign model_fit_text = third_part %}
+                {% assign model_key = model_title | downcase | handleize %}
+              {% else %}
+                {% assign option_value = second_part | downcase %}
+              {% endif %}
+            {% else %}
+              {% assign option_value = media.alt | strip | downcase %}
+            {% endif %}
+
+            {% assign alt_lower = media.alt | downcase %}
+            {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+            {% assign is_mens_image = false %}
+            {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+              {% assign is_mens_image = true %}
+            {% endif %}
+
+            {% assign should_hide_media = false %}
+            {% if hide_mens_images and is_mens_image %}
+              {% assign should_hide_media = true %}
+            {% endif %}
+            {% if hide_womens_images and is_womens_image %}
+              {% assign should_hide_media = true %}
+            {% endif %}
+            {%- unless should_hide_media -%}
+              {% if model_key == blank %}
+                {% assign model_key = 'default-model-' | append: option_value | handleize %}
+                {% assign model_title = default_fit_text %}
+                {% assign model_fit_text = default_fit_text %}
+              {% endif %}
+              <div
+                class="zoom-element"
+                media_ID="{{ media.id }}"
+                data_alt="{{ media.alt | escape }}"
+                data-model="{{ model_key }}"
+                data-model-title="{{ model_title | escape }}"
+                data-model-fit-text="{{ model_fit_text | escape }}"
+                data-model-color="{{ option_value | escape }}"
+              >
+                <picture>
+                  <source
+                    srcset="{{ media | img_url: '1000x' }}"
+                    media="(max-width: 767px)"
+                    type="image/webp"
+                  >
+
+                  <source
+                    srcset="{{ media | img_url: '2000x' }}"
+                    media="(min-width: 768px)"
+                    type="image/webp"
+                  >
+
+                  <img
+                    src="{{ media | img_url: '1000x' }}"
+                    width="{{ media.width }}"
+                    height="{{ media.height }}"
+                    alt="{{ media.alt | escape }}"
+                    loading="lazy"
+                    data-zoom-src="{{ media | img_url: 'master' }}"
+                    class="responsive-product-image"
+                  >
+                </picture>
+              </div>
+            {%- endunless -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    <div class="mob-only">
+      <div class="detail__sliders__main-slider">
+        <div class="swiper-wrapper">
+          {%- for media in product.media -%}
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                {% assign alt_parts = media.alt | split: '|' %}
+                {% assign option_value = '' %}
+                {% assign model_title = '' %}
+                {% assign model_fit_text = '' %}
+                {% assign model_key = '' %}
+
+                {% if media.alt contains '|' %}
+                  {% assign first_part = alt_parts[0] | strip %}
+                  {% assign second_part = alt_parts[1] | strip %}
+                  {% assign third_part = alt_parts[2] | strip %}
+
+                  {% if second_part contains 'Size' %}
+                    {% assign option_value = first_part | downcase %}
+                    {% assign model_title = second_part %}
+                    {% assign model_fit_text = third_part %}
+                    {% assign model_key = model_title | downcase | handleize %}
+                  {% else %}
+                    {% assign option_value = second_part | downcase %}
+                  {% endif %}
+                {% else %}
+                  {% assign option_value = media.alt | strip | downcase %}
+                {% endif %}
+
+                {% assign alt_lower = media.alt | downcase %}
+                {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+                {% assign is_mens_image = false %}
+                {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+                  {% assign is_mens_image = true %}
+                {% endif %}
+
+                {% assign should_hide_media = false %}
+                {% if hide_mens_images and is_mens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {% if hide_womens_images and is_womens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {%- unless should_hide_media -%}
+                  {% if model_key == blank %}
+                    {% assign model_key = 'default-model-' | append: option_value | handleize %}
+                    {% assign model_title = default_fit_text %}
+                    {% assign model_fit_text = default_fit_text %}
+                  {% endif %}
+                  <div
+                    class="zoom-element swiper-slide"
+                    media_ID="{{ media.id }}"
+                    data_alt="{{ media.alt | escape }}"
+                    data-model="{{ model_key }}"
+                    data-model-title="{{ model_title | escape }}"
+                    data-model-fit-text="{{ model_fit_text | escape }}"
+                    data-model-color="{{ option_value | escape }}"
+                  >
+                    <picture>
+                      <source
+                        srcset="{{ media | img_url: '1000x' }}"
+                        media="(max-width: 767px)"
+                        type="image/webp"
+                      >
+
+                      <source
+                        srcset="{{ media | img_url: '2000x' }}"
+                        media="(min-width: 768px)"
+                        type="image/webp"
+                      >
+
+                      <img
+                        src="{{ media | img_url: '1000x' }}"
+                        width="{{ media.width }}"
+                        height="{{ media.height }}"
+                        alt="{{ media.alt | escape }}"
+                        loading="lazy"
+                        data-zoom-src="{{ media | img_url: 'master' }}"
+                        class="responsive-product-image"
+                      >
+                    </picture>
+                  </div>
+                {%- endunless -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        <div class="swiper-button-prev">
+          {{ swiper-button-prev }}
+        </div>
+        <div class="swiper-button-next">
+          {{ swiper-button-next }}
+        </div>
+        <div class="swiper-pagination main-pagination"></div>
+      </div>
+      <div class="detail__sliders__thumb-slider">
+        <div class="swiper-wrapper">
+          {%- for media in product.media -%}
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                {% assign alt_parts = media.alt | split: '|' %}
+                {% assign option_value = '' %}
+                {% assign model_title = '' %}
+                {% assign model_fit_text = '' %}
+                {% assign model_key = '' %}
+
+                {% if media.alt contains '|' %}
+                  {% assign first_part = alt_parts[0] | strip %}
+                  {% assign second_part = alt_parts[1] | strip %}
+                  {% assign third_part = alt_parts[2] | strip %}
+
+                  {% if second_part contains 'Size' %}
+                    {% assign option_value = first_part | downcase %}
+                    {% assign model_title = second_part %}
+                    {% assign model_fit_text = third_part %}
+                    {% assign model_key = model_title | downcase | handleize %}
+                  {% else %}
+                    {% assign option_value = second_part | downcase %}
+                  {% endif %}
+                {% else %}
+                  {% assign option_value = media.alt | strip | downcase %}
+                {% endif %}
+
+                {% assign alt_lower = media.alt | downcase %}
+                {% assign is_womens_image = false %}
+            {% if alt_lower contains 'women' or alt_lower contains 'woman' %}
+              {% assign is_womens_image = true %}
+            {% endif %}
+                {% assign is_mens_image = false %}
+                {% if is_womens_image == false and alt_lower contains 'men' or is_womens_image == false and alt_lower contains 'man' %}
+                  {% assign is_mens_image = true %}
+                {% endif %}
+
+                {% assign should_hide_media = false %}
+                {% if hide_mens_images and is_mens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {% if hide_womens_images and is_womens_image %}
+                  {% assign should_hide_media = true %}
+                {% endif %}
+                {%- unless should_hide_media -%}
+                  <div
+                    class="detail__sliders__img swiper-slide"
+                    data_alt="{{ media.alt | escape }}"
+                    data-model="{{ model_key }}"
+                    data-model-title="{{ model_title | escape }}"
+                    data-model-fit-text="{{ model_fit_text | escape }}"
+                    data-model-color="{{ option_value | escape }}"
+                  >
+                    <picture>
+                      <!-- Mobile only -->
+                      <source
+                        srcset="{{ media | img_url: '200x' }}"
+                        media="(max-width: 767px)"
+                        type="image/webp"
+                      >
+
+                      <!-- Fallback image (only loads on mobile) -->
+                      <img
+                        src="{{ media | img_url: '200x' }}"
+                        width="400"
+                        height="auto"
+                        alt="{{ media.alt | escape }}"
+                        loading="lazy"
+                        class="mobile-only"
+                      >
+                    </picture>
+                  </div>
+                {%- endunless -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        <div class="swiper-button-prev">
+          {{ swiper-button-prev }}
+        </div>
+        <div class="swiper-button-next">
+          {{ swiper-button-next }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+
+<script>
+document.addEventListener('click', function(e) {
+  const wrapper = e.target.closest('[data-custom-video]');
+  if (!wrapper) return;
+
+  const video = wrapper.querySelector('video');
+  const button = wrapper.querySelector('.video-play-button');
+
+  if (!video) return;
+
+  if (video.paused) {
+    video.setAttribute('controls', 'controls');
+    video.play();
+    if (button) button.style.display = 'none';
+  }
+});
+
+document.querySelectorAll('[data-custom-video] video').forEach(video => {
+  video.addEventListener('pause', () => {
+    const wrapper = video.closest('[data-custom-video]');
+    const button = wrapper.querySelector('.video-play-button');
+    if (button) button.style.display = '';
+  });
+});
+</script>

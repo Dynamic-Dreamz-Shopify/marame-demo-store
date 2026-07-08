@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_collection_banner_8kmx3q": {
+      "type": "main-collection-banner",
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid-merge",
+      "settings": {
+        "products_per_page": 10,
+        "show_variant_count": true,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true
+      }
+    },
+    "content_banner_rxpX9W": {
+      "type": "content-banner",
+      "disabled": true,
+      "settings": {
+        "heading": "Committed to quality. We believe in creating garments that endure, using only the highest quality materials that age beautifully over time. Lorem ipsum dolor sit amet consectetur adipiscing elit, libero aenean condimentum pulvinar primis. Venenatis dignissim.",
+        "content": "<p><strong>Marame</strong></p><p>Timeless Luxury.</p>"
+      }
+    },
+    "split_screen_EQ4Gwe": {
+      "type": "split-screen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Bottoms",
+        "collection_1_image": "shopify://shop_images/ba1853fb857cfe8e9591b14c69096468.png",
+        "collection_1_link": "shopify://collections/mens-bottoms",
+        "button_1_text": "View all",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#ffffff",
+        "collection_2": "",
+        "collection_2_title": "shirts",
+        "collection_2_image": "shopify://shop_images/674495fce1957cdcf19302cebd4fb073.jpg",
+        "collection_2_link": "shopify://collections/mens-tops-shirts",
+        "button_2_text": "View all",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main_collection_banner_8kmx3q",
+    "product-grid",
+    "content_banner_rxpX9W",
+    "split_screen_EQ4Gwe"
+  ]
+}

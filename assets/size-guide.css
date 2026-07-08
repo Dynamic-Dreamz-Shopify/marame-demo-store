@@ -1,0 +1,886 @@
+/* MARAME size guide — matches PDP typography, tabs, size pills, and buttons */
+
+.size-guide {
+  /* PDP tokens from dynamic.css */
+  --sg-box-radius: 4.64px;
+  --sg-btn-radius: 4.604px;
+  --sg-pill-radius: 100%;
+}
+
+.size-guide-trigger-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.75rem;
+  min-height: 22px;
+  line-height: 1;
+}
+
+.size-guide-trigger-divider {
+  color: #c8c8c8;
+  font-size: 10px;
+  line-height: 1;
+  user-select: none;
+}
+
+.size-guide-trigger {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: HelveticaNowProDisplayBold, sans-serif;
+  font-size: 10px;
+  line-height: 22px;
+  height: 22px;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 0.1rem;
+  color: #2a2a2d;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.size-guide-trigger:hover,
+.size-guide-trigger:focus-visible {
+  color: #383230;
+  outline: none;
+  text-decoration-thickness: 2px;
+}
+
+.default-prodcut_page .pdp-title-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.default-prodcut_page .pdp-title-price-row .detail__sidebar__colors__price {
+  flex-shrink: 0;
+}
+
+.default-prodcut_page .pdp-title-price-row .size-guide-trigger-wrap {
+  margin-left: auto;
+}
+
+.product .default_product_template .detail__sidebar__intro .pdp-title-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.product .default_product_template .detail__sidebar__intro .pdp-title-price-row .size-guide-trigger-wrap {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Modal shell */
+.size-guide {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  pointer-events: none;
+}
+
+.size-guide.is-open {
+  pointer-events: auto;
+}
+
+.size-guide__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.size-guide.is-open .size-guide__overlay {
+  opacity: 1;
+}
+
+.size-guide__dialog {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: min(100%, 32.5rem);
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.size-guide.is-open .size-guide__dialog {
+  transform: translateX(0);
+}
+
+.size-guide__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.25rem 2.5rem 0;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.size-guide__title {
+  margin: 0;
+  font-family: HelveticaNowProDisplayBold, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2;
+  letter-spacing: 0.42px;
+  color: #2a2a2d;
+  text-align: center;
+  text-transform: none;
+}
+
+.size-guide__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: transparent;
+  color: #2a2a2d;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.size-guide__close svg {
+  width: auto;
+  height: auto;
+}
+
+.size-guide__close:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: 2px;
+}
+
+/* Tabs — product-tabs pattern */
+.size-guide__tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 1.25rem 1.5rem;
+  padding: 0 0 0.35rem;
+  border-bottom: 0.31px solid #000;
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+
+.size-guide__tab {
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: HelveticaNowDisplayRegular, sans-serif;
+  font-weight: 400;
+  font-size: 10.78px;
+  line-height: 27.71px;
+  padding: 0;
+  color: #8f8f8f;
+  text-transform: none;
+  border-bottom: 0;
+  white-space: nowrap;
+}
+
+.size-guide__tab.is-active {
+  color: #000;
+  font-family: HelveticaNowDisplayBold, sans-serif;
+  font-weight: 700;
+}
+
+.size-guide__tab:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: 2px;
+}
+
+.size-guide__body {
+  overflow: auto;
+  padding: 0 1.25rem 2rem;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
+}
+
+.size-guide__panel {
+  display: none;
+}
+
+.size-guide__panel.is-active {
+  display: block;
+}
+
+.size-guide__image-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.size-guide__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.size-guide__intro,
+.size-guide__notes,
+.size-guide__intro p,
+.size-guide__notes p {
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+  text-transform: none;
+}
+
+.size-guide__intro,
+.size-guide__notes {
+  margin-bottom: 1.25rem;
+}
+
+.size-guide__intro p,
+.size-guide__notes p {
+  margin: 0 0 0.65rem;
+}
+
+.size-guide__controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.size-guide__label {
+  display: block;
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #2a2a2d;
+  margin-bottom: 0.5rem;
+}
+
+.size-guide__select {
+  width: 100%;
+  appearance: none;
+  border: 0.25px solid #2a2a2d;
+  background: #fff;
+  color: #2a2a2d;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.24px;
+  padding: 0.45rem 2rem 0.45rem 0.65rem;
+  border-radius: var(--sg-box-radius);
+  min-height: 35px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232A2A2D' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+/* CM/IN toggle — legacy size-chart pill */
+.size-guide__unit-toggle {
+  display: flex;
+  width: 100%;
+  max-width: 160px;
+  background-color: #f6f6f6;
+  padding: 2px;
+  border-radius: 150px;
+  font-size: 10px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.size-guide__unit-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  height: calc(100% - 4px);
+  background-color: #2a2a2d;
+  border-radius: 100px;
+  transition: transform 0.2s ease;
+  z-index: 0;
+}
+
+.size-guide__unit-toggle:has(.size-guide__unit-btn[data-size-guide-unit='in'].is-active)::after {
+  transform: translateX(100%);
+}
+
+.size-guide__unit-btn {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: transparent;
+  font-family: HelveticaNowProDisplayBold, sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #2a2a2d;
+  cursor: pointer;
+  padding: 0.15rem 0;
+  text-transform: uppercase;
+}
+
+.size-guide__unit-toggle:has(.size-guide__unit-btn[data-size-guide-unit='cm'].is-active) .size-guide__unit-btn[data-size-guide-unit='in'],
+.size-guide__unit-toggle:has(.size-guide__unit-btn[data-size-guide-unit='in'].is-active) .size-guide__unit-btn[data-size-guide-unit='cm'] {
+  color: #2a2a2d;
+}
+
+.size-guide__unit-btn.is-active {
+  color: #fff;
+}
+
+/* Table */
+.size-guide__table-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -0.15rem;
+  padding: 0 0.15rem;
+  border: 0.25px solid #ebebeb;
+  border-radius: var(--sg-box-radius);
+}
+
+.size-guide__table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.size-guide__th,
+.size-guide__td {
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #2a2a2d;
+  text-align: center;
+  padding: 11px 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.size-guide__th:not(.size-guide__th--measure),
+.size-guide__td:not(.size-guide__td--measure) {
+  min-width: 2.75rem;
+}
+
+.size-guide__th--measure,
+.size-guide__td--measure {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #fff;
+  min-width: 9rem;
+  max-width: 12rem;
+  white-space: normal;
+  box-shadow: 1px 0 0 #f0f0f0;
+  text-transform: none;
+}
+
+.size-guide__th {
+  font-family: HelveticaNowProDisplayBold, sans-serif;
+  font-weight: 700;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.size-guide__tbody tr:nth-child(odd) .size-guide__td:not(.size-guide__td--measure) {
+  background: #f6f6f6;
+}
+
+.size-guide__measure-name {
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 10.78px;
+  text-transform: none;
+}
+
+.size-guide__help {
+  appearance: none;
+  border: 0.25px solid #2a2a2d;
+  background: #fff;
+  color: #2a2a2d;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 9px;
+  line-height: 1;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+  cursor: help;
+  padding: 0;
+}
+
+.size-guide__empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 10.78px;
+  color: #8f8f8f;
+}
+
+body.size-guide-open {
+  overflow: hidden;
+}
+
+/* Find Your Size */
+.size-finder {
+  text-transform: none;
+}
+
+.size-finder__privacy {
+  margin: 0 0 1.25rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #8f8f8f;
+}
+
+.size-finder__progress {
+  margin-bottom: 1rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #8f8f8f;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.size-finder__heading {
+  margin: 0 0 0.35rem;
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.42px;
+  color: #2a2a2d;
+}
+
+.size-finder__lede {
+  margin: 0 0 1.25rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+}
+
+.size-finder__group {
+  border: 0;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.size-finder__group .size-guide__label {
+  margin-bottom: 0.65rem;
+}
+
+.size-finder__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+/* Region / fit pills — rounded rectangles like PDP dropdown + filters */
+.size-finder__pill {
+  appearance: none;
+  position: relative;
+  z-index: 1;
+  min-width: 52px;
+  width: auto;
+  height: 35px;
+  padding: 0 0.85rem;
+  border: 0.5px solid #2a2a2d;
+  border-radius: var(--sg-box-radius);
+  background: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Size number pills — same circles as PDP .detail__sidebar__sizes .option */
+.size-finder__pill[data-finder-field='usual_size'] {
+  width: 35px;
+  min-width: 35px;
+  padding: 0;
+  border-radius: var(--sg-pill-radius);
+}
+
+.size-finder__pill small {
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.24px;
+  color: #2a2a2d;
+  pointer-events: none;
+}
+
+.size-finder__pill[data-finder-field='usual_size'] small {
+  font-size: 10px;
+  letter-spacing: -0.1px;
+}
+
+.size-finder__pill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background: #2a2a2d;
+  border-radius: inherit;
+  opacity: 0;
+}
+
+.size-finder__pill[data-finder-field='usual_size']::after {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  margin: auto;
+  border-radius: var(--sg-pill-radius);
+}
+
+.size-finder__pill.is-selected::after {
+  opacity: 1;
+}
+
+.size-finder__pill.is-selected small {
+  color: #fff;
+}
+
+.size-finder__pill:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: 1px;
+}
+
+.size-finder__choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.size-finder__choice {
+  appearance: none;
+  width: 100%;
+  border: 0.31px solid #2a2a2d;
+  border-radius: var(--sg-box-radius);
+  background: #fff;
+  text-align: left;
+  padding: 0.85rem 0.75rem;
+  cursor: pointer;
+  color: #2a2a2d;
+}
+
+.size-finder__choice.is-selected {
+  border-color: #2a2a2d;
+  background: #fafafa;
+}
+
+.size-finder__choice-label {
+  display: block;
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+}
+
+.size-finder__choice-hint {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #8f8f8f;
+}
+
+.size-finder__choice.is-selected .size-finder__choice-label {
+  font-family: HelveticaNowDisplayBold, sans-serif;
+  font-weight: 700;
+}
+
+.size-finder__choice:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: -1px;
+}
+
+.size-finder__fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.size-finder__field {
+  display: block;
+}
+
+.size-finder__input {
+  width: 100%;
+  margin-top: 0.4rem;
+  border: 0.31px solid #2a2a2d;
+  border-radius: var(--sg-box-radius);
+  background: #fff;
+  color: #2a2a2d;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.24px;
+  padding: 0.45rem 0.65rem;
+  min-height: 35px;
+}
+
+.size-finder__input:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: 1px;
+}
+
+.size-finder__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 1.75rem;
+}
+
+.size-finder__btn {
+  appearance: none;
+  width: 100%;
+  border: 0.384px solid #2a2a2d;
+  background: #fff;
+  color: #2a2a2d;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  padding: 5px 5px 4px;
+  min-height: 35px;
+  border-radius: var(--sg-btn-radius);
+  cursor: pointer;
+}
+
+.size-finder__btn--primary {
+  background: #2a2a2d;
+  color: #fff;
+  border-color: #2a2a2d;
+}
+
+.size-finder__btn--ghost {
+  background: #fff;
+}
+
+.size-finder__btn:focus-visible {
+  outline: 1px solid #2a2a2d;
+  outline-offset: 1px;
+}
+
+.size-finder__result-card {
+  padding: 1rem 0.75rem;
+  border: 0.31px solid #ddd;
+  border-radius: var(--sg-box-radius);
+  background: #fafafa;
+}
+
+.size-finder__result-kicker {
+  margin: 1rem 0 0.35rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #8f8f8f;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.size-finder__result-size {
+  margin: 0 0 0.75rem;
+  font-family: HelveticaNowProDisplayBold, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.875;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  color: #2a2a2d;
+}
+
+.size-finder__result-size span {
+  font-size: 20px;
+}
+
+.size-finder__result-secondary {
+  margin: 0 0 0.75rem;
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+}
+
+.size-finder__result-message,
+.size-finder__result-advice,
+.size-finder__result-notes,
+.size-finder__result-notes p {
+  margin: 0 0 0.65rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+}
+
+.size-finder__result-reasons {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.75rem;
+  border: 0.25px solid #ebebeb;
+  border-radius: var(--sg-box-radius);
+  background: #fafafa;
+}
+
+.size-finder__result-reasons-title {
+  margin: 0 0 0.35rem;
+  font-family: HelveticaNowProDisplayMedium, sans-serif;
+  font-weight: 500;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+}
+
+.size-finder__result-reasons ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.size-finder__result-reasons li {
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+  color: #2a2a2d;
+  margin-bottom: 0.25rem;
+}
+
+.size-finder__result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 767px) {
+  .size-guide__dialog {
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    max-height: 88vh;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    transform: translateY(100%);
+  }
+
+  .size-guide.is-open .size-guide__dialog {
+    transform: translateY(0);
+  }
+
+  .size-guide__header {
+    padding: 0.65rem 2.5rem 0;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .size-guide__close {
+    top: 1rem;
+    right: 0.65rem;
+  }
+
+  .size-guide__tabs {
+    margin-inline: 1rem;
+  }
+
+  .size-guide__body {
+    padding-inline: 1rem;
+  }
+
+  .size-guide__controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .size-guide__dialog {
+    top: calc(var(--header-height, 0px) + 3.125rem);
+    height: calc(100% - (var(--header-height, 0px) + 3.125rem));
+    max-width: 50%;
+    padding-left: 1.875rem;
+    padding-right: var(--spacer, 1.25rem);
+    box-shadow: none;
+  }
+}
+
+/*
+ * Force PDP corner radii — theme global styles load after section CSS
+ * and can flatten buttons/inputs inside .product.
+ */
+.size-guide button.size-finder__pill,
+.size-guide button.size-finder__choice,
+.size-guide button.size-finder__btn,
+.size-guide .size-finder__input,
+.size-guide .size-guide__select,
+.size-guide .size-finder__result-card,
+.size-guide .size-guide__table-scroll {
+  border-radius: var(--sg-box-radius) !important;
+}
+
+.size-guide button.size-finder__btn {
+  border-radius: var(--sg-btn-radius) !important;
+}
+
+.size-guide button.size-finder__pill[data-finder-field='usual_size'] {
+  border-radius: var(--sg-pill-radius) !important;
+}
+
+.size-guide button.size-finder__pill::after {
+  border-radius: inherit !important;
+}
+
+.size-guide button.size-finder__btn::before,
+.size-guide button.size-finder__btn::after {
+  display: none;
+}

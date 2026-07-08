@@ -1,0 +1,382 @@
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+
+{{ 'component-show-more.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+{%- unless collection.template_suffix == 'fragrances' or collection.template_suffix == 'care-guide' -%}
+  {{ 'default-collection.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+{% assign product_tags = "" %}
+{% assign collection_handle = collection.handle %} <!-- Get the current collection handle -->
+
+<!-- Collect unique product tags from products -->
+{% for product in collection.products %}
+  {% for tag in product.tags %}
+    {% assign tag_handle = tag | handle %}
+    {% unless product_tags contains tag_handle %}
+      {% assign product_tags = product_tags | append: tag_handle | append: "," %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %} {% render 'collection-filter-bar' %} {% endcomment %}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+  {% comment %}      
+    <section class="filters row">
+      <div class="col--6 col--md--4 col--lg--6">
+          <h4>Filter</h4>
+      </div>
+      <div class="filters__content col--6 col--md--4 col--lg--6"> 
+          <ul class="filters__content__list">
+            {% assign product_tags = product_tags | split: "," %}
+          
+            {%- for tag_handle in product_tags -%}
+              {% if tag_handle contains collection_handle and tag_handle != collection_handle %}
+                {% assign remaining_tag = tag_handle | remove_first: collection_handle | remove_first: "-" %}
+                {% assign tag_dash_count = tag_handle | split: "-" | size | minus: 1 %}
+                {% assign collection_dash_count = collection_handle | split: "-" | size | minus: 1 %}
+                {% assign expected_dash_count = collection_dash_count | plus: 1 %}
+          
+                <!-- Ensure only direct subcategories are displayed -->
+                {% if tag_dash_count == expected_dash_count %}
+                  <li>
+                    <a href="/collections/{{ tag_handle }}" class="btn btn--underline">
+                      <h4>{{ collections[tag_handle].title | default: remaining_tag | replace: "-", " " | capitalize }}</h4>
+                    </a>
+                  </li>
+                {% endif %}
+              {% endif %}
+            {%- endfor -%}
+          </ul>
+          <p class="filters__content__results"><span>{{ collection.all_products_count }}</span> {{ collection.all_products_count | pluralize: 'result', 'results' }}</p>
+      </div>
+    </section>
+  {% endcomment %}
+{% comment %}
+    <aside
+      aria-labelledby="verticalTitle"
+      class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+      id="main-collection-filters"
+      data-id="{{ section.id }}"
+    >
+      {% render 'facets',
+        results: collection,
+        enable_filtering: section.settings.enable_filtering,
+        enable_sorting: section.settings.enable_sorting,
+        filter_type: section.settings.filter_type,
+        paginate: paginate
+      %}
+    </aside>
+{% endcomment %}
+  <section class="filters hidden">
+    {% comment %}
+      <div class="filters__left">
+          <h6>Filter</h6>
+      </div>
+  
+      <ul class="filters__list">
+        {% assign product_tags = product_tags | split: "," %}
+        {%- for tag_handle in product_tags -%}
+          {% if collection_handle contains 'womens' %}
+            {% if tag_handle contains collection_handle %}
+              {% assign remaining_tag = tag_handle | remove_first: collection_handle | remove_first: "-" %}
+              {% assign tag_dash_count = tag_handle | split: "-" | size | minus: 1 %}
+              {% assign collection_dash_count = collection_handle | split: "-" | size | minus: 1 %}
+              {% assign expected_dash_count = collection_dash_count | plus: 1 %}
+        
+              <!-- Ensure only direct subcategories are displayed -->
+              {% if tag_dash_count == expected_dash_count %}
+                <li>
+                  <a href="{{ collection.url }}/{{ tag_handle }}" class="btn btn--underline">
+                    <h4>{{ collections[tag_handle].title | default: remaining_tag | replace: "-", " " | capitalize }}</h4>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% else %}
+            {% if tag_handle contains collection_handle %}
+              {% unless tag_handle contains 'womens' %}
+                {% assign remaining_tag = tag_handle | remove_first: collection_handle | remove_first: "-" %}
+                {% assign tag_dash_count = tag_handle | split: "-" | size | minus: 1 %}
+                {% assign collection_dash_count = collection_handle | split: "-" | size | minus: 1 %}
+                {% assign expected_dash_count = collection_dash_count | plus: 1 %}
+          
+                <!-- Ensure only direct subcategories are displayed -->
+                {% if tag_dash_count == expected_dash_count %}
+                  <li>
+                    <a href="{{ collection.url }}/{{ tag_handle }}" class="btn btn--underline">
+                      <h4>{{ collections[tag_handle].title | default: remaining_tag | replace: "-", " " | capitalize }}</h4>
+                    </a>
+                  </li>
+                {% endif %}
+              {% endunless %}
+            {% endif %}
+          {% endif %}
+        {%- endfor -%}
+      </ul>
+  
+    <ul class="filters__list">
+      {% if collection.metafields.custom.collection_filter != blank %}
+        {% for single_collection in collection.metafields.custom.collection_filter.value %}
+          {% unless single_collection.id == collection.id %}
+          <li>
+            <a href="{{ single_collection.url }}" class="btn btn--underline">
+              <h4>{{ single_collection.title | capitalize }}</h4>
+            </a>
+          </li>
+        {% endunless %}
+        {% endfor %}
+      {% endif %}
+    </ul>
+
+    <div class="filters__left">
+      <div class="filters__left__mbl">
+      
+        <div class="filters__left__main">
+          <select name="Filters" class="c-select filter" aria-label="Filters">
+            <option value="" disabled selected>Filters +</option>
+            {%- for filter in collection.filters -%}
+              {% case filter.type %}
+              {% when 'boolean', 'list' %}
+                <option value="{{ filter.label | downcase | replace: ' ', '-' }}">{{ filter.label }}</option>
+              {% endcase %}
+            {%- endfor -%}
+            <option value="category">Category</option>
+          </select>
+        </div>
+    
+         <div class="filters__left__secondary">
+          {%- for filter in collection.filters -%}
+            {% case filter.type %}            
+            {% when 'list', 'boolean' %}
+              <select id="{{ filter.label | downcase | replace: ' ', '-' }}" name="{{ filter.label }}" class="c-select filter" aria-label="{{ filter.label }}">
+                <option value="" disabled selected>{{ filter.label | upcase }}</option>
+                {%- for value in filter.values -%}
+                  <option value="{{ filter.param_name }}={{ value.value | url_escape }}">{{ value.label }}</option>
+                {%- endfor -%}
+              </select>
+            {% endcase %}
+          {%- endfor -%}
+
+          {% if collection.metafields.custom.collection_filter != blank %}
+            <select id="category" name="category" class="c-select filter" aria-label="category">
+              {% for single_collection in collection.metafields.custom.collection_filter.value %}
+                {% unless single_collection.id == collection.id %}
+                  <option value="{{ single_collection.url }}">{{ single_collection.title | capitalize }}</option>
+                {% endunless %}
+              {% endfor %}
+            </select>
+          {% endif %}
+      
+        </div>
+      </div>
+    </div>
+    {% endcomment %}
+
+    <div class="filters__left">
+      <div class="filter-panels">
+        <button class="filter-panels__trigger" id="filter-trigger-button">
+          <p>Filters</p>
+        </button>
+    
+        <div class="filter-panels__container" id="filter-panels-container">
+    
+          <div id="main-filter-panel" class="filter-panel">
+            <div class="filter-panel__header">
+              <p>Filters</p>
+              <button id="close-button">
+                <span class="sr-only">Close</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+                  <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                </svg>
+              </button>
+            </div>
+            
+    
+            <ul class="filter-panel__list">
+              {%- for filter in collection.filters -%}
+                {% case filter.type %}
+                {% when 'list' or 'boolean' %}
+                  <li class="filter-panel__item" data-group="{{ filter.label | downcase | replace: ' ', '-' }}">{{ filter.label }}</li>
+                {% endcase %}
+              {%- endfor -%}
+    
+              {%- if collection.metafields.custom.collection_filter != blank -%}
+                <li class="filter-panel__item" data-group="category">Category</li>
+              {%- endif -%}
+            </ul>
+    
+            <div class="filter-panel__ctas">
+              <button id="main-clear-button" class="btn btn--outline">Clear</button>
+              <button id="main-view-button" class="btn btn--dark">View</button>
+            </div>
+          </div>
+    
+          <div id="secondary-filter-panel" class="filter-panel">
+            <div class="filter-panel__header">
+              <p id="secondary-panel-title"></p>
+              <button id="back-button">
+                <span class="sr-only">Go back</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none">
+                  <path d="M4 1L1 4L4 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                </svg>
+              </button>
+              <button id="close-button">
+                <span class="sr-only">Close</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+                  <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                </svg>
+              </button>
+            </div>
+    
+            <div id="secondary-filter-options" class="filter-panel__list">
+              {%- for filter in collection.filters -%}
+                {% case filter.type %}
+                {% when 'list', 'boolean' %}
+                  <ul id="options-{{ filter.label | downcase | replace: ' ', '-' }}" class="filter-panel__list__group" style="display: none;">
+                    {%- for value in filter.values -%}
+                      <li class="filter-panel__item{% if value.active %} selected{% endif %}" data-value="{{ filter.param_name }}={{ value.value | url_escape }}">
+                        {{ value.label }}
+                        <span class="tick-svg"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
+                        <path d="M0.765625 2.63086L2.83823 4.15467" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        <path d="M2.83789 4.15474L5.9468 0.345215" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        </svg></span>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {% endcase %}
+              {%- endfor -%}
+    
+              {%- if collection.metafields.custom.collection_filter != blank -%}
+                <ul id="options-category" class="filter-panel__list__group" style="display: none;">
+                  {%- for single_collection in collection.metafields.custom.collection_filter.value -%}
+                    {%- unless single_collection.id == collection.id -%}
+                      <li class="filter-panel__item" onclick="custom_category_filter(this)" redirect-url="{{ single_collection.url }}" data-value="{{ single_collection.handle }}">
+                        {{ single_collection.title }}
+                        <span class="tick-svg"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
+                        <path d="M0.765625 2.63086L2.83823 4.15467" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        <path d="M2.83789 4.15474L5.9468 0.345215" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        </svg></span>
+                      </li>
+                    {%- endunless -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+    
+            <div class="filter-panel__ctas">
+              <button id="secondary-clear-button" class="btn btn--outline" disabled>Clear</button>
+              <button id="secondary-view-button" onclick="redirect_to_category(this)" class="btn btn--dark">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="filters__right">
+        <select name="Feature select" class="c-select filter" aria-label="Sort products by" id="sort-by-collection-product">
+            <option value="" disabled selected>Sort By</option>
+            <option value="latest" data_sort="created-descending">Latest</option>
+            <option value="high-to-low" data_sort="price-descending">Price: High To Low</option>
+            <option value="low-to-high" data_sort="price-ascending"><p>Price: Low To High</p></option>
+        </select>
+    </div>
+  
+  </section>
+  
+  
+  <section class="listing">
+    {%- if collection.products.size == 0 -%}
+       <h2 class="h1">
+        {{ 'sections.collection_template.empty' | t -}}
+      </h2>
+    {%- else -%}
+      <ul class="listing__list{% if collection.template_suffix == 'fragrances' %} collection-fragrances-div default-card-product{% endif %}">
+        {%- for product in collection.products -%}
+          {% render 'card-product', 
+            card_product: product,
+            show_count: section.settings.show_variant_count
+          %} 
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+      <div class="listing__more show" style="display: flex;">
+        <button id="load_more_product_JS" data_current_page="{{ paginate.current_page }}" data_next_page="{{ paginate.next.url | split: '&' | first }}" data_total_page="{{ paginate.pages }}">
+          <small>View More</small>
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#BBB" stroke-width=".926" d="m.591.362 4.63 4.168M.591.362l4.63 4.168M.591.362l4.63 4.168m-.619 0L9.233.362M4.602 4.53 9.233.362M4.602 4.53 9.233.362M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126m-.619 0L8.307 4.53M4.834 7.656 8.307 4.53M4.834 7.656 8.307 4.53"/></svg>
+        </button>
+      </div>
+      {% comment %}
+        {% render 'pagination', paginate: paginate, anchor: '' %}
+      {% endcomment %}
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+                                 
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 2,
+      "max": 36,
+      "step": 2,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_count",
+      "default": true,
+      "label": "Show Variants count"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    }    
+  ]
+}
+{% endschema %}

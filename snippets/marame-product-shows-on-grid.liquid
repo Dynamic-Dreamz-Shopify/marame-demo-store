@@ -1,0 +1,51 @@
+{%- comment -%}
+  Whether a product should appear on the native collection grid.
+  Uses collection membership (loop) + your existing collection tags (e.g. womens).
+
+  @param product {Product}
+  @param collection {Collection}
+  @param marame_use_random_grid {Boolean}
+  @output marame_product_show {Boolean}
+{%- endcomment -%}
+{%- assign marame_product_show = true -%}
+{%- assign tag_mode = section.settings.marame_tag_mode | default: 'collection' -%}
+{%- assign collection_handle = collection.handle -%}
+{%- render 'marame-collection-gender' -%}
+{%- assign extra_tag = section.settings.marame_include_tag | strip -%}
+
+{%- if marame_use_random_grid or section.settings.marame_display_mode == 'all' -%}
+  {%- comment -%} Random / all: use Shopify collection membership (products already in this collection) {%- endcomment -%}
+  {%- assign marame_product_show = true -%}
+{%- elsif tag_mode == 'custom' -%}
+  {%- assign marame_product_show = false -%}
+  {%- if extra_tag != blank and product.tags contains extra_tag -%}
+    {%- assign marame_product_show = true -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign marame_product_show = false -%}
+  {%- for tag in product.tags -%}
+    {%- assign tag_handle = tag | handleize -%}
+    {%- if tag_handle == collection_handle -%}
+      {%- assign marame_product_show = true -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- assign marame_is_curated_root = false -%}
+    {%- if collection_handle == 'mens' or collection_handle == 'womens' -%}
+      {%- assign marame_is_curated_root = true -%}
+    {%- endif -%}
+    {%- if marame_is_curated_root and marame_collection_gender != '' and tag_handle == marame_collection_gender -%}
+      {%- assign marame_product_show = true -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- if extra_tag != blank -%}
+      {%- assign extra_handle = extra_tag | handleize -%}
+      {%- if tag_handle == extra_handle or tag == extra_tag -%}
+        {%- assign marame_product_show = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if tag_mode == 'collection_or_custom' and extra_tag != blank and product.tags contains extra_tag -%}
+    {%- assign marame_product_show = true -%}
+  {%- endif -%}
+{%- endif -%}

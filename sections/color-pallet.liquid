@@ -1,0 +1,85 @@
+<section class="styleguide">
+  <div class="styleguide__palette row">
+      <div class="col--6 col--md--2 col--lg--2">
+          <h2 class="h1">{{ section.settings.section_title }}</h2>
+      </div>
+      <div class="col--0 col--lg--1"></div>
+      <ul class="col--6 col--md--6 col--lg--9">
+        {% for block in section.blocks %}
+           <li class="bg--{{ block.setting.color_name | handleize }} text--{{ block.settings.text_color }}" style="background-color: {{ block.settings.color_code }}">
+              <h4>{{ block.settings.color_name }}</h4>
+              <h2>{{ block.settings.color_code }}</h2>
+          </li>
+        {% endfor %}
+          <!-- <li class="bg--neutral-warm text--white">
+              <h4>neutral warm</h4>
+              <h2>#383230</h2>
+          </li>
+          <li class="bg--stone text--neutral-warm">
+              <h4>stone</h4>
+              <h2>#E6E0D4</h2>
+          </li>
+          <li class="bg--white text--neutral-warm">
+              <h4>white</h4>
+              <h2>#FFFFFF</h2>
+          </li> -->
+      </ul>
+  </div>
+  <div class="styleguide__divider"></div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Color palllet",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "color_box",
+        "name": "Color box",
+        "settings": [
+          {
+            "type": "text",
+            "id": "color_name",
+            "label": "Color name"
+          },
+          {
+            "type": "text",
+            "id": "color_code",
+            "label": "Color code (in HEX)"
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "options": [
+              {
+                "label": "White",
+                "value": "white"
+              },
+              {
+                "label": "Neutral warm",
+                "value": "neutral-warm"
+              }
+            ],
+            "label": "Text color"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Color pallet"
+      }
+    ]
+  }
+{% endschema %}

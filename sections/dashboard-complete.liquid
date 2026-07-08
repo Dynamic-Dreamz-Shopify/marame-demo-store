@@ -1,0 +1,51 @@
+<section class="dashboard dashboard--fit-finder-complete row">
+  <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+    <ul>
+      {% for block in section.blocks %}
+        {% if block.settings.text != blank %}
+          {% assign page_text_replace = block.settings.link | replace: "/pages/", "" %}
+          <li class="is_list{% if page.handle contains page_text_replace %} active{% endif %}">
+            <a href="{{ block.settings.link | default: "javascript: void(0)" }}"><p>{{ block.settings.text }}</p></a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="dashboard__body col--6 col--md--6 col--lg--10">
+    <div class="dashboard__body__intro">
+      <h1>
+        welcome back, <span class="dashboard__body__username">{{ customer.name }}</span>
+      </h1>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dashboard complete",
+  "class": "dashboard_complete",
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Text",
+          "id": "text"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dashboard complete"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,299 @@
+{%- assign show_section = false -%}
+
+{%- if section.settings.show_logged_in_section == 'both' -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_in' and customer -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_out' and customer == null -%}
+  {%- assign show_section = true -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {%- assign customer_gender = customer.metafields.custom.gender | default: '' | downcase -%}
+
+  {%- if section.settings.show_for_gender == 'female' and customer_gender != 'female' -%}
+    {%- assign show_section = false -%}
+  {%- elsif section.settings.show_for_gender == 'all' and customer_gender == 'female' and template.name == 'index' -%}
+    {%- assign show_section = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {% assign collection_1 = section.settings.collection_1 %}
+  {% assign collection_2 = section.settings.collection_2 %}
+  {% assign collection_image_1 = collection_1.featured_image -%}
+  {%- if product.metafields.custom.collection_1_image != blank -%}
+    {% assign collection_image_1 = product.metafields.custom.collection_1_image.value -%}
+  {%- elsif collection.metafields.custom.collection_1_image != blank -%}
+    {% assign collection_image_1 = collection.metafields.custom.collection_1_image.value %}
+  {%- elsif section.settings.collection_1_image != blank -%}
+    {% assign collection_image_1 = section.settings.collection_1_image %}
+  {%- endif -%}
+  {% assign collection_image_2 = collection_2.featured_image -%}
+  {%- if product.metafields.custom.collection_2_image != blank -%}
+    {% assign collection_image_2 = product.metafields.custom.collection_2_image.value -%}
+  {%- elsif collection.metafields.custom.collection_2_image != blank -%}
+    {% assign collection_image_2 = collection.metafields.custom.collection_2_image.value %}
+  {%- elsif section.settings.collection_2_image != blank -%}
+    {% assign collection_image_2 = section.settings.collection_2_image %}
+  {%- endif -%}
+ 
+  <section class="splitscreen {% if section.settings.show_logged_in_section == 'logged_out' %}splitscreen--hero{% endif %}">
+    <!-- Left Split -->
+    <div class="splitscreen__item">
+      <div class="splitscreen__item__bg">
+        {%- if collection_image_1 != blank -%}
+          <img 
+            src="{{ collection_image_1 | img_url: 'master' }}"
+            alt="{{ collection_image_1.alt | default: section.settings.collection_1_title }}"
+            loading="lazy"
+            data-p-speed="0.15"
+          >
+        {%- endif -%}
+      </div>
+      <div class="splitscreen__item__content">
+        {% assign collection_title_1 = collection_1.title %}
+        {% assign collection_btn_label = '' %}
+        {% assign collection_url = collection_1.url %}
+        
+        {%- if product.metafields.custom.collection_1_title != blank -%}
+          {% assign collection_title_1 = product.metafields.custom.collection_1_title.value %}
+        {%- elsif collection.metafields.custom.collection_1_title != blank -%}
+          {% assign collection_title_1 = collection.metafields.custom.collection_1_title.value %}
+        {%- elsif section.settings.button_1_text != blank -%}
+          {% assign collection_title_1 = section.settings.collection_1_title %}
+        {%- endif -%}        
+        {%- if product.metafields.custom.collection_1_label_url != blank -%}
+          {% assign collection_btn_label = product.metafields.custom.collection_1_label_url.value.text %}
+          {% assign collection_url = product.metafields.custom.collection_1_label_url.value.url %}
+        {%- elsif collection.metafields.custom.collection_1_label_url != blank -%}
+          {% assign collection_btn_label = collection.metafields.custom.collection_1_label_url.value.text %}
+          {% assign collection_url = collection.metafields.custom.collection_1_label_url.value.url %}
+        {%- elsif section.settings.button_1_text != blank -%}
+          {% assign collection_btn_label = section.settings.button_1_text %}
+          {% assign collection_url = section.settings.collection_1_link %}
+        {%- endif -%}
+        <h2 class="h1 featured-collection-title">{{ collection_title_1 }}</h2>
+        <div class="splitscreen__item__content__ctas">
+          {% if collection_btn_label != blank %}
+            <a href="{{ collection_url }}" 
+               class="btn btn--underline btn--light">
+              <h4>{{ collection_btn_label }}</h4>
+            </a>
+          {% endif %}
+          {% if section.settings.secondary__label %}
+            <a href="{{ section.settings.secondary_link }}" 
+               class="btn btn--underline btn--light">
+              <h4>{{ section.settings.secondary__label }}</h4>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Right Split -->
+    <div class="splitscreen__item">
+      <div class="splitscreen__item__bg">
+        {% if collection_image_2 != blank %}
+          <img 
+            src="{{ collection_image_2 | img_url: 'master' }}"
+            alt="{{ collection_image_2.alt | default: section.settings.collection_2_title }}"
+            loading="lazy"
+            data-p-speed="0.15"
+          >
+        {% endif %}
+      </div>
+      <div class="splitscreen__item__content">
+        {% assign collection_title_2 = collection_2.title %}
+        {% assign collection_btn_label_2 = '' %}
+        {% assign collection_url_2 = collection_2.url %}
+
+        {%- if product.metafields.custom.collection_2_title != blank -%}
+          {% assign collection_title_2 = product.metafields.custom.collection_2_title.value %}
+        {%- elsif collection.metafields.custom.collection_2_title != blank -%}
+          {% assign collection_title_2 = collection.metafields.custom.collection_2_title.value %}
+        {%- elsif section.settings.collection_2_title != blank -%}
+          {% assign collection_title_2 = section.settings.collection_2_title %}
+        {%- endif -%}
+        {%- if product.metafields.custom.collection_2_label_url != blank -%}
+          {% assign collection_btn_label_2 = product.metafields.custom.collection_2_label_url.value.text %}
+          {% assign collection_url_2 = product.metafields.custom.collection_2_label_url.value.url %}
+        {%- elsif collection.metafields.custom.collection_2_label_url != blank -%}
+          {% assign collection_btn_label_2 = collection.metafields.custom.collection_2_label_url.value.text %}
+          {% assign collection_url_2 = collection.metafields.custom.collection_2_label_url.value.url %}
+        {%- elsif section.settings.button_2_text != blank -%}
+          {% assign collection_btn_label_2 = section.settings.button_2_text %}
+          {% assign collection_url_2 = section.settings.collection_2_link %}
+        {%- endif -%}
+        <h2 class="h1 featured-collection-title">{{ collection_title_2 }}</h2>
+        <div class="splitscreen__item__content__ctas">
+          {% if collection_btn_label_2 != blank %}
+            <a href="{{ collection_url_2 }}" 
+               class="btn btn--underline btn--light">
+              <h4>{{ collection_btn_label_2 }}</h4>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Splitscreen Collections",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "show_logged_in_section",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "both",
+            "label": "Both"
+          },
+          {
+            "value": "logged_in",
+            "label": "Logged-in Customers Only"
+          },
+          {
+            "value": "logged_out",
+            "label": "Logged-out Customers Only"
+          }
+        ],
+        "default": "both"
+      },
+      {
+        "type": "radio",
+        "id": "show_for_gender",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "all",
+            "label": "Default"
+          },
+          {
+            "value": "female",
+            "label": "Female Customers Only"
+          }
+        ],
+        "default": "all"
+      },
+      {
+        "type": "header",
+        "content": "Section Header"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "FEATURED LOOK FOR YOU"
+      },
+      {
+        "type": "header",
+        "content": "Left Collection Settings"
+      },
+      {
+        "type": "collection",
+        "id": "collection_1",
+        "label": "Select Collection"
+      },
+      {
+        "type": "text",
+        "id": "collection_1_title",
+        "label": "Custom Collection Title",
+        "default": "Shop the Look"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection_1_image",
+        "label": "Custom Collection Image"
+      },
+      {
+        "type": "url",
+        "id": "collection_1_link",
+        "label": "Custom Collection Link"
+      },
+      {
+        "type": "text",
+        "id": "button_1_text",
+        "label": "Button Text",
+        "default": "SHOP THE LOOK"
+      },
+      {
+        "type": "text",
+        "id": "secondary__label",
+        "label": "Second button text"
+      },
+      {
+        "type": "url",
+        "id": "secondary_link",
+        "label": "Second button link"
+      },
+      {
+        "type": "color",
+        "id": "button_1_color",
+        "label": "Button Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "button_1_bg",
+        "label": "Button Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Right Collection Settings"
+      },
+      {
+        "type": "collection",
+        "id": "collection_2",
+        "label": "Select Collection"
+      },
+      {
+        "type": "text",
+        "id": "collection_2_title",
+        "label": "Custom Collection Title",
+        "default": "Shop the Look"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection_2_image",
+        "label": "Custom Collection Image"
+      },
+      {
+        "type": "url",
+        "id": "collection_2_link",
+        "label": "Custom Collection Link"
+      },
+      {
+        "type": "text",
+        "id": "button_2_text",
+        "label": "Button Text",
+        "default": "SHOP THE LOOK"
+      },
+      {
+        "type": "color",
+        "id": "button_2_color",
+        "label": "Button Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "button_2_bg",
+        "label": "Button Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Layout Settings"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Splitscreen Collections"
+      }
+    ]
+  }
+{% endschema %}

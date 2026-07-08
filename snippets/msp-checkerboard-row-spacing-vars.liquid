@@ -1,0 +1,33 @@
+{%- comment -%}
+  Per-row spacing overrides — only when "Match section spacing" is off.
+  Paragraph / text-block gap is always 2× line-break gap.
+  @param block {Block}
+{%- endcomment -%}
+{%- liquid
+  assign use_section_spacing = block.settings.body_use_section_spacing
+  if use_section_spacing == nil
+    assign use_section_spacing = true
+  endif
+
+  unless use_section_spacing
+    assign row_line_break_mobile = block.settings.body_line_break_gap | plus: 0
+    assign row_line_break_desktop = block.settings.body_line_break_gap_desktop | plus: 0
+
+    assign legacy_paragraph_gap = block.settings.body_paragraph_gap | plus: 0
+    if row_line_break_mobile == 0 and legacy_paragraph_gap > 0
+      assign row_line_break_mobile = legacy_paragraph_gap | divided_by: 2
+    endif
+    if row_line_break_desktop == 0
+      assign row_line_break_desktop = row_line_break_mobile
+    endif
+    if row_line_break_desktop == 0 and legacy_paragraph_gap > 0
+      assign row_line_break_desktop = legacy_paragraph_gap | divided_by: 2
+    endif
+  endunless
+-%}
+{%- unless use_section_spacing -%}
+  {% render 'msp-checkerboard-body-spacing-vars',
+    line_break_mobile: row_line_break_mobile,
+    line_break_desktop: row_line_break_desktop
+  %}
+{%- endunless -%}

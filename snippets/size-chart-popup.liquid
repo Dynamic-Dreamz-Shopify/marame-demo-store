@@ -1,0 +1,45 @@
+<div class="sizechart-popup">
+    <div class="popup-wrap">
+        <div class="popup-header">
+            <h3 class="bold">Size guide</h3>
+            <span class="popup-close-icon"><svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M126 110.25L15.7499 0L-0.000137442 15.75L110.25 126L126 110.25Z" fill="#2A2A2D"/><path d="M110.25 -0.000100856L-0.00012207 110.25L15.7499 126L126 15.7499L110.25 -0.000100856Z" fill="#2A2A2D"/></svg></span>
+        </div>
+        {%- assign Metavalue = product.metafields.custom.size_chart.value -%}
+        {%- if Metavalue != blank -%}
+        <div class="fys-box sizechart-box">
+            <h4 class="box-title bold">Find your size</h4>
+            <div class="size--incm-option">
+                <input type="checkbox" id="select_size_type">
+                <label for="select_size_type">
+                <span class="size-option inch">IN</span>
+                <span class="size-option centimeter">CM</span>
+                </label>
+            </div>
+            <div class="size-table-wrap">{{ Metavalue.html | replace: 'POINTS OF MEASURE', 'Size' | capitalize }}</div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.international_sizechart_image != blank -%}
+        <div class="international-sizechart-row">
+            <h3 class="international-sizechart-title"><span class="international-sizechart-opener">International size conversion chart</span></h3>
+        </div>
+        {%- endif -%}
+    </div>
+</div>
+
+{%- if section.settings.international_sizechart_image != blank -%}
+<div class="international-sizechart-popup">
+    <div class="popup-wrap">
+        <div class="popup-header">
+            <h3 class="bold">International size conversion chart</h3>
+            <span class="is-popup-close-icon"><svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M126 110.25L15.7499 0L-0.000137442 15.75L110.25 126L126 110.25Z" fill="#2A2A2D"/><path d="M110.25 -0.000100856L-0.00012207 110.25L15.7499 126L126 15.7499L110.25 -0.000100856Z" fill="#2A2A2D"/></svg></span>
+        </div>
+        <div class="popup-image-wrap">
+            {{- section.settings.international_sizechart_image | image_url: width: section.settings.international_sizechart_image.width, height: section.settings.title_icon.international_sizechart_image | image_tag: loading: 'lazy' , class: 'desktop_sizechart_image' -}}
+            {{- section.settings.international_sizechart_mobile_image | image_url: width: section.settings.international_sizechart_mobile_image.width, height: section.settings.title_icon.international_sizechart_mobile_image | image_tag: loading: 'lazy' , class: 'mobile_sizechart_image' -}}
+        </div>
+    </div>
+</div>
+{%- endif -%}
+
+<div class="international-popup-overlay"></div>
+<div class="sizechart-popup-overlay"></div>

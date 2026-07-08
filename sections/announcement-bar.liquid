@@ -1,0 +1,202 @@
+{% if section.settings.liquid != blank %}
+  <style>
+    body:has(.top-banner) .header:not(.header--scrolled){top: 40px;}
+      .top-banner__inner {
+      letter-spacing: 3px;
+    }
+
+    .top-banner {
+        padding: 9px 0;
+        flex-wrap: nowrap;
+    }
+
+    .top-banner__inner {
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 1.8;
+        display: flex;
+        align-items: center;
+        text-transform: none;
+    }
+
+    .announcement_bar_row {
+        transform: none !important;
+        transition: all .3s ease-in-out;
+    }
+
+    .template-index:has(.header.header--active) .announcement_bar_row .top-banner-trustpilot_app_div {
+        display: none;
+    }
+
+    body:has(.header--scrolled) .announcement_bar_row {
+        top: -38px;
+    }
+
+    .top-banner__inner p {
+        text-transform: none;
+    }
+
+    .top-banner__inner p:not(:last-of-type) {
+        margin-right: 30px;
+    }
+
+    .top-banner__inner-text {
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 1.8;
+        display: flex;
+        align-items: center;
+        text-transform: none;
+        display: flex;
+    }
+
+    @media (min-width: 1025px) {
+      .top-banner-trustpilot_app_div {
+          position: absolute !important;
+          top: 50%;
+          right: 25px;
+          transform: translateY(-50%) scale(0.7);
+          width: 400px;
+      }
+    }
+
+    {% if section.settings.scrolling %}
+      @media (min-width: 1025px) {
+        .top-banner__inner {
+            animation: marquee 15s linear infinite;
+            padding-left: 0;
+        }
+
+        .top-banner-trustpilot_app_div {
+            position: unset !important;
+            transform: scale(0.7);
+            margin-left: -70px;
+        }
+
+        .top-banner__inner-text {
+            font-family: 'HelveticaNowDisplayLight';
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 1.8;
+            display: flex;
+            align-items: center;
+            text-transform: none;
+            display: flex;
+            animation: marquee 10s linear infinite;
+            padding-left: 0;
+        }
+
+        .top-banner-trustpilot_app_div:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: #2a2a2d;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            bottom: 0;
+        }
+
+        .template-index .top-banner-trustpilot_app_div:before {
+            background-color: #fff;
+        }
+
+        .top-banner-trustpilot_app_div {
+            position: absolute !important;
+            transform: scale(0.7);
+            right: 0;
+            top: 5px;
+            background-color: #2a2a2d;
+        }
+
+        .template-index .top-banner-trustpilot_app_div {
+            background-color: #fff;
+        }
+
+        .top-banner__inner {
+            animation: none;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translate(0)
+            }
+
+            to {
+                transform: translate(-160%);
+            }
+        }
+      }
+    {% endif %}
+
+    @media (max-width: 1024px) {
+      .top-banner__inner {
+          animation: marquee 15s linear infinite;
+          padding-left: 0;
+          flex-direction: row-reverse;
+      }
+
+      .top-banner {
+          padding: 10px 0 8px;
+      }
+      
+      .top-banner-trustpilot_app_div {
+          transform: scale(0.7);
+          width: 400px;
+          margin-top: -5px;
+          margin-left: -70px;
+      }
+    }
+  </style>
+  <div class="top-banner">
+    <div class="top-banner__inner">
+      <div class="top-banner__inner-text">
+        {{ section.settings.liquid }}
+      </div>
+      <div class="top-banner-trustpilot_app_div">
+        <!-- TrustBox script -->
+        <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+        <!-- End TrustBox script -->
+
+        <!-- TrustBox widget - Micro Combo -->
+        <div class="trustpilot-widget"
+          data-locale="en-US"
+          data-template-id="5419b6ffb0d04a076446a9af"
+          data-businessunit-id="6863d52829d0eb9d7940e024"
+          data-style-height="20px"
+          data-style-width="500px"
+          data-theme="{% if template == 'index' or template.name == 'login' or template.name == 'register' %}light{% else %}dark{% endif %}">
+          <a href="https://trstp.lt/YWwViWvjYv" target="_blank" rel="noopener">Trustpilot</a>
+        </div>
+        <!-- End TrustBox widget -->
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Announcement Bar",
+    "class": "announcement_bar_row",
+    "settings": [
+      {
+        "type": "liquid",
+        "id": "liquid",
+        "label": "Liquid"
+      },
+      {
+        "type": "checkbox",
+        "id": "scrolling",
+        "label": "Start Scrolling",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement Bar"
+      }
+    ]
+  }
+{% endschema %}

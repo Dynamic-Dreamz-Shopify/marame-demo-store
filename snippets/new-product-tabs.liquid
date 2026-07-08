@@ -1,0 +1,532 @@
+<div class="product-accordion">
+
+    {% assign current_variant = product.selected_variant | default: product.selected_or_first_available_variant %}
+
+    {% assign overview = current_variant.metafields.custom.accordion_1_content %}
+    {% assign overview_check = overview | metafield_text | strip_html | strip %}
+    {% if overview_check == blank %}
+        {% assign overview = product.metafields.custom.accordion_1_content %}
+    {% endif %}
+
+    {% assign selected_color = current_variant.option1 | downcase | strip %}
+
+    {% assign variant_fit_fabric = current_variant.metafields.custom.fit_and_fabric_accordion_3_contents %}
+    {% assign variant_fit_fabric_check = variant_fit_fabric | metafield_text | strip_html | strip %}
+
+    {% if variant_fit_fabric_check == blank %}
+        {% for variant_item in product.variants %}
+            {% assign variant_item_color = variant_item.option1 | downcase | strip %}
+            {% assign variant_item_fit_fabric = variant_item.metafields.custom.fit_and_fabric_accordion_3_contents %}
+            {% assign variant_item_fit_fabric_check = variant_item_fit_fabric | metafield_text | strip_html | strip %}
+
+            {% if variant_item_color == selected_color and variant_item_fit_fabric_check != blank %}
+                {% assign variant_fit_fabric = variant_item_fit_fabric %}
+                {% assign variant_fit_fabric_check = variant_item_fit_fabric_check %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% assign product_fit_fabric = product.metafields.custom.accordion_3_content %}
+    {% assign product_fit_fabric_check = product_fit_fabric | metafield_text | strip_html | strip %}
+
+    {% if variant_fit_fabric_check != blank %}
+        {% assign fit_fabric = variant_fit_fabric %}
+        {% assign fit_fabric_source = 'variant/color-group' %}
+    {% else %}
+        {% assign fit_fabric = product_fit_fabric %}
+        {% assign fit_fabric_source = 'product' %}
+    {% endif %}
+
+    {% assign care = current_variant.metafields.custom.accordion_2_content %}
+    {% assign care_check = care | metafield_text | strip_html | strip %}
+    {% if care_check == blank %}
+        {% assign care = product.metafields.custom.accordion_2_content %}
+    {% endif %}
+
+    {% assign size_chart = product.metafields.custom.size_chart %}
+    {% assign shipping_title = settings.sr_head %}
+    {% assign shipping_content = settings.sr_content %}
+
+  {% if overview != blank %}
+  <div class="accordion-item">
+    <button class="accordion-header">
+      {% if product.handle contains 'gift-card-marame' %}  
+        Receiving Your Gift Card
+        {% else %}
+        Product Overview
+        {% endif %}
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content">
+      {{ overview | metafield_tag }}
+      {%- capture rankData -%}
+        {%- for n in (1..4) -%}
+            {%- assign labelKey = 'label_' | append: forloop.index -%}
+            {%- assign labelKeyVal = 'label_' | append: forloop.index | append: '_rank' -%}
+            {%- assign labelVal = product.metafields.custom[labelKey].value -%}
+            {%- assign labelRankVal = product.metafields.custom[labelKeyVal].value | plus: 0 -%}
+            {%- if labelVal != blank and labelRankVal != blank -%}
+                <div class="accordion__body-label-item">
+                    <span class="rank-label">{{ labelVal }}</span>
+                    {%- render 'icon-rank', rank: labelRankVal -%}
+                </div>
+            {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {% comment %} {%- if rankData != blank -%}<div class="accordion__body-label-list">{{ rankData }}</div>{%- endif -%} {% endcomment %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if fit_fabric != blank %}
+  <div class="accordion-item fit-fabric">
+    <button class="accordion-header">
+      Fit & Fabric
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content fit-fabric-original-content" data-fit-fabric-original>
+      {{ fit_fabric | metafield_tag }}
+      <!-- DEBUG FIT FABRIC:
+        variant_id={{ current_variant.id }}
+        variant_title={{ current_variant.title }}
+        source={{ fit_fabric_source }}
+        variant_text={{ variant_fit_fabric_check | escape }}
+        product_text={{ product_fit_fabric_check | escape }}
+        -->
+      {%- if rankData != blank -%}<div class="accordion__body-label-list">{{ rankData }}</div>{%- endif -%}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if care != blank %}
+  <div class="accordion-item">
+    <button class="accordion-header">
+    {% if product.handle contains 'gift-card-marame' %}
+        Gift Card T&Cs
+    {% else %}
+      Product Care
+    {% endif %}
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content">
+      {{ care | metafield_tag }}
+    </div>
+  </div>
+  {% endif %}
+
+   {% if size_chart != blank %}
+  <div class="accordion-item">
+    <button class="accordion-header">
+      Size Guide
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content">
+      {% comment %} {{ size_chart | metafield_tag }} {% endcomment %}
+        {%- assign Metavalue = product.metafields.custom.size_chart.value -%}
+        {%- if Metavalue != blank -%}
+            {% comment %} {{ Size_guide_content }} {% endcomment %}
+            <div class="sizechart-popup">
+            <div class="popup-wrap">
+            <div class="popup-header">
+                <h3 class="bold">Size guide</h3>
+                <span class="popup-close-icon"><svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M126 110.25L15.7499 0L-0.000137442 15.75L110.25 126L126 110.25Z" fill="#2A2A2D"/><path d="M110.25 -0.000100856L-0.00012207 110.25L15.7499 126L126 15.7499L110.25 -0.000100856Z" fill="#2A2A2D"/></svg></span>
+            </div>
+            
+            {%- if Metavalue != blank -%}
+            <div class="fys-box sizechart-box">
+                <h4 class="box-title bold">Find your size</h4>
+                <div class="size--incm-option">
+                    <input type="checkbox" id="select_size_type">
+                    <label for="select_size_type">
+                    <span class="size-option inch">IN</span>
+                    <span class="size-option centimeter">CM</span>
+                    </label>
+                </div>
+                <div class="size-table-wrap">{{ Metavalue.html | replace: 'POINTS OF MEASURE', 'Size' | capitalize }}</div>
+            </div>
+            {%- endif -%}
+            <div class="international-sizechart-row">
+                <h3 class="international-sizechart-title"><span class="international-sizechart-opener">International size conversion chart</span></h3>
+            </div>
+            </div>
+            </div>
+        {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if shipping_title != blank and shipping_content != blank %}
+  <div class="accordion-item {{ shipping_title | replace: 'SHIPPING & RETURNS', 'Shipping' | replace: ' ', '-' }}">
+    <button class="accordion-header">
+      {{ shipping_title | replace: 'SHIPPING & RETURNS', 'Shipping' }}
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content">
+      {{ shipping_content }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if settings.returns_exchanges_policy != blank %}
+  <div class="accordion-item returns-exchanges">
+    <button class="accordion-header">
+      Returns & Exchanges
+      <span class="icon"></span>
+    </button>
+    <div class="accordion-content">
+      {{ settings.returns_exchanges_policy }}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+<style>
+    .product-accordion {
+        margin-top: 24px;
+    }
+
+    .accordion-item {
+        border-bottom: 0.5px solid #E6E0D4;
+    }
+
+    .accordion-header {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        padding: 20px 0;
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 325;
+        font-size: 15px;
+        line-height: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .accordion-item.active .accordion-header {
+        font-family: 'HelveticaNowProDisplayMedium';
+        font-weight: 500;
+    }
+
+    .accordion-content {
+        display: none;
+        padding-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .accordion-item.active .accordion-content {
+        display: block;
+    }
+
+    .product-accordion * {
+        text-transform: none;
+    }
+
+    /*  */
+
+    .accordion_with_atc_buttons .accordion-content p, 
+    .accordion_with_atc_buttons .accordion-content ul li,
+    .accordion_with_atc_buttons .accordion-content a {
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 325;
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .accordion_with_atc_buttons .accordion-content strong {
+        font-family: 'HelveticaNowProDisplayMedium';
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .accordion_with_atc_buttons .accordion-content p {
+        margin-bottom: 10px;
+    }
+
+    .accordion_with_atc_buttons .accordion-content ul li:not(:last-of-type) {
+        margin-bottom: 5px;
+    }
+
+    .accordion_with_atc_buttons .accordion-content ul li {
+        list-style: disc;
+        list-style-position: inside;
+    }
+
+    .accordion_with_atc_buttons .accordion-content ul {
+        margin-bottom: 5px;
+    }
+
+    /*  */
+
+    .product-accordion .sizechart-popup {
+        position: unset;
+        max-width: 100%;
+        height: unset;
+        padding: 0;
+        transform: none;
+    }
+
+    .product-accordion .sizechart-popup .popup-wrap {
+        max-width: 100%;
+    }
+
+    .product-accordion .sizechart-popup .popup-header {
+        display: none;
+    }
+
+    .product-accordion .sizechart-popup .fys-box {
+        margin-bottom: 15px;
+    }
+
+    .product-accordion .sizechart-popup .box-title {
+        font-family: 'HelveticaNowProDisplayMedium';
+        font-weight: 500;
+        font-size: 10.78px;
+        line-height: 16.94px;
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    .product-accordion .size--incm-option {
+        margin-bottom: 10px;
+    }
+
+    .product-accordion .size--incm-option .size-option {
+        font-family: 'HelveticaNowProDisplayMedium';
+        font-weight: 500;
+        font-size: 10.78px;
+        line-height: 16.94px;
+    }
+
+    .product-accordion .sizechart-popup .size-table th {
+        font-family: 'HelveticaNowProDisplayBold';
+        font-weight: 700;
+        font-size: 10.82px;
+        line-height: 12px;
+        vertical-align: middle;
+        padding: 5px;
+        text-transform: capitalize;
+    }
+
+    .product-accordion .sizechart-popup .size-table td {
+        font-family: HelveticaNowDisplayLight,sans-serif;
+        font-weight: 325;
+        font-size: 10.82px;
+        line-height: 13px;
+        vertical-align: middle;
+        padding: 5px;
+    }
+
+    .product-accordion .sizechart-popup .size-table tbody tr:nth-child(odd) td {
+        background: #F9F6F4;
+    }
+
+    .product-accordion .sizechart-popup .size-table tbody tr:nth-child(odd) td:first-of-type {
+        border-radius: 3px 0 0 3px;
+    }
+
+    .product-accordion .sizechart-popup .size-table tbody tr:nth-child(odd) td:last-of-type {
+        border-radius: 0 3px 3px 0;
+    }
+
+    .product-accordion .international-sizechart-row .international-sizechart-title span {
+        font-family: 'HelveticaNowProDisplayBold';
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 18px;
+        text-decoration: underline;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .product-accordion .international-sizechart-row .international-sizechart-title {
+        margin: 0;
+        padding: 0;
+        line-height: unset;
+    }
+
+    .pdp-hero-section > .sizechart-popup {
+        display: none;
+    }
+
+    .accordion__body-label-item {
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    span.rank-label {
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 325;
+        font-size: 9px;
+        line-height: 15px;
+        text-align: center;
+    }
+
+    .icon-rank-wrap {
+        gap: 1px;
+    }
+
+    .icon-rank-wrap span {
+        background-color: #D9D9D9;
+        border: none;
+        width: 14px;
+        height: 20px;
+    }
+
+    .icon-rank-wrap span:first-of-type {
+        border-radius: 2px 0 0 2px;
+    }
+
+    .icon-rank-wrap span:last-of-type {
+        border-radius: 0 2px 2px 0;
+    }
+
+    .accordion__body-label-list {
+        justify-content: space-between;
+    }
+
+    .accordion-header .icon {
+        width: 10px;
+        height: 10px;
+        position: relative;
+    }
+
+    .accordion-header .icon:before, 
+    .accordion-header .icon:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        bottom: 0;
+        width: 1px;
+        border-left: 1px solid #000;
+        transform: translateX(-50%);
+        {% comment %} transition: all .3s ease-in-out; {% endcomment %}
+    }
+
+    .accordion-header .icon:after {
+        top: 50%;
+        left: 0;
+        bottom: auto;
+        right: 0;
+        width: unset;
+        height: 1px;
+        background-color: #000;
+        transform: translateY(-50%);
+    }
+
+    .accordion-item.active .accordion-header .icon::before {
+        transform: rotate(45deg) translateY(5px);
+        left: 0;
+        border-top: 1px solid #000;
+        right: 0;
+        width: unset;
+        transform-origin: bottom;
+    }
+
+    .accordion-item.active .accordion-header .icon::after {
+        opacity: 0;
+        transform: rotate(45deg) translateY(-50%);
+    }
+
+    {% comment %}  {% endcomment %}
+
+    .product-accordion {
+        margin-top: 35px;
+    }
+
+    .accordion-item {
+        border-bottom: none;
+        padding: 0 15px 0 3px;
+    }
+
+    .accordion-header {
+        font-family: 'HelveticaNowDisplayLight';
+        font-weight: 325;
+        font-size: 12px;
+        line-height: 1;
+        padding: 11px 0;
+    }
+
+    .accordion-item:not(:last-of-type) {
+        margin-bottom: 7px;
+    }
+
+    .accordion-content {
+        padding-bottom: 13px;
+    }
+
+    .size-table-wrap {
+        overflow: auto;
+        display: flex;
+    }
+
+    .sizechart-popup .size-table {
+        width: auto;
+        flex-shrink: 0;
+        margin: 0 auto;
+    }
+
+    .accordion_with_atc_buttons {
+        width: 100%;
+    }
+
+    @media (max-width: 767px) {
+        .product-accordion {
+            margin-top: 15px;
+        }
+
+        .accordion-header {
+            padding: 18px 0;
+        }
+
+        .accordion-header {
+            padding: 11px 0;
+        }
+
+        .product-accordion {
+            margin-top: 38px;
+        }
+
+        .accordion-item {
+            padding: 0;
+        }
+
+        .accordion-content {
+            padding: 11px 0 13px;
+        }
+    }
+</style>
+
+<script>
+  (function () {
+    if (window.marameAccordionBound) return;
+    window.marameAccordionBound = true;
+
+    document.addEventListener("click", function (event) {
+      const header = event.target.closest(".product-accordion .accordion-header");
+      if (!header) return;
+
+      event.preventDefault();
+
+      const item = header.closest(".accordion-item");
+      const accordion = header.closest(".product-accordion");
+      if (!item || !accordion) return;
+
+      const isActive = item.classList.contains("active");
+
+      accordion.querySelectorAll(".accordion-item").forEach(function (accordionItem) {
+        accordionItem.classList.remove("active");
+      });
+
+      if (!isActive) {
+        item.classList.add("active");
+      }
+    });
+  })();
+</script>

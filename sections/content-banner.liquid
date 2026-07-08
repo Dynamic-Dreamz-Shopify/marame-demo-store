@@ -1,0 +1,53 @@
+<section class="banner row">
+    <div class="banner__lottie">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16" fill="none">
+            <g clip-path="url(#clip0_2001_8346)">
+              <path d="M21.9994 13.547H19.7148V15.84H21.9994V13.547Z" fill="white"/>
+              <path d="M8.17931 10.4928H8.153L3.13184 0.0576262L3.10313 0H0.000488281V15.8328H2.49791V4.4036H2.50748L6.85644 13.3285L6.86601 13.3501H9.46391L13.7889 4.42761V15.8328H16.2864V0H13.2053L8.17931 10.4928Z" fill="white"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_2001_8346">
+                <rect width="22" height="15.84" fill="white"/>
+              </clipPath>
+            </defs>
+        </svg>
+    </div>
+    <div class="col--0 col--md--3 col--lg--6"></div>
+    <div class="banner__content col--6 col--md--4 col--lg--5">
+      {%- if collection.metafields.custom.content_banner_title != blank -%}
+        <h3>{{ collection.metafields.custom.content_banner_title.value }}</h3>
+      {% elsif section.settings.heading %}
+        <h3>{{ section.settings.heading }}</h3>
+      {%- endif -%}
+      {%- if collection.metafields.custom.content_banner_description != blank -%}  
+         {{ collection.metafields.custom.content_banner_description | metafield_tag }}
+      {% elsif section.settings.content != blank %}
+        <div>
+          {{ section.settings.content }}
+        </div>
+      {%- endif -%}
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Content banner",
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      },
+    ],
+    "presets": [
+      {
+        "name": "Content banner"
+      }
+    ]
+  }
+{% endschema %}

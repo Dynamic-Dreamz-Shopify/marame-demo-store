@@ -1,0 +1,145 @@
+<section class="lookbook-product">
+  <div class="lookbook-product__content">
+    <div class="lookbook-product__content__full">
+      {% if product.metafields.custom.buy_the_look_image != blank %}
+        <img
+          src="{{ product.metafields.custom.buy_the_look_image | img_url: "master" }}"
+          alt="{{ product.featured_image.alt }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+        >
+      {% else %}
+        <img
+          src="{{ product.featured_image | img_url: "master" }}"
+          alt="{{ product.featured_image.alt }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+        >
+      {% endif %}
+    </div>
+    <div class="lookbook-product__content__details">
+      {% for product in product.metafields.custom.buy_the_look.value limit: 3 %}
+        <div class="lookbook-product__content__details__item product--grid--main">
+          <div class="lookbook-product__content__details__item__img cursor_pointer">
+            {% if product.featured_media != blank %}
+              <img onclick="location.href='{{ product.url }}'" src="{{ product.featured_media | img_url: 'master' }}" alt="{{ product.featured_media.alt }}" loading="lazy" width="{{ product.featured_media.width }}" height="{{ product.featured_media.height }}">
+            {% endif %}
+            {% comment %}
+              <button class="heartBtn" aria-label="Favorite item">
+                {% render 'icon-heart' %}
+              </button>
+            {% endcomment %}
+            {% render 'wishlist-app-links', linkType: 'list-product', product: product  %}
+          </div>
+          <div class="lookbook-product__content__details__item__content">
+            <div class="lookbook-product__content__details__item__deets">
+              <a href="{{ product.url }}">
+                <h6 class="medium">{{ product.title }}</h6>
+                {%- assign color_option_index = -1 -%}
+                {%- for option_name in product.options -%}
+                  {%- if option_name == 'Color' or option_name == 'Colour' -%}
+                    {%- assign color_option_index = forloop.index0 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if color_option_index != -1 -%}
+                  {%- assign color_list = '' -%}
+
+                  {%- for variant in product.variants -%}
+                    {%- assign color_value = variant.options[color_option_index] | strip -%}
+                    {%- unless color_list contains color_value -%}
+                      {%- assign color_list = color_list | append: color_value | append: ',' -%}
+                    {%- endunless -%}
+                  {%- endfor -%}
+
+                  {%- assign unique_colors = color_list | split: ',' | compact -%}
+                  <p>in {{ unique_colors.first }}</p>
+                {% endif %}
+              </a>
+              <h6>{{ product.price | money }}</h6>
+            </div>
+            <div class="lookbook-product__content__details__item__sizes">
+              {%- assign size_option_index = -1 -%}
+              {%- for option_name in product.options -%}
+                {%- if option_name == 'Size' or option_name == 'size' -%}
+                  {%- assign size_option_index = forloop.index0 -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if size_option_index != -1 -%}
+                {%- assign size_list = '' -%}
+
+                {%- for variant in product.variants -%}
+                  {%- assign size_value = variant.options[size_option_index] | strip -%}
+                  {%- unless size_list contains size_value -%}
+                    {%- assign size_list = size_list | append: size_value | append: ',' -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- assign unique_sizes = color_list | split: ',' | compact -%}
+              {% endif %}
+              <div class="size-select" data-recommended="10">
+                <select class="size-select__select" name="size" aria-label="Select size">
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                  <option value="10" selected>10</option>
+                  <option value="12">12</option>
+                  <option value="14" disabled>14</option>
+                  <option value="16" disabled>16</option>
+                </select>
+                <div class="size-select__options">
+                  {% render 'grid-option-size', card_product: product %}                
+                  {% comment %}
+                    <div class="option" data-value="6"><small>6</small></div>
+                    <div class="option" data-value="8"><small>8</small></div>
+                    <div class="option" data-value="10"><small>10</small></div>
+                    <div class="option" data-value="12"><small>12</small></div>
+                    <div class="option option--out-of-stock" data-value="14"><small>14</small></div>
+                    <div class="option option--out-of-stock" data-value="16"><small>16</small></div>
+                  {% endcomment %}
+                </div>
+                <button class="btn btn--outline hidden"><small>RECOMMENDED SIZE</small></button>
+              </div>
+            </div>
+            <div class="accordion__list">
+              {%- for i in (1..5) -%}
+                {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+                {% assign title = product.metafields.custom[key].value %}
+                {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+                {% assign content_accordion = product.metafields.custom[content_key] %}
+                {%- if title != blank and content_accordion != blank -%}
+                  {% if title != blank %}
+                    <details class="accordion">
+                      <summary class="accordion__head">
+                        <h5>{{ title }}</h5>
+                      </summary>
+                      <div class="accordion__body">
+                        <div class="accordion__body__inner">
+                          {{ content_accordion | metafield_tag }}
+                        </div>
+                      </div>
+                    </details>
+                  {% endif %}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <a href="#" class="btn btn--dark atc_JS" disabled>QUICK ADD TO CART</a>
+            <div class="successfully_ATC"></div>
+            <div class="pro-card-notify_me hidden">OUT OF STOCK<span class="pro-card-notify_me-btn">NOTIFY ME</span></div>
+          </div>
+        </div>
+      {% endfor %}  
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Lookbook Product"
+    }
+  ]
+}
+{% endschema %}

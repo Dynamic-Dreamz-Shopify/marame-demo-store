@@ -1,0 +1,299 @@
+{% render 'msp-assets' %}
+
+{%- liquid
+  assign image_desktop = section.settings.image
+  assign image_mobile = section.settings.image_mobile
+  if image_mobile == blank
+    assign image_mobile = image_desktop
+  endif
+  if image_desktop == blank
+    assign image_desktop = image_mobile
+  endif
+  assign has_media = false
+  if image_desktop != blank or image_mobile != blank or section.settings.fallback_asset != blank
+    assign has_media = true
+  endif
+  assign use_fixed_height = false
+  if section.settings.block_height_mobile > 0 or section.settings.block_height_desktop > 0 or section.settings.block_vh_mobile > 0 or section.settings.block_vh_desktop > 0
+    assign use_fixed_height = true
+  endif
+  assign focal_image = image_desktop
+  if focal_image == blank
+    assign focal_image = image_mobile
+  endif
+-%}
+
+{%- capture landscape_aspect -%}{% render 'msp-aspect-ratio', preset: section.settings.frame_preset, width: section.settings.frame_width, height: section.settings.frame_height %}{%- endcapture -%}
+{%- capture object_position -%}{% render 'msp-object-position', image: focal_image, use_manual_focal: section.settings.use_manual_focal, focal_x: section.settings.focal_x, focal_y: section.settings.focal_y %}{%- endcapture -%}
+
+{% style %}
+  #msp-landscape-{{ section.id }} {
+    --msp-section-gap-mobile: {{ section.settings.gap_bottom_mobile }}px;
+    --msp-section-gap-desktop: {{ section.settings.gap_bottom_desktop }}px;
+    --msp-landscape-aspect: {{ landscape_aspect | strip }};
+    --msp-landscape-height-mobile: {% if section.settings.block_vh_mobile > 0 %}{{ section.settings.block_vh_mobile }}vh{% elsif section.settings.block_height_mobile > 0 %}{{ section.settings.block_height_mobile }}px{% else %}auto{% endif %};
+    --msp-landscape-height-desktop: {% if section.settings.block_vh_desktop > 0 %}{{ section.settings.block_vh_desktop }}vh{% elsif section.settings.block_height_desktop > 0 %}{{ section.settings.block_height_desktop }}px{% else %}auto{% endif %};
+    --msp-object-position: {{ object_position | strip }};
+  }
+{% endstyle %}
+
+{%- assign landscape_zone_key = section.settings.logo_zone_key | default: 'signup_landscape_image' -%}
+<section
+  id="msp-landscape-{{ section.id }}"
+  class="msp msp-section msp-section--landscape-image msp-section-gap{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: landscape_zone_key, zone_label: section.settings.logo_zone_label %}
+>
+  <div class="msp-landscape-image{% if use_fixed_height %} msp-landscape-image--fixed-height{% endif %}{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}">
+    <div class="msp-landscape-image__cell">
+      {%- if has_media -%}
+        {%- if image_desktop != blank and image_mobile != blank and image_mobile != image_desktop -%}
+          <picture class="msp-landscape-image__picture">
+            <source media="(max-width: 989px)" srcset="{{ image_mobile | image_url: width: 1200 }}">
+            <source media="(min-width: 990px)" srcset="{{ image_desktop | image_url: width: 2560 }}">
+            {{
+              image_desktop
+              | image_url: width: 2560
+              | image_tag:
+                class: 'msp-media__img msp-landscape-image__img',
+                alt: section.settings.alt,
+                loading: 'lazy',
+                widths: '390, 750, 1100, 1440, 1920, 2560',
+                sizes: '100vw'
+            }}
+          </picture>
+        {%- else -%}
+          {% render 'msp-image',
+            image: image_desktop,
+            fallback_asset: section.settings.fallback_asset,
+            alt: section.settings.alt,
+            object_position: object_position | strip,
+            sizes: '100vw',
+            widths: '390, 750, 1100, 1440, 1920, 2560'
+          %}
+        {%- endif -%}
+      {%- elsif request.design_mode -%}
+        <div class="msp-section__placeholder">Upload a landscape image (or set a fallback asset filename).</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Landscape image",
+  "tag": "section",
+  "class": "section-marame-signup-landscape-image",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Full-width landscape image block. Toggle mobile/desktop, set px or vh height, and crop with the focal point."
+    },
+    {
+      "type": "text",
+      "id": "row_label",
+      "label": "Row label (theme editor only)",
+      "default": "Landscape image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Header logo zone"
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_key",
+      "label": "Zone key",
+      "default": "signup_landscape_image",
+      "info": "Match a zone in Signup — Header logo (optional)."
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_label",
+      "label": "Zone label (optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (desktop — also used on mobile if mobile empty)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile, optional)"
+    },
+    {
+      "type": "text",
+      "id": "fallback_asset",
+      "label": "Fallback asset filename",
+      "info": "Optional theme asset if no image uploaded."
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text",
+      "default": "Landscape image"
+    },
+    {
+      "type": "header",
+      "content": "Crop position"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_manual_focal",
+      "label": "Manual focal point",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "focal_x",
+      "label": "Horizontal focus",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "focal_y",
+      "label": "Vertical focus",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Frame (landscape)"
+    },
+    {
+      "type": "select",
+      "id": "frame_preset",
+      "label": "Aspect ratio (when height is 0 / auto)",
+      "options": [
+        { "value": "landscape", "label": "Landscape 16:9" },
+        { "value": "wide", "label": "Wide (390 × 218)" },
+        { "value": "landscape_banner", "label": "Wide banner (1440 × 760)" },
+        { "value": "full", "label": "Full width banner" },
+        { "value": "custom", "label": "Custom ratio" }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "number",
+      "id": "frame_width",
+      "label": "Custom frame width",
+      "default": 16
+    },
+    {
+      "type": "number",
+      "id": "frame_height",
+      "label": "Custom frame height",
+      "default": 9
+    },
+    {
+      "type": "header",
+      "content": "Block height — mobile"
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "label": "Height — mobile (px, 0 = use aspect ratio)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_vh_mobile",
+      "label": "Height — mobile (vh, 0 = off)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 0,
+      "info": "If set (>0), overrides mobile px height."
+    },
+    {
+      "type": "header",
+      "content": "Block height — desktop"
+    },
+    {
+      "type": "range",
+      "id": "block_height_desktop",
+      "label": "Height — desktop (px, 0 = use aspect ratio)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_vh_desktop",
+      "label": "Height — desktop (vh, 0 = off)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 0,
+      "info": "If set (>0), overrides desktop px height."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_mobile",
+      "label": "Space below — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_desktop",
+      "label": "Space below — desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Signup — Landscape image"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement_bar_DwkrAx": {
+      "type": "announcement-bar",
+      "disabled": true,
+      "name": "Announcement Bar",
+      "settings": {
+        "liquid": "BOXING DAY SALE - 26TH DECEMBER 7AM GMT",
+        "scrolling": false
+      }
+    },
+    "blocks_BxjPcD": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_68bd445_mhyHYq": {
+          "type": "ai_gen_block_68bd445",
+          "settings": {
+            "message_1": "FREE NEXT DAY DELIVERY (ORDERS OVER £200)*",
+            "message_1_link": "",
+            "message_2": "FREE 30 DAY RETURNS",
+            "message_2_link": "",
+            "message_3": "20% OFF SITE WIDE",
+            "message_3_link": "",
+            "message_4": "SIGN UP IN FOOTER FOR EXTRA 10% OFF",
+            "message_4_link": "",
+            "message_5": "",
+            "message_5_link": "",
+            "enable_trustpilot": true,
+            "trustpilot_embed": "<!-- TrustBox widget - Micro TrustScore -->\n<div class=\"trustpilot-widget\" data-locale=\"en-US\" data-template-id=\"5419b637fa0340045cd0c936\" data-businessunit-id=\"6863d52829d0eb9d7940e024\" data-style-height=\"20px\" data-style-width=\"100%\" data-token=\"f2a4b8da-f135-4b36-8cf8-b1daa254c131\">\n  <a href=\"https://www.trustpilot.com/review/marame.com\" target=\"_blank\" rel=\"noopener\">Trustpilot</a>\n</div>\n<!-- End TrustBox widget -->",
+            "widget_scale": 0.7,
+            "rotation_speed": 3,
+            "font_size": 10,
+            "text_transform": "capitalize",
+            "text_alignment": "center",
+            "background_color": "#65524f",
+            "text_color": "#ffffff",
+            "bar_height": 40,
+            "vertical_padding": 6,
+            "horizontal_padding": 15
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_5b1a070_6eaw7U": {
+          "type": "ai_gen_block_5b1a070",
+          "disabled": true,
+          "settings": {
+            "message_1": "Free next day delivery on orders over £200",
+            "message_1_link": "",
+            "message_2": "Free exchanges & store credit returns",
+            "message_2_link": "",
+            "message_3": "",
+            "message_3_link": "",
+            "message_4": "",
+            "message_4_link": "",
+            "message_5": "",
+            "message_5_link": "",
+            "rotation_speed": 2500,
+            "show_trustpilot": true,
+            "trustpilot_embed": "<!-- TrustBox widget - Micro TrustScore -->\n<div class=\"trustpilot-widget\" data-locale=\"en-US\" data-template-id=\"5419b637fa0340045cd0c936\" data-businessunit-id=\"6863d52829d0eb9d7940e024\" data-style-height=\"20px\" data-style-width=\"100%\" data-token=\"3adb1738-cbc9-425d-a1cf-12b5bb885e66\">\n  <a href=\"https://www.trustpilot.com/review/marame.com\" target=\"_blank\" rel=\"noopener\">Trustpilot</a>\n</div>\n<!-- End TrustBox widget -->",
+            "trustpilot_scale": 0.7,
+            "trustpilot_right_padding": 20,
+            "background_color": "#ffffff",
+            "text_color": "#2a2a2d",
+            "font_size": 11,
+            "text_transform": "capitalize",
+            "bar_height": 45,
+            "horizontal_padding": 20,
+            "vertical_padding": 10
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_68bd445_mhyHYq",
+        "ai_gen_block_5b1a070_6eaw7U"
+      ],
+      "disabled": true,
+      "name": "Announcement bar",
+      "settings": {}
+    },
+    "header-alter": {
+      "type": "header-alter",
+      "blocks": {
+        "menu_image_84c7D3": {
+          "type": "menu_image",
+          "settings": {
+            "link_label": "Menswear",
+            "image_title": "<h1>men’s A/W lookbook</h1>",
+            "button_label": "men’s lookbook",
+            "button_link": "#"
+          }
+        },
+        "menu_image_DQiGkD": {
+          "type": "menu_image",
+          "settings": {
+            "link_label": "Menswear",
+            "image_title": "<h3>create an account & take our fit finder quiz for 10% off your first order</h3>",
+            "button_label": "sign up",
+            "button_link": "https://marame-mcstaging.myshopify.com/account/register"
+          }
+        },
+        "menu_image_F3VeMX": {
+          "type": "menu_image",
+          "settings": {
+            "link_label": "Womenswear",
+            "image_title": "<h1>men’s A/W lookbook</h1>",
+            "button_label": "men’s lookbook",
+            "button_link": "#"
+          }
+        },
+        "menu_image_NAYr7h": {
+          "type": "menu_image",
+          "settings": {
+            "link_label": "Womenswear",
+            "image_title": "<h3>create an account & take our fit finder quiz for 10% off your first order</h3>",
+            "button_label": "sign up",
+            "button_link": "https://marame-mcstaging.myshopify.com/account/register"
+          }
+        }
+      },
+      "block_order": [
+        "menu_image_84c7D3",
+        "menu_image_DQiGkD",
+        "menu_image_F3VeMX",
+        "menu_image_NAYr7h"
+      ],
+      "settings": {
+        "header_logo_svg": "<svg width=\"101\" height=\"14\" viewbox=\"0 0 101 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M88.7236 7.87752H94.8232V5.89965H88.7236V2.01819H95.6808V0H86.4854V13.9936H95.8802V11.9754H88.7236V7.87752Z\" fill=\"currentColor\"></path>\n    <path d=\"M101 11.9733H98.9521V13.9999H101V11.9733Z\" fill=\"currentColor\"></path>\n    <path d=\"M7.33021 9.27391H7.30663L2.80645 0.0509322L2.78072 0H0V13.9936H2.2383V3.89207H2.24687L6.1446 11.7802L6.15318 11.7993H8.48152L12.3578 3.91329V13.9936H14.5961V0H11.8347L7.33021 9.27391Z\" fill=\"currentColor\"></path>\n    <path d=\"M26.3838 0H23.6824L18.7105 13.9448L18.6934 13.9936H21.1418L22.3767 10.3838H27.6658L28.9008 13.9936H31.3492L26.4052 0.0615431L26.3838 0ZM25.0352 2.61028L27.0248 8.44626H23.0156L25.0073 2.61028H25.0352Z\" fill=\"currentColor\"></path>\n    <path d=\"M45.6771 12.177L45.5399 10.0379C45.5142 9.26116 45.3362 8.62663 45.0125 8.15338C44.738 7.75229 44.3264 7.44458 43.7883 7.23873C44.4014 6.99043 44.8945 6.60844 45.2547 6.10336C45.6771 5.5134 45.8893 4.78125 45.8893 3.92389C45.8893 2.71 45.4455 1.74017 44.5687 1.04409C43.7004 0.356507 42.4997 0.00634766 40.9968 0.00634766H35.4482V13.9788H37.7466V8.32316H41.0569C41.8265 8.32316 42.3883 8.49718 42.7291 8.83885C43.07 9.18264 43.263 9.79171 43.2994 10.6448L43.3573 12.1091C43.3702 12.9262 43.516 13.5395 43.7883 13.93L43.8226 13.9788H46.2324L46.1273 13.8047C45.8893 13.41 45.7393 12.8625 45.6749 12.177H45.6771ZM37.7466 2.0118H40.881C41.7343 2.0118 42.3947 2.19219 42.8471 2.54659C43.2909 2.89463 43.5138 3.42305 43.5138 4.117C43.5138 4.81096 43.293 5.40092 42.8599 5.78716C42.4226 6.17764 41.8094 6.375 41.0376 6.375H37.7466V2.0118Z\" fill=\"currentColor\"></path>\n    <path d=\"M57.8916 0H55.1902L50.2441 13.8727L50.2012 13.9936H52.6496L53.8845 10.3838H59.1737L60.4 13.9682L60.4086 13.9936H62.857L57.913 0.0615431L57.8916 0ZM56.543 2.61028L58.5348 8.44626H54.5256L56.5173 2.61028H56.543Z\" fill=\"currentColor\"></path>\n    <path d=\"M74.2931 9.27391H74.2695L69.7543 0.0212218L69.7436 0H66.9629V13.9936H69.2012V3.89207H69.2098L73.0925 11.7484L73.1161 11.7993H75.4444L79.3207 3.91329V13.9936H81.559V0H78.7976L74.2931 9.27391Z\" fill=\"currentColor\"></path>\n</svg>",
+        "menu": "main-menu-2-0",
+        "header_black": false,
+        "other_menu_1": "",
+        "other_menu_url_1": "shopify://products/gift-card-marame",
+        "other_menu_2": "",
+        "other_menu_url_2": "",
+        "show_find_your_content": false,
+        "find_your_title": "",
+        "small_content": "",
+        "url": ""
+      }
+    }
+  },
+  "order": [
+    "announcement_bar_DwkrAx",
+    "blocks_BxjPcD",
+    "header-alter"
+  ]
+}

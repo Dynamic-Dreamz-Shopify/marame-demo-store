@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "blocks_RzF87V": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1257a9e_TfxtUD": {
+          "type": "ai_gen_block_1257a9e",
+          "name": "Customizable title",
+          "settings": {
+            "row_1_text": "Frequently Asked Questions",
+            "row_2_text": "Helpful answers, all in one place.",
+            "row_3_text": "",
+            "max_width": 1000,
+            "row_1_font": "sans_serif_n4",
+            "row_1_font_size": 36,
+            "row_1_font_weight": "500",
+            "row_1_letter_spacing": 10,
+            "row_1_text_transform": "none",
+            "row_1_text_align": "left",
+            "row_1_color": "#121212",
+            "row_1_padding_top": 145,
+            "row_1_padding_bottom": 0,
+            "row_1_padding_left": 20,
+            "row_1_padding_right": 0,
+            "row_1_spacing": 20,
+            "row_2_font": "sans_serif_n4",
+            "row_2_font_size": 20,
+            "row_2_font_weight": "100",
+            "row_2_letter_spacing": 0,
+            "row_2_text_transform": "none",
+            "row_2_text_align": "left",
+            "row_2_color": "#121212",
+            "row_2_padding_top": 0,
+            "row_2_padding_bottom": 0,
+            "row_2_padding_left": 20,
+            "row_2_padding_right": 0,
+            "row_2_spacing": 10,
+            "row_3_font": "sans_serif_n4",
+            "row_3_font_size": 18,
+            "row_3_font_weight": "400",
+            "row_3_letter_spacing": 0,
+            "row_3_text_transform": "none",
+            "row_3_text_align": "left",
+            "row_3_color": "#121212",
+            "row_3_padding_top": 0,
+            "row_3_padding_bottom": 0,
+            "row_3_padding_left": 0,
+            "row_3_padding_right": 0,
+            "row_3_spacing": 10,
+            "row_1_mobile_font": "sans_serif_n4",
+            "row_1_mobile_font_size": 20,
+            "row_1_mobile_font_weight": "400",
+            "row_1_mobile_letter_spacing": 0,
+            "row_1_mobile_text_transform": "none",
+            "row_1_mobile_text_align": "left",
+            "row_1_mobile_color": "#121212",
+            "row_1_mobile_padding_top": 85,
+            "row_1_mobile_padding_bottom": 0,
+            "row_1_mobile_padding_left": 25,
+            "row_1_mobile_padding_right": 0,
+            "row_1_mobile_spacing": 5,
+            "row_2_mobile_font": "sans_serif_n4",
+            "row_2_mobile_font_size": 12,
+            "row_2_mobile_font_weight": "100",
+            "row_2_mobile_letter_spacing": 0,
+            "row_2_mobile_text_transform": "none",
+            "row_2_mobile_text_align": "left",
+            "row_2_mobile_color": "#121212",
+            "row_2_mobile_padding_top": 0,
+            "row_2_mobile_padding_bottom": 0,
+            "row_2_mobile_padding_left": 25,
+            "row_2_mobile_padding_right": 0,
+            "row_2_mobile_spacing": 10,
+            "row_3_mobile_font": "sans_serif_n4",
+            "row_3_mobile_font_size": 14,
+            "row_3_mobile_font_weight": "400",
+            "row_3_mobile_letter_spacing": 0,
+            "row_3_mobile_text_transform": "none",
+            "row_3_mobile_text_align": "left",
+            "row_3_mobile_color": "#121212",
+            "row_3_mobile_padding_top": 0,
+            "row_3_mobile_padding_bottom": 0,
+            "row_3_mobile_padding_left": 0,
+            "row_3_mobile_padding_right": 0,
+            "row_3_mobile_spacing": 10
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1257a9e_TfxtUD"
+      ],
+      "name": "Customizable title",
+      "settings": {}
+    },
+    "blocks_Q3tRB4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_460c19e_KtyrAn": {
+          "type": "ai_gen_block_460c19e",
+          "settings": {
+            "max_width": 1000,
+            "section_padding_top": 40,
+            "section_padding_bottom": 40,
+            "section_padding_horizontal": 20,
+            "item_padding_vertical": 20,
+            "item_padding_horizontal": 16,
+            "content_padding_bottom": 20,
+            "title_font": "sans_serif_n4",
+            "title_font_size": 13,
+            "title_letter_spacing": 7,
+            "title_text_transform": "none",
+            "title_color": "#121212",
+            "title_bg_color": "#ffffff",
+            "title_hover_color": "#636363",
+            "title_hover_bg_color": "#ffffff",
+            "content_font": "sans_serif_n4",
+            "content_font_size": 13,
+            "content_line_height": 1.6,
+            "content_letter_spacing": 1.5,
+            "content_text_transform": "none",
+            "content_color": "#949494",
+            "content_bg_color": "#ffffff",
+            "content_border_thickness": 0,
+            "content_border_style": "solid",
+            "content_border_color": "#e0e0e0",
+            "icon_size": 20,
+            "icon_color": "#242833",
+            "icon_hover_color": "#000000",
+            "divider_thickness": 1,
+            "divider_style": "solid",
+            "divider_color": "#eceaea",
+            "animation_duration": 0.5,
+            "animation_easing": "ease",
+            "item_1_title": "How Do I Place An Order?",
+            "item_1_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Simply browse our collection, select your size and preferred item(s), and add them to your cart. When you’re ready, head to checkout to complete your purchase securely.\n  </span>\n\n</span>",
+            "item_2_title": "What Payment Methods Do You Accept?",
+            "item_2_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We accept most major debit and credit cards aswell as American Express, PayPal, ShopPay, Klarna and Clearpay among others.\n  </span>\n\n</span>",
+            "item_3_title": "How Much Is Shipping?",
+            "item_3_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Standard Delivery starts from £2.95 and Next Day Delivery starts from £4.95.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    UK orders over £200 qualify for free next-day delivery if placed before 2pm.\n  </span>\n\n</span>",
+            "item_4_title": "How Do I Contact You?",
+            "item_4_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    You can reach our customer service team Monday to Friday, 9am to 4pm. Queries outside these hours will be handled as soon as we return.\n  </span>\n\n</span>",
+            "item_5_title": "How Long Does Dispatch Take?",
+            "item_5_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Orders placed before 2pm (Mon–Fri), excluding bank holidays, are shipped the same day.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Orders placed after 2pm are shipped the next working day.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Orders placed after 2pm on Friday or over the weekend are shipped the following Monday.\n  </span>\n\n</span>",
+            "item_6_title": "Can I Change My Shipping Address",
+            "item_6_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    If your order hasn’t shipped yet, email us at help@marame.com as soon as possible. We’ll do our best to update the address.\n  </span>\n\n</span>",
+            "item_7_title": "Can I Cancel Or Change My Order?",
+            "item_7_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    If the order hasn’t yet been processed, we may be able to cancel or amend it. Please contact help@marame.com urgently.\n  </span>\n\n</span>",
+            "item_8_title": "Do You Offer Next-Day Delivery?",
+            "item_8_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Yes, we offer next day delivery on all orders if ordered before 2pm (Mon–Fri). T&Cs apply.\n  </span>\n\n</span>",
+            "item_9_title": "What Is Your Returns Policy",
+            "item_9_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    You can return items within 30 days of fulfillment. Items must be unworn, unwashed, and in original condition with all tags attached.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Returns from the UK are free of charge, international returns come with international shipping fees. \n\nWe offer full refunds, exchanges and store credit options. \n  </span>\n\n</span>",
+            "item_10_title": "How Do I Start a Return?",
+            "item_10_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    You can process your return by visiting our returns portal: https://returnsportal.shop/marame.\n  </span>\n\n</span>",
+            "item_11_title": "Can I Exchange An Item?",
+            "item_11_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Yes, we offer exchanges for different sizes and colours, but you can also choose an entirely different item. \n\nWe also offer instant exchanges, which means you can get your new product shipped to you before returning your original product. We just take an authorisation hold on your card until the original product is received in good order. \n  </span>\n\n</span>",
+            "item_12_title": "What If I Receive A Faulty Or Incorrect Item?",
+            "item_12_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Email help@marame.com with your order number and a photo of the issue. We’ll take care of it quickly.\n  </span>\n\n</span>",
+            "item_13_title": "Are Your Sizes True To Fit",
+            "item_13_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Please see sizing information on our product pages. Our pieces are designed for a tailored yet comfortable fit. If you're between sizes or prefer a relaxed look, consider sizing up.\n  </span>\n\n</span>",
+            "item_14_title": "Are Your Sizes UK Or International?",
+            "item_14_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We use UK sizing across our product range.\n  </span>\n\n</span>",
+            "item_15_title": "Can I Get Help With Sizing?",
+            "item_15_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Yes, contact us at help@marame.com for personalised advice.\n  </span>\n\n</span>",
+            "item_16_title": "How Should I Care For My Items?",
+            "item_16_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Care instructions are included on the label of each garment (scan the QR code). Following them will help preserve the quality and fit of your pieces.\n  </span>\n\n</span>",
+            "item_17_title": "Can I Machine Wash Everything?",
+            "item_17_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Most items are machine washable, but we recommend checking the garment's care label before washing.\n  </span>\n\n</span>",
+            "item_18_title": "Where Are Your Clothes Made?",
+            "item_18_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Our clothing is made in Portugal and our footwear is made in China. We only work with manufacturers who uphold high standards of quality, sustainability, and ethical labour practices.\n  </span>\n\n</span>",
+            "item_19_title": "Do You Use Sustainable Production Methods?",
+            "item_19_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Yes. We work with partners who prioritise ethical and sustainable practices throughout their supply chains.\n  </span>\n\n</span>",
+            "item_20_title": "Can I Trace Where My Item Was Made?",
+            "item_20_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    While we don’t list specific factories, we can assure you that all our partners are selected for their ethical and sustainable credentials.\n  </span>\n\n</span>"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_460c19e_KtyrAn"
+      ],
+      "name": "Terms accordion",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "blocks_RzF87V",
+    "blocks_Q3tRB4"
+  ]
+}

@@ -1,0 +1,418 @@
+<div class="product-tabs">
+  {% assign show_collapsible_content = true %}
+  <ul class="product-tabs__nav">
+    {%- for i in (1..3) -%}
+       {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+        {% assign title = product.metafields.custom[key].value %}
+        {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+        {% assign content_accordion = product.metafields.custom[content_key] %}
+        {%- if title != blank and content_accordion != blank -%}
+        {% assign show_collapsible_content = false %}
+        <li class="product-tabs__nav-item {% if forloop.first %}active{% endif %}" data-tab="{{ title | handleize }}">
+          <button type="button">{{ title | remove:"Garment" | replace: '& Features', 'Details' | replace: 'Care & Fabric', 'Fabric & Care' }}</button>
+        </li>
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} Shipping {% endcomment %}
+    {% assign Shipping = settings.sr_head %}
+    {% assign ShippingContent = settings.sr_content %}
+    {%- if Shipping != blank and ShippingContent != blank -%}
+    <li class="product-tabs__nav-item" data-tab="{{ Shipping | handleize }}">
+      <button type="button">{{ Shipping | replace: 'SHIPPING & RETURNS', 'Shipping' }}</button>
+    </li>
+    {% endif %}
+
+    {% comment %} Reviews {% endcomment %}
+    <li class="product-tabs__nav-item" data-tab="reviews">
+      <button type="button">Reviews</button>
+    </li>
+    
+    {% comment %} Returns {% endcomment %}
+    <li class="product-tabs__nav-item" data-tab="returns">
+      <button type="button">Returns</button>
+    </li>
+  </ul>
+
+{% comment %}
+<ul class="product-tabs__nav">
+  {% for block in section.blocks %}
+    <li class="product-tabs__nav-item {% if forloop.first %}active{% endif %}" data-tab="{{ block.id }}">
+      <button type="button">{{ block.settings.tab_title }}</button>
+    </li>
+  {% endfor %}
+</ul>
+{% endcomment %}
+
+  <div class="product-tabs__content">
+
+    {%- for i in (1..5) -%}
+        {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+        {% assign title = product.metafields.custom[key].value %}
+        {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+        {% comment %} {% assign content_accordion = product.metafields.custom[content_key] %} {% endcomment %}
+
+      {% assign current_variant = product.selected_or_first_available_variant %}
+      {% assign content_accordion = blank %}
+
+      {% if current_variant.metafields.custom[content_key] != blank %}
+      {% assign content_accordion = current_variant.metafields.custom[content_key] %}
+      {% elsif product.metafields.custom[content_key] != blank %}
+      {% assign content_accordion = product.metafields.custom[content_key] %}
+      {% endif %}
+
+        
+        {%- if title != blank and content_accordion != blank -%}
+        <div class="product-tab-content {% if forloop.first %}active{% endif %}" id="{{ title | handleize }}">
+          {{ content_accordion | metafield_tag }}
+          
+          {% if i == 1 or i == 3 -%}
+            {%- capture rankData -%}
+            {%- for n in (1..4) -%}
+              {%- assign labelKey = 'label_' | append: forloop.index -%}
+              {%- assign labelKeyVal = 'label_' | append: forloop.index | append: '_rank' -%}
+              {%- assign labelVal = product.metafields.custom[labelKey].value -%}
+              {%- assign labelRankVal = product.metafields.custom[labelKeyVal].value | plus: 0 -%}
+              {%- if labelVal != blank and labelRankVal != blank -%}
+              <div class="accordion__body-label-item">
+                <span class="rank-label">{{ labelVal }}</span>
+                {%- render 'icon-rank', rank: labelRankVal -%}
+              </div>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- endcapture -%}
+            {%- if rankData != blank -%}<div class="accordion__body-label-list">{{ rankData }}</div>{%- endif -%}
+          {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+
+      {% comment %} Size Guid {% endcomment %}
+     {%- assign Metavalue = product.metafields.custom.size_chart.value -%}
+     {%- if section.settings.international_sizechart_image != blank or Metavalue != blank -%}
+      {% assign Size_guide = "Size Guide" %}
+      {% assign Size_guide_content = "Size Guide Content" %}
+      {% comment %} add vlank condition here like below tab {% endcomment %}
+      <li class="product-tabs__nav-item" data-tab="{{ Size_guide | handleize }}">
+        <button type="button">Size Guide</button>
+      </li>
+    {% endif %}
+    
+    {% comment %} Shipping {% endcomment %}
+    <div class="product-tab-content" id="{{ Shipping | handleize }}">
+      {{ ShippingContent }}
+    </div>
+    {% comment %} Reviews {% endcomment %}
+    <div class="product-tab-content" id="reviews">
+      <div class="trustpilot_app_div">
+          <!-- TrustBox widget - Mini -->
+            <div class="trustpilot-widget" data-locale="en-GB" data-template-id="53aa8807dec7e10d38f59f32" data-businessunit-id="6863d52829d0eb9d7940e024" data-style-height="150px" data-style-width="100%">
+              <a href="https://uk.trustpilot.com/review/marame.com" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+      </div>
+    </div>
+    {% comment %} Returns {% endcomment %}
+    <div class="product-tab-content" id="returns">
+      {% comment %} <p><strong>Returns &amp; Exchanges</strong></p>
+      <ul><li>We accept returns within 14 days of delivery. Items must be in their original condition with all tags attached.</li><li>UK returns are subject to a £3 return fee.</li><li>Exchanges are available for sizing issues or faulty items only, free of charge.</li><li>International returns must be shipped at the customer’s expense.</li></ul> {% endcomment %}
+      {{ settings.returns_exchanges_policy }}
+    </div>
+
+
+    {% for block in section.blocks %}
+      <div class="product-tab-content {% if forloop.first %}active{% endif %}" id="{{ block.id }}">
+        {{ block.settings.tab_content }}
+        {% if block.settings.enable_trustpilot %}
+          <div class="trustpilot_app_div">
+            <div class="trustpilot-widget" 
+                 data-locale="en-GB" 
+                 data-template-id="53aa8807dec7e10d38f59f32" 
+                 data-businessunit-id="6863d52829d0eb9d7940e024" 
+                 data-style-height="150px" 
+                 data-style-width="100%">
+              <a href="https://uk.trustpilot.com/review/marame.com" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.accordion_with_atc_buttons .product-tabs {
+  margin-top: 79px;
+}
+
+.accordion_with_atc_buttons .product-tabs__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 0.31px solid #000000;
+  margin: 0 -34px 40px;
+  padding: 0 34px;
+  overflow: auto;
+}
+
+.accordion_with_atc_buttons .product-tabs__nav-item {
+  flex-shrink: 0;
+}
+
+.accordion_with_atc_buttons .product-tabs__nav-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, border-bottom 0.2s;
+  font-family: HelveticaNowDisplayRegular,sans-serif;
+  font-weight: 400;
+  font-size: 10.78px;
+  line-height: 27.71px;
+  padding: 0;
+  color: #8F8F8F;
+  text-transform: none;
+}
+
+.accordion_with_atc_buttons .product-tabs__nav-item.active button {
+  color: #000;
+  font-family: HelveticaNowDisplayBold,sans-serif;
+  font-weight: 700;
+}
+
+.accordion_with_atc_buttons .product-tab-content {
+  display: none;
+  font-family: HelveticaNowDisplayLight,sans-serif;
+  font-weight: 325;
+  font-size: 10.78px;
+  line-height: 16.94px;
+}
+
+.accordion_with_atc_buttons .product-tab-content.active {
+  display: block;
+}
+
+.accordion_with_atc_buttons .product-tab-content * {
+    text-transform: none;
+}
+
+.accordion_with_atc_buttons .accordion__body-label-list {
+    margin-top: 26px;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.accordion_with_atc_buttons span.rank-label {
+    font-size: 10.78px;
+    line-height: 23.09px;
+}
+
+.accordion_with_atc_buttons .product-tab-content p, 
+.accordion_with_atc_buttons .product-tab-content ul li,
+.accordion_with_atc_buttons .product-tab-content a {
+    font-family: HelveticaNowDisplayLight, sans-serif;
+    font-weight: 325;
+    font-size: 10.78px;
+    line-height: 16.94px;
+}
+
+.accordion_with_atc_buttons .product-tab-content strong {
+    font-family: 'HelveticaNowProDisplayMedium';
+    font-weight: 500;
+    font-size: 10.78px;
+    line-height: 16.94px;
+}
+
+.accordion_with_atc_buttons .product-tab-content p {
+    margin-bottom: 10px;
+}
+
+.accordion_with_atc_buttons .product-tab-content ul li:not(:last-of-type) {
+    margin-bottom: 5px;
+}
+
+.accordion_with_atc_buttons .product-tab-content ul li {
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.accordion_with_atc_buttons .product-tab-content ul {
+    margin-bottom: 5px;
+}
+
+{% comment %}  {% endcomment %}
+
+.product-tabs .sizechart-popup {
+    position: unset;
+    max-width: 100%;
+    height: unset;
+    padding: 0;
+    transform: none;
+}
+
+.product-tabs .sizechart-popup .popup-wrap {
+    max-width: 100%;
+}
+
+.product-tabs .sizechart-popup .popup-header {
+    display: none;
+}
+
+.product-tabs .sizechart-popup .fys-box {
+    margin-bottom: 15px;
+}
+
+.product-tabs .sizechart-popup .box-title {
+    font-family: 'HelveticaNowProDisplayMedium';
+    font-weight: 500;
+    font-size: 10.78px;
+    line-height: 16.94px;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.product-tabs .size--incm-option {
+    margin-bottom: 10px;
+}
+
+.product-tabs .size--incm-option .size-option {
+    font-family: 'HelveticaNowProDisplayMedium';
+    font-weight: 500;
+    font-size: 10.78px;
+    line-height: 16.94px;
+}
+
+.product-tabs .sizechart-popup .size-table th {
+    font-family: 'HelveticaNowProDisplayBold';
+    font-weight: 700;
+    font-size: 10.82px;
+    line-height: 12px;
+    vertical-align: middle;
+    padding: 5px;
+    text-transform: capitalize;
+}
+
+.product-tabs .sizechart-popup .size-table td {
+    font-family: HelveticaNowDisplayLight,sans-serif;
+    font-weight: 325;
+    font-size: 10.82px;
+    line-height: 13px;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.product-tabs .sizechart-popup .size-table tbody tr:nth-child(odd) td {
+    background: #F9F6F4;
+}
+
+.product-tabs .sizechart-popup .size-table tbody tr:nth-child(odd) td:first-of-type {
+    border-radius: 3px 0 0 3px;
+}
+
+.product-tabs .sizechart-popup .size-table tbody tr:nth-child(odd) td:last-of-type {
+    border-radius: 0 3px 3px 0;
+}
+
+.product-tabs .international-sizechart-row .international-sizechart-title span {
+    font-family: 'HelveticaNowProDisplayBold';
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 18px;
+    text-decoration: underline;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.product-tabs .international-sizechart-row .international-sizechart-title {
+    margin: 0;
+    padding: 0;
+    line-height: unset;
+}
+
+.pdp-hero-section > .sizechart-popup {
+    display: none;
+}
+
+@media (max-width: 767px) {
+  .accordion_with_atc_buttons .product-tabs {
+      margin-top: 52px;
+  }
+
+  .accordion_with_atc_buttons .product-tabs__nav {
+      margin: 0 -20px 20px;
+      padding: 0 20px;
+      padding-bottom: 4px;
+  }
+
+  .accordion_with_atc_buttons .product-tabs__nav-item button {
+      font-size: 8px;
+      line-height: 18px;
+  }
+
+  .accordion_with_atc_buttons .product-tab-content {
+      font-size: 8px;
+      line-height: 11px;
+  }
+
+  .accordion_with_atc_buttons .product-tab-content p, 
+  .accordion_with_atc_buttons .product-tab-content ul li,
+  .accordion_with_atc_buttons .product-tab-content a {
+      font-size: 8px;
+      line-height: 11px;
+  }
+
+  .accordion_with_atc_buttons .product-tab-content strong {
+      font-size: 8px;
+      line-height: 11px;
+  }
+
+  .accordion_with_atc_buttons .accordion__body-label-list {
+      margin-top: 14px;
+      gap: 10px;
+  }
+
+  .accordion_with_atc_buttons span.rank-label {
+      font-size: 8px;
+      line-height: 15px;
+  }
+
+  .product-tabs .sizechart-popup .box-title {
+      font-size: 8px;
+      line-height: 11px;
+  }
+
+  .product-tabs .size--incm-option .size-option {
+      font-size: 8px;
+  }
+
+  .product-tabs .sizechart-popup .size-table th {
+      font-size: 8px;
+      line-height: 10px;
+      padding: 7px 5px;
+  }
+
+  .product-tabs .sizechart-popup .size-table td {
+      font-size: 8px;
+      line-height: 10px;
+      padding: 7px 5px;
+  }
+
+  .product-tabs .international-sizechart-row .international-sizechart-title span {
+      font-size: 8px;
+      line-height: 18px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.product-tabs__nav-item button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const tabName = this.parentElement.getAttribute('data-tab');
+      document.querySelectorAll('.product-tabs__nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.product-tab-content').forEach(c => c.classList.remove('active'));
+      this.parentElement.classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+    });
+  });
+});
+</script>

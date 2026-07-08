@@ -1,0 +1,1 @@
+import{lenis as o}from"./scroll.js";import"./script.js";import"./parallax.js";import"./_commonjsHelpers.js";import"./variables.js";function m(t){t==="enable"?o.start():o.stop()}export{m as toggleScroll};

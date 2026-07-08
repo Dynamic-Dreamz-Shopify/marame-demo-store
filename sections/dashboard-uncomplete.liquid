@@ -1,0 +1,98 @@
+<section class="dashboard row">
+  <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+    <ul>
+      {% for block in section.blocks %}
+        {% if block.settings.text != blank %}
+          {% assign page_text_replace = block.settings.text | replace: "/pages/", "" %}
+          <li class="is_list{% if page.handle contains page_text_replace %} active{% endif %}">
+            <a href="{{ block.settings.link | default: 'javascript: void(0)' }}">
+              <p>{{ block.settings.text }}</p>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="dashboard__body col--6 col--md--6 col--lg--10">
+    <div class="dashboard__body__intro">
+      <h1>
+        welcome back, <span class="dashboard__body__username">{{ customer.name }}</span>
+      </h1>
+      {% if section.settings.content != blank or section.settings.button_label != blank %}
+        <div class="dashboard__body__intro__banner">
+          {% if section.settings.content != blank %}
+            <h4>{{ section.settings.content }}</h4>
+          {% endif %}
+          {% if section.settings.button_label != blank %}
+            <a href="{{ section.settings.button_link | default: 'javascript: void(0)' }}" class="btn btn--light">
+              <h6 class="medium">{{ section.settings.button_label }}</h6>
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if section.settings.image != blank %}
+    <div class="dashboard__bg">
+      <img
+        src="{{ section.settings.image | img_url: 'master' }}"
+        alt="{{ section.settings.image.alt }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        loading="lazy"
+      >
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Dashboard uncomplete",
+  "class": "dashboard-uncomplete",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Image",
+      "id": "image"
+    },
+    {
+      "type": "inline_richtext",
+      "label": "Content",
+      "id": "content"
+    },
+    {
+      "type": "text",
+      "label": "Button label",
+      "id": "button_label"
+    },
+    {
+      "type": "url",
+      "label": "Button link",
+      "id": "button_link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Text",
+          "id": "text"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dashboard uncomplete"
+    }
+  ]
+}
+{% endschema %}

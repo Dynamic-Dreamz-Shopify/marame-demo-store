@@ -1,0 +1,204 @@
+{%- comment -%}
+  CSS custom properties for signup form typography and field layout.
+  @param section {Section}
+{%- endcomment -%}
+{%- liquid
+  assign signup_heading_size_mobile = section.settings.signup_heading_size_mobile
+  if signup_heading_size_mobile == blank
+    assign signup_heading_size_mobile = section.settings.signup_heading_size | default: 15
+  endif
+  assign signup_heading_size_desktop = section.settings.signup_heading_size_desktop
+  if signup_heading_size_desktop == blank
+    assign signup_heading_size_desktop = section.settings.signup_heading_size | default: signup_heading_size_mobile
+  endif
+
+  assign signup_heading_tracking_mobile = section.settings.signup_heading_tracking_mobile
+  if signup_heading_tracking_mobile == blank
+    assign signup_heading_tracking_mobile = section.settings.signup_heading_tracking | default: 0
+  endif
+  assign signup_heading_tracking_desktop = section.settings.signup_heading_tracking_desktop
+  if signup_heading_tracking_desktop == blank
+    assign signup_heading_tracking_desktop = section.settings.signup_heading_tracking | default: 0
+  endif
+
+  assign signup_heading_line_height_mobile = section.settings.signup_heading_line_height_mobile
+  if signup_heading_line_height_mobile == blank
+    assign signup_heading_line_height_mobile = 20
+  endif
+  assign signup_heading_line_height_desktop = section.settings.signup_heading_line_height_desktop
+  if signup_heading_line_height_desktop == blank
+    assign signup_heading_line_height_desktop = signup_heading_line_height_mobile
+  endif
+
+  assign signup_heading_align_mobile = section.settings.signup_heading_align_mobile
+  if signup_heading_align_mobile == blank
+    assign signup_heading_align_mobile = section.settings.signup_heading_align | default: 'center'
+  endif
+  assign signup_heading_align_desktop = section.settings.signup_heading_align_desktop
+  if signup_heading_align_desktop == blank
+    assign signup_heading_align_desktop = section.settings.signup_heading_align | default: signup_heading_align_mobile
+  endif
+
+  assign signup_align_mobile = section.settings.signup_align_mobile
+  if signup_align_mobile == blank
+    assign signup_align_mobile = section.settings.signup_align | default: 'center'
+  endif
+  assign signup_align_desktop = section.settings.signup_align_desktop
+  if signup_align_desktop == blank
+    assign signup_align_desktop = section.settings.signup_align | default: signup_align_mobile
+  endif
+
+  assign input_font_size_mobile = section.settings.input_font_size_mobile
+  if input_font_size_mobile == blank
+    assign input_font_size_mobile = section.settings.input_font_size | default: 15
+  endif
+  assign input_font_size_desktop = section.settings.input_font_size_desktop
+  if input_font_size_desktop == blank
+    assign input_font_size_desktop = section.settings.input_font_size | default: input_font_size_mobile
+  endif
+
+  assign input_line_height_mobile = section.settings.input_line_height_mobile
+  if input_line_height_mobile == blank
+    assign input_line_height_mobile = section.settings.input_line_height | default: 20
+  endif
+  assign input_line_height_desktop = section.settings.input_line_height_desktop
+  if input_line_height_desktop == blank
+    assign input_line_height_desktop = section.settings.input_line_height | default: input_line_height_mobile
+  endif
+
+  assign input_text_align_mobile = section.settings.input_text_align_mobile
+  if input_text_align_mobile == blank
+    assign input_text_align_mobile = section.settings.input_text_align | default: 'center'
+  endif
+  assign input_text_align_desktop = section.settings.input_text_align_desktop
+  if input_text_align_desktop == blank
+    assign input_text_align_desktop = section.settings.input_text_align | default: input_text_align_mobile
+  endif
+
+  assign submit_font_size_mobile = section.settings.submit_font_size_mobile
+  if submit_font_size_mobile == blank
+    assign submit_font_size_mobile = section.settings.submit_font_size | default: 15
+  endif
+  assign submit_font_size_desktop = section.settings.submit_font_size_desktop
+  if submit_font_size_desktop == blank
+    assign submit_font_size_desktop = section.settings.submit_font_size | default: submit_font_size_mobile
+  endif
+
+  assign submit_line_height_mobile = section.settings.submit_line_height_mobile
+  if submit_line_height_mobile == blank
+    assign submit_line_height_mobile = section.settings.submit_line_height | default: 20
+  endif
+  assign submit_line_height_desktop = section.settings.submit_line_height_desktop
+  if submit_line_height_desktop == blank
+    assign submit_line_height_desktop = section.settings.submit_line_height | default: submit_line_height_mobile
+  endif
+
+  assign submit_text_align_mobile = section.settings.submit_text_align_mobile
+  if submit_text_align_mobile == blank
+    assign submit_text_align_mobile = section.settings.submit_text_align | default: 'center'
+  endif
+  assign submit_text_align_desktop = section.settings.submit_text_align_desktop
+  if submit_text_align_desktop == blank
+    assign submit_text_align_desktop = section.settings.submit_text_align | default: submit_text_align_mobile
+  endif
+
+  assign message_font_size_mobile = section.settings.message_font_size_mobile
+  if message_font_size_mobile == blank
+    assign message_font_size_mobile = section.settings.message_font_size | default: 12
+  endif
+  assign message_font_size_desktop = section.settings.message_font_size_desktop
+  if message_font_size_desktop == blank
+    assign message_font_size_desktop = section.settings.message_font_size | default: message_font_size_mobile
+  endif
+
+  assign signup_heading_transform = section.settings.signup_heading_transform
+  if signup_heading_transform == blank
+    assign signup_heading_transform = 'capitalize'
+  endif
+
+  assign input_field_height_legacy = section.settings.input_field_height | default: 48
+  assign input_field_height_mobile = section.settings.input_field_height_mobile
+  if input_field_height_mobile == blank
+    assign input_field_height_mobile = input_field_height_legacy
+  endif
+  assign input_field_height_desktop = section.settings.input_field_height_desktop
+  if input_field_height_desktop == blank
+    assign input_field_height_desktop = input_field_height_legacy
+  endif
+
+  assign submit_field_height_mobile = section.settings.submit_field_height_mobile
+  if submit_field_height_mobile == blank or submit_field_height_mobile == 0
+    assign submit_field_height_mobile = input_field_height_mobile
+  endif
+  assign submit_field_height_desktop = section.settings.submit_field_height_desktop
+  if submit_field_height_desktop == blank or submit_field_height_desktop == 0
+    assign submit_field_height_desktop = input_field_height_desktop
+  endif
+
+  assign input_letter_spacing_mobile = section.settings.input_letter_spacing_mobile | plus: 0
+  if input_letter_spacing_mobile == 0
+    assign input_letter_spacing_mobile = section.settings.input_letter_spacing | plus: 0
+  endif
+
+  assign input_letter_spacing_desktop = section.settings.input_letter_spacing_desktop | plus: 0
+  if input_letter_spacing_desktop == 0
+    assign input_letter_spacing_desktop = input_letter_spacing_mobile
+  endif
+
+  assign submit_letter_spacing_mobile = section.settings.submit_letter_spacing_mobile | plus: 0
+  if submit_letter_spacing_mobile == 0
+    assign submit_letter_spacing_mobile = section.settings.submit_letter_spacing | plus: 0
+  endif
+
+  assign submit_letter_spacing_desktop = section.settings.submit_letter_spacing_desktop | plus: 0
+  if submit_letter_spacing_desktop == 0
+    assign submit_letter_spacing_desktop = submit_letter_spacing_mobile
+  endif
+-%}
+--msp-signup-max-width: {{ section.settings.signup_max_width }}px;
+--msp-signup-align-mobile: {{ signup_align_mobile }};
+--msp-signup-align-desktop: {{ signup_align_desktop }};
+--msp-signup-align: {{ signup_align_mobile }};
+--msp-signup-heading-align-mobile: {{ signup_heading_align_mobile }};
+--msp-signup-heading-align-desktop: {{ signup_heading_align_desktop }};
+--msp-signup-heading-align: {{ signup_heading_align_mobile }};
+--msp-signup-heading-transform: {{ signup_heading_transform }};
+--msp-signup-heading-size-mobile: {{ signup_heading_size_mobile }}px;
+--msp-signup-heading-size-desktop: {{ signup_heading_size_desktop }}px;
+--msp-signup-heading-tracking-mobile: {{ signup_heading_tracking_mobile }}px;
+--msp-signup-heading-tracking-desktop: {{ signup_heading_tracking_desktop }}px;
+--msp-signup-heading-line-height-mobile: {{ signup_heading_line_height_mobile }}px;
+--msp-signup-heading-line-height-desktop: {{ signup_heading_line_height_desktop }}px;
+--msp-input-font-size-mobile: {{ input_font_size_mobile }}px;
+--msp-input-font-size-desktop: {{ input_font_size_desktop }}px;
+--msp-input-line-height-mobile: {{ input_line_height_mobile }}px;
+--msp-input-line-height-desktop: {{ input_line_height_desktop }}px;
+--msp-input-field-height: {{ input_field_height_mobile }}px;
+--msp-input-field-height-mobile: {{ input_field_height_mobile }}px;
+--msp-input-field-height-desktop: {{ input_field_height_desktop }}px;
+--msp-submit-field-height-mobile: {{ submit_field_height_mobile }}px;
+--msp-submit-field-height-desktop: {{ submit_field_height_desktop }}px;
+--msp-input-letter-spacing-mobile: {{ input_letter_spacing_mobile }}px;
+--msp-input-letter-spacing-desktop: {{ input_letter_spacing_desktop }}px;
+--msp-input-letter-spacing: {{ input_letter_spacing_mobile }}px;
+--msp-input-text-align-mobile: {{ input_text_align_mobile }};
+--msp-input-text-align-desktop: {{ input_text_align_desktop }};
+--msp-input-text-align: {{ input_text_align_mobile }};
+--msp-input-text-transform: {{ section.settings.input_text_transform }};
+--msp-input-color: {{ section.settings.color_input_text }};
+--msp-input-padding-x: {{ section.settings.input_padding_x }}px;
+--msp-input-padding-right: {{ section.settings.input_padding_right }}px;
+--msp-input-border-radius: {{ section.settings.input_border_radius }}px;
+--msp-submit-font-size-mobile: {{ submit_font_size_mobile }}px;
+--msp-submit-font-size-desktop: {{ submit_font_size_desktop }}px;
+--msp-submit-line-height-mobile: {{ submit_line_height_mobile }}px;
+--msp-submit-line-height-desktop: {{ submit_line_height_desktop }}px;
+--msp-submit-letter-spacing-mobile: {{ submit_letter_spacing_mobile }}px;
+--msp-submit-letter-spacing-desktop: {{ submit_letter_spacing_desktop }}px;
+--msp-submit-letter-spacing: {{ submit_letter_spacing_mobile }}px;
+--msp-submit-text-align-mobile: {{ submit_text_align_mobile }};
+--msp-submit-text-align-desktop: {{ submit_text_align_desktop }};
+--msp-submit-text-align: {{ submit_text_align_mobile }};
+--msp-submit-text-transform: {{ section.settings.submit_text_transform }};
+--msp-message-font-size-mobile: {{ message_font_size_mobile }}px;
+--msp-message-font-size-desktop: {{ message_font_size_desktop }}px;

@@ -1,0 +1,448 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "generic_hero_nj8TRN": {
+      "type": "generic-hero",
+      "settings": {
+        "heading": "<h2>Womens Lookbook</h2>"
+      }
+    },
+    "lookbook_inner_fU8PhV": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_LeeLGz": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-long-sleeve-fitted-tshirt-cosy-cream-full.jpg",
+            "product": "long-sleeve-fitted-t-shirt",
+            "color_name": "Cosy Cream",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Stone",
+            "product_3": "leather-buckled-loafers-black",
+            "color_name_3": "Black",
+            "product_4": "garrett-leight-hampton-sun",
+            "color_name_4": "Pure Glass",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_kX3LWU": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/Lookbook_W.jpg",
+            "product": "fitted-t-shirt",
+            "color_name": "",
+            "product_2": "classic-blazer",
+            "color_name_2": "",
+            "product_3": "high-waisted-wide-leg-jeans",
+            "color_name_3": "",
+            "product_4": "leather-ankle-boots",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_i8U8U9": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-regular-fit-tshirt-white-full.jpg",
+            "product": "regular-fit-t-shirt",
+            "color_name": "",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "",
+            "product_3": "leather-buckled-loafers-black",
+            "color_name_3": "",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_LeeLGz",
+        "block_kX3LWU",
+        "block_i8U8U9"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Subtle Sophistication",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_bGLLzh": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_gJY48f": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/1-w_88bbe154-7450-4ded-a926-4c0360288dae.jpg",
+            "product": "100-portuguese-cotton-fleece-logo-womens-hoodie",
+            "color_name": "",
+            "product_2": "100-portuguese-cotton-fleece-womens-joggers",
+            "color_name_2": "",
+            "product_3": "smart-suede-trainers-sandstone",
+            "color_name_3": "",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_BpF7Jw": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-fitted-tshirt-cosy-cream-full.jpg",
+            "product": "fitted-t-shirt",
+            "color_name": "Cosy Cream",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Black",
+            "product_3": "smart-suede-trainers-sandstone",
+            "color_name_3": "Grey",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_ngb99t": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-cotton-fleece-joggers-ash-white-full.jpg",
+            "product": "double-layer-fitted-vest",
+            "color_name": "White",
+            "product_2": "100-portuguese-cotton-fleece-womens-joggers",
+            "color_name_2": "Ash White",
+            "product_3": "smart-leather-trainers-white-w",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_gJY48f",
+        "block_BpF7Jw",
+        "block_ngb99t"
+      ],
+      "settings": {
+        "title": "AIRPORT AESTHETICS",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_TjWiWc": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_Q7VnNM": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-mid-thigh-boat-neck-dress-black-full.jpg",
+            "product": "mid-thigh-boat-neck-dress",
+            "color_name": "Black",
+            "product_2": "leather-knee-high-boots",
+            "color_name_2": "Black",
+            "product_3": "",
+            "color_name_3": "",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_iaCqyN": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-regular-fit-striped-tshirt-white-snow-black-full.jpg",
+            "product": "regular-fit-t-shirt",
+            "color_name": "White Snow/Black",
+            "product_2": "high-waisted-smart-trouser",
+            "color_name_2": "White Cream",
+            "product_3": "slingback-leather-heels",
+            "color_name_3": "Black",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_jxLYgX": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-high-waisted-smart-trousers-white-cream-full.jpg",
+            "product": "fitted-t-shirt",
+            "color_name": "Cinnamon Sugar",
+            "product_2": "high-waisted-smart-trouser",
+            "color_name_2": "White Cream",
+            "product_3": "slingback-leather-heels",
+            "color_name_3": "Cream",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_Q7VnNM",
+        "block_iaCqyN",
+        "block_jxLYgX"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Making a Statement",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_bhpztt": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_T4ynLD": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-regular-fit-tshirt-black-full.jpg",
+            "product": "regular-fit-t-shirt",
+            "color_name": "Black",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Stone",
+            "product_3": "leather-buckled-loafers-black",
+            "color_name_3": "Black",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_mfppKa": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-merino-wool-crew-neck-jumper-fiery-rose-full.jpg",
+            "product": "italian-merino-wool-knit-jumper-womens",
+            "color_name": "Fiery Rose",
+            "product_2": "high-waisted-smart-trouser",
+            "color_name_2": "White Cream",
+            "product_3": "leather-ankle-boots",
+            "color_name_3": "Black",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_MEggCn": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-classic-blazer-natural-beige-full.jpg",
+            "product": "classic-blazer",
+            "color_name": "Natural Beige",
+            "product_2": "fitted-t-shirt",
+            "color_name_2": "Black",
+            "product_3": "high-waisted-smart-trouser",
+            "color_name_3": "Black",
+            "product_4": "leather-ankle-boots",
+            "color_name_4": "Black",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_T4ynLD",
+        "block_mfppKa",
+        "block_MEggCn"
+      ],
+      "settings": {
+        "title": "Elevated Everyday",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_XDwdpG": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_H7WAnY": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/6-b-min_25edc346-8270-48fa-b2ee-fb9cd9ef6c97.jpg",
+            "product": "italian-merino-wool-knit-jumper-womens",
+            "color_name": "Rich Chocolate",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Stone",
+            "product_3": "suede-sandals-w",
+            "color_name_3": "Clay",
+            "product_4": "garrett-leight-brooks-sun",
+            "color_name_4": "Spotted Brown Shell",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_Gdjbme": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-fitted-tshirt-white-full.jpg",
+            "product": "fitted-t-shirt",
+            "color_name": "White",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Black",
+            "product_3": "smart-leather-trainers-white-w",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_4DjWkg": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-merino-wool-crew-neck-jumper-vanilla-cream-full.jpg",
+            "product": "italian-merino-wool-knit-jumper-womens",
+            "color_name": "Vanilla Cream",
+            "product_2": "high-waisted-tapered-trousers",
+            "color_name_2": "Caramel",
+            "product_3": "smart-leather-trainers-white-w",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_H7WAnY",
+        "block_Gdjbme",
+        "block_4DjWkg"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Softly Social",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_iRfXDy": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_W4LMhT": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-mid-thigh-boat-neck-dress-cotton-cream-full.jpg",
+            "product": "mid-thigh-boat-neck-dress",
+            "color_name": "Cotton Cream",
+            "product_2": "leather-knee-high-boots",
+            "color_name_2": "Brown",
+            "product_3": "",
+            "color_name_3": "",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_RLRrBD": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-classic-blazer-black-full.jpg",
+            "product": "classic-blazer",
+            "color_name": "Black",
+            "product_2": "fitted-t-shirt",
+            "color_name_2": "Cinnamon Sugar",
+            "product_3": "high-waisted-tapered-trousers",
+            "color_name_3": "Caramel",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_YKiiri": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/womens-high-waisted-smart-trousers-black-full.jpg",
+            "product": "fitted-t-shirt",
+            "color_name": "Black",
+            "product_2": "high-waisted-smart-trouser",
+            "color_name_2": "Black",
+            "product_3": "leather-ankle-boots",
+            "color_name_3": "Black",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_W4LMhT",
+        "block_RLRrBD",
+        "block_YKiiri"
+      ],
+      "settings": {
+        "title": "DATE NIGHTS",
+        "title_position": "left"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "generic_hero_nj8TRN",
+    "lookbook_inner_fU8PhV",
+    "lookbook_inner_bGLLzh",
+    "lookbook_inner_TjWiWc",
+    "lookbook_inner_bhpztt",
+    "lookbook_inner_XDwdpG",
+    "lookbook_inner_iRfXDy"
+  ]
+}

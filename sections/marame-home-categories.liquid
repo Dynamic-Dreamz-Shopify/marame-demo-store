@@ -1,0 +1,588 @@
+{% render 'mhp-assets' %}
+
+{%- liquid
+  assign mens_pos = section.settings.menswear_label_position | default: 'bottom'
+  assign womens_pos = section.settings.womenswear_label_position | default: 'bottom'
+  assign mens_has_image = false
+  assign womens_has_image = false
+  if section.settings.menswear_image_mobile != blank or section.settings.menswear_image_desktop != blank
+    assign mens_has_image = true
+  endif
+  if section.settings.womenswear_image_mobile != blank or section.settings.womenswear_image_desktop != blank
+    assign womens_has_image = true
+  endif
+
+  assign menswear_url = section.settings.menswear_link
+  if menswear_url == blank
+    if collections['menswear'] != blank
+      assign menswear_url = collections['menswear'].url
+    else
+      assign menswear_url = '/collections/menswear'
+    endif
+  endif
+
+  assign womenswear_url = section.settings.womenswear_link
+  if womenswear_url == blank
+    if collections['womenswear'] != blank
+      assign womenswear_url = collections['womenswear'].url
+    else
+      assign womenswear_url = '/collections/womenswear'
+    endif
+  endif
+
+  assign mens_img_m = section.settings.menswear_image_mobile
+  assign mens_img_d = section.settings.menswear_image_desktop
+  if mens_img_d == blank
+    assign mens_img_d = mens_img_m
+  endif
+  if mens_img_m == blank
+    assign mens_img_m = mens_img_d
+  endif
+
+  assign womens_img_m = section.settings.womenswear_image_mobile
+  assign womens_img_d = section.settings.womenswear_image_desktop
+  if womens_img_d == blank
+    assign womens_img_d = womens_img_m
+  endif
+  if womens_img_m == blank
+    assign womens_img_m = womens_img_d
+  endif
+-%}
+
+{%- capture mens_focal_mobile -%}
+  {%- render 'msp-object-position',
+    image: mens_img_m,
+    use_manual_focal: section.settings.menswear_use_manual_focal,
+    focal_x: section.settings.menswear_focal_x_mobile,
+    focal_y: section.settings.menswear_focal_y_mobile
+  -%}
+{%- endcapture -%}
+{%- capture mens_focal_desktop -%}
+  {%- render 'msp-object-position',
+    image: mens_img_d,
+    use_manual_focal: section.settings.menswear_use_manual_focal,
+    focal_x: section.settings.menswear_focal_x_desktop,
+    focal_y: section.settings.menswear_focal_y_desktop
+  -%}
+{%- endcapture -%}
+{%- capture womens_focal_mobile -%}
+  {%- render 'msp-object-position',
+    image: womens_img_m,
+    use_manual_focal: section.settings.womenswear_use_manual_focal,
+    focal_x: section.settings.womenswear_focal_x_mobile,
+    focal_y: section.settings.womenswear_focal_y_mobile
+  -%}
+{%- endcapture -%}
+{%- capture womens_focal_desktop -%}
+  {%- render 'msp-object-position',
+    image: womens_img_d,
+    use_manual_focal: section.settings.womenswear_use_manual_focal,
+    focal_x: section.settings.womenswear_focal_x_desktop,
+    focal_y: section.settings.womenswear_focal_y_desktop
+  -%}
+{%- endcapture -%}
+
+{%- capture mhp_cat_scope -%}#mhp-categories-{{ section.id }}{%- endcapture -%}
+{% style %}
+  {{ mhp_cat_scope }} .mhp-categories__panel--mens {
+    --mhp-cat-label-size: {{ section.settings.menswear_label_size_mobile }}px;
+    --mhp-cat-label-spacing: {{ section.settings.menswear_label_spacing_mobile | times: 0.01 }}em;
+    --mhp-cat-offset-left: {{ section.settings.menswear_offset_left_mobile }}px;
+    --mhp-cat-offset-bottom: {{ section.settings.menswear_offset_bottom_mobile }}px;
+    --mhp-cat-offset-top: {{ section.settings.menswear_offset_top_mobile }}px;
+    --mhp-cat-label-size-desktop: {{ section.settings.menswear_label_size_desktop }}px;
+    --mhp-cat-label-spacing-desktop: {{ section.settings.menswear_label_spacing_desktop | times: 0.01 }}em;
+    --mhp-cat-offset-left-desktop: {{ section.settings.menswear_offset_left_desktop }}px;
+    --mhp-cat-offset-bottom-desktop: {{ section.settings.menswear_offset_bottom_desktop }}px;
+    --mhp-cat-offset-top-desktop: {{ section.settings.menswear_offset_top_desktop }}px;
+  }
+  {{ mhp_cat_scope }} .mhp-categories__panel--womens {
+    --mhp-cat-label-size: {{ section.settings.womenswear_label_size_mobile }}px;
+    --mhp-cat-label-spacing: {{ section.settings.womenswear_label_spacing_mobile | times: 0.01 }}em;
+    --mhp-cat-offset-left: {{ section.settings.womenswear_offset_left_mobile }}px;
+    --mhp-cat-offset-bottom: {{ section.settings.womenswear_offset_bottom_mobile }}px;
+    --mhp-cat-offset-top: {{ section.settings.womenswear_offset_top_mobile }}px;
+    --mhp-cat-label-size-desktop: {{ section.settings.womenswear_label_size_desktop }}px;
+    --mhp-cat-label-spacing-desktop: {{ section.settings.womenswear_label_spacing_desktop | times: 0.01 }}em;
+    --mhp-cat-offset-left-desktop: {{ section.settings.womenswear_offset_left_desktop }}px;
+    --mhp-cat-offset-bottom-desktop: {{ section.settings.womenswear_offset_bottom_desktop }}px;
+    --mhp-cat-offset-top-desktop: {{ section.settings.womenswear_offset_top_desktop }}px;
+  }
+{% endstyle %}
+
+<section
+  id="mhp-categories-{{ section.id }}"
+  class="mhp mhp-section mhp-section--categories"
+  data-marame-home-section
+  {% render 'msp-logo-zone-marker', zone_key: 'home_categories', zone_label: 'Menswear / Womenswear' %}
+>
+  <div class="mhp-categories">
+    <article class="mhp-categories__panel mhp-categories__panel--mens{% unless mens_has_image %} mhp-categories__panel--no-image{% endunless %}">
+      <a
+        href="{{ menswear_url }}"
+        class="mhp-categories__link"
+        {% if section.settings.menswear_label != blank %}aria-label="{{ section.settings.menswear_label | escape }}"{% endif %}
+      >
+        <div class="mhp-categories__media">
+          <div class="mhp-categories__image mhp-categories__image--mobile">
+            {% render 'mhp-crop-image',
+              image: mens_img_m,
+              alt: '',
+              object_position: mens_focal_mobile | strip,
+              sizes: '(min-width: 990px) 50vw, 100vw'
+            %}
+          </div>
+          <div class="mhp-categories__image mhp-categories__image--desktop">
+            {% render 'mhp-crop-image',
+              image: mens_img_d,
+              alt: '',
+              object_position: mens_focal_desktop | strip,
+              sizes: '(min-width: 990px) 50vw, 100vw'
+            %}
+          </div>
+        </div>
+        {%- if section.settings.menswear_label != blank -%}
+          <span class="mhp-categories__cta mhp-categories__cta--pos-{{ mens_pos }}">
+            <span class="mhp-categories__cta-text">{{ section.settings.menswear_label }}</span>
+            <span class="mhp-categories__cta-arrow" aria-hidden="true">
+              <svg viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L7 6.5L1 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </span>
+        {%- endif -%}
+      </a>
+    </article>
+
+    <article class="mhp-categories__panel mhp-categories__panel--womens{% unless womens_has_image %} mhp-categories__panel--no-image{% endunless %}">
+      <a
+        href="{{ womenswear_url }}"
+        class="mhp-categories__link"
+        {% if section.settings.womenswear_label != blank %}aria-label="{{ section.settings.womenswear_label | escape }}"{% endif %}
+      >
+        <div class="mhp-categories__media">
+          <div class="mhp-categories__image mhp-categories__image--mobile">
+            {% render 'mhp-crop-image',
+              image: womens_img_m,
+              alt: '',
+              object_position: womens_focal_mobile | strip,
+              sizes: '(min-width: 990px) 50vw, 100vw'
+            %}
+          </div>
+          <div class="mhp-categories__image mhp-categories__image--desktop">
+            {% render 'mhp-crop-image',
+              image: womens_img_d,
+              alt: '',
+              object_position: womens_focal_desktop | strip,
+              sizes: '(min-width: 990px) 50vw, 100vw'
+            %}
+          </div>
+        </div>
+        {%- if section.settings.womenswear_label != blank -%}
+          <span class="mhp-categories__cta mhp-categories__cta--pos-{{ womens_pos }}">
+            <span class="mhp-categories__cta-text">{{ section.settings.womenswear_label }}</span>
+            <span class="mhp-categories__cta-arrow" aria-hidden="true">
+              <svg viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L7 6.5L1 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </span>
+        {%- endif -%}
+      </a>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Categories",
+  "tag": "section",
+  "class": "section-marame-home-categories",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Crop sliders are directly under each tile’s images (sections titled “Menswear — image crop” and “Womenswear — image crop”). Confirm you are editing draft theme #195956212047, not the live theme."
+    },
+    {
+      "type": "header",
+      "content": "Menswear"
+    },
+    {
+      "type": "image_picker",
+      "id": "menswear_image_mobile",
+      "label": "Image — mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "menswear_image_desktop",
+      "label": "Image — desktop"
+    },
+    {
+      "type": "header",
+      "content": "Menswear — image crop"
+    },
+    {
+      "type": "checkbox",
+      "id": "menswear_use_manual_focal",
+      "label": "Manual crop position (sliders)",
+      "info": "Off = use focal point from the image picker above.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "menswear_focal_x_mobile",
+      "label": "Horizontal focus — mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "menswear_focal_y_mobile",
+      "label": "Vertical focus — mobile",
+      "info": "Lower % shows more of the top of the image.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "menswear_focal_x_desktop",
+      "label": "Horizontal focus — desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "menswear_focal_y_desktop",
+      "label": "Vertical focus — desktop",
+      "info": "Lower % shows more of the top of the image.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "menswear_label",
+      "label": "Label",
+      "default": "menswear"
+    },
+    {
+      "type": "url",
+      "id": "menswear_link",
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "menswear_label_position",
+      "label": "Label position",
+      "options": [
+        { "value": "top", "label": "Near top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "bottom", "label": "Near bottom" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "range",
+      "id": "menswear_label_size_mobile",
+      "label": "Label size — mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "menswear_label_size_desktop",
+      "label": "Label size — desktop",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "menswear_label_spacing_mobile",
+      "label": "Letter spacing — mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "menswear_label_spacing_desktop",
+      "label": "Letter spacing — desktop",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_left_mobile",
+      "label": "Inset from left — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_bottom_mobile",
+      "label": "Inset from bottom — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_top_mobile",
+      "label": "Inset from top — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_left_desktop",
+      "label": "Inset from left — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_bottom_desktop",
+      "label": "Inset from bottom — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "menswear_offset_top_desktop",
+      "label": "Inset from top — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Womenswear"
+    },
+    {
+      "type": "image_picker",
+      "id": "womenswear_image_mobile",
+      "label": "Image — mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "womenswear_image_desktop",
+      "label": "Image — desktop"
+    },
+    {
+      "type": "header",
+      "content": "Womenswear — image crop"
+    },
+    {
+      "type": "checkbox",
+      "id": "womenswear_use_manual_focal",
+      "label": "Manual crop position (sliders)",
+      "info": "Off = use focal point from the image picker above.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "womenswear_focal_x_mobile",
+      "label": "Horizontal focus — mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "womenswear_focal_y_mobile",
+      "label": "Vertical focus — mobile",
+      "info": "Lower % shows more of the top of the image.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "womenswear_focal_x_desktop",
+      "label": "Horizontal focus — desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "womenswear_focal_y_desktop",
+      "label": "Vertical focus — desktop",
+      "info": "Lower % shows more of the top of the image.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "womenswear_label",
+      "label": "Label",
+      "default": "Womenswear"
+    },
+    {
+      "type": "url",
+      "id": "womenswear_link",
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "womenswear_label_position",
+      "label": "Label position",
+      "options": [
+        { "value": "top", "label": "Near top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "bottom", "label": "Near bottom" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "range",
+      "id": "womenswear_label_size_mobile",
+      "label": "Label size — mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "womenswear_label_size_desktop",
+      "label": "Label size — desktop",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "womenswear_label_spacing_mobile",
+      "label": "Letter spacing — mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "womenswear_label_spacing_desktop",
+      "label": "Letter spacing — desktop",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_left_mobile",
+      "label": "Inset from left — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_bottom_mobile",
+      "label": "Inset from bottom — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_top_mobile",
+      "label": "Inset from top — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_left_desktop",
+      "label": "Inset from left — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_bottom_desktop",
+      "label": "Inset from bottom — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "womenswear_offset_top_desktop",
+      "label": "Inset from top — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [{ "name": "Home — Categories" }]
+}
+{% endschema %}

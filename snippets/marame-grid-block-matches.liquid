@@ -1,0 +1,29 @@
+{%- comment -%}
+  Outputs "true" when a grid_variant block applies to the current collection page.
+  Dedicated templates (suffix matches handle) include every block in that template file.
+
+  @param block {Block}
+  @param current_handle {String}
+  @param collection_gender {String} mens|womens|''
+  @param is_curated_root {Boolean}
+  @param template_suffix {String}
+{%- endcomment -%}
+{%- assign marame_grid_block_matches = false -%}
+{%- assign marame_template_suffix = template_suffix | strip | downcase -%}
+{%- if marame_template_suffix != '' and marame_template_suffix == current_handle -%}
+  {%- assign marame_grid_block_matches = true -%}
+{%- else -%}
+  {%- assign block_handle = block.settings.collection_handle | strip | downcase -%}
+  {%- comment -%} New blocks from “Add Grid card” often leave this blank — assume this page. {%- endcomment -%}
+  {%- if block_handle == '' and is_curated_root == false -%}
+    {%- assign block_handle = current_handle -%}
+  {%- endif -%}
+  {%- if block_handle == current_handle -%}
+    {%- assign marame_grid_block_matches = true -%}
+  {%- elsif is_curated_root and block_handle != '' and block_handle == collection_gender -%}
+    {%- assign marame_grid_block_matches = true -%}
+  {%- elsif block_handle == '' and is_curated_root -%}
+    {%- assign marame_grid_block_matches = true -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if marame_grid_block_matches -%}true{%- endif -%}

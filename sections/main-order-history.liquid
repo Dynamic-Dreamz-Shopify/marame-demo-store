@@ -1,0 +1,165 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<section class="dashboard row">
+    <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+        <ul>
+            <li>
+                <a href="{{ routes.account_url }}"><p>Dashboard</p></a>
+            </li>
+            <li class="active">
+                <a href="{{ routes.account_url }}?view=orders"><p>order history</p></a>
+            </li>
+            <li>
+                <a href="{{ routes.account_addresses_url }}"><p>addresses ({{ customer.addresses_count }})</p></a>
+            </li>
+            {% comment %}
+            <li>
+              <a href="{{ routes.account_url }}?view=my-profile"><p>account details</p></a>
+            </li>
+              <li>
+                <a href="{{ routes.account_url }}?view=my-details"><p>My details</p></a>
+              </li>
+            {% endcomment %}
+            <li>
+              <a href="{{ routes.account_url }}?view=wishlist"><p>MY SAVED ITEMS</p></a>
+            </li>
+            <li>
+              <a href="{{ routes.account_logout_url }}"><p>{{ 'customer.log_out' | t }}</p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard__body col--6 col--md--6 col--lg--10">
+      <div class="account-page">
+          <h1>{{ 'customer.orders.title' | t }}</h1>
+          {% paginate customer.orders by 20 %}
+            {%- if customer.orders.size > 0 -%}
+                <table role="table" class="order-history">
+                    <thead>
+                        <tr>
+                            <th>{{ 'customer.orders.order_number' | t }}</th>
+                            <th>{{ 'customer.orders.date' | t }}</th>
+                            <th>{{ 'customer.orders.payment_status' | t }}</th>
+                            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                            <th>{{ 'customer.orders.total' | t }}</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%- for order in customer.orders -%}
+                            <tr>
+                                <td>
+                                    <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                                </td>
+                                <td>{{ order.created_at | time_tag: format: 'date' }}</td>
+                                <td>{{ order.financial_status_label }}</td>
+                                <td>{{ order.fulfillment_status_label }}</td>
+                                <td>{{ order.total_net_amount | money_with_currency }}</td>
+                                <td class="mbl-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+                                        <path d="M1 1L7 6.5L13 1" stroke="#2A2A2D" stroke-width="1.5"/>
+                                    </svg>
+                                </td>
+                                <td><a class="btn btn--dark" href="https://our-returns.dpd.co.uk/MARAME_RETURNS">Set up Return</a></td>
+                                <td><a class="btn btn--dark" href="https://our-returns.dpd.co.uk/MARAME_RETURNS">Set up Exchange</a></td>
+                                <td><a class="btn btn--dark" href="{{ order.customer_url }}">View Order</a></td>
+                            </tr>
+                        {%- endfor -%}
+                    </tbody>
+                </table>
+            {%- else -%}
+                <br>
+                <p>{{ 'customer.orders.none' | t }}</p>
+            {%- endif -%}
+            
+            {%- if paginate.pages > 1 -%}
+                <nav class="pagination">
+                    <ul>
+                        {%- if paginate.previous -%}
+                            <li><a href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a></li>
+                        {%- endif -%}
+                        {%- for part in paginate.parts -%}
+                            <li>
+                                {%- if part.is_link -%}
+                                    <a href="{{ part.url }}">{{ part.title }}</a>
+                                {%- else -%}
+                                    <span>{{ part.title }}</span>
+                                {%- endif -%}
+                            </li>
+                        {%- endfor -%}
+                        {%- if paginate.next -%}
+                            <li><a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a></li>
+                        {%- endif -%}
+                    </ul>
+                </nav>
+            {%- endif -%}
+          {% endpaginate %}
+      </div>
+      <section class="three-products three-products--no-spacer">
+        <div class="three-products__title">
+            <h3>{{ section.settings.you_love_title }}</h3>
+        </div>
+        <ul class="three-products__list">
+          {%- assign products_list = section.settings.products_list -%}
+          {%- for product in products_list -%}
+            <li class="product-card">
+                <a class="product-card" href="{{ product.url | within: collection }}">
+                    {%- if product.featured_media -%}
+                      <div class="product-card__img">
+                          <img src="{{ product.featured_media | img_url: 'master' }}" alt="{{ product.featured_media.alt | escape }}" width="{{ product.featured_media.width }}" height="{{ product.featured_media.height }}" loading="lazy" />
+                          {%- for tag in product.tags -%}
+                            {% if tag == 'Almost Gone' %}
+                              <small class="label">Almost Gone</small>
+                            {%- endif -%}
+                          {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                    <div class="product-card__content">
+                        <h4 class="product-card__content__desc">{{ product.title }}</h4>
+                        {%- if product.variants.size > 1 -%}
+                          <div class="product-card__content__colors product-card__content__colors--active">
+                              <button aria-label="Select color">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10">
+                                      <circle cx="5.00008" cy="5.00008" r="5.00008" fill="currentColor" stroke="none" />
+                                      <circle cx="9.9996" cy="5.00008" r="4.50008" stroke="currentColor" fill="none" />
+                                  </svg>
+                              </button>
+                              <p>+{{ product.variants.size }}</p>
+                          </div>
+                        {%- endif -%}
+                        <p class="product-card__content__price">{{ product.price | money }}</p>
+                    </div>
+                </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+    </section>         
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Order History",
+    "settings": [
+      {
+        "type": "header",
+        "content": "You’ll love Products"
+      },
+      {
+        "type": "text",
+        "id": "you_love_title",
+        "label": "Title",
+        "default": "we think you’ll love"
+      },
+      {
+        "type": "product_list",
+        "id": "products_list",
+        "label": "Products",
+        "limit": 3
+      }
+    ]
+  }
+{% endschema %}

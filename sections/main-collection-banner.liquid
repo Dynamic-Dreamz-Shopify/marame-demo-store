@@ -1,0 +1,91 @@
+<section class="listing-hero row">
+  <div class="listing-hero__content col--3 col--md--4 col--lg--5">
+    <h1 class="h2">{{ collection.title }}</h1>
+  </div>
+  <div class="col--0 col--md--2 col--lg--4"></div>
+  {% comment %} <div class="listing-hero__view col--3 col--md--2 col--lg--3">
+    <h6>View</h6>
+    <div class="listing-hero__view__btns">
+      <button data-column="1">
+        <span></span>
+        <span></span>
+        <span class="sr-only">1 column</span>
+      </button>
+      <button data-column="2">
+        <span></span>
+        <span></span>
+        <span class="sr-only">2 column</span>
+      </button>
+      <button data-column="3">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">3 column</span>
+      </button>
+      <button data-column="4">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">4 column</span>
+      </button>
+      <button data-column="5">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">5 column</span>
+      </button>
+    </div>
+  </div> {% endcomment %}
+</section>
+
+{% schema %}
+{
+  "name": "Collection content",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection content"
+    }
+  ]
+}
+{% endschema %}
+
+{% comment %}
+  <section class="listing-hero row">
+      <div class="col--0 col--md--3 col--lg--6"></div>
+      <div class="listing-hero__content col--6 col--md--4 col--lg--5">
+        <h2 class="h1">{{ collection.title }}</h2>
+        {%- if collection.description != blank and section.settings.show_description -%}
+          <div class="collection-description">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+  </section>
+
+  {% schema %}
+    {
+      "name": "Collection content",
+      "enabled_on": {
+        "templates": ["collection"]
+      },
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_description",
+          "label": "Show Description",
+          "default": true
+        }
+      ],
+      "presets": [
+        {
+          "name": "Collection content"
+        }
+      ]
+    }
+  {% endschema %}
+{% endcomment %}

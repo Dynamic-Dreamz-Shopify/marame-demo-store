@@ -1,0 +1,118 @@
+{%- assign show_section = false -%}
+
+{%- if section.settings.show_logged_in_section == 'both' -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_in' and customer -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_out' and customer == null -%}
+  {%- assign show_section = true -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {%- assign customer_gender = customer.metafields.custom.gender | default: '' | downcase -%}
+
+  {%- if section.settings.show_for_gender == 'female' and customer_gender != 'female' -%}
+    {%- assign show_section = false -%}
+  {%- elsif section.settings.show_for_gender == 'all' and customer_gender == 'female' -%}
+    {%- assign show_section = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  <section class="three-products">
+    <div class="three-products__title">
+        <h2 class="h1">{{ section.settings.title }}</h2>
+    </div>
+    <ul class="three-products__list">
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        {% render 'card-product', 
+          card_product: product,
+          show_count: section.settings.show_variant_count
+        %}    
+      {%- endfor -%}
+    </ul>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "show_logged_in_section",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "both",
+            "label": "Both"
+          },
+          {
+            "value": "logged_in",
+            "label": "Logged-in Customers Only"
+          },
+          {
+            "value": "logged_out",
+            "label": "Logged-out Customers Only"
+          }
+        ],
+        "default": "both"
+      },
+      {
+        "type": "radio",
+        "id": "show_for_gender",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "all",
+            "label": "Default"
+          },
+          {
+            "value": "female",
+            "label": "Female Customers Only"
+          }
+        ],
+        "default": "all"
+      },
+      {
+        "type": "header",
+        "content": "Section Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "your suggested looks"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "products_to_show",
+        "min": 3,
+        "max": 24,
+        "step": 3,
+        "default": 3,
+        "label": "Maximum products to show"
+      },
+      {
+        "type": "header",
+        "content": "Product card"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_variant_count",
+        "default": true,
+        "label": "Show Variants count"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection"
+      }
+    ]
+  }
+{% endschema %}

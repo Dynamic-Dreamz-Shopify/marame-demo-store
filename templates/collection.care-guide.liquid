@@ -1,0 +1,58 @@
+{%- layout none -%}
+{%- paginate collection.products by 50 -%}
+  <div class="products-list" all_products_count="{{ collection.all_products_count }}">
+    <div class="products-list__title"><h5>List</h5></div>
+    {% comment %} <ul>
+      {%- for product in collection.products -%}
+        {% assign colorName = "" %}
+        {% assign colorName = product.options_with_values | where:"name","Color" %}
+
+        <li data-product-id="{{- forloop.index -}}{{- product.id -}}"{% if forloop.first and paginate.current_page == 1 %} class="active"{% endif %}>
+          {{- product.title -}}{% if colorName != blank %}{{ colorName[0].values[0] | prepend: " - " }}{% endif %}
+        </li> 
+      {%- endfor -%}
+    </ul> {% endcomment %}
+
+     <ul>
+      {%- for product in collection.products -%}
+
+        {% assign first_color = '' %}
+
+        {%- for option in product.options_with_values -%}
+          {%- if option.name == 'Color' or option.name == 'Colour' -%}
+            {% assign first_color =  option.values | join: ', ' %}
+          {%- endif -%}
+        {%- endfor -%}
+
+        <li data-product-id="{{ forloop.index }}{{ product.id }}"{% if forloop.first and paginate.current_page == 1 %} class="active"{% endif %}>
+          {{ product.title }}
+          {% comment %} {%- if first_color != blank -%}
+            {{ first_color | prepend: ' - ' }}
+          {%- endif -%} {% endcomment %}
+        </li>
+
+      {%- endfor -%}
+    </ul>
+
+
+  </div>
+  
+  <div class="product-details">
+    {%- for product in collection.products -%}
+      <div class="product-detail{% if forloop.first and paginate.current_page == 1 %} active{% endif %}" data-product="{{- forloop.index -}}{{- product.id -}}">
+        <div class="product-detail__title">
+          <h5>{{- product.title -}}</h5>
+        </div>
+        <div class="product-detail__content">
+          <h5>
+            {%- if product.metafields.custom.accordion_2_content != blank -%}
+              {{ product.metafields.custom.accordion_2_content | metafield_tag }}
+            {%- else -%}
+              No data Found
+            {%- endif -%}
+          </h5>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endpaginate -%}

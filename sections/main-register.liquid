@@ -1,0 +1,367 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sign row">
+  <div class="sign__bg">
+    <img
+      src="{{ section.settings.bg_image | image_url }}"
+      loading="eager" fetchpriority="high"
+      alt="{{ section.settings.bg_image.alt | escape }}"
+      data-p-speed="0.15"
+      height=""
+      width=""
+    >
+  </div>
+  <div class="col--0 col--md--3 col--lg--6"></div>
+  <div class="sign__form col--6 col--md--5 col--lg--6">
+    <div class="customer register section-{{ section.id }}-padding">
+      <svg style="display: none">
+        <symbol id="icon-error" viewBox="0 0 13 13">
+          <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+          <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+          <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+          <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+        </symbol>
+      </svg>
+      <h2>
+        {{ 'customer.register.title' | t }}
+      </h2>
+      <h5 class="message">
+        Register for an account to tailor your experience with personalised suggestions, size recommendations,
+        subscriptions, faster checkout and more.
+      </h5>
+      {%- form 'create_customer', novalidate: 'novalidate', return_to: '/account' -%}
+        <!-- <input type="hidden" name="customer[accepts_marketing]" data-input-accepts-marketing value="true" /> -->
+        
+        {%- if form.errors -%}
+          <h2 class="form__message hidden" tabindex="-1" autofocus>
+            <svg aria-hidden="true" focusable="false">
+              <use href="#icon-error" />
+            </svg>
+            {{ 'templates.contact.form.error_heading' | t }}
+          </h2>
+          <ul>
+            {%- for field in form.errors -%}
+              <li>
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  <a href="#RegisterForm-{{ field }}">
+                    {{ form.errors.translated_fields[field] | capitalize }}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        <div class="field">
+          <input
+            type="text"
+            name="customer[first_name]"
+            id="RegisterForm-FirstName"
+            {% if form.first_name %}
+              value="{{ form.first_name }}"
+            {% endif %}
+            autocomplete="given-name"
+            placeholder="{{ 'customer.register.first_name' | t }}"
+          >
+          <label for="RegisterForm-FirstName">
+            {{ 'customer.register.first_name' | t }}
+          </label>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Please enter {{ 'customer.register.first_name' | t }}</div>
+        <div class="field">
+          <input
+            type="text"
+            name="customer[last_name]"
+            id="RegisterForm-LastName"
+            {% if form.last_name %}
+              value="{{ form.last_name }}"
+            {% endif %}
+            autocomplete="family-name"
+            placeholder="{{ 'customer.register.last_name' | t }}"
+          >
+          <label for="RegisterForm-LastName">
+            {{ 'customer.register.last_name' | t }}
+          </label>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Please enter {{ 'customer.register.last_name' | t }}</div>
+        <div class="field">
+          <input
+            type="email"
+            name="customer[email]"
+            id="RegisterForm-email"
+            {% if form.email %}
+              value="{{ form.email }}"
+            {% endif %}
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="email"
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="RegisterForm-email-error"
+            {% endif %}
+            placeholder="{{ 'customer.register.email' | t }}"
+            required
+          >
+          <label for="RegisterForm-email">
+            {{ 'customer.register.email' | t }}
+          </label>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Please enter a valid email address</div>
+        {%- if form.errors contains 'email' -%}
+          <span id="RegisterForm-email-error" class="form__message">
+            <svg aria-hidden="true" focusable="false">
+              <use href="#icon-error" />
+            </svg>
+            {{ form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email }}.
+          </span>
+        {%- endif -%}
+        <!-- Mobile Number Field -->
+        <div class="field">
+          <input
+            type="tel"
+            name="customer[note][mobile_number]"
+            id="RegisterForm-Mobile"
+            placeholder="Mobile Number"
+            pattern="[0-9]{10,15}"
+            required
+          >
+          <label for="RegisterForm-Mobile">Mobile Number</label>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Please add Mobile Number</div>
+
+        {% comment %}
+          <!-- Date of Birth Field -->
+          <div class="field">
+              <input
+                      type="date"
+                      name="customer[note][date_of_birth]"
+                      id="RegisterForm-DOB"
+                      required
+              >
+              <label for="RegisterForm-DOB">Date of Birth</label>
+          </div>
+        {% endcomment %}
+        <div class="field field--password">
+          <input
+            type="password"
+            name="customer[password]"
+            id="RegisterForm-password"
+            aria-required="true"
+            {% if form.errors contains 'password' %}
+              aria-invalid="true"
+              aria-describedby="RegisterForm-password-error"
+            {% endif %}
+            placeholder="{{ 'customer.register.password' | t }}"
+            required
+          >
+          <label for="RegisterForm-password">
+            {{ 'customer.register.password' | t }}
+          </label>
+          <div class="password-toggle" aria-label="Toggle password visibility"></div>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Password must be a minimum of 5 characters</div>
+                
+        {%- if form.errors contains 'password' -%}
+          <span id="RegisterForm-password-error" class="form__message">
+            <svg aria-hidden="true" focusable="false">
+              <use href="#icon-error" />
+            </svg>
+            {{ form.errors.translated_fields.password | capitalize }}
+            {{ form.errors.messages.password }}.
+          </span>
+        {%- endif -%}
+        
+        <!-- Confirm Password Field -->
+        <div class="field field--password">
+          <input
+            type="password"
+            id="RegisterForm-confirm-password"
+            aria-required="true"
+            required
+          >
+          <label for="RegisterForm-confirm-password">Confirm Password</label>
+          <div class="password-toggle" aria-label="Toggle password visibility"></div>
+        </div>
+        <div class="alert_text red hidden toggle-field center">Passwords do not match</div>
+                
+        <!-- Terms & Conditions Toggle -->
+        <div class="toggle-field">
+          <label class="toggle-switch">
+            <input type="checkbox" name="customer[note][terms_accepted]" id="RegisterForm-Terms" required>
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Tick here to confirm you agree to our Terms & Conditions</span>
+        </div>
+
+        <!-- Marketing Subscription Toggle -->
+        <div class="toggle-field">
+          <label class="toggle-switch">
+            <input type="checkbox" name="customer[note][marketing_optin]" id="RegisterForm-Marketing" data-input-marketing-optin>
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Confirm you wish to receive marketing communications from Marame</span>
+        </div>
+        <div class="alert_text red hidden toggle-field center terms----conditions">Please agree to terms and conditions</div>
+        <input type="hidden" name="customer[accepts_marketing]" value=true>
+        <input type="hidden" name="customer[privacy]" value="true">
+        <button>
+          {{ 'customer.register.submit' | t }}
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector('form[action="/account"]');
+    const firstName = document.querySelector('#RegisterForm-FirstName');
+    const lastName = document.querySelector('#RegisterForm-LastName');
+    const mobile = document.querySelector('#RegisterForm-Mobile');
+    const email = document.querySelector('#RegisterForm-email');
+    const password = document.querySelector('#RegisterForm-password');
+    const confirmPassword = document.querySelector('#RegisterForm-confirm-password');
+    const termsCheckbox = document.querySelector('#RegisterForm-Terms');
+    const marketingCheckbox = document.querySelector('#RegisterForm-Marketing');
+
+    const firstNameError = firstName.closest(".field").nextElementSibling;
+    const lastNameError = lastName.closest(".field").nextElementSibling;
+    const mobileError = mobile.closest(".field").nextElementSibling;
+    const emailError = email.closest(".field").nextElementSibling;
+    const passwordError = password.closest(".field").nextElementSibling;
+    const confirmPasswordError = confirmPassword.closest(".field").nextElementSibling;
+    const termsError = termsCheckbox.closest("form").querySelectorAll(".terms----conditions")[0];
+
+    form.addEventListener('submit', function (e) {
+      
+      // First Name required
+      if (!firstName.value) {
+        e.preventDefault();
+        firstNameError.classList.remove("hidden");
+        return;
+        return;
+      } else {
+        firstNameError.classList.add("hidden");
+      }
+      
+      // Last Name required
+      if (!lastName.value) {
+        e.preventDefault();
+        lastNameError.classList.remove("hidden");
+        return;
+      } else {
+        lastNameError.classList.add("hidden");
+      }
+      
+      // Email required
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value || !emailPattern.test(email.value)) {
+        e.preventDefault();
+        emailError.classList.remove("hidden");
+        return;
+      } else {
+        emailError.classList.add("hidden");
+      }
+      
+      // Mobile required
+      if (!mobile.value) {
+        e.preventDefault();
+        mobileError.classList.remove("hidden");
+        return;
+      } else {
+        mobileError.classList.add("hidden");
+      }
+      
+      // Password required + length validation
+      if (!password.value || password.value.length < 5 || password.value.length > 40) {
+        e.preventDefault();
+        passwordError.classList.remove("hidden");
+        return;
+      } else {
+        passwordError.classList.add("hidden");
+      }
+
+      // Confirm password match
+      if (!confirmPassword.value || confirmPassword.value !== password.value) {
+        e.preventDefault();
+        confirmPasswordError.classList.remove("hidden");
+        return;
+      } else {
+        confirmPasswordError.classList.add("hidden");
+      }
+
+      // Terms checkbox validation
+      if (!termsCheckbox.checked) {
+        e.preventDefault();
+        termsError.classList.remove("hidden");
+        return;
+      } else {
+        termsError.classList.add("hidden");
+      }
+      
+      // Terms checkbox validation
+      // if (!marketingCheckbox.checked) {
+      //   e.preventDefault();
+      //   termsError.classList.remove("hidden");
+      // return;
+      // } else {
+      //   termsError.classList.add("hidden");
+      // }
+
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-register.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "background image"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,512 @@
+{% render 'mhp-assets' %}
+
+{%- liquid
+  assign heading_anim = section.settings.heading_animation | default: 'fade'
+  assign portugal_video_desktop = section.settings.video
+  assign portugal_video_mobile = section.settings.video_mobile
+  if portugal_video_mobile == blank
+    assign portugal_video_mobile = portugal_video_desktop
+  endif
+  if portugal_video_desktop == blank
+    assign portugal_video_desktop = portugal_video_mobile
+  endif
+  assign portugal_has_video = false
+  if portugal_video_desktop != blank or portugal_video_mobile != blank
+    assign portugal_has_video = true
+  endif
+-%}
+
+{%- capture mhp_portugal_scope -%}#mhp-portugal-{{ section.id }}{%- endcapture -%}
+{% style %}
+  {{ mhp_portugal_scope }} {
+    --mhp-portugal-gradient-inner: {{ section.settings.gradient_inner_color }};
+    --mhp-portugal-gradient-outer: {{ section.settings.gradient_outer_color }};
+    --mhp-portugal-video-shadow: {{ section.settings.video_shadow_opacity | times: 0.01 }};
+    --mhp-portugal-glow-color: {{ section.settings.video_glow_color }};
+    --mhp-portugal-heading-size: {{ section.settings.heading_size_mobile }}px;
+    --mhp-portugal-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --mhp-portugal-heading-spacing: {{ section.settings.heading_letter_spacing_mobile }}px;
+    --mhp-portugal-heading-spacing-desktop: {{ section.settings.heading_letter_spacing_desktop }}px;
+    --mhp-portugal-heading-gap: {{ section.settings.heading_video_gap_mobile }}px;
+    --mhp-portugal-heading-gap-desktop: {{ section.settings.heading_video_gap_desktop }}px;
+    --mhp-portugal-pad-top: {{ section.settings.padding_top_mobile }}px;
+    --mhp-portugal-pad-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    --mhp-portugal-pad-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --mhp-portugal-pad-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --mhp-portugal-video-max: {{ section.settings.video_max_width_mobile }}px;
+    --mhp-portugal-video-max-desktop: {{ section.settings.video_max_width_desktop }}px;
+    --mhp-portugal-video-offset-y: {{ section.settings.video_offset_y_mobile }}px;
+    --mhp-portugal-video-offset-y-desktop: {{ section.settings.video_offset_y_desktop }}px;
+    --mhp-portugal-video-offset-x: {{ section.settings.video_offset_x_mobile }}px;
+    --mhp-portugal-video-offset-x-desktop: {{ section.settings.video_offset_x_desktop }}px;
+  }
+  {% render 'msp-block-height-style',
+    scope_id: mhp_portugal_scope,
+    target_selector: '.mhp-portugal__inner',
+    height_mobile: section.settings.section_height_mobile,
+    height_desktop: section.settings.section_height_desktop,
+    use_min_height: true
+  %}
+  {{ mhp_portugal_scope }} .mhp-portugal__heading {
+    display: block !important;
+    color: #fff !important;
+    letter-spacing: {{ section.settings.heading_letter_spacing_mobile }}px !important;
+  }
+  @media screen and (min-width: 990px) {
+    {{ mhp_portugal_scope }} .mhp-portugal__heading {
+      letter-spacing: {{ section.settings.heading_letter_spacing_desktop }}px !important;
+    }
+  }
+  {{ mhp_portugal_scope }} .mhp-portugal__heading.is-revealed {
+    transition-duration: {{ section.settings.heading_animation_duration }}s;
+    transition-delay: {{ section.settings.heading_animation_delay }}s;
+  }
+  {{ mhp_portugal_scope }} .mhp-portugal__video-wrap {
+    filter: drop-shadow(
+      0 18px 48px
+      {{ section.settings.video_glow_color | color_modify: 'alpha', section.settings.video_shadow_opacity | times: 0.01 }}
+    );
+  }
+{% endstyle %}
+
+<section
+  id="mhp-portugal-{{ section.id }}"
+  class="mhp mhp-section mhp-section--portugal"
+  data-marame-home-section
+  data-mhp-parallax
+  data-parallax-video="{{ section.settings.parallax_video_strength }}"
+  data-parallax-gradient="{{ section.settings.parallax_gradient_strength }}"
+  {% render 'msp-logo-zone-marker', zone_key: 'home_portugal', zone_label: 'Portugal video' %}
+>
+  <div class="mhp-portugal">
+    <div class="mhp-portugal__gradient" data-mhp-parallax-gradient aria-hidden="true"></div>
+    <div class="mhp-portugal__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2
+          class="mhp-portugal__heading mhp-portugal__heading--{{ heading_anim }}"
+          data-mhp-portugal-heading
+        >
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      <div class="mhp-portugal__video-wrap" data-mhp-parallax-video>
+        {%- if portugal_has_video -%}
+          <div class="mhp-portugal__video-player" data-mhp-portugal-video-player>
+            {%- if section.settings.video != blank -%}
+              <div class="mhp-portugal__video-source mhp-portugal__video-source--desktop">
+                {{
+                  section.settings.video
+                  | video_tag:
+                    class: 'mhp-portugal__video',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: false,
+                    preload: 'metadata'
+                }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.video_mobile != blank -%}
+              <div class="mhp-portugal__video-source mhp-portugal__video-source--mobile">
+                {{
+                  section.settings.video_mobile
+                  | video_tag:
+                    class: 'mhp-portugal__video',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: false,
+                    preload: 'metadata'
+                }}
+              </div>
+            {%- elsif section.settings.video != blank and section.settings.video_mobile == blank -%}
+              <div class="mhp-portugal__video-source mhp-portugal__video-source--mobile">
+                {{
+                  section.settings.video
+                  | video_tag:
+                    class: 'mhp-portugal__video',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: false,
+                    preload: 'metadata'
+                }}
+              </div>
+            {%- endif -%}
+            <button
+              type="button"
+              class="mhp-portugal__video-hit"
+              data-mhp-portugal-video-hit
+              aria-label="Turn on sound and show video controls"
+            ></button>
+            <div
+              class="mhp-portugal__video-controls"
+              data-mhp-portugal-video-controls
+              aria-hidden="true"
+            >
+              <button
+                type="button"
+                class="mhp-portugal__video-control"
+                data-mhp-portugal-video-action="restart"
+                aria-label="Restart video from the beginning"
+              >
+                <span aria-hidden="true">Restart</span>
+              </button>
+              <button
+                type="button"
+                class="mhp-portugal__video-control"
+                data-mhp-portugal-video-action="play-pause"
+                aria-label="Pause video"
+                data-state="playing"
+              >
+                <span class="mhp-portugal__video-control-label" aria-hidden="true">Pause</span>
+              </button>
+              <button
+                type="button"
+                class="mhp-portugal__video-control"
+                data-mhp-portugal-video-action="mute"
+                aria-label="Unmute video"
+                data-state="muted"
+              >
+                <span class="mhp-portugal__video-control-label" aria-hidden="true">Unmute</span>
+              </button>
+            </div>
+          </div>
+        {%- elsif section.settings.video_poster != blank -%}
+          {{
+            section.settings.video_poster
+            | image_url: width: 1600
+            | image_tag: class: 'mhp-portugal__video-poster', alt: section.settings.heading, loading: 'lazy'
+          }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Portugal video",
+  "tag": "section",
+  "class": "section-marame-home-portugal",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "hand made in Portugal"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography — mobile"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Size — mobile",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_mobile",
+      "label": "Letter spacing — mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Heading typography — desktop"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Size — desktop",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_desktop",
+      "label": "Letter spacing — desktop",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "heading_animation",
+      "label": "Heading animation",
+      "options": [
+        { "value": "fade", "label": "Fade in" },
+        { "value": "swipe-up", "label": "Swipe up" },
+        { "value": "dissolve", "label": "Dissolve" },
+        { "value": "swipe-dissolve", "label": "Swipe + dissolve" }
+      ],
+      "default": "fade"
+    },
+    {
+      "type": "range",
+      "id": "heading_animation_duration",
+      "label": "Animation duration",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "heading_animation_delay",
+      "label": "Animation delay",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.2
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "paragraph",
+      "content": "Videos autoplay muted with no sound until a visitor taps. Upload separate files for mobile and desktop, or leave mobile empty to use the desktop video on phones."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video — desktop"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video — mobile",
+      "info": "Optional. Shown below 990px width. Uses desktop video when empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Poster image (if no video uploaded)"
+    },
+    {
+      "type": "header",
+      "content": "Video position"
+    },
+    {
+      "type": "range",
+      "id": "video_max_width_mobile",
+      "label": "Max width — mobile",
+      "min": 200,
+      "max": 400,
+      "step": 2,
+      "unit": "px",
+      "default": 354
+    },
+    {
+      "type": "range",
+      "id": "video_max_width_desktop",
+      "label": "Max width — desktop",
+      "min": 400,
+      "max": 1200,
+      "step": 8,
+      "unit": "px",
+      "default": 1072
+    },
+    {
+      "type": "range",
+      "id": "video_offset_y_mobile",
+      "label": "Vertical offset — mobile",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "video_offset_y_desktop",
+      "label": "Vertical offset — desktop",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "video_offset_x_mobile",
+      "label": "Horizontal offset — mobile",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "video_offset_x_desktop",
+      "label": "Horizontal offset — desktop",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_video_gap_mobile",
+      "label": "Gap below heading — mobile",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_video_gap_desktop",
+      "label": "Gap below heading — desktop",
+      "min": 8,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Section height"
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "label": "Min height — mobile",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 472
+    },
+    {
+      "type": "range",
+      "id": "section_height_desktop",
+      "label": "Min height — desktop",
+      "min": 0,
+      "max": 2400,
+      "step": 24,
+      "unit": "px",
+      "default": 1128
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Gradient & parallax"
+    },
+    {
+      "type": "color",
+      "id": "gradient_inner_color",
+      "label": "Gradient centre",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "gradient_outer_color",
+      "label": "Gradient edge",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "parallax_video_strength",
+      "label": "Video parallax — scroll lift toward heading",
+      "info": "How far the video moves up over the heading as you scroll (px).",
+      "min": 0,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "parallax_gradient_strength",
+      "label": "Background gradient parallax",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "video_glow_color",
+      "label": "Video glow colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "video_shadow_opacity",
+      "label": "Video glow strength",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "default": 44
+    }
+  ],
+  "presets": [{ "name": "Home — Portugal video" }]
+}
+{% endschema %}

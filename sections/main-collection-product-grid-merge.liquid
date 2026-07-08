@@ -1,0 +1,582 @@
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+
+{{ 'component-show-more.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+{%- unless collection.template_suffix == 'fragrances' or collection.template_suffix == 'care-guide' -%}
+  {{ 'default-collection.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+
+{% javascript %}
+  document.addEventListener('sezerium:js:unload', (e) => {
+      setTimeout(() => document.querySelector('.collection-loading')?.classList?.replace('collection-loading', 'sezerium-loaded'), 500);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof SezeriumCollection === 'undefined') {
+        document.querySelector('.collection-loading')?.classList?.replace('collection-loading', 'sezerium-loaded');
+    }
+});
+{% endjavascript %}
+{% style %}
+  .collection-loading {
+      position: relative;
+      overflow: visible;
+  }
+  .collection-loading::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 1);
+      z-index: 10;
+  }
+  .collection-loading::before {
+      content: "";
+      position: sticky;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 4px solid black;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 11;
+      pointer-events: none; 
+      display: block;
+  }
+  @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+{% endstyle %}
+
+
+{% assign product_tags = "" %}
+{% assign collection_handle = collection.handle %} <!-- Get the current collection handle -->
+
+<!-- Collect unique product tags from products -->
+{% for product in collection.products %}
+  {% for tag in product.tags %}
+    {% assign tag_handle = tag | handle %}
+    {% unless product_tags contains tag_handle %}
+      {% assign product_tags = product_tags | append: tag_handle | append: "," %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+{% comment %} {% render 'collection-filter-bar' %} {% endcomment %}
+
+{% assign grid_index = 0 %}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <section class="filters">
+    
+    {% comment %} <span class="shop_all left"><a href="/collections/womens">Shop All</a></span> {% endcomment %}
+    <span class="shop_all left"><a href="/collections/womens">{{ collection.title }}</a></span>
+    <div class="filters_custom right" data-lenis-prevent>
+
+      {% assign apply_filter = false %}
+      {%- for filter in collection.filters -%} 
+        {%- for value in filter.active_values -%}
+          {% assign apply_filter = true %}
+          {% endfor %}
+      {% endfor %}
+
+     <button id="secondary-clear-button" class="btn btn--outline {% unless apply_filter %} hidden {% endunless %}">Clear</button><p>Filters/Sort By</p>
+      <svg class="cloase_before_down" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.5 0.5L3.92806 4.1855L7.35611 0.5" stroke="#2A2A2C" stroke-miterlimit="10" stroke-linecap="round"/>
+      </svg> 
+     
+       <svg class="cloase_after_filter" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" {% unless apply_filter %}  style="display: none;" {% endunless %}>
+          <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+          <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+        </svg>
+     
+    </div>
+
+    
+
+    <div class="new-filters-drawer-overlay"></div>
+
+    <div class="new-filters-drawer">
+      <div class="filters__left filters_data hidden" >
+        <div class="filter-panels">
+          <button class="filter-panels__trigger" id="filter-trigger-button">
+            <p>Filter</p>
+          </button>
+      
+          <div class="filter-panels__container open" id="filter-panels-container">
+      
+            <div id="main-filter-panel" class="filter-panel lenis">
+              <div class="filter-panel__header">
+                <p>Filter</p>
+                <button id="close-button">
+                  <span class="sr-only">Close</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+                    <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                  </svg>
+                </button>
+              </div>
+              
+      
+              <ul class="filter-panel__list">
+                {%- for filter in collection.filters -%}
+                  {% case filter.type %}
+                  {% when 'list' or 'boolean' %}
+                    <li class="filter-panel__item" data-group="{{ filter.label | downcase | replace: ' ', '-' }}">{{ filter.label }}</li>
+                  {% endcase %}
+                {%- endfor -%}
+              </ul>
+
+               <ul class="filter-panel__list">
+              {%- for filter in collection.filters -%}
+                {% if filter.label == "Price" %}
+                  <li class="filter-panel__item price" data-group="{{ filter.label | downcase | replace: ' ', '-' }}">{{ filter.label }}</li>
+                  <ul id="options-{{ filter.label | downcase | replace: ' ', '-' }}" class="filter-panel__list__groups price_filter" style="display: block;" data-filter-cols="{{ filter.label }}">
+                    <form class="price-filter-form" method="get">
+                      <div class="price-range-slider range-group"
+                          style="--range-min: 0%; --range-max: 100%;">
+                          <input type="range"
+                              id="Mobile-Filter-price-range-min"
+                              class="range"
+                              min="0"
+                              max="{{ filter.range_max | divided_by: 100 | round }}"
+                              value="{{ filter.min_value.value | default: 0 | divided_by: 100 | round }}"
+                              step="1">
+
+                          <input type="range"
+                              id="Mobile-Filter-price-range-max"
+                              class="range"
+                              min="0"
+                              max="{{ filter.range_max | divided_by: 100 | round }}"
+                              value="{{ filter.max_value.value | default: filter.range_max | divided_by: 100 | round }}"
+                              step="1">
+                      </div>
+
+                      <!-- REQUIRED hidden inputs -->
+
+                      <div class="price_gt">
+                      <span class="currency_sign">{{ cart.currency.symbol }}</span>
+                      <input type="text"
+                              id="Mobile-Filter-Price-GTE"
+                              name="filter.v.price.gte"
+                              value="{{ filter.min_value.value | divided_by: 100 | round }}">
+                      </div>
+
+                      <div class="price_lt">
+                      <span class="currency_sign">{{ cart.currency.symbol }}</span>
+                      <input type="text"
+                              id="Mobile-Filter-Price-LTE"
+                              name="filter.v.price.lte"
+                              value="{{ filter.max_value.value | divided_by: 100 | round }}">
+                      </div>
+                    </form>
+                    </ul>
+                  {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+      
+            <div id="secondary-filter-panel" class="filter-panel lenis">
+              <div class="filter-panel__header">
+                <p id="secondary-panel-title"></p>
+                <button id="back-button">
+                  <span class="sr-only">Go back</span>
+                  <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.11719 1L1.43168 4.59754L5.11719 8.19509" stroke="#2A2A2C" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+                  </svg>
+                </button>
+                <button id="close-button">
+                  <span class="sr-only">Close</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+                    <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                  </svg>
+                </button>
+              </div>
+      
+              <div id="secondary-filter-options" class="filter-panel__list">
+                {%- for filter in collection.filters -%}
+                  {% case filter.type %}
+                  {% when 'list', 'boolean' %}
+                    <ul id="options-{{ filter.label | downcase | replace: ' ', '-' }}" class="filter-panel__list__group" style="display: none;" data-filter-cols="{{ filter.label }}">
+                      {%- for value in filter.values -%}
+                        <li class="filter-panel__item{% if value.active %} selected{% endif %}" data-value="{{ filter.param_name }}={{ value.value | url_escape }}" data-filter-cols="{{ filter.label }}" data-optname="{{ value.label }}">
+                        {% if filter.label contains 'Size' or filter.label contains 'Shoe size' %} size -{% endif %} {{ value.label }}
+                          <span class="tick-svg">
+                            <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M0.5625 3.90527L4.3125 8.15527L11.9375 0.530273" stroke="#5AD84F" stroke-width="1.5"/>
+                            </svg>
+                          </span>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {% endcase %}
+                {%- endfor -%}
+              </div>
+            </div>
+
+            <div class="filter-panel__ctas">
+                <ul class="active-filters">
+                    {%- for filter in collection.filters -%}
+                        {%- for value in filter.active_values -%}
+                                <li>
+                                    <span data-filter="{{ filter.label }}">{{ value.label }}</span>
+                                    <a href="javascript:void(0);" class="filter-custm-remove" data-value="{{ value.label }}" data-filter="{{ filter.label }}">✕</a>
+                                </li>
+                        {%- endfor -%}
+                    {%- endfor -%}
+                  </ul>
+                {% comment %} <button id="secondary-clear-button" class="btn btn--outline" disabled>Clear</button> {% endcomment %}
+                <button id="secondary-view-button" onclick="redirect_to_category(this)" class="btn btn--dark">Apply Filter</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="filters__right filters_data hidden">
+          <select name="Feature select" class="c-select filter" aria-label="Sort products by" id="sort-by-collection-product">
+              <option value="" disabled selected>Sort By</option>
+              <option value="latest" data_sort="created-descending">Latest</option>
+              <option value="high-to-low" data_sort="price-descending">Price: High To Low</option>
+              <option value="low-to-high" data_sort="price-ascending"><p>Price: Low To High</p></option>
+              <option value="best-selling" data_sort="best-selling"><p>Recommended</p></option>
+          </select>
+      </div>
+      <div class="cloase_filter_cstm">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+          <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+          <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+        </svg>
+      </div>
+    </div>
+  
+  </section>
+  
+  
+  <section class="listing">
+    {%- if collection.products.size == 0 -%}
+       <h2 class="h1">
+        {{ 'sections.collection_template.empty' | t -}}
+      </h2>
+    {%- else -%}
+      <ul class="listing__list{% if collection.template_suffix == 'fragrances' %} collection-fragrances-div default-card-product{% endif %} collection-loading">
+        
+        
+       {%- for product in collection.products -%}
+
+        <span class="actived_filter hidden">
+        {% comment %} {%- for filter in collection.filters -%}
+          {% if filter.label == 'Colour' %}
+            {%for value in filter.values %}
+              {{value.label }}
+            {% endfor %}
+          {% endif %}
+            {%- for value in filter.active_values -%}
+              {% assign op_name_down = value.label | downcase %}
+              <p>{{ op_name_down }}</p>
+              
+            {% endfor %}
+          {% endfor %} {% endcomment %}
+
+          {% assign color_string = '' %}
+          {% for filter in collection.filters %}
+            {% if filter.label == 'Colour' %}
+              {% for value in filter.active_values %}
+                {% assign val = value.label | downcase %}
+                {% unless color_string contains val %}
+                  {% assign color_string = color_string | append: val | append: ',' %}
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+
+          {% assign color_values = color_string | split: ',' %}
+
+        </span>
+        
+        {%- assign color_option_index = 0 -%}
+
+        {%- for option in product.options -%}
+          {% assign color_down = option | downcase  %}
+          {% if color_down == 'color' %}
+            {% assign color_option_index = forloop.index0 %}
+          {% endif %}
+        {%- endfor -%}
+        {%- for variant in product.variants -%} 
+          {% assign color_value = variant.options[color_option_index] %}
+           {% if forloop.first or color_value != prev_color %} 
+            {% assign get_i = grid_index | modulo: 5 %}
+            {% assign cycle_pos = forloop.index | modulo: 21 %} 
+            {% if cycle_pos == 0 %} 
+              {% assign cycle_pos = 21 %} 
+            {% endif %} 
+            {% if cycle_pos == 4 or cycle_pos == 8 or cycle_pos == 16 %} 
+              {% assign special_class = 'has-metafield' %} 
+            {% elsif cycle_pos == 15 %} 
+              {% assign special_class = 'has-metafield-3' %} 
+            {% else %} 
+              {% assign special_class = '' %} 
+            {% endif %} 
+              {% render 'card-product-merge', coming_soon:product.selected_or_first_available_variant.metafields.custom.coming_soon , card_product: product, color_variant: variant, show_count: section.settings.show_variant_count, get_i:get_i, special_class: special_class, color_values:color_values , collection:collection %}
+            {% assign prev_color = color_value %} 
+          {% endif %} 
+        {%- endfor -%}
+
+        {% assign prev_color = '' %}
+
+        
+      {% comment %} <script type="application/json"
+        class="variant-images-json"
+        data-product-id="{{ product.id }}">
+        {
+        {% for variant in product.variants %}
+          "{{ variant.id }}": {
+            "variant_id":"{{ variant.id }}",
+            "color": "{{ variant.option1 | downcase }}",
+            "options": {{ variant.options | json }},
+            "variant_title": "{{ variant.title | escape }}",
+            "variant_available":"{{variant.available}}",
+            "inventory_quantity":"{{variant.inventory_quantity}}",
+            "images": [
+              {% capture images_json %}{% endcapture %}
+                {% capture images_json %}{% endcapture %}
+
+                {%- assign color_down = variant.option1 | downcase -%}
+
+                {%- comment -%} Featured image first {%- endcomment -%}
+                {% if variant.featured_media %}
+                  {% assign media = variant.featured_media %}
+
+                  {% capture images_json %}
+                  {
+                    "id": "{{ media.id }}",
+                    "src": "{{ media | image_url: width: 2000 }}",
+                    "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                    "alt": "{{ media.alt | escape }}",
+                    "width": {{ media.width }},
+                    "height": {{ media.height }}
+                  }
+                  {% endcapture %}
+                {% endif %}
+
+                {%- comment -%}  Other images of same color {%- endcomment -%}
+                {%- for media in product.media -%}
+                  {% if media.media_type == 'image' and media.id != variant.featured_media.id %}
+
+                    {% assign img_color = media.alt
+                      | downcase
+                      | replace: ' | ', '|'
+                      | replace: '| ', '|'
+                      | replace: ' |', '|'
+                      | split: '|'
+                      | last
+                      | strip
+                    %}
+
+                    {% if img_color == color_down %}
+                      {% capture single_image %}
+                      {
+                        "id": "{{ media.id }}",
+                        "src": "{{ media | image_url: width: 600 }}",
+                        "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                        "alt": "{{ media.alt | escape }}",
+                        "width": {{ media.width }},
+                        "height": {{ media.height }}
+                      }
+                      {% endcapture %}
+
+                      {% capture images_json %}{{ images_json }},{{ single_image }}{% endcapture %}
+                    {% endif %}
+                  {% endif %}
+                {%- endfor -%}
+
+              {{ images_json }}
+            ]
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+        }
+        </script>  {% endcomment %}
+
+      {%- endfor -%}
+      </ul>
+      
+
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+      <div class="listing__more show" style="display: flex;">
+        {% comment %} <button id="load_more_product_JS" data_current_page="{{ paginate.current_page }}" data_next_page="{{ paginate.next.url | split: '&' | first }}" data_total_page="{{ paginate.pages }}"> {% endcomment %}
+          <button id="load_more_product_JS" data_current_page="{{ paginate.current_page }}" data_total_page="{{ paginate.pages }}" data_next_page="{{ paginate.next.url  | split: '&' | first }}">
+          <small>View More</small>
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#BBB" stroke-width=".926" d="m.591.362 4.63 4.168M.591.362l4.63 4.168M.591.362l4.63 4.168m-.619 0L9.233.362M4.602 4.53 9.233.362M4.602 4.53 9.233.362M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126m-.619 0L8.307 4.53M4.834 7.656 8.307 4.53M4.834 7.656 8.307 4.53"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+ {% render 'color-drawer' %} 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const notify_me_btns = document.querySelectorAll('.notify-button');
+    const bis_form = document.getElementById("bis-form");
+    const klaviyo_cstm_form = document.querySelector('.klaviyo_notify_popup_main');
+
+    {% comment %} console.log('notify_me_btns',notify_me_btns.length); {% endcomment %}
+
+    {% comment %} if(notify_me_btns){
+      notify_me_btns.forEach(function(btn){ {% endcomment %}
+        
+        document.addEventListener('click',function(e){
+          const btn = e.target.closest(".notify-button");
+          {% comment %} console.log("btn:---",btn); {% endcomment %}
+          if (!btn) return;
+        
+        {% comment %} btn.addEventListener('click',function(e) { {% endcomment %}
+          e.preventDefault();
+
+         
+          {% comment %} document.getElementById("success_message").style.display="none" {% endcomment %}
+
+          let variant_id = btn.getAttribute('data-var-id');
+          let product_id = btn.getAttribute('data-product-id');
+
+          console.log("variant_id:--",variant_id);
+          console.log("product_id:--",product_id); 
+
+            const variantEl = btn.closest('.product-card').querySelector('.single_product_new.custom_new.active');
+            console.log('variantEl',variantEl);
+            if (!variantEl) return;
+
+            const productCard = variantEl.closest('.listing__item');
+
+            const get_pro_id = variantEl.dataset.productId;
+            const get_href = variantEl.dataset.href;
+            const selectedColor = variantEl.dataset.color;
+                    
+
+            console.log("get_pro_id:--",get_pro_id);
+            console.log("get_href:--",get_href);
+            console.log("selectedColor:--",selectedColor);
+
+          console.log("bis_form:--",bis_form);
+          bis_form.style.display="block";
+          if(klaviyo_cstm_form){
+            klaviyo_cstm_form.style.display="block";
+          }
+
+          bis_form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let customer_email = document.getElementById('bis_input').value;
+          
+            const options = {
+              method: "POST",
+              headers: {
+                accept: "application/vnd.api+json",
+                revision: "2025-01-15",
+                "content-type": "application/vnd.api+json",
+              },
+              body: `{"data": {"type": "back-in-stock-subscription","attributes": {"channels": ["EMAIL"],"profile": {"data": {"type": "profile","attributes": {"email": "${customer_email}"}}}},"relationships": {"variant": {"data": {"type": "catalog-variant","id": "$shopify:::$default:::${variant_id}"}}}}}`,
+            };
+            const url = 'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=QNV73W';
+            fetch(url, options)
+              .then((res) => console.log(res))
+              .catch((err) => console.error(err));
+            bis_form.style.display = "none";
+            document.getElementById("success_message").style.display="block"
+          });
+
+        {% comment %} }); {% endcomment %}
+         });
+      {% comment %} });
+    } {% endcomment %}
+
+    // Close popup when clicking the X
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.popup_inner::before')) return; // ignore pseudo element
+      if (e.target.matches('.popup_inner::before') || e.target.closest('.popup_inner::before')) {
+        document.querySelector('.klaviyo_notify_popup_main').style.display = 'none';
+      }
+    });
+
+    // Simpler: just attach close to the container click
+    document.addEventListener('click', function (e) {
+      const popup = document.querySelector('.klaviyo_notify_popup_main');
+      if (!popup) return;
+      if (e.target.classList.contains('klaviyo_notify_popup_main')) popup.style.display = 'none';
+    });
+
+    document.querySelector('.popup_close').addEventListener('click', function() {
+      document.querySelector('.klaviyo_notify_popup_main').style.display = 'none';
+    });
+
+  });
+</script>
+                                 
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 2,
+      "max": 36,
+      "step": 1,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_count",
+      "default": true,
+      "label": "Show Variants count"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    }    
+  ]
+}
+{% endschema %}

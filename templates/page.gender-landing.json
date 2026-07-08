@@ -1,0 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "fullscreen_banner_block_m8jUax": {
+      "type": "fullscreen-banner-block",
+      "blocks": {
+        "link_9HQCc3": {
+          "type": "link",
+          "settings": {
+            "text": "Tops",
+            "link": "shopify://collections/tops-1"
+          }
+        },
+        "link_zAQkke": {
+          "type": "link",
+          "settings": {
+            "text": "Bottoms",
+            "link": "shopify://collections/womens-bottoms"
+          }
+        },
+        "link_dFGJrB": {
+          "type": "link",
+          "settings": {
+            "text": "Jackets & Coats",
+            "link": "shopify://collections/jackets-coats"
+          }
+        },
+        "link_iBtQtz": {
+          "type": "link",
+          "settings": {
+            "text": "Knitwear",
+            "link": ""
+          }
+        },
+        "link_kcEr9K": {
+          "type": "link",
+          "settings": {
+            "text": "Loungewear",
+            "link": ""
+          }
+        },
+        "link_JGVxXP": {
+          "type": "link",
+          "settings": {
+            "text": "Footwear",
+            "link": ""
+          }
+        },
+        "link_ee77gP": {
+          "type": "link",
+          "settings": {
+            "text": "Shop all",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "link_9HQCc3",
+        "link_zAQkke",
+        "link_dFGJrB",
+        "link_iBtQtz",
+        "link_kcEr9K",
+        "link_JGVxXP",
+        "link_ee77gP"
+      ],
+      "settings": {
+        "image_desktop": "shopify://shop_images/marame-white-1.webp"
+      }
+    },
+    "gender_landing_splitscreen_iPbNMk": {
+      "type": "gender-landing-splitscreen",
+      "blocks": {
+        "block_KErbpT": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/knitwear-white.webp",
+            "heading": "KNITWEAR",
+            "button_label": "Shop all",
+            "button_link": "#"
+          }
+        },
+        "block_9VqXNf": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/blazers-white.jpg",
+            "heading": "BLAZERS",
+            "button_label": "Shop all",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_KErbpT",
+        "block_9VqXNf"
+      ],
+      "settings": {}
+    },
+    "gender_landing_banner_qniLkB": {
+      "type": "gender-landing-banner",
+      "settings": {
+        "image_desktop": "shopify://shop_images/marame-magasin.webp",
+        "heading": "MENS SUMMER 25 LOOKBOOK",
+        "button_label": "Discover",
+        "button_link": "#"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "fullscreen_banner_block_m8jUax",
+    "gender_landing_splitscreen_iPbNMk",
+    "gender_landing_banner_qniLkB"
+  ]
+}

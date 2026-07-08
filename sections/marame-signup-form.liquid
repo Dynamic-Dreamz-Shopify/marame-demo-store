@@ -1,0 +1,961 @@
+{% render 'msp-assets' %}
+
+{%- capture klaviyo_form_id -%}{% render 'msp-klaviyo-form-id', form_id: section.settings.klaviyo_form_id, embed_code: section.settings.klaviyo_embed_code %}{%- endcapture -%}
+{%- assign klaviyo_form_id = klaviyo_form_id | strip -%}
+{%- liquid
+  assign use_klaviyo_embed = false
+  if section.settings.form_mode == 'klaviyo_embed' and klaviyo_form_id != blank
+    assign use_klaviyo_embed = true
+  endif
+-%}
+
+{% style %}
+  #msp-form-{{ section.id }} {
+    --msp-border: {{ section.settings.color_border }};
+    --msp-muted: {{ section.settings.color_placeholder }};
+    --msp-signup-bg: {{ section.settings.color_signup_glass }};
+    --msp-input-bg: {{ section.settings.color_input_bg }};
+    --msp-button-bg: {{ section.settings.color_button_bg }};
+    --msp-button-color: {{ section.settings.color_button_text }};
+    --msp-button-bg-inactive: {{ section.settings.color_button_bg_inactive }};
+    --msp-button-color-inactive: {{ section.settings.color_button_text_inactive }};
+    --msp-signup-heading-color: {{ section.settings.color_signup_heading }};
+    {% render 'msp-signup-form-vars', section: section %}
+    {% render 'msp-headline-weight-vars', weight: section.settings.signup_heading_font_weight %}
+    --msp-signup-pad-top-mobile: {{ section.settings.signup_pad_top_mobile }}px;
+    --msp-signup-pad-bottom-mobile: {{ section.settings.signup_pad_bottom_mobile }}px;
+    --msp-signup-pad-top-desktop: {{ section.settings.signup_pad_top_desktop }}px;
+    --msp-signup-pad-bottom-desktop: {{ section.settings.signup_pad_bottom_desktop }}px;
+    --msp-gap-before-signup-mobile: {{ section.settings.gap_before_signup_mobile }}px;
+    --msp-gap-before-signup-desktop: {{ section.settings.gap_before_signup_desktop }}px;
+  }
+  {%- capture msp_form_scope -%}#msp-form-{{ section.id }}{%- endcapture -%}
+  {% render 'msp-block-height-style',
+    scope_id: msp_form_scope,
+    target_selector: '.msp-signup-wrap',
+    height_mobile: section.settings.block_height_mobile,
+    height_desktop: section.settings.block_height_desktop,
+    use_min_height: true
+  %}
+{% endstyle %}
+
+<section
+  id="msp-form-{{ section.id }}"
+  class="msp msp-section msp-section--form{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  {% render 'msp-logo-zone-marker', zone_key: 'signup_form', zone_label: 'Register form' %}
+  data-marame-signup-page
+  data-marame-signup-section
+  data-klaviyo-company="{{ section.settings.klaviyo_company_id | escape }}"
+  data-klaviyo-list="{{ section.settings.klaviyo_list_id | escape }}"
+  data-success-message="{{ section.settings.success_message | escape }}"
+>
+  <div class="msp-signup-wrap{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}">
+    {% render 'msp-signup-form', section: section, use_klaviyo_embed: use_klaviyo_embed, klaviyo_form_id: klaviyo_form_id %}
+  </div>
+
+  <div
+    class="msp-modal"
+    data-msp-terms-modal
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="msp-terms-title-{{ section.id }}"
+  >
+    <div class="msp-modal__dialog">
+      <button type="button" class="msp-modal__close" data-msp-terms-close aria-label="Close">&times;</button>
+      <h2 class="msp-modal__title" id="msp-terms-title-{{ section.id }}">
+        {{ section.settings.terms_modal_title }}
+      </h2>
+      <div class="msp-modal__content rte">
+        {{ section.settings.terms_content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Register form",
+  "tag": "section",
+  "class": "section-marame-signup-form",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "signup_glass",
+      "label": "Frosted glass card on desktop",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "form_mode",
+      "label": "Form type",
+      "options": [
+        { "value": "klaviyo_embed", "label": "Klaviyo embed" },
+        { "value": "custom", "label": "Custom API form" }
+      ],
+      "default": "klaviyo_embed"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_form_id",
+      "label": "Klaviyo form ID",
+      "default": "ShK72R",
+      "info": "6-character ID from your embed (e.g. ShK72R for klaviyo-form-ShK72R)."
+    },
+    {
+      "type": "textarea",
+      "id": "klaviyo_embed_code",
+      "label": "Klaviyo embed HTML (optional)",
+      "default": "<div class=\"klaviyo-form-ShK72R\"></div>",
+      "info": "Paste the full embed snippet from Klaviyo. The form ID is read automatically; our custom field styling is still applied."
+    },
+    {
+      "type": "textarea",
+      "id": "signup_heading",
+      "label": "Heading",
+      "default": "register your interests for pre access"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "enter email"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "SUBMIT"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Message after submit",
+      "default": "Thank you for registering."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_company_id",
+      "label": "Klaviyo company ID (custom form)",
+      "default": "RuBV9d"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "Klaviyo list ID (custom form)",
+      "default": "Tca9mX"
+    },
+    {
+      "type": "text",
+      "id": "terms_button_label",
+      "label": "Info button label",
+      "default": "Terms and conditions"
+    },
+    {
+      "type": "image_picker",
+      "id": "terms_icon",
+      "label": "Info icon (optional)"
+    },
+    {
+      "type": "text",
+      "id": "terms_modal_title",
+      "label": "Terms popup title",
+      "default": "Terms & conditions"
+    },
+    {
+      "type": "richtext",
+      "id": "terms_content",
+      "label": "Terms popup content",
+      "default": "<p>By submitting your email you agree to receive marketing communications from Marame. You can unsubscribe at any time.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "paragraph",
+      "content": "Submit background / text = dark active button (after email is entered). Inactive colours = grey button before typing. Theme editor preview shows the active colours."
+    },
+    {
+      "type": "color",
+      "id": "color_border",
+      "label": "Input border",
+      "default": "#2d2c2a"
+    },
+    {
+      "type": "color",
+      "id": "color_placeholder",
+      "label": "Placeholder",
+      "default": "#828282"
+    },
+    {
+      "type": "color",
+      "id": "color_input_bg",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_signup_glass",
+      "label": "Glass background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_signup_heading",
+      "label": "Heading colour",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_button_bg",
+      "label": "Submit background",
+      "default": "#2a2a2c"
+    },
+    {
+      "type": "color",
+      "id": "color_button_text",
+      "label": "Submit text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_button_bg_inactive",
+      "label": "Submit background (inactive)",
+      "default": "#d9d9d9"
+    },
+    {
+      "type": "color",
+      "id": "color_button_text_inactive",
+      "label": "Submit text (inactive)",
+      "default": "#2a2a2d"
+    },
+    {
+      "type": "header",
+      "content": "Block height"
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "label": "Min height — mobile (0 = auto)",
+      "min": 0,
+      "max": 480,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_height_desktop",
+      "label": "Min height — desktop (0 = auto)",
+      "min": 0,
+      "max": 560,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap_before_signup_mobile",
+      "label": "Space above form — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_before_signup_desktop",
+      "label": "Space above form — desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "signup_pad_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "signup_pad_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "signup_pad_top_desktop",
+      "label": "Padding top — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "signup_pad_bottom_desktop",
+      "label": "Padding bottom — desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Register heading — typography"
+    },
+    {
+      "type": "paragraph",
+      "content": "Controls the “register your interest” heading. Use mobile + desktop letter-spacing below (not legacy fields). If Save reverts your changes, check the red error bar — often caused by an invalid value on another section (e.g. checkerboard row)."
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_size_mobile",
+      "label": "Heading size — mobile",
+      "min": 11,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_tracking_mobile",
+      "label": "Heading letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_line_height_mobile",
+      "label": "Heading space between lines — mobile",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "signup_heading_align_mobile",
+      "label": "Heading alignment — mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_size_desktop",
+      "label": "Heading size — desktop",
+      "min": 11,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_tracking_desktop",
+      "label": "Heading letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_line_height_desktop",
+      "label": "Heading space between lines — desktop",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "signup_heading_align_desktop",
+      "label": "Heading alignment — desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "signup_heading_font_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "regular", "label": "Regular" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "bold", "label": "Bold" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "select",
+      "id": "signup_heading_transform",
+      "label": "Heading letter case",
+      "options": [
+        { "value": "none", "label": "As typed" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "header",
+      "content": "Form layout — mobile vs desktop"
+    },
+    {
+      "type": "select",
+      "id": "signup_align_mobile",
+      "label": "Form card position — mobile",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "signup_align_desktop",
+      "label": "Form card position — desktop",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Form text size — mobile"
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_mobile",
+      "label": "Email field size — mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "submit_font_size_mobile",
+      "label": "Submit button size — mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "message_font_size_mobile",
+      "label": "Success / error message size — mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Form text size — desktop"
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_desktop",
+      "label": "Email field size — desktop",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "submit_font_size_desktop",
+      "label": "Submit button size — desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "message_font_size_desktop",
+      "label": "Success / error message size — desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_size",
+      "label": "Heading size (legacy)",
+      "info": "Used only when mobile/desktop heading sizes are unset.",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "signup_heading_tracking",
+      "label": "Heading letter-spacing (legacy)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "Used only when mobile/desktop spacing above are unset."
+    },
+    {
+      "type": "select",
+      "id": "signup_heading_align",
+      "label": "Heading alignment (legacy)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "info": "Used only when mobile/desktop alignment above are unset."
+    },
+    {
+      "type": "select",
+      "id": "signup_align",
+      "label": "Form position (legacy)",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center",
+      "info": "Used only when mobile/desktop form position above are unset."
+    },
+    {
+      "type": "range",
+      "id": "signup_max_width",
+      "label": "Form card max width",
+      "min": 260,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "header",
+      "content": "Email & submit box height"
+    },
+    {
+      "type": "paragraph",
+      "content": "Height of the email rectangle and submit button. Submit can match email or be taller/shorter on its own."
+    },
+    {
+      "type": "range",
+      "id": "input_field_height_mobile",
+      "label": "Email field height — mobile",
+      "min": 28,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "input_field_height_desktop",
+      "label": "Email field height — desktop",
+      "min": 28,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "submit_field_height_mobile",
+      "label": "Submit button height — mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = same as email field height."
+    },
+    {
+      "type": "range",
+      "id": "submit_field_height_desktop",
+      "label": "Submit button height — desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "input_field_height",
+      "label": "Email field height (legacy)",
+      "min": 28,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "info": "Used when mobile/desktop heights above are unset."
+    },
+    {
+      "type": "header",
+      "content": "Email field layout"
+    },
+    {
+      "type": "range",
+      "id": "input_padding_x",
+      "label": "Text padding — left",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "input_padding_right",
+      "label": "Text padding — right (before info icon)",
+      "min": 32,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Field corner radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Email text"
+    },
+    {
+      "type": "range",
+      "id": "input_line_height_mobile",
+      "label": "Line height — mobile",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "input_line_height_desktop",
+      "label": "Line height — desktop",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "input_font_size",
+      "label": "Font size (legacy)",
+      "info": "Used only when mobile/desktop email sizes are unset.",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "input_line_height",
+      "label": "Line height (legacy)",
+      "info": "Used only when mobile/desktop line heights are unset.",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "input_letter_spacing_mobile",
+      "label": "Email letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 3,
+      "info": "Placeholder (“Enter email”) and typed text. Minimum 3px applied in code for readability."
+    },
+    {
+      "type": "range",
+      "id": "input_letter_spacing_desktop",
+      "label": "Email letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "input_letter_spacing",
+      "label": "Email letter-spacing (legacy)",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "input_text_align_mobile",
+      "label": "Email text alignment — mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "input_text_align_desktop",
+      "label": "Email text alignment — desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "input_text_align",
+      "label": "Email text alignment (legacy)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "input_text_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "color",
+      "id": "color_input_text",
+      "label": "Typed text colour",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Submit button text"
+    },
+    {
+      "type": "range",
+      "id": "submit_line_height_mobile",
+      "label": "Line height — mobile",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "submit_line_height_desktop",
+      "label": "Line height — desktop",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "submit_font_size",
+      "label": "Font size (legacy)",
+      "info": "Used only when mobile/desktop submit sizes are unset.",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "submit_line_height",
+      "label": "Line height (legacy)",
+      "info": "Used only when mobile/desktop submit line heights are unset.",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "submit_letter_spacing_mobile",
+      "label": "Submit letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "submit_letter_spacing_desktop",
+      "label": "Submit letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "submit_letter_spacing",
+      "label": "Submit letter-spacing (legacy)",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "submit_text_align_mobile",
+      "label": "Submit text alignment — mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "submit_text_align_desktop",
+      "label": "Submit text alignment — desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "submit_text_align",
+      "label": "Submit text alignment (legacy)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "submit_text_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "message_font_size",
+      "label": "Message size (legacy)",
+      "info": "Used only when mobile/desktop message sizes are unset.",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [{ "name": "Signup — Register form" }]
+}
+{% endschema %}

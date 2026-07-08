@@ -1,0 +1,150 @@
+{% form 'product',
+  product,
+  id: product_form_id,
+  class: 'form shopify-product-form product_page_atc_form',
+  data-handle: product.handle
+%}
+  {% comment %}
+    <select
+      name="id"
+      style="display:none !important"
+      class="product_option_selection"
+      id="products-{{ product.id }}"
+    >
+      {%- for variant in product.variants -%}
+        <option
+          value="{{ variant.id }}"
+          {% comment %}{% if product.selected_or_first_available_variant.id == variant.id %} selected="selected"{% endif %}{% endcomment %}
+        >
+          {{- variant.title -}}
+        </option>
+      {% endfor %}
+    </select>
+  {% endcomment %}
+  <script type="application/json">
+    {{ product | json }}
+  </script>
+
+  <input
+    type="hidden"
+    name="quantity"
+    value="1"
+  >
+
+  <input
+    type="hidden"
+    name="id"
+    value="{{product.selected_or_first_available_variant.id }}"
+  >
+
+     {% assign current_variant = product.selected_or_first_available_variant %}
+      {% if current_variant.metafields.custom.preorder_shipping_date_info != blank %}
+        <input
+          type="hidden"
+          name="properties[Pre-Order]"
+          value="{{ current_variant.metafields.custom.preorder_shipping_date_info }}">
+      {% endif %}
+   
+
+    <button
+      type="submit"
+      class="btn btn--outline product--atc {% unless product.selected_or_first_available_variant.available %} klaviyo-bis-trigger {% endunless %}"
+    >
+      Add to bag
+    </button>
+  {% comment %} <a class="button klaviyo-bis-trigger" href="#" style="text-align: center; margin: 0px; width: auto; display: inline;" data-klaviyo-handle="{{ product.handle }}">OUT OF STOCK - NOTIFY ME</a> {% endcomment %}
+
+  {% comment %}
+    <div
+      class="klaviyo-product-container"
+      id="klaviyo-data-handle-{{ product.handle }}"
+      data-klaviyo-handle="{{ product.handle }}"
+    >
+      <div class="klaviyo-button-container product-grid-btn">
+      </div>
+    </div>
+  {% endcomment %}
+   {{ form | payment_button }}
+   {% comment %} <div class="buy_with_custm_btn"></div> {% endcomment %}
+{% endform %}
+
+{% style %}
+  .product--atc{
+    color: #fff;
+    font-family: HelveticaNowDisplayRegular;
+    font-size: 12.277px;
+    font-weight: 400;
+    line-height: 27.624px;
+    border-radius: 4.604px;
+    border: .384px solid #2A2A2D;
+    background-color: #2a2a2d;
+    min-height: 46.04px;
+    text-transform: none;
+    width: 100%;
+    max-height: 50.00px;
+  }
+
+  .product--atc[disabled]{
+    background-color: #bbb;
+    border-color: #bbb;
+  }
+
+  .product--atc.loading {
+    pointer-events: none; /* prevent double clicks */
+    opacity: 0.7; /* optional visual effect */
+  }
+
+  .product--atc.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #fff;
+    border-top: 2px solid #000; /* spinner color */
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector("form[action='/cart/add']");
+    console.log('Form found:', form);
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const submitBtn = event.currentTarget.querySelector('.product--atc');
+      console.log('Submit button:', submitBtn);
+
+      submitBtn.setAttribute('aria-disabled', true);
+      submitBtn.classList.add('loading');
+
+      const formData = new FormData(event.currentTarget);
+
+      fetch(`${routes.cart_add_url}`, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: `application/json` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('Added to cart:', data);
+          document.querySelector('custom-cart-drawer').fetchCartDrawerData();
+        })
+        .catch((err) => console.error(err))
+        .finally(() => {
+          submitBtn.classList.remove('loading');
+          submitBtn.removeAttribute('aria-disabled');
+          document.querySelector("[data-pro-custom-select-btn]").classList.add("added_product");
+        });
+    });
+  });
+</script>

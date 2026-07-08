@@ -1,0 +1,32 @@
+{%- comment -%}
+  Outputs "true" when variant_key matches any key in marame_color_keys (pipe-separated).
+  @param variant_key {String} handleized colour
+  @param variant_color {String} downcased colour label
+  @param marame_color_keys {String} pipe-separated handleized keys
+  @param marame_target_color {String} original target label (downcased)
+{%- endcomment -%}
+{%- assign marame_color_key_hit = false -%}
+{%- if marame_color_keys != blank -%}
+  {%- assign marame_key_parts = marame_color_keys | split: '|' -%}
+  {%- for marame_mk in marame_key_parts -%}
+    {%- assign marame_mk = marame_mk | strip -%}
+    {%- if marame_mk == '' -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- if variant_key == marame_mk or variant_color == marame_mk -%}
+      {%- assign marame_color_key_hit = true -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- if marame_target_color != '' and marame_mk.size >= 3 -%}
+      {%- if variant_color contains marame_mk or marame_mk contains variant_color -%}
+        {%- assign marame_color_key_hit = true -%}
+        {%- break -%}
+      {%- endif -%}
+      {%- if variant_key contains marame_mk or marame_mk contains variant_key -%}
+        {%- assign marame_color_key_hit = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if marame_color_key_hit -%}true{%- endif -%}

@@ -1,0 +1,35 @@
+{%- if paginate.parts.size > 0 -%}
+    <ul class="pagination" role="list"> 
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <li>
+          <a
+            href="{{ part.url }}{{ anchor }}"
+            class="pagination__item"
+            aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
+          >
+            <small>{{- part.title -}}</small>
+          </a>
+        </li>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <li class="active">
+              <a
+                role="link"
+                aria-disabled="true"
+                class="pagination__item"
+                aria-current="page"
+                aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
+              >
+               <small>{{- part.title -}}</small>
+              </a>
+            </li>
+          {%- else -%}
+              <li>
+              <span class="pagination__item">{{ part.title }}</span>
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

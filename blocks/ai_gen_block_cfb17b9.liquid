@@ -1,0 +1,455 @@
+{% doc %}
+  @prompt
+    Create a fullscreen video banner section with these features:
+    - Separate video upload fields for desktop and mobile versions
+    - HTML5 video with autoplay, muted, loop, playsinline, and preload="auto" attributes
+    - Adjustable height control with options: 100vh (full screen), 90vh, 85vh, 80vh, 75vh, 70vh, or custom pixel height input
+    - Separate height controls for desktop and mobile if possible
+    - Responsive CSS with media query at 768px to switch between desktop and mobile videos
+    - Object-fit cover to maintain aspect ratio
+    - Width 100% for full-width display
+    - Dark background color as fallback while video loads
+    - Proper Shopify CDN video URLs with correct MIME types
+    - Clean, reliable code that ensures videos display properly
+    - Optional overlay opacity control
+    - Vertical alignment options (top, center, bottom) for video positioning within the container
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-video-banner-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #121212;
+    display: block;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--full-screen {
+    height: 100vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--90vh {
+    height: 90vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--85vh {
+    height: 85vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--80vh {
+    height: 80vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--75vh {
+    height: 75vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--70vh {
+    height: 70vh;
+  }
+
+  .ai-video-banner-{{ ai_gen_id }}--custom {
+    height: {{ block.settings.custom_height_desktop }}px;
+  }
+
+  .ai-video-banner-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: {{ block.settings.vertical_alignment }};
+    justify-content: center;
+  }
+
+  .ai-video-banner-video-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-video-banner-video-{{ ai_gen_id }}--mobile {
+    display: none;
+  }
+
+  .ai-video-banner-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});
+    pointer-events: none;
+  }
+
+  .ai-video-banner-content-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: {{ block.settings.text_color }};
+    z-index: 2;
+    width: 90%;
+    max-width: 800px;
+  }
+
+  .ai-video-banner-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+
+  .ai-video-banner-subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-video-banner-{{ ai_gen_id }}--full-screen {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--90vh {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--85vh {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--80vh {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--75vh {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--70vh {
+      height: {{ block.settings.height_mobile }};
+    }
+
+    .ai-video-banner-{{ ai_gen_id }}--custom {
+      height: {{ block.settings.custom_height_mobile }}px;
+    }
+
+    .ai-video-banner-video-{{ ai_gen_id }}--desktop {
+      display: none;
+    }
+
+    .ai-video-banner-video-{{ ai_gen_id }}--mobile {
+      display: block;
+    }
+
+    .ai-video-banner-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
+    }
+
+    .ai-video-banner-subheading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subheading_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<video-banner-{{ ai_gen_id }}
+  class="ai-video-banner-{{ ai_gen_id }} ai-video-banner-{{ ai_gen_id }}--{{ block.settings.height_desktop }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-video-banner-container-{{ ai_gen_id }}">
+    {% if block.settings.video_desktop != blank %}
+      <video
+        class="ai-video-banner-video-{{ ai_gen_id }} ai-video-banner-video-{{ ai_gen_id }}--desktop"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="{{ block.settings.video_alt_text | escape }}"
+      >
+        <source src="{{ block.settings.video_desktop | file_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% else %}
+      <div class="ai-video-banner-video-{{ ai_gen_id }} ai-video-banner-video-{{ ai_gen_id }}--desktop" style="background-color: #121212;"></div>
+    {% endif %}
+
+    {% if block.settings.video_mobile != blank %}
+      <video
+        class="ai-video-banner-video-{{ ai_gen_id }} ai-video-banner-video-{{ ai_gen_id }}--mobile"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="{{ block.settings.video_alt_text | escape }}"
+      >
+        <source src="{{ block.settings.video_mobile | file_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% elsif block.settings.video_desktop != blank %}
+      <video
+        class="ai-video-banner-video-{{ ai_gen_id }} ai-video-banner-video-{{ ai_gen_id }}--mobile"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="{{ block.settings.video_alt_text | escape }}"
+      >
+        <source src="{{ block.settings.video_desktop | file_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% else %}
+      <div class="ai-video-banner-video-{{ ai_gen_id }} ai-video-banner-video-{{ ai_gen_id }}--mobile" style="background-color: #121212;"></div>
+    {% endif %}
+
+    <div class="ai-video-banner-overlay-{{ ai_gen_id }}"></div>
+
+    {% if block.settings.heading != blank or block.settings.subheading != blank %}
+      <div class="ai-video-banner-content-{{ ai_gen_id }}">
+        {% if block.settings.heading != blank %}
+          <h1 class="ai-video-banner-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h1>
+        {% endif %}
+        {% if block.settings.subheading != blank %}
+          <p class="ai-video-banner-subheading-{{ ai_gen_id }}">{{ block.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</video-banner-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VideoBanner{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.videos = this.querySelectorAll('video');
+        this.ensureVideoPlayback();
+      }
+
+      ensureVideoPlayback() {
+        this.videos.forEach((video) => {
+          video.play().catch(() => {
+            video.muted = true;
+            video.play();
+          });
+        });
+      }
+    }
+
+    customElements.define('video-banner-{{ ai_gen_id }}', VideoBanner{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fullscreen video banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video"
+    },
+    {
+      "type": "text",
+      "id": "video_alt_text",
+      "label": "Video description",
+      "default": "Fullscreen video banner"
+    },
+    {
+      "type": "header",
+      "content": "Height"
+    },
+    {
+      "type": "select",
+      "id": "height_desktop",
+      "label": "Desktop height",
+      "options": [
+        {
+          "value": "full-screen",
+          "label": "Full screen (100vh)"
+        },
+        {
+          "value": "90vh",
+          "label": "90vh"
+        },
+        {
+          "value": "85vh",
+          "label": "85vh"
+        },
+        {
+          "value": "80vh",
+          "label": "80vh"
+        },
+        {
+          "value": "75vh",
+          "label": "75vh"
+        },
+        {
+          "value": "70vh",
+          "label": "70vh"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "full-screen"
+    },
+    {
+      "type": "range",
+      "id": "custom_height_desktop",
+      "label": "Custom desktop height",
+      "min": 200,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Mobile height",
+      "options": [
+        {
+          "value": "100vh",
+          "label": "Full screen (100vh)"
+        },
+        {
+          "value": "90vh",
+          "label": "90vh"
+        },
+        {
+          "value": "85vh",
+          "label": "85vh"
+        },
+        {
+          "value": "80vh",
+          "label": "80vh"
+        },
+        {
+          "value": "75vh",
+          "label": "75vh"
+        },
+        {
+          "value": "70vh",
+          "label": "70vh"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "100vh"
+    },
+    {
+      "type": "range",
+      "id": "custom_height_mobile",
+      "label": "Custom mobile height",
+      "min": 200,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Video positioning"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fullscreen video banner"
+    }
+  ]
+}
+{% endschema %}

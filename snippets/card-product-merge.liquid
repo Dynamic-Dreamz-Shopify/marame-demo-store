@@ -1,0 +1,935 @@
+{% comment %} {% if card_product.type contains "Fragrance" or card_product.type contains "gift" %} {% endcomment %}
+  {% if card_product.type contains "gift" %}
+  {% render 'card-product-new', card_product: card_product , color_variant:color_variant %}
+{% else %}
+  {%- capture _card_idx -%}{%- increment grid_card_counter -%}{%- endcapture -%}
+{%- assign card_pos = _card_idx | plus: 0 -%}
+{%- if card_product and card_product != empty -%}
+  {% assign size_option = 'size' %}
+  {% assign size_option_available = false %}
+  {%- for option in card_product.options_with_values -%}
+    {% assign option_name = option.name | downcase %}
+    {% if option_name == "shoe size" %}
+      {% assign size_option = 'shoe size' %}
+    {% endif %}
+    {% if option_name == size_option %}
+      {% assign size_option_available = true %}
+    {% endif %}
+  {%- endfor -%}
+
+  {% unless card_product.available %}
+    {% assign size_option_available = false %}
+  {% endunless %}
+
+  {% assign color_name = '' %}
+        {% assign variant_title = color_variant.title | downcase %}
+        {% for option in card_product.options_with_values %}
+        {% assign op_name = option.name | downcase %}
+
+        {% if op_name contains 'color' or op_name contains 'colour' %}
+            {% assign color_index = forloop.index %}
+          {% for value in option.values %}
+            {% assign op_val = value | downcase %}
+            
+            {% if color_index == 1 %}
+              {% assign variant_title = color_variant.option1 | downcase %}
+            {% elsif color_index == 2 %}
+              {% assign variant_title = color_variant.option2 | downcase %}
+            {% elsif color_index == 3 %}
+              {% assign variant_title = color_variant.option3 | downcase %}
+            {% endif %}
+
+            {% if variant_title == op_val %}
+              {% assign color_name = op_val %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% endfor %}
+
+
+    {% assign color_name_app = " " %}
+   
+    {% if color_name_down contains 'white' or color_name_down contains 'ash white' or color_name_down contains 'white snow/black' or color_name_down contains 'ash sand/white snow' or color_name_down contains 'white cotton denim' or color_name_down contains 'cosy cream' or color_name_down contains 'white cream' or color_name_down contains 'off white' or color_name_down contains 'vanilla cream' or color_name_down contains 'vanilla cream/black' or color_name_down contains 'cotton cream'  or color_name_down contains 'cream' %}
+      {% assign color_name_app = "White" %}
+    {% endif %}
+
+    {% if color_name contains 'black wash denim' or color_name contains 'black' or color_name contains 'black denim' or color_name contains 'matte black' %}
+      {% assign color_name_app = "Black" %}
+    {% endif %} 
+
+    {% if color_name contains 'light wash denim' or color_name contains 'blue wash denim' or color_name contains 'blue violet' or color_name contains 'blushing blue' or color_name contains 'sky blue stripe'  or color_name contains 'classic wash denim'  or color_name contains 'deep wash denim'%}
+      {% assign color_name_app = "Blue" %}
+    {% endif %} 
+
+    {% if color_name contains 'chocolate' or color_name contains 'brown' or color_name contains 'smoked brown' or color_name contains 'conker brown' or color_name contains 'brown linen' or color_name contains 'brown toffee' or color_name contains 'cinnamon sugar' or color_name contains 'caramel' or color_name contains 'brown cherry' or color_name contains 'rich chocolate' or color_name contains 'wholemeal' or color_name contains 'old brown havana' or color_name contains 'honeyburst' or color_name contains 'ganache' or color_name contains 'honey havana' or color_name contains 'spotted brown shell' or color_name contains 'caramel' or color_name contains 'pacific teak' or color_name contains 'butterscotch' or color_name contains 'burnt brown'%}
+      {% assign color_name_app = "Brown" %}
+    {% endif %} 
+
+    {% if color_name contains 'Golden Grain' %}
+      {% assign color_name_app = "Gold" %}
+    {% endif %} 
+
+    {% if color_name contains 'wolf green' or color_name contains 'morning meadow' or color_name contains 'barley green' or color_name contains 'shadowed green' or color_name contains 'autumn khaki' or color_name contains 'canyon clay' or color_name contains 'olive' or color_name contains 'olive grove' or color_name contains 'forest khaki' or color_name contains 'cedar green stripe' or color_name contains 'hazel' or color_name contains 'forest grain' or color_name contains 'olive tortoise' %}
+      {% assign color_name_app = "Green" %}
+    {% endif %} 
+
+    {% if color_name contains 'grey' or color_name contains 'wolf green' or color_name contains 'speckled grey' or color_name contains 'clay' or color_name contains 'light light grey' %}
+      {% assign color_name_app = "Grey" %}
+    {% endif %} 
+
+    {% if color_name contains 'navy' or color_name contains 'deep navy wash denim' or color_name contains 'navy wash denim' %}
+      {% assign color_name_app = "Navy" %}
+    {% endif %} 
+
+    {% if color_name contains '12' or color_name contains 'citrus' or color_name contains 'crystal peach' %}
+      {% assign color_name_app = "Orange" %}
+    {% endif %} 
+
+    {% if color_name contains 'ballet pink' or color_name contains 'popping pink'%}
+      {% assign color_name_app = "Pink" %}
+    {% endif %} 
+
+    {% if color_name contains 'fiery rose' or color_name contains 'raspberry red stripe'%}
+      {% assign color_name_app = "Red" %}
+    {% endif %} 
+
+    {% if color_name contains 'silver ice' or color_name contains 'sand crystal' or color_name contains 'pure glass'%}
+      {% assign color_name_app = "Silver" %}
+    {% endif %} 
+
+    {% if color_name contains 'beige' or color_name contains 'chalk linen' or color_name contains 'beige linen' or color_name contains 'natural sand' or color_name contains 'woven sand' or color_name contains 'natural beige' or color_name contains 'ivory stone' or color_name contains 'almond taupe' or color_name contains 'classic trench' or color_name contains 'greige grain' or color_name contains 'putty dove' or color_name contains 'beige pearl' or color_name contains 'sandstone' or color_name contains 'beige & white' or color_name contains 'canyon clay' or color_name contains 'drift beige' or color_name contains 'shadow grey' or color_name contains 'beige' or color_name contains 'stone' or color_name contains 'cream'%}
+      {% assign color_name_app = "Beige" %}
+    {% endif %} 
+
+
+    {% assign product_group_down = color_name_app | downcase %}
+    {% assign color_match = false %}
+
+    {% for color in color_values %}
+      {% if color != '' %}
+        {% assign filter_color_down = color | downcase %}
+
+        {% if filter_color_down contains product_group_down %}
+          {% assign color_match = true %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+  {% comment %} <li class="listing__item default-card-product  {% if get_i == 0 %} fifth_pro{% endif %}{% if color_values.size > 0 and color_match == false %} currently_hidden{% endif %}" active_color_name="{{ color_name }}"> {% endcomment %}
+    <li class="listing__item default-card-product {{ special_class }}" active_color_name="{{ color_name }}" data-coming-soon="{{ coming_soon }}" data-product-type="{{ card_product.type | downcase }}">
+    <div class="product-card product--grid--main" data-available="true">
+
+        <button class="heartBtn" aria-label="Favorite item">
+          {% comment %} {% render 'icon-heart' %} {% endcomment %}
+           <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.0078 0.400024H0.400391V18.5433L6.80388 13.8102L14.0078 18.5433V0.400024Z" stroke="white" stroke-width="0.8"/>
+          </svg>
+        </button>
+
+      
+      {% for tag in card_product.tags %}
+        {% if tag contains "badge_" %}
+        <div class="product-card__badge pc-{{ tag | handle }}">{{ tag | remove: "badge_" | capitalize }}</div>
+        {% break %}
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %} {% render 'wishlist-app-links', linkType: 'list-product', product: card_product  %} {% endcomment %}
+
+      <a class="iWishAddColl iwishcheck" href="#" data-variant="{{ color_variant.id }}" data-product="{{ card_product.id }}" data-pTitle="{{ card_product.title | escape }}" aria-label="Add {{ card_product.title | escape }} in wishlist"></a>
+
+      <div class="product-card__img-new-slider swiper" {% if color_name %} data-color="{{ color_name }}" {% endif %} >  
+        <div class="swiper-wrapper" onclick="location.href='{{ card_product.url }}'">
+          {% comment %} {%- for media in card_product.media -%}
+             {% case media.media_type %}
+              {% when 'image' %}
+                {% if color_variant.featured_media == media %}
+                  {% assign var_id = color_variant.id | json %}
+                  <a href="{{ card_product.url }}?variant={{var_id }}"  data-tt="{{color_variant.id | json }}" swiper_index="{{ forloop.index }}" class="product-card__img swiper-slide tt" data_vimg="{{ media.id }}" data_alt="{{ media.alt | escape }}" aria-label="Read more about {{ media.alt }}">
+                    {% assign is_match_id = color_variant.featured_media.id  %}
+                    <img
+                      src="{{ media | image_url: width: 600, format: 'webp' }}"
+                      srcset="
+                        {{ media | image_url: width: 400, format: 'webp' }} 400w,
+                        {{ media | image_url: width: 600, format: 'webp' }} 600w,
+                        {{ media | image_url: width: 800, format: 'webp' }} 800w"
+                      sizes="(max-width: 767px) 100vw, 544px"
+                      alt="{{ media.alt | escape }}"
+                      width="{{ media.width }}"
+                      height="{{ media.height }}"
+                     
+                        loading="eager" fetchpriority="high"
+                     >
+                  </a>
+                {% endif %}
+             {% endcase %}
+          {%- endfor -%} {% endcomment %}
+           {% comment %} {%- for media in card_product.media -%}
+            {% case media.media_type %}
+              {% when 'image' %}
+                {% if color_variant.featured_media == media %}
+
+                  {% assign alt_text = media.alt | default: '' %}
+                  {% assign alt_parts = alt_text | split: '|' %}
+                  {% assign after_pipe = '' %}
+
+                  {% if alt_parts.size > 1 %}
+                    {% assign after_pipe = alt_parts[1] | strip %}
+                  {% endif %}
+
+                  {% unless after_pipe contains 'swatch_img' %}
+
+                    {% assign var_id = color_variant.id | json %}
+
+                    <a
+                      href="{{ card_product.url }}?variant={{ var_id }}"
+                      data-tt="{{ color_variant.id | json }}"
+                      swiper_index="{{ forloop.index }}"
+                      class="product-card__img swiper-slide tt"
+                      data_vimg="{{ media.id }}"
+                      data_alt="{{ alt_text | escape }}"
+                      aria-label="Read more about {{ alt_text }}"
+                    >
+                      <img
+                        src="{{ media | image_url: width: 2000, format: 'webp' }}"
+                        sizes="(max-width: 767px) 100vw, 544px"
+                        alt="{{ alt_text | escape }}"
+                        width="{{ media.width }}"
+                        height="{{ media.height }}"
+                        loading="eager"
+                        fetchpriority="high"
+                      >
+                    </a>
+
+                  {% endunless %}
+
+                {% endif %}
+            {% endcase %}
+          {%- endfor -%}
+
+          {%- for media in card_product.media -%}
+            {% case media.media_type %}
+              {% when 'image' %}
+                {% unless color_variant.featured_media == media %}
+                   {% assign var_id = color_variant.id | json %}
+                   {% comment %} {% assign image_alt_down = media.alt | split:'|' | last | downcase %} {% endcomment %}
+                   {% assign image_alt_down = media.alt | downcase | replace: ' | ', '|' | replace: '| ', '|' | replace: ' |', '|' | split: '|' | last | strip%}
+                   
+                {% if image_alt_down == color_name %}
+                <a href="{{ card_product.url }}?variant={{var_id }}" {% if image_alt_down contains color_name %} data-color-img data-color="{{ color_name }}"{% endif %}  {% if color_variant.featured_media == media %}data-initial{% endif %} swiper_index="{{ forloop.index }}" class="product-card__img swiper-slide dd" data_vimg="{{ media.id }}" data_alt="{{ media.alt | escape }}" aria-label="Read more about {{ media.alt }}">
+                 
+                  <img
+                    src="{{ media | image_url: width: 2000, format: 'webp' }}"
+                    sizes="(max-width: 767px) 100vw, 544px"
+                    alt="{{ media.alt | escape }}"
+                    width="{{ media.width }}"
+                    height="{{ media.height }}"
+                    {% if forloop.first %}
+                      loading="eager" fetchpriority="high"
+                    {% else %}
+                      loading="lazy"
+                    {% endif %}>
+                </a>
+                {% endif %}
+              {% endunless %}
+            {% endcase %}
+          {% endfor %} {% endcomment %}
+
+
+         {%- assign color_down = color_variant.option1 | downcase | strip -%}
+
+          {% if card_product.type == "Unisex" %}
+            {% comment %} For unisex: show ALL color-matching media in natural order — JS handles gender filtering {% endcomment %}
+            {%- for media in card_product.media -%}
+              {% if media.media_type == 'image' %}
+                {% assign img_color = media.alt | downcase
+                  | replace: ' | ', '|' | replace: '| ', '|' | replace: ' |', '|'
+                  | split: '|' | last | strip %}
+                {% if img_color == color_down %}
+                  <a href="{{ card_product.url | within: collection }}?variant={{ color_variant.id }}"
+                    class="product-card__img swiper-slide"
+                    data_vimg="{{ media.id }}"
+                    data_alt="{{ media.alt | downcase | escape }}">
+                    <img
+                      src="{{ media | image_url: width: 600, format: 'webp' }}"
+                      sizes="(max-width: 767px) 100vw, 544px"
+                      alt="{{ media.alt | escape }}"
+                      width="{{ media.width }}" height="{{ media.height }}"
+                      {% if forloop.first %}
+                        {% if card_pos < 20 %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                      {% else %}
+                        loading="lazy"
+                      {% endif %} decoding="async">
+                  </a>
+                {% endif %}
+              {% endif %}
+            {%- endfor -%}
+
+          {% else %}
+            {% comment %} Non-unisex: featured image first, then other color images {% endcomment %}
+            {% if color_variant.featured_media %}
+              {% assign media = color_variant.featured_media %}
+              {% assign alt_text = media.alt | default: '' %}
+              {% assign alt_parts = alt_text | split: '|' %}
+              {% assign after_pipe = '' %}
+              {% if alt_parts.size > 1 %}{% assign after_pipe = alt_parts[1] | strip %}{% endif %}
+              {% unless after_pipe contains 'swatch_img' %}
+                <a href="{{ card_product.url | within: collection }}?variant={{ color_variant.id }}"
+                  class="product-card__img swiper-slide"
+                  data_vimg="{{ media.id }}"
+                  data_alt="{{ media.alt | downcase | escape }}">
+                  <img
+                    src="{{ media | image_url: width: 600, format: 'webp' }}"
+                    sizes="(max-width: 767px) 100vw, 544px"
+                    alt="{{ alt_text | escape }}"
+                    width="{{ media.width }}" height="{{ media.height }}"
+                  {% if card_pos < 20 %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+                </a>
+              {% endunless %}
+            {% endif %}
+
+        {%- comment -%} 2. Other same-color images — lazy {%- endcomment -%}
+        {%- for media in card_product.media -%}
+        {% if media.media_type == 'image' and media.id != color_variant.featured_media.id %}
+          {% assign img_color = media.alt | downcase
+            | replace: ' | ', '|' | replace: '| ', '|' | replace: ' |', '|'
+            | split: '|' | last | strip %}
+          {% if img_color == color_down %}
+            <a href="{{ card_product.url | within: collection }}?variant={{ color_variant.id }}"
+              class="product-card__img swiper-slide"
+              data_vimg="{{ media.id }}"
+              data_alt="{{ media.alt | downcase | escape }}">
+              <img
+                src="{{ media | image_url: width: 600, format: 'webp' }}"
+                sizes="(max-width: 767px) 100vw, 544px"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.width }}" height="{{ media.height }}"
+                loading="lazy" decoding="async">
+            </a>
+          {% endif %}
+        {% endif %}
+      {%- endfor -%}
+    {% endif %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+            <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+          </svg>
+        </div>
+        <div class="swiper-button-next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+            <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+          </svg>
+        </div>
+        {% comment %} <div class="pro-card-colors_list_custom">
+          {% render "metafield-products", card_product: card_product, query_para: '?view=for-metafield-color' %}
+        </div> {% endcomment %}
+        
+        
+         {% for option in card_product.options_with_values %}
+          {% assign show_atc_btn = false %}
+           {% assign opt_name = option.name | downcase %}
+           {% if opt_name contains 'size' %}
+            {% assign show_atc_btn = true %}
+           {% endif %}
+         {% endfor %}
+
+         {% comment %} {% if opt_name contains 'size' %} {% endcomment %}
+          {% if show_atc_btn %}
+          <button class="atc_btn_custom" aria-label="atc">
+            <span class="atc_btn">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.4" y="4.38792" width="13.0258" height="11.1236" rx="0.6" stroke="white" stroke-width="0.8"/>
+                <path d="M4.24886 5.51898L4.23438 4.28884C4.23438 2.84113 4.56204 0.400024 6.91041 0.400024C9.18611 0.400024 9.59593 2.77557 9.59593 4.20216C9.59593 4.82164 9.59593 5.01396 9.59593 5.51898" stroke="white" stroke-width="0.8"/>
+              </svg>
+              {% comment %} <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/download.png?v=1766987837" width="20px" height="20px"> {% endcomment %}
+            </span>
+          </button>
+        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
+          <div class="successfully_ATC_new hidden">Added to Bag</div>
+
+        <div class="pdp-card-option-custom">
+          <div class="product-card__content__add-to-cart">
+            <ul class="size-select__select custom_select_size hidden" name="size" aria-label="Select size">
+
+            {% assign selected_color = color_name | downcase %}
+
+            {% for option in card_product.options_with_values %}
+              {% assign opt_name = option.name | downcase %}
+
+              {% if opt_name == 'color' or opt_name == 'colour' %}
+                {% assign color_index = forloop.index0 %}
+              {% endif %}
+
+              {% if opt_name contains 'size' %}
+                {% assign size_index = forloop.index0 %}
+
+                {% for opt in option.values %}
+
+                  {%- assign matched = false -%}
+                  {%- assign size_var = '' -%}
+                  {%- assign size_var_title = '' -%}
+                  {%- assign variant_avail = false -%}
+                  {%- assign var_qty = nil -%}
+
+                  {% assign opt_down = opt | downcase %}
+
+                  {% for variant in card_product.variants %}
+                    {% assign col_down = variant.options[color_index] | downcase %}
+                    {% assign size_down = variant.options[size_index] | downcase %}
+
+                    {% if col_down == selected_color and size_down == opt_down %}
+                      {% assign matched = true %}
+                      {% assign size_var = variant.id %}
+                      {% assign size_var_title = variant.title %}
+                      {% assign variant_avail = variant.available %}
+
+                      {% if variant.inventory_quantity > 0 and variant.inventory_quantity <= 5 %}
+                        {% assign var_qty = variant.inventory_quantity %}
+                      {% endif %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+
+                  <li class="size_option {% unless variant_avail %}out-of-stock{% endunless %}"
+                      {% if matched %}
+                        data-size-var="{{ size_var }}"
+                        data-size-opt="{{ opt }}"
+                        data-variant-title="{{ size_var_title }}"
+                      {% endif %}>
+
+                   size {% if variant_avail %}-{% endif %} {{ opt }}
+
+                    {% if var_qty %}
+                      {% comment %} <span class="low-stock"> - only {{ var_qty }} left</span> {% endcomment %}
+                      <div class="low-stock">
+                          only {{ var_qty }} left
+                          <svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.856 11.96H10.28L10.032 9.464V8H11.128V9.464L10.856 11.96ZM11.152 13.696H10V12.584H11.152V13.696Z" fill="#F5ACAC"></path>
+                            <path d="M9.95117 2.01758C10.1353 1.64848 10.6616 1.64848 10.8457 2.01758L18.2354 16.8311C18.4007 17.1634 18.1584 17.5537 17.7871 17.5537H3.00977C2.63848 17.5537 2.39622 17.1634 2.56152 16.8311L9.95117 2.01758Z" stroke="#F39696"></path>
+                          </svg>
+                        </div>
+                    {% endif %}
+
+                    {% unless variant_avail %}
+                      <span class="option--out-of-stock">
+                        {% comment %} <span>- out of stock</span> {% endcomment %}
+                         {% comment %} <span>-</span> {% endcomment %}
+                        <a class="button notify-button"
+                          data-product-id="{{ card_product.id }}"
+                          data-var-id="{{ size_var }}"
+                          href="#"
+                          data-klaviyo-handle="{{ card_product.handle }}">
+                          {% comment %} notify me when available {% endcomment %}
+                          Tell me when it’s back
+                          <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.25 7.83167V0.25H14.0391V7.83167C14.0391 8.38395 13.5913 8.83167 13.0391 8.83167H1.25C0.697715 8.83167 0.25 8.38395 0.25 7.83167Z" fill="#D9D9D9"/>
+                            <path d="M0.25 0.25V7.83167C0.25 8.38395 0.697715 8.83167 1.25 8.83167H13.0391C13.5913 8.83167 14.0391 8.38395 14.0391 7.83167V0.25M0.25 0.25H14.0391M0.25 0.25L6.61615 4.21199C6.93964 4.41332 7.34942 4.41332 7.67291 4.21199L14.0391 0.25" stroke="#2A2A2C" stroke-width="0.5"/>
+                          </svg>
+                        </a>
+                      </span>
+                    {% endunless %}
+                  </li>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+
+            </ul>
+
+            <span class="close_size"> 
+              <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.00977 0.402832L4.65305 3.60596L0.296331 0.402832" stroke="#262525"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        
+      </div>
+      <div class="product-card__content">
+        <div class="product-card__content__infos">
+          <a href="{% if var_id != "" %}{{ card_product.url }}?variant={{ var_id }}{%else%}{{ card_product.url }}{% endif %}" class="product-card__content__infos__deets">
+            <h5 class="desc">{{ card_product.title }}</h5>
+
+            {% comment %} custom code for swatch {% endcomment %}
+
+            {% assign loop_count = 0 %}
+
+            {%- for option in card_product.options_with_values -%}
+            {% assign option_name = option.name | downcase %}
+            {% assign option_color = 'color' %}
+                {% if option_name == option_color %}
+                    {%- for value in option.values -%}
+                    {% assign loop_count =  loop_count | plus:1  %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+            {% if loop_count < 1 %}
+                <div class="pro-card-colors_list_custom">
+                {% render "metafield-products", card_product: card_product, query_para: '?view=for-metafield-color' %}
+                </div>
+            {% else %}
+                <div class="pro-card-colors_list_custom new">
+                <div class="meta-color-select">
+                <div class="meta-color-select__options">
+                 
+
+
+                {%- for option in card_product.options_with_values -%}
+                  {% assign option_color = 'color' %}
+                  {% assign option_name = option.name | downcase %}
+                  {% if option_name == option_color %}
+                   
+                    {% assign total_colors = option.values.size %}
+                    {% assign color_index = 0 %}  
+                    {%- for value in option.values -%}
+                       {% assign color_index = color_index | plus: 1 %}
+                      {% assign var_id = color_variant.id | json %}
+                      {%- assign color_label = value | escape -%}
+                      {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+                      {%- assign color_key = value | downcase -%}
+                      {%- assign color_swatch_style = '' -%}
+
+                      {%- for config in color_swatch_config -%}
+                        {%- assign pair = config | split: ':' -%}
+                        {%- assign config_name = pair[0] | strip | downcase -%}
+                        {%- assign config_value = pair[1] | strip -%}
+
+                        {%- if config_name == color_key -%}
+                        
+                          {%- if config_value contains '.png' or config_value contains '.jpg' or config_value contains '.jpeg' or config_value contains '.webp' -%}
+                            {%- assign image_url = config_value | file_url  %}
+                            {%- assign color_swatch_style = 'background-image:url(' | append: image_url | append:')'| append:';' -%}
+                          {%- else -%}
+                            {%- assign color_swatch_style = 'background-color:' | append: config_value | append: ';' -%}
+                          {%- endif -%}
+
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                      {%- if color_swatch_style == blank -%}
+                        {%- if value.swatch.image != blank -%}
+                          {% assign image_url = config_value | file_url  %}
+                          {%- assign color_swatch_style = 'background-image:url(' | append: image_url | append:')'| append:';' -%}
+                          
+                        {%- elsif value.swatch.color != blank -%}
+                          {%- assign color_swatch_style = 'background-color:' 
+                            | append: value.swatch.color 
+                            | append: ';' -%}
+                        {%- endif -%}
+                      {%- endif -%} 
+
+                      {% assign is_match_id = color_variant.featured_media.id  %}
+
+                    <div class="single_product_new single_product custom_new {% if value.variant.featured_media.id == is_match_id %}active fisrt_swatch {%else%}hidden{% endif %}"
+                        data-href="{{ card_product.url | within: collection }}?variant={{ value.variant.id }}"
+                        data-vhandle="{{ value.variant.id }}"
+                        data-color="{{ value | downcase }}"
+                        data-product-id="{{ card_product.id }}"
+                        data-variant-id="{{ value.variant.id }}"
+                        data-vimg="{{ value.variant.featured_media.id }}"
+                        style="{{ color_swatch_style }}"
+                        aria-label="{{ color_label }}"
+                        title="{{ color_label }}"
+                        data-title="{% if color_label contains 'White' %}White{%else%}{{ color_label }}{% endif %}"
+                        data-index="{{color_index }}"
+                        >
+                     </div> 
+                      <div class="d-color_li hidden {% if value.variant.featured_media.id == is_match_id %}active fisrt_swatch {% endif %}"><span style="{{ color_swatch_style }}" color_name="{{ color_label }}" data-vid="{{ value.variant.id }}"></span></div>
+                      
+                   {% endfor %}
+                   
+                   <span class="total_swatch show_desk">
+                   {% assign total_colors_last = total_colors| minus: 1 %}
+                   {% if total_colors_last > 0 %}
+                      +{{ total_colors_last }}
+                      {% endif %}
+                   </span>
+
+                   <span class="total_swatch show_mobile">
+                   {% assign total_colors_last = total_colors| minus: 1 %}
+                   {% if total_colors_last > 0 %}
+                      +{{ total_colors_last }}
+                      {% endif %}
+                   </span>
+                  
+                  {% endif %}
+                {% endfor %}
+
+                {% comment %} {%- for option in card_product.options_with_values -%}
+                  {% assign option_color = 'color' %}
+                  {% assign option_name = option.name | downcase %}
+                  {% if option_name == option_color %}
+                    <span class="index_up">{{ swatch_size }}--{{ color_index }}</span>
+                    {%- for value in option.values -%}
+                      {% assign var_id = color_variant.id | json %}
+                      {%- assign color_label = value | escape -%}
+                      {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+                      {%- assign color_key = value | downcase -%}
+                      {%- assign color_swatch_style = '' -%}
+
+                      {%- for config in color_swatch_config -%}
+                        {%- assign pair = config | split: ':' -%}
+                        {%- assign config_name = pair[0] | strip | downcase -%}
+                        {%- assign config_value = pair[1] | strip -%}
+
+                        {%- if config_name == color_key -%}
+                        
+                          {%- if config_value contains '.png' or config_value contains '.jpg' or config_value contains '.jpeg' or config_value contains '.webp' -%}
+                            {%- assign image_url = config_value | file_url  %}
+                            {%- assign color_swatch_style = 'background-image:url(' | append: image_url | append:')'| append:';' -%}
+                          {%- else -%}
+                            {%- assign color_swatch_style = 'background-color:' | append: config_value | append: ';' -%}
+                          {%- endif -%}
+
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                      {%- if color_swatch_style == blank -%}
+                        {%- if value.swatch.image != blank -%}
+                          {% assign image_url = config_value | file_url  %}
+                          {%- assign color_swatch_style = 'background-image:url(' | append: image_url | append:')'| append:';' -%}
+                          
+                        {%- elsif value.swatch.color != blank -%}
+                          {%- assign color_swatch_style = 'background-color:' 
+                            | append: value.swatch.color 
+                            | append: ';' -%}
+                        {%- endif -%}
+                      {%- endif -%} 
+
+                      <div class="single_product_new single_product custom_new
+                      {% if value.variant.featured_media.id == is_match_id %}active{% endif %}"
+                      data-href="{{ card_product.url }}?variant={{ value.variant.id }}"
+                      data-vhandle="{{ value.variant.id }}"
+                      data-color="{{ value | downcase }}"
+                      data-product-id="{{ card_product.id }}"
+                      data-vimg="{{ value.variant.featured_media.id }}"
+                      style="{{ color_swatch_style }}"
+                      aria-label="{{ color_label }}"
+                      title="{{ color_label }}"
+                      >
+                      </div>
+                   {% endfor %}
+                  {% endif %}
+                {% endfor %} {% endcomment %}
+                </div>
+                </div>
+                </div>
+            {% endif %}
+
+            <div class="product-card-pricebox">
+             {% comment %} <p class="compare_at_price price">{% if card_product.compare_at_price != 0 %}{{ card_product.compare_at_price | money_without_trailing_zeros }}{% endif %}</p>
+              <p class="price">{{ card_product.compare_at_price | money_without_trailing_zeros }}</p> {% endcomment %}
+
+            {%if color_variant.compare_at_price %} <p class="compare_at_price price">{% if color_variant.compare_at_price %}{{ color_variant.compare_at_price | money_without_currency }} {{ shop.currency }} {% endif %}</p>{% endif %}
+              <p class="price">{{ color_variant.price | money_without_currency }} {{ shop.currency }}</p>
+
+            </div>
+          </a>
+        </div>
+
+
+         
+
+
+        <div class="pdp-card-option-wrap hidden">
+          <div class="product-card__content__add-to-cart">
+          
+            <div class="product-card__content__add-to-cart__available show_add_remove show{% comment %}{% unless size_option_available or card_product.available %} show{% endunless %}{% endcomment %}">
+              <div class="product-card__content__add-to-cart__available__sizes pdp-card-sizeslist">
+                
+                <div class="size-select" data-recommended="10">
+                    {% comment %} <select class="size-select__select hidden" name="size" aria-label="Select size">
+                      <option value="6">6</option>
+                      <option value="8">8</option>
+                      <option value="10" selected>10</option>
+                      <option value="12">12</option>
+                      <option value="14" disabled>14</option>
+                      <option value="16" disabled>16</option>
+                    </select> {% endcomment %}
+
+
+                  <div class="size-select__options{% unless card_product.available %} product_not_available{% endunless %}">
+                    {% render 'grid-option-size', card_product: card_product %}
+                    <div class="successfully_ATC"></div>
+                    <div class="pro-card-notify_me hidden">OUT OF STOCK<span class="pro-card-notify_me-btn hidden">NOTIFY ME</span></div>
+                  </div>
+                  <button class="btn btn--outline"><small>RECOMMENDED SIZE</small></button>
+                </div>
+                {% comment %} <button class="btn btn--dark temp-atc-btn"><small>ADD TO CART</small></button> {% endcomment %}
+                <a href="{{ card_product.url }}" class="btn btn--dark atc_JS{% unless card_product.available %} button_disabled{% endunless %}" disabled><small>{% if size_option_available or card_product.available %}ADD TO CART{% else %}OUT OF STOCK - NOTIFY ME{% endif %}</small></a>
+                {%- comment -%}
+                  <p class="price">{{ card_product.price | money_without_trailing_zeros }}</p>
+                {%- endcomment -%}
+              </div>
+            </div>
+
+            <div class="product-card__content__add-to-cart__out-of-stock">
+              <button class="btn btn--dark button_disabled"><small>OUT OF STOCK - NOTIFY ME</small></button>
+            </div>
+          </div>
+        </div>
+
+      </div>     
+      
+    </div>
+
+
+     {% comment %} <script type="application/json"
+        class="variant-images-json"
+        data-product-id="{{ card_product.id }}">
+        {
+        {% comment %} {% for variant in product.variants %} {% endcomment %}
+          "{{ color_variant.id }}": {
+            "variant_id":"{{ color_variant.id }}",
+            "color": "{{ color_variant.option1 | downcase }}",
+            "options": {{ color_variant.options | json }},
+            "variant_title": "{{ color_variant.title | escape }}",
+            "variant_available":"{{color_variant.available}}",
+            "inventory_quantity":"{{color_variant.inventory_quantity}}",
+            "images": [
+              {% capture images_json %}{% endcapture %}
+                {% capture images_json %}{% endcapture %}
+
+                {%- assign color_down = color_variant.option1 | downcase -%}
+
+                {%- comment -%} Featured image first {%- endcomment -%}
+                {% if color_variant.featured_media %}
+                  {% assign media = color_variant.featured_media %}
+
+                  {% capture images_json %}
+                  {
+                    "id": "{{ media.id }}",
+                    "src": "{{ media | image_url: width: 2000 }}",
+                    "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                    "alt": "{{ media.alt | escape }}",
+                    "width": {{ media.width }},
+                    "height": {{ media.height }}
+                  }
+                  {% endcapture %}
+                {% endif %}
+
+                {%- comment -%}  Other images of same color {%- endcomment -%}
+                {%- for media in product.media -%}
+                  {% if media.media_type == 'image' and media.id != color_variant.featured_media.id %}
+
+                    {% assign img_color = media.alt
+                      | downcase
+                      | replace: ' | ', '|'
+                      | replace: '| ', '|'
+                      | replace: ' |', '|'
+                      | split: '|'
+                      | last
+                      | strip
+                    %}
+
+                    {% if img_color == color_down %}
+                      {% capture single_image %}
+                      {
+                        "id": "{{ media.id }}",
+                        "src": "{{ media | image_url: width: 600 }}",
+                        "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                        "alt": "{{ media.alt | escape }}",
+                        "width": {{ media.width }},
+                        "height": {{ media.height }}
+                      }
+                      {% endcapture %}
+
+                      {% capture images_json %}{{ images_json }},{{ single_image }}{% endcapture %}
+                    {% endif %}
+                  {% endif %}
+                {%- endfor -%}
+
+              {{ images_json }}
+            ]
+          }
+          {% comment %} {% unless forloop.last %},{% endunless %} {% endcomment %}
+        {% comment %} {% endfor %} {% endcomment %}
+        }
+        </script>  {% endcomment %}
+
+
+{% comment %} <script type="application/json"
+  class="variant-images-json"
+  data-product-id="{{ card_product.id }}">
+{
+{% for variant in card_product.variants %}
+
+  {% assign color_down = variant.option1 | downcase %}
+  {% assign size_value = variant.option2 %}
+
+  "{{ variant.id }}": {
+    "variant_id": {{ variant.id | json }},
+    "color": {{ color_down | json }},
+     "size": {{ size_value | json }},  
+    "options": {{ variant.options | json }}, 
+    "variant_title": {{ variant.title | json }},
+    "variant_available": {{ variant.available | json }},
+    "inventory_quantity": {{ variant.inventory_quantity | json }},
+    "coming_soon": {{ variant.metafields.custom.coming_soon.value | json }},
+    "images": [
+
+      {% assign first_image = true %}
+
+      {% if variant.featured_media %}
+        {% assign fm_400 = variant.featured_media | image_url: width: 400 %}
+        {% assign fm_600 = variant.featured_media | image_url: width: 600 %}
+        {% assign fm_800 = variant.featured_media | image_url: width: 800 %}
+        {% assign fm_srcset = fm_400 | append: ' 400w, ' | append: fm_600 | append: ' 600w, ' | append: fm_800 | append: ' 800w' %}
+
+        {
+          "id": {{ variant.featured_media.id | json }},
+          "src": {{ variant.featured_media | image_url: width: 1000 | json }},
+          "srcset": {{ fm_srcset | json }},
+          "alt": {{ variant.featured_media.alt | json }}
+        }
+        {% assign first_image = false %}
+      {% endif %}
+
+      {% for media in card_product.media %}
+        {% if media.media_type == 'image' and variant.featured_media and media.id != variant.featured_media.id %}
+          
+          {% assign img_color = media.alt
+            | downcase
+            | split: '|'
+            | last
+            | strip
+          %}
+
+          {% if img_color == color_down %}
+            {% assign img_400 = media | image_url: width: 400 %}
+            {% assign img_600 = media | image_url: width: 600 %}
+            {% assign img_800 = media | image_url: width: 800 %}
+            {% assign img_srcset = img_400 | append: ' 400w, ' | append: img_600 | append: ' 600w, ' | append: img_800 | append: ' 800w' %}
+
+            {% unless first_image %},{% endunless %}
+            {
+              "id": {{ media.id | json }},
+              "src": {{ media | image_url: width: 1000 | json }},
+              "srcset": {{ img_srcset | json }},
+              "alt": {{ media.alt | json }}
+            }
+            {% assign first_image = false %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+    ]
+  }{% unless forloop.last %},{% endunless %}
+
+{% endfor %}
+}
+</script> {% endcomment %}
+
+
+<script type="application/json"
+  class="variant-images-json"
+  data-product-id="{{ card_product.id }}">
+{
+
+{% assign seen_colors = '' %}
+{% for variant in card_product.variants %}
+  {% assign color_down = variant.option1 | downcase %}
+  {% assign size_value = variant.option2 %}
+  {% assign color_key = '|' | append: color_down | append: '|' %}
+
+  "{{ variant.id }}": {
+    "variant_id": {{ variant.id | json }},
+    "color": {{ color_down | json }},
+    "size": {{ size_value | json }},
+    "options": {{ variant.options | json }},
+    "variant_title": {{ variant.title | json }},
+    "variant_available": {{ variant.available | json }},
+    "inventory_quantity": {{ variant.inventory_quantity | json }},
+    "coming_soon": {{ variant.metafields.custom.coming_soon.value | json }},
+    "images": [
+      {%- unless seen_colors contains color_key -%}
+        {% assign first_image = true %}
+
+        {% comment %} {% if variant.featured_media %}
+          {% comment %} {% assign fm_400 = variant.featured_media | image_url: width: 400 %}
+          {% assign fm_600 = variant.featured_media | image_url: width: 600 %}
+          {% assign fm_800 = variant.featured_media | image_url: width: 800 %}
+          {% assign fm_srcset = fm_400 | append: ' 400w, ' | append: fm_600 | append: ' 600w, ' | append: fm_800 | append: ' 800w' %} {% endcomment %}
+          {
+            "id": {{ variant.featured_media.id | json }},
+            "src": {{ variant.featured_media | image_url: width: 1000 | json }},
+            {% comment %} "srcset": {{ fm_srcset | json }}, {% endcomment %}
+            "alt": {{ variant.featured_media.alt | json }}
+          }
+          {% assign first_image = false %}
+        {% endif %} {% endcomment %}
+
+        {% if variant.featured_media %}
+          {% if card_product.type == "Unisex" %}
+
+            {% comment %} 
+              For unisex: skip featured image here — all images come from media loop below
+              in their natural Shopify admin order. Just set first_image = false to allow
+              the loop to add commas correctly.
+            {% endcomment %}
+            {% assign color_first_media = nil %}
+            {% assign has_gender_first_media = false %}
+
+            {% comment %} Check if first product media is gendered (for JS filtering) {% endcomment %}
+            {% assign first_media_alt = card_product.media.first.alt | downcase | strip %}
+            {% if first_media_alt contains 'woman' or first_media_alt contains 'women'
+                or first_media_alt contains 'womean' or first_media_alt contains 'man '
+                or first_media_alt contains 'men ' %}
+              {% assign has_gender_first_media = true %}
+            {% endif %}
+
+          {% else %}
+            {
+              "id": {{ variant.featured_media.id | json }},
+              "src": {{ variant.featured_media | image_url: width: 1000 | json }},
+              "alt": {{ variant.featured_media.alt | json }}
+            }
+            {% assign first_image = false %}
+          {% endif %}
+        {% endif %}
+
+        {% for media in card_product.media %}
+        {% if media.media_type == 'image' %}
+          {% assign img_color = media.alt | downcase | split: '|' | last | strip %}
+          {% if img_color == color_down %}
+
+            {% assign skip_this = false %}
+
+            {% comment %} For non-unisex: skip featured media (already added above) {% endcomment %}
+            {% if card_product.type != "Unisex" %}
+              {% if variant.featured_media and media.id == variant.featured_media.id %}
+                {% assign skip_this = true %}
+              {% endif %}
+            {% endif %}
+
+            {% unless skip_this %}
+              {% unless first_image %},{% endunless %}
+              {
+                "id": {{ media.id | json }},
+                "src": {{ media | image_url: width: 1000 | json }},
+                "alt": {{ media.alt | json }}
+              }
+              {% assign first_image = false %}
+            {% endunless %}
+
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+        {% assign seen_colors = seen_colors | append: color_key %}
+      {%- endunless -%}
+    ]
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+}
+</script>
+
+  </li>
+{% endif %}
+
+{% endif %}

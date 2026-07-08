@@ -1,0 +1,146 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+<section class="dashboard row">
+  <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+    <ul>
+      <li>
+        <a href="{{ routes.account_url }}"><p>Dashboard</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_url }}?view=orders"><p>order history</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_addresses_url }}">
+          <p>addresses ({{ customer.addresses_count }})</p>
+        </a>
+      </li>
+      {% comment %}
+      <li>
+        <a href="{{ routes.account_url }}?view=my-profile"><p>account details</p></a>
+      </li>
+      {% endcomment %}
+      <li class="active">
+        <a href="{{ routes.account_url }}?view=wishlist"><p>MY SAVED ITEMS</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_logout_url }}"><p>{{ 'customer.log_out' | t }}</p></a>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard__body col--6 col--md--6 col--lg--10">
+    <div class="dashboard__body__intro">
+      <h1>{{ section.settings.welcome_title }}</h1>
+      <section class="listing wishlist_data_API">
+        <ul class="listing__list"></ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var wishlistSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="23" viewBox="0 0 26 23" fill="none"><g clip-path="url(#a)"><path d="M6.862.424c2.233-.21 4.27.756 5.645 2.618.088.116.449.764.497.778.068.015.081-.044.109-.08.64-.916 1.042-1.556 1.968-2.21 4.752-3.39 10.295 1.163 9.968 6.835-.306 5.25-6.53 10.624-10.384 13.286-.279.189-1.185.865-1.437.923a1 1 0 0 1-.36.007c-.246-.043-1.097-.669-1.37-.85C7.625 19.084 1.334 13.71.999 8.452.769 4.751 3.24.766 6.863.424" fill="#EFEFEF"></path><path d="M6.905.885c2.06-.194 3.943.692 5.23 2.432l.003.005v.001l.023.035a6 6 0 0 1 .153.25l.06.1c.053.089.11.181.156.253q.035.055.073.106a.7.7 0 0 0 .107.113.5.5 0 0 0 .159.083l.018.006.02.004a.53.53 0 0 0 .583-.264l.001-.002.003-.005.149-.213c.559-.804.924-1.33 1.705-1.881l.001-.001c2.198-1.567 4.553-1.301 6.347.016 1.81 1.33 3.045 3.734 2.891 6.415-.144 2.466-1.69 5.023-3.745 7.333-2.044 2.295-4.531 4.28-6.438 5.597-.065.044-.159.11-.263.185l-.05.036c-.129.09-.273.192-.416.29s-.28.188-.393.255c-.084.05-.132.074-.152.084l-.01.005a.7.7 0 0 1-.154.006l-.024-.01a2 2 0 0 1-.124-.066 7 7 0 0 1-.368-.23 22 22 0 0 1-.46-.316l-.232-.16c-1.917-1.31-4.427-3.292-6.493-5.587-2.078-2.308-3.647-4.868-3.804-7.337-.109-1.743.42-3.562 1.404-4.98S5.26 1.04 6.905.884Zm5.791 2.648z" stroke="#383230" stroke-opacity=".33" stroke-width=".926"></path></g><defs><clipPath id="a"><path fill="#fff" d="M.984.367h24.079v22.227H.984z"></path></clipPath></defs></svg>`,
+        customerId = "{{ customer.id }}",
+        xtoken = 'IWISH_API_6ebf898e315611f0b6660e72f2521631';
+  
+    if(document.querySelector(".wishlist_data_API")){
+      var url = `https://api.myshopapps.com/wishlist/V2/fetchWishlistData/${customerId}`,
+          options = {
+            method: 'GET',
+            headers: {
+              xtoken: xtoken,
+              Accept: 'application/json'
+            }
+          };
+      
+      function fetch_wishlist_DATA(){
+        fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+          data.result.forEach(function(singleItem){
+            fetch(`/products/${singleItem.handle}?view=wishlist`)
+            .then(response => {
+                return response.text();
+            })
+            .then(responseData => {
+                var parser = new DOMParser(),
+                    new_wishlist_HTML = parser.parseFromString(responseData, "text/html"),
+                    new_wishlist_HTML = new_wishlist_HTML.querySelector("body").innerHTML;
+              
+                document.querySelector(".wishlist_data_API .listing__list").innerHTML += new_wishlist_HTML;
+              
+                document.querySelectorAll(".wishlist_data_API .listing__list .iwishcheck").forEach(function(iwishlist_item_icon){
+                  iwishlist_item_icon.innerHTML = wishlistSVG;
+                  iwishlist_item_icon.classList.add("active");
+                  iwishlist_item_icon.classList.add("item_remove_API");
+                });
+              
+                load_listing_script();
+                load_init_scripts_script();
+                product_grid_size_option();
+                product_grid_ATC();
+                product_media_update();
+                check_size_option();
+                iWish.init();
+                item_remove_API();
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+          });
+          
+        })
+        .catch(error => {
+          console.error("Fetch error:", error);
+        });
+      }
+      
+        var removeURL = 'https://api.myshopapps.com/wishlist/V2/removeWishlist',
+            removeoptions = {method: 'DELETE', headers: {xtoken: xtoken, Accept: 'application/json'}};
+
+        function item_remove_API(){
+          document.querySelectorAll(".wishlist_data_API .item_remove_API").forEach(function(single_wishlist_item){
+            single_wishlist_item.addEventListener("click", function (event) {
+              event.preventDefault();
+              var variant_ID = parseInt(this.getAttribute("data-variant"));
+              
+              fetch(`${removeURL}?customer_id=${customerId}&variant_id=${variant_ID}`, removeoptions)
+              .then(response => response.json())
+              .then(() => {
+                const itemToRemove = document.querySelector(".wishlist_data_API .listing__list .item_remove_API[data-variant='"+variant_ID+"']");
+                if (itemToRemove) {
+                  itemToRemove.closest(".listing__item").remove();
+                }
+        
+                let storedList = JSON.parse(localStorage.getItem('iwish_list') || '[]');
+                storedList = storedList.filter(item => item[0] !== variant_ID.toString());
+                localStorage.setItem('iwish_list', JSON.stringify(storedList));
+        
+                iWish.iWishsync;
+              })
+              .catch(error => {
+                console.error("Fetch error:", error);
+              });
+            });
+          });
+        }
+      fetch_wishlist_DATA();
+    }
+  });
+</script>
+{% schema %}
+{
+  "name": "Wishlist",
+  "settings": [
+    {
+     "type": "header",
+      "content": "Welcome content"
+    },
+    {
+      "type": "text",
+      "id": "welcome_title",
+      "label": "Welcome title",
+      "default": "MY SAVED ITEMS,"
+    }
+  ]
+}
+{% endschema %}

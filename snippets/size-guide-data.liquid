@@ -1,0 +1,152 @@
+{%- comment -%}
+  Builds normalized size-guide + find-your-size JSON for size-guide.js.
+
+  Metaobject: size_guide
+    (existing chart fields — see docs/SIZE-GUIDE-EXAMPLE.json)
+
+  Metaobject: size_finder_profile
+    - title
+    - garment_type
+    - runs_large_small          → single line: runs_small | true_to_size | runs_large
+    - recommendation_adjustment → number (e.g. -1, 0, 1)
+    - fit_notes                 → rich text
+    - required_fields           → list of text (optional override)
+    - optional_fields           → list of text (optional override)
+
+  Product metafields (namespace: custom):
+    - size_guide
+    - size_guide_enabled
+    - size_finder_enabled       → boolean
+    - size_finder_profile       → metaobject reference → size_finder_profile
+    - fit_notes                 → rich text (product override)
+    - runs_large_small          → single line (product override)
+    - recommendation_adjustment → number (product override)
+    - required_size_finder_fields → list of text (product override)
+    - optional_size_finder_fields → list of text (product override)
+{%- endcomment -%}
+
+{%- liquid
+  assign guide = product.metafields.custom.size_guide.value
+  assign enabled = product.metafields.custom.size_guide_enabled
+  assign has_guide = false
+
+  if guide != blank and enabled != false
+    assign has_guide = true
+  endif
+-%}
+
+{%- if has_guide -%}
+  {%- liquid
+    assign region_mapping = guide.region_size_mapping.value
+    assign measurement_rows = guide.measurement_rows.value
+    assign available_regions = guide.available_regions.value
+
+    assign default_region = guide.default_region | default: 'UK'
+    if region_mapping.default_region != blank
+      assign default_region = region_mapping.default_region
+    endif
+
+    assign intro_html = ''
+    if product.metafields.custom.size_guide_intro_text != blank
+      assign intro_html = product.metafields.custom.size_guide_intro_text | metafield_tag
+    elsif guide.how_to_measure_steps != blank
+      assign intro_html = guide.how_to_measure_steps | metafield_tag
+    endif
+
+    assign notes_html = ''
+    if guide.measurement_notes != blank
+      assign notes_html = guide.measurement_notes | metafield_tag
+    endif
+
+    assign image_url = ''
+    assign image_alt = guide.image_alt_text | default: 'How to measure'
+    assign image_width = 0
+    assign image_height = 0
+
+    if product.metafields.custom.size_guide_measurement_image != blank
+      assign measure_image = product.metafields.custom.size_guide_measurement_image.value
+      assign image_url = measure_image | image_url: width: 1200
+      assign image_width = measure_image.width
+      assign image_height = measure_image.height
+      if product.metafields.custom.size_guide_measurement_image.alt != blank
+        assign image_alt = product.metafields.custom.size_guide_measurement_image.alt
+      endif
+    elsif guide.measuring_image != blank
+      assign measure_image = guide.measuring_image.value
+      assign image_url = measure_image | image_url: width: 1200
+      assign image_width = measure_image.width
+      assign image_height = measure_image.height
+    endif
+
+    assign guide_title = guide.title | default: 'Size guide'
+    assign garment_type = guide.garment_type | default: ''
+
+    assign finder_profile = product.metafields.custom.size_finder_profile.value
+    assign finder_enabled = false
+    if product.metafields.custom.size_finder_enabled == true
+      assign finder_enabled = true
+    elsif finder_profile != blank and product.metafields.custom.size_finder_enabled != false
+      assign finder_enabled = true
+    endif
+
+    assign runs_large_small = 'true_to_size'
+    if product.metafields.custom.runs_large_small != blank
+      assign runs_large_small = product.metafields.custom.runs_large_small.value | default: product.metafields.custom.runs_large_small
+    elsif finder_profile.runs_large_small != blank
+      assign runs_large_small = finder_profile.runs_large_small.value | default: finder_profile.runs_large_small
+    endif
+
+    assign recommendation_adjustment = 0
+    if product.metafields.custom.recommendation_adjustment != blank
+      assign recommendation_adjustment = product.metafields.custom.recommendation_adjustment.value | default: product.metafields.custom.recommendation_adjustment
+    elsif finder_profile.recommendation_adjustment != blank
+      assign recommendation_adjustment = finder_profile.recommendation_adjustment.value | default: finder_profile.recommendation_adjustment
+    endif
+
+    assign fit_notes_html = ''
+    if product.metafields.custom.fit_notes != blank
+      assign fit_notes_html = product.metafields.custom.fit_notes | metafield_tag
+    elsif finder_profile.fit_notes != blank
+      assign fit_notes_html = finder_profile.fit_notes | metafield_tag
+    endif
+
+    assign required_fields = product.metafields.custom.required_size_finder_fields.value
+    assign optional_fields = product.metafields.custom.optional_size_finder_fields.value
+    if optional_fields == blank and finder_profile.optional_fields != blank
+      assign optional_fields = finder_profile.optional_fields.value
+    endif
+    if required_fields == blank and finder_profile.required_fields != blank
+      assign required_fields = finder_profile.required_fields.value
+    endif
+    if finder_profile.garment_type != blank and garment_type == blank
+      assign garment_type = finder_profile.garment_type
+    endif
+  -%}
+
+  <script type="application/json" id="SizeGuideData-{{ section.id }}">
+  {
+    "title": {{ guide_title | json }},
+    "garmentType": {{ garment_type | json }},
+    "defaultRegion": {{ default_region | json }},
+    "availableRegions": {{ available_regions | json }},
+    "regionSizeMapping": {{ region_mapping | json }},
+    "measurementRows": {{ measurement_rows | json }},
+    "introHtml": {{ intro_html | json }},
+    "notesHtml": {{ notes_html | json }},
+    "image": {
+      "url": {{ image_url | json }},
+      "alt": {{ image_alt | json }},
+      "width": {{ image_width | json }},
+      "height": {{ image_height | json }}
+    },
+    "finder": {
+      "enabled": {{ finder_enabled | json }},
+      "runsLargeSmall": {{ runs_large_small | json }},
+      "recommendationAdjustment": {{ recommendation_adjustment | json }},
+      "fitNotesHtml": {{ fit_notes_html | json }},
+      "requiredFields": {{ required_fields | json }},
+      "optionalFields": {{ optional_fields | json }}
+    }
+  }
+  </script>
+{%- endif -%}

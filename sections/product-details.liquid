@@ -1,0 +1,1013 @@
+{{ 'size-guide.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'size-guide-finder-engine-v3.js' | asset_url }}" defer></script>
+<script src="{{ 'size-guide-finder.js' | asset_url }}" defer></script>
+<script src="{{ 'size-guide.js' | asset_url }}" defer></script>
+
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+{% capture swiper-button-prev %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+      <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+    </svg>
+{% endcapture %}
+
+{% capture swiper-button-next %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+    <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+  </svg>
+{% endcapture %}
+
+<section class="detail pdp-hero-section {% if template == 'product' and product.gift_card? == false %} default_product_template {% endif %}{% if product.template_suffix == 'fragrances' %} product-fragrances-div default_product_template{% endif %}{% if product.gift_card? %} details-gift-card default_product_template{% endif %}">
+  <div class="detail__breadcrumb ">
+    <a href="{{ product.collections[0].url }}">
+      <h6>{{ product.collections[0].title }}</h6>
+    </a>
+    <h6>/</h6>
+    <a href="{{ product.url }}">
+      <h6>{{ product.title }}</h6>
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="detail__sliders product col--6 col--md--4 col--lg--6">
+      <div class="detail__sliders__main desk-only">
+        {%- for media in product.media -%}
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              <div class="zoom-element" media_ID="{{ media.id }}" data_alt="{{ media.alt | escape }}">
+                <picture>
+                  <source 
+                    srcset="{{ media | img_url: '1000x' }}" 
+                    media="(max-width: 767px)" 
+                    type="image/webp">
+
+                  <source 
+                    srcset="{{ media | img_url: '2000x' }}" 
+                    media="(min-width: 768px)" 
+                    type="image/webp">
+
+                  <img
+                    src="{{ media | img_url: '1000x' }}"
+                    width="{{ media.width }}"
+                    height="{{ media.height }}"
+                    alt="{{ media.alt | escape }}"
+                    loading="lazy"
+                    data-zoom-src="{{ media | img_url: 'master' }}"
+                    class="responsive-product-image"
+                  >
+                </picture>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+      <div class="mob-only">
+        <div class="detail__sliders__main-slider">
+          <div class="swiper-wrapper">
+            {%- for media in product.media -%}
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  <div class="zoom-element swiper-slide" media_ID="{{ media.id }}" data_alt="{{ media.alt | escape }}">
+                    <picture>
+                      <source 
+                        srcset="{{ media | img_url: '1000x' }}" 
+                        media="(max-width: 767px)" 
+                        type="image/webp">
+
+                      <source 
+                        srcset="{{ media | img_url: '2000x' }}" 
+                        media="(min-width: 768px)" 
+                        type="image/webp">
+
+                      <img
+                        src="{{ media | img_url: '1000x' }}"
+                        width="{{ media.width }}"
+                        height="{{ media.height }}"
+                        alt="{{ media.alt | escape }}"
+                        loading="lazy"
+                        data-zoom-src="{{ media | img_url: 'master' }}"
+                        class="responsive-product-image"
+                      >
+                    </picture>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+            <div class="swiper-button-prev">
+              {{ swiper-button-prev }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+                <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"></path>
+              </svg>
+            </div>
+            <div class="swiper-button-next">
+              {{ swiper-button-next }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+                <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"></path>
+              </svg>
+            </div>
+            <div class="swiper-pagination main-pagination"></div>
+        </div>
+        <div class="detail__sliders__thumb-slider">
+          <div class="swiper-wrapper">
+            {%- for media in product.media -%}
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  <div class="detail__sliders__img swiper-slide" data_alt="{{ media.alt | escape }}">
+                    <picture>
+                      <!-- Mobile only -->
+                      <source 
+                        srcset="{{ media | img_url: '200x' }}" 
+                        media="(max-width: 767px)" 
+                        type="image/webp">
+
+                      <!-- Fallback image (only loads on mobile) -->
+                      <img
+                        src="{{ media | img_url: '200x' }}"
+                        width="400"
+                        height="auto"
+                        alt="{{ media.alt | escape }}"
+                        loading="lazy"
+                        class="mobile-only"
+                      >
+                    </picture>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+          <div class="swiper-button-prev">
+            {{ swiper-button-prev }}
+          </div>
+          <div class="swiper-button-next">
+            {{ swiper-button-next }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% assign color_active = false %}
+    {% assign option_color = 'color' %}
+
+    {%- unless product.has_only_default_variant -%}
+      {%- for option in product.options_with_values -%}
+        {% assign option_name = option.name | downcase %}
+
+        {% if option_name == option_color %}
+          {%- for value in option.values -%}
+            {% assign color_active = true %}
+            {% assign color_name = value %}
+            {% if forloop.first %}
+              {% break %}
+            {% endif %}
+          {%- endfor -%}
+        {% endif %}
+      {%- endfor -%}
+    {%- endunless -%}
+
+    <div class="detail__sidebar col--6 col--md--4 col--lg--6">
+      <div class="detail__sidebar__content ffff">
+        <div class="detail__sidebar__intro {% if template == 'product' and product.gift_card? == false %} product_default{% endif %}">
+          <h1 class="h4">{{ product.title }}</h1>
+          <h3 class="vari_price">{{ product.selected_or_first_available_variant.title }}</h3>
+
+          {% if template contains 'fragrances' %}
+          <div class="detail__sidebar__colors__price">
+            {% if product.selected_or_first_available_variant.compare_at_price != 0 %}
+              <h5 class="h4 compare_at_price">
+                {{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}
+              </h5>
+            {% endif %}
+            <h4 class="vari_price">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</h4>
+          </div>
+          {% endif %}
+
+          {% if color_active %}
+            <h2 class="p">IN {{ color_name }}</h2>
+          {% endif %}
+        </div>
+
+        {% if template == 'product' and product.gift_card? == false %}
+          <div class="detail__sidebar__intro">
+            <div class="default-prodcut_page">
+              <div class="pdp-title-wrap">
+                <h2 class="h4">{{ product.title }}</h2>
+                {% render 'wishlist-app-links', linkType: 'list-product', product: product %}
+                {% if color_active %}
+                <h2 class="p pdp-color-name-text desktop-hide">IN {{ color_name }}</h2>
+              {% endif %}
+              </div>
+              <div class="pdp-title-price-row">
+                <div class="detail__sidebar__colors__price">
+                  {% if product.selected_or_first_available_variant.compare_at_price != 0 %}
+                    <h5 class="h4 compare_at_price">
+                      {{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}
+                    </h5>
+                  {% endif %}
+                  <h4 class="vari_price">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</h4>
+                </div>
+                {% render 'size-guide-trigger', product: product, section: section %}
+              </div>
+            </div>
+
+            {% if color_active %}
+              <h2 class="p pdp-color-name-text mobile-hide">IN {{ color_name }}</h2>
+            {% endif %}
+          </div>
+        {% endif %}
+
+
+        <hr>
+
+        <div class="meta_product_inner">
+          {% if product.metafields.custom.similar_products != blank %}<div class="meta-color-head">{{ product.options[0] | replace:"Color","Colours" }}</div>{% endif %}
+          {% if product.metafields.custom.similar_products != blank %}<div class="meta-color-value">{{ product.options_with_values[0].selected_value }}</div>{% endif %}
+          <div class="meta-color-select">
+            <div class="meta-color-select__options">
+              {%- unless product.has_only_default_variant -%}
+                {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+                {%- assign color_swatch_style = '' -%}
+
+                {%- for option in product.options_with_values -%}
+                  {% assign option_name = option.name | downcase %}
+
+                  {% if option_name == option_color %}
+                    {%- for value in option.values -%}
+                      {% assign color_swatch_style = null %}
+                      {%- assign swatch = value.swatch -%}
+                      {%- assign color_value_downcase = value | downcase -%}
+                      {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ';' -%}
+                      {%- for color_swatch_item in color_swatch_config -%}
+                        {%- assign color_swatch_parts = color_swatch_item | split: ':' -%}
+                        {%- assign color_swatch_name = color_swatch_parts.first | downcase | strip -%}
+                        {%- if color_value_downcase == color_swatch_name -%}
+                          {%- assign color_swatch_value = color_swatch_parts.last | strip -%}
+                          {%- if color_swatch_value contains '#' -%}
+                            {%- assign color_swatch_style = 'background-color: '
+                              | append: color_swatch_value
+                              | append: ';'
+                            -%}
+                          {%- elsif swatch.color != blank -%}
+                            {%- assign color_swatch_style = 'background-color: '
+                              | append: swatch.color
+                              | append: ')'
+                            -%}
+                          {%- elsif images[color_swatch_value] != blank -%}
+                            {%- assign color_swatch_image = images[color_swatch_value] | img_url: '72x72' -%}
+                            {%- assign color_swatch_style = 'background-image: url('
+                              | append: color_swatch_image
+                              | append: ')'
+                              | append: ';'
+                            -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {% assign color_active = true %}
+                      {% assign color_swatch_style = color_swatch_style %}
+                      {% if forloop.first %}
+                        {% break %}
+                      {% endif %}
+                    {%- endfor -%}
+                  {% endif %}
+                {%- endfor -%}
+              {% endunless %}
+              {% if product.metafields.custom.swatches_image != blank %}
+                {% assign metafiled_image = product.metafields.custom.swatches_image | img_url: 'master' %}
+                {%- assign color_swatch_style = 'background-image: url('
+                  | append: metafiled_image
+                  | append: ')'
+                  | append: ';'
+                -%}
+              {% endif %}
+              <div
+                class="single_product active"
+                data_handle="{{ product.url }}"
+                data-style="{% if color_active %}{{ color_swatch_style }}{% endif %}"
+              >{% if template contains "fragrances" %}{{ product.selected_or_first_available_variant.options[0] }}
+                {% else %}
+                  {% if product.metafields.custom.swatches_image.value != blank %}
+                    <img src="{{ product.metafields.custom.swatches_image.value | img_url:"100x" }}">
+                  {% else %}
+                  <img src="{{ product.featured_image | img_url:"100x" }}">
+                  {% endif %}
+                {% endif %}</div>
+              {% if product.metafields.custom.similar_products != blank %}
+                {% for meta_product in product.metafields.custom.similar_products.value %}
+                  {% unless meta_product.handle == product.handle %}
+                    {%- unless meta_product.has_only_default_variant -%}
+                      {%- assign color_swatch_config = settings.color_swatch_config
+                        | newline_to_br
+                        | split: '<br />'
+                      -%}
+                      {%- assign color_swatch_style = '' -%}
+
+                      {%- for option in meta_product.options_with_values -%}
+                        {% assign option_name = option.name | downcase %}
+
+                        {% if option_name == option_color %}
+                          {%- for value in option.values -%}
+                            {% assign color_swatch_style = null %}
+                            {%- assign swatch = value.swatch -%}
+                            {%- assign color_value_downcase = value | downcase -%}
+                            {%- assign color_swatch_style = 'background-color: '
+                              | append: swatch.color
+                              | append: ';'
+                            -%}
+                            {%- for color_swatch_item in color_swatch_config -%}
+                              {%- assign color_swatch_parts = color_swatch_item | split: ':' -%}
+                              {%- assign color_swatch_name = color_swatch_parts.first | downcase | strip -%}
+                              {%- if color_value_downcase == color_swatch_name -%}
+                                {%- assign color_swatch_value = color_swatch_parts.last | strip -%}
+                                {%- if color_swatch_value contains '#' -%}
+                                  {%- assign color_swatch_style = 'background-color: '
+                                    | append: color_swatch_value
+                                    | append: ';'
+                                  -%}
+                                {%- elsif swatch.color != blank -%}
+                                  {%- assign color_swatch_style = 'background-color: '
+                                    | append: swatch.color
+                                    | append: ')'
+                                  -%}
+                                {%- elsif images[color_swatch_value] != blank -%}
+                                  {%- assign color_swatch_image = images[color_swatch_value] | img_url: '72x72' -%}
+                                  {%- assign color_swatch_style = 'background-image: url('
+                                    | append: color_swatch_image
+                                    | append: ')'
+                                    | append: ';'
+                                  -%}
+                                {%- endif -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+                            {% assign color_active = true %}
+                            {% assign color_swatch_style = color_swatch_style %}
+                            {% if forloop.first %}
+                              {% break %}
+                            {% endif %}
+                          {%- endfor -%}
+                        {% endif %}
+                      {%- endfor -%}
+                    {%- endunless -%}
+                    {% if meta_product.metafields.custom.swatches_image != blank %}
+                      {% assign metafiled_image = meta_product.metafields.custom.swatches_image | img_url: 'master' %}
+                      {%- assign color_swatch_style = 'background-image: url('
+                        | append: metafiled_image
+                        | append: ')'
+                        | append: ';'
+                      -%}
+                    {% endif %}
+                    <div
+                      class="single_product"
+                      data_handle="{{ meta_product.url }}"
+                      data-style="{% if color_active %}{{ color_swatch_style }}{% endif %}"
+                    >{% if template contains "fragrances" %}{{ meta_product.selected_or_first_available_variant.options[0] }}
+                    {% else %}
+                      {% if meta_product.metafields.custom.swatches_image.value != blank %}
+                        <img src="{{ meta_product.metafields.custom.swatches_image.value | img_url:"100x" }}">
+                      {% else %}
+                      <img src="{{ meta_product.featured_image | img_url:"100x" }}">
+                      {% endif %}
+                    {% endif %}</div>
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="detail__sidebar__colors__price {% if template == 'product' and product.gift_card? == false %} product_default{% endif %}">
+            {% if product.selected_or_first_available_variant.compare_at_price != 0 %}
+              <h5 class="h4 compare_at_price">
+                {{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}
+              </h5>
+            {% endif %}
+            <h4 >{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</h4>
+          </div>
+        </div>
+
+
+
+
+      {%comment %}  {%- if product.available -%}{% endcomment %}
+          {%- unless product.has_only_default_variant -%}
+            {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+            {%- assign color_swatch_style = '' -%}
+
+            {%- for option in product.options_with_values -%}
+              {% assign option_size = 'size' %}
+              {% assign option_name = option.name | downcase %}
+              {% if option_name == 'shoe size' %}
+                {% assign option_name = option_size %}
+              {% endif %}
+
+              {% assign option_color_length = 0 %}
+              {% if option_name == option_color %}
+                {% assign option_color_length = option.values.size %}
+              {% endif %}
+              <div
+                class="{% if product.gift_card? %}detail__sidebar__sizes {% endif %}detail__sidebar__{{- option_name -}}s option_index{% if option_color_length == 1 and option_name == option_color %} hidden{% endif %}{% if template contains "fragrances" %} hidden{% endif %}"
+                data-option="option{{ forloop.index }}"
+              >
+                <div
+                  class="{{- option_name -}}-select"
+                  {% if option_name == option_size %}
+                    data-recommended="{{ option.values[2] }}"
+                  {% endif %}
+                >
+                  <select
+                    class="{{- option_name -}}-select__select"
+                    name="{{- option_name -}}"
+                    aria-label="Select {{- option_name -}}"
+                  >
+                    {%- for value in option.values -%}
+                      <option value="{{- value -}}">{{- value -}}</option>
+                    {%- endfor -%}
+                  </select>
+
+                  {% comment %}
+                  <div class="{{- option_name -}}-select__options">
+                    {%- for value in option.values -%}
+                      {% if option_name == option_color %}
+                        {% assign color_swatch_style = null %}
+                        {%- assign swatch = value.swatch -%}
+                        {%- assign color_value_downcase = value | downcase -%}
+                        {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ';' -%}
+                        {%- for color_swatch_item in color_swatch_config -%}
+                          {%- assign color_swatch_parts = color_swatch_item | split: ':' -%}
+                          {%- assign color_swatch_name = color_swatch_parts.first | downcase | strip -%}
+                          {%- if color_value_downcase == color_swatch_name -%}
+                            {%- assign color_swatch_value = color_swatch_parts.last | strip -%}
+                            {%- if color_swatch_value contains '#' -%}
+                              {%- assign color_swatch_style = 'background-color: '
+                                | append: color_swatch_value
+                                | append: ';'
+                              -%}
+                            {%- elsif swatch.color != blank -%}
+                              {%- assign color_swatch_style = 'background-color: '
+                                | append: swatch.color
+                                | append: ')'
+                              -%}
+                            {%- elsif images[color_swatch_value] != blank -%}
+                              {%- assign color_swatch_image = images[color_swatch_value] | img_url: '72x72' -%}
+                              {%- assign color_swatch_style = 'background-image: url('
+                                | append: color_swatch_image
+                                | append: ')'
+                                | append: ';'
+                              -%}
+                            {%- endif -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {% endif %}
+
+                      <div
+                        class="option{% unless value.variant.available %} option--out-of-stock{% endunless %}"
+                        data-value="{{- value -}}"
+                        {% if option_name == option_color %}
+                          style="{{ color_swatch_style }}"
+                        {% endif %}
+                      >
+                        {%- unless option_name == option_color -%}
+                          <small>{{- value -}}</small>
+                        {%- endunless -%}
+                      </div>
+                    {%- endfor -%}
+                    {%- if option_name == option_size -%}<div class="successfully_ATC"></div>{%- endif -%}
+                  </div>
+                  {% endcomment %}
+
+                  <div class="pro-custom-select" data-custom-select-option="{{ option_name }}" data-pro-custom-select>
+                    <button class="pro-custom-select-button ff" data-pro-custom-select-btn>
+                      <span class="s-text">Please select a size</span>
+                      <span class="s-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="13" viewBox="0 0 6 13" fill="none">
+                        <path d="M0.177734 0.479492L4.79655 6.866L0.177734 12.7963" stroke="#939393" stroke-width="0.461881"/>
+                        </svg>
+                      </span>
+                    </button>
+                    <ul class="pro-custom-select-list lenis" data-pro-custom-select-list>
+                      {% comment %} <li class="pro-custom-select-list-item disabled">Please select a size</li> {% endcomment %}
+                      {%- for value in option.values -%}
+                      <li class="pro-custom-select-list-item c-option{%- unless value.available %} c-option--out-of-stock{% endunless %}" data-value="{{- value -}}" data-pro-custom-select-list-item>
+                        <span class="opt-value"><b>{{- option.name }} {{ value -}}</b>{% if value.variant.inventory_quantity <= 5 and value.variant.inventory_quantity > 0 %} - only {{ value.variant.inventory_quantity }} left{% endif %}</span>
+                        {%- unless value.available -%}<span class="opt-oos"> - out of stock <a class="button klaviyo-bis-trigger" href="#" data-klaviyo-handle="{{ product.handle }}">notify me when available</a></span>{%- endunless -%}
+                      </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+
+                  {% if product.gift_card? %} 
+                    <span class="select-value-alert hidden">SELECT VALUE</span>
+                  {% endif %}
+                  {%- if option_name == option_size -%}
+                    <button class="btn btn--outline hidden"><small>RECOMMENDED SIZE</small></button>
+                  {%- endif -%}
+                </div>
+                {%- if option_name == option_color -%}
+                  <div class="detail__sidebar__colors__price hidden">
+                    <h4>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</h4>
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+    {%comment %}    {%- endif -%} {%endcomment %}
+
+        {% form 'product', product, id: product_form_id, class: 'form shopify-product-form product_page_atc_form', data-handle: product.handle %}
+          <select
+            name="id"
+            style="display:none !important"
+            class="product_option_selection"
+            id="products-{{ product.id }}"
+          >
+            {%- for variant in product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                {% comment %}{% if product.selected_or_first_available_variant.id == variant.id %} selected="selected"{% endif %}{% endcomment %}
+              >
+                {{- variant.title -}}
+              </option>
+            {% endfor %}
+          </select>
+          <script type="application/json">
+            {{ product | json }}
+          </script>
+
+          
+
+          <input
+            type="hidden"
+            name="quantity"
+            value="1"
+          >
+
+          <div class="accordion_with_atc_buttons">
+            {%- assign haveSize = false -%}
+            {% for opt in product.options %}
+              {% assign optName = opt | downcase %}
+              {% if optName == "size" or optName == "shoe size" %}
+                {% assign haveSize = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+            {% if template contains 'fragrances' %}
+              {%- assign haveSize = false -%}
+            {% endif %}
+
+            <div class="detail__sidebar__ctas{% if haveSize %} have-sizes{% endif %}">
+              <div class="detail__sidebar__ctas-inner">
+                {% if haveSize %}
+                <a href="{{ product.url }}" class="btn btn--outline addtocart_form_submit-temp">Add to bag</a>
+                {%endif %}
+                <a
+                  href="{{ product.url }}"
+                  class="btn btn--dark addtocart_form_submit{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}"
+                >
+                  {% if product.selected_or_first_available_variant.available %}
+                    {{ 'products.product.add_to_cart' | t }}
+                  {% else %}
+                    {{ 'products.product.sold_out' | t }}
+                  {% endif %}
+                </a>
+              </div>
+              {% if product.available %}
+                {{ form | payment_button }}
+              {% endif %}
+              {% if product.metafields.custom.buy_the_look != blank %}
+                <a href="#buy_full_look" class="btn btn--dark scroll-to-section">Buy Full Look</a>
+              {% endif %}
+            </div>
+
+            {% if section.settings.shipping_text != blank %}
+            <div class="pro_shipping-payment_text">
+            <div class="pro-shipping_text">{{ section.settings.shipping_text }}</div>
+            <div class="pro-payments_wrapper">
+              <div class="pro-payments_item pro-payments_klarna">3 payments of £{{ product.price | divided_by: 3 | round | divided_by: 100.0 }} at 0% interest with 
+                <span>{% render 'icon-klarna' %}</span>
+              </div>
+              <div class="pro-payments_item pro-payments_clearpay">or 4 payments of £{{ product.price | divided_by: 4 | round | divided_by: 100.0 }} with 
+                <span>{% render 'icon-clearpay' %}</span>
+              </div>
+            </div>
+            </div>
+            {% endif %}
+            {%  render 'product-tabs' %}
+            {% comment %}
+            <div class="accordion__list">
+              {% assign show_collapsible_content = true %}
+              {%- for i in (1..5) -%}
+                {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+                {% assign title = product.metafields.custom[key].value %}
+                {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+                {% assign content_accordion = product.metafields.custom[content_key] %}
+                {%- if title != blank and content_accordion != blank -%}
+                  {% assign show_collapsible_content = false %}
+                  <details class="accordion">
+                    <summary class="accordion__head">
+                      <h5>
+                        {% if title != blank %}
+                          {{ title | replace: "Garment", "Product" }}
+                        {% endif %}
+                      </h5>
+                    </summary>
+
+                    <div class="accordion__body">
+                      <div class="accordion__body__inner">
+                        {% if content_accordion != blank %}
+                          {{ content_accordion | metafield_tag }}
+                          {% if i == 3 -%}
+                            {%- capture rankData -%}
+                            {%- for n in (1..4) -%}
+                              {%- assign labelKey = 'label_' | append: forloop.index -%}
+                              {%- assign labelKeyVal = 'label_' | append: forloop.index | append: '_rank' -%}
+                              {%- assign labelVal = product.metafields.custom[labelKey].value -%}
+                              {%- assign labelRankVal = product.metafields.custom[labelKeyVal].value | plus: 0 -%}
+                              {%- if labelVal != blank and labelRankVal != blank -%}
+                              <div class="accordion__body-label-item">
+                                <span class="rank-label">{{ labelVal }}</span>
+                                {%- render 'icon-rank', rank: labelRankVal -%}
+                              </div>
+                              {%- endif -%}
+                            {%- endfor -%}
+                            {%- endcapture -%}
+                            {%- if rankData != blank -%}<div class="accordion__body-label-list">{{ rankData }}</div>{%- endif -%}
+                          {% endif %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </details>
+                {%- endif -%}
+              {%- endfor -%}
+              {% if settings.sr_head != blank and settings.sr_content != blank %}
+              <details class="accordion">
+                <summary class="accordion__head">
+                  <h5 class="medium">{{ settings.sr_head }}</h5>
+                </summary>
+                <div class="accordion__body">
+                  <div class="accordion__body__inner">{{ settings.sr_content }}</div>
+                </div>
+              </details>
+              {% endif %}
+            <details class="accordion">
+              <summary class="accordion__head">
+                <h5 class="medium">Reviews</h5>
+              </summary>
+              <div class="accordion__body">
+                <div class="accordion__body__inner">
+                  <div class="trustpilot_app_div">
+                      <!-- TrustBox widget - Mini -->
+                        <div class="trustpilot-widget" data-locale="en-GB" data-template-id="53aa8807dec7e10d38f59f32" data-businessunit-id="6863d52829d0eb9d7940e024" data-style-height="150px" data-style-width="100%">
+                          <a href="https://uk.trustpilot.com/review/marame.com" target="_blank" rel="noopener">Trustpilot</a>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+            </div> 
+          {% endcomment %}
+          </div>
+          {% comment %} <a class="button klaviyo-bis-trigger" href="#" style="text-align: center; margin: 0px; width: auto; display: inline;" data-klaviyo-handle="{{ product.handle }}">OUT OF STOCK - NOTIFY ME</a> {% endcomment %}
+
+          {% comment %} <div
+            class="klaviyo-product-container"
+            id="klaviyo-data-handle-{{ product.handle }}"
+            data-klaviyo-handle="{{ product.handle }}"
+          >
+            <div class="klaviyo-button-container product-grid-btn">
+            </div>
+          </div> {% endcomment %}
+        {% endform %}
+
+      </div>
+    </div>
+  </div>
+  {% render 'size-guide-modal', product: product, section: section %}
+</section>
+
+
+
+{% comment %}
+  <section class="detail">
+    <div class="detail__breadcrumb">
+       {% if collection.url %}
+        <small>
+          {{ collection.title | link_to: collection.url }}
+        </small>
+        <small> / </small>
+      {% endif %}
+      <small>
+        <a href="{{ product.url | within: collection }}" aria-current="page">{{ product.title }}</a>
+      </small>
+    </div>
+    <div class="row">
+      <div class="detail__gallery detail-slider col--6 col--md--8 col--lg--6">
+        <ul class="swiper-wrapper">
+         {% for image in product.images %}
+            <li class="swiper-slide">
+              <div class="detail__gallery__img">
+                <img src="{{ image.src | img_url: 'master' }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}" />
+              </div>
+            </li>
+          {% endfor %}
+          {% if product.media.size > 0 %}
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'video' -%}
+                {%- for source in media.sources -%}
+                  {%- if source.format == 'mp4' -%}
+                    {%- assign video_url = source.url -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <li class="swiper-slide">
+                  <div class="detail__gallery__video">
+                    <button class="video__inner" aria-label="Video modal opener" data-video-src="{{ video_url }}">
+                      <div class="video__inner__poster">
+                        <img src="{{ media.preview_image | img_url: 'master' }}" alt="{{ media.alt | escape }}" />
+                      </div>
+                      <div class="video__inner__btn">
+                        <p class="medium">Watch</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="5" height="6" viewBox="0 0 5 6" fill="none">
+                          <path d="M5 3.00003L0 5.88678L2.52368e-07 0.113281L5 3.00003Z" fill="#E6E0D4" />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          {% endif %}
+        </ul>
+        <div class="swiper-pagination"></div>
+      </div>
+        <div class="detail__sidebar col--6 col--md--8 col--lg--6">
+            <div class="detail__sidebar__content">
+                <div class="detail__sidebar__intro">
+                    <h2>{{ product.title }}</h2>
+                    <p class="text--body medium">{{ product.selected_or_first_available_variant.price | money }}</p>
+                </div>
+                <hr />
+                <select id="product-variants-select" name="id" class="variant-select" style="display: none;">
+                  {%- for variant in product.variants -%}
+                    <option {% if product.selected_or_first_available_variant.id == variant.id %}selected="selected"{% endif %} data-price="{{ variant.price | money }}" data-val="{{ variant.title }}" data-variant-available="{{ variant.available }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+                  {%- endfor -%}
+                </select>
+                {%- unless product.has_only_default_variant -%}
+                  {% for option in product.options_with_values %}
+                    {% if option.name == 'Color' %}
+                      <div class="detail__sidebar__colors" data-product-option-index="{{ option.position }}">
+                        <div class="detail__sidebar__colors__text">
+                            <strong>Colour:</strong>
+                            <p class="detail__sidebar__colors__text__label">{{ option.selected_value }}</p>
+                        </div>
+                        <div class="detail__sidebar__colors__images">
+                            {%- for value in option.values -%}
+                              {% liquid
+                                assign option_disabled = true
+                                if value.available
+                                  assign option_disabled = false
+                                endif
+                              %}
+                              <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}" name="{{ option.name }}-{{ option.position }}" value="{{ value | escape }}" form="{{ product_form_id }}"
+                                {% if value.selected %}
+                                  checked
+                                {% endif %}
+                                {% if option_disabled %}
+                                  class="disabled"
+                                {% endif %}
+                              >
+                              <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}" class="detail__sidebar__colors__images__item" data-color="{{ value }}">
+                                {% assign variant_image = product.images | where: 'alt', value | first | image_url %}
+                                {% if variant_image != blank %}
+                                  <img src="{{ product.images | where: 'alt', value | first | image_url }}" alt="{{ value }}" />
+                                {% else %}
+                                  {{ value }}
+                                {% endif %}
+                              </label>
+                            {%- endfor -%}
+                            <span class="detail__sidebar__colors__images__selection"></span>
+                        </div>
+                      </div>
+                    {% else %}
+                      <div class="purchase-cta" data-product-option-index="{{ option.position }}">
+                        <div class="purchase-cta__text">
+                          <strong>{{ option.name }}:&nbsp;</strong>
+                          {%- if option.name == 'Size' -%}
+                            {%- assign recommended_size = '' -%}
+                            {%- for tag in product.tags -%}
+                              {%- if tag contains 'Tops' or tag contains 'Jackets' or tag contains 'Knitwear' or tag contains 'Hoodies' -%}
+                                  {%- assign recommended_size = customer.metafields.custom.size_tops -%}
+                              {%- elsif tag contains 'Bottoms' or tag contains 'Joggers' or tag contains 'Shorts' -%}
+                                  {%- assign recommended_size = customer.metafields.custom.size_bottoms -%}
+                              {%- elsif tag contains 'Shoes' -%}
+                                  {%- assign recommended_size = customer.metafields.custom.size_shoes -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+
+                            {%- if recommended_size != blank -%}
+                              <p>Your recommended size is <span class="recommended-size medium" data-recommended-size="{{ recommended_size }}">{{ recommended_size | capitalize }}</span></p>
+                            {%- else -%}
+                              <p class="selected-option">{{ option.selected_value }}</p>
+                            {%- endif -%}
+                          {%- else -%}
+                            <p class="selected-option">{{ option.selected_value }}</p>
+                          {%- endif -%}
+
+                          {%- if option.name == 'Size' -%}
+                            <a href="#" class="btn btn--underline"><p>Size Guide</p></a>
+                          {%- endif -%}
+                        </div>
+
+                        {%- assign selected_size = recommended_size | default: option.selected_value | capitalize -%}
+                        <select name="{{ option.name }}" class="c-select" id="select-option">
+                          {%- for value in option.values -%}
+                            <option {% if selected_size == value %}selected{% endif %} value="{{ value }}">{{ value }}</option>
+                          {%- endfor -%}
+                        </select>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {%- endunless -%}
+                {% render 'buy-buttons', product: product, product_form_id: product_form_id %}
+
+              <div class="accordion__list">
+                {% assign show_collapsible_content = true %}
+                {%- for i in (1..5) -%}
+                  {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+                  {% assign title = product.metafields.custom[key].value %}
+                  {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+                  {% assign content_accordion = product.metafields.custom[content_key] %}
+                  {%- if title != blank and content_accordion != blank -%}
+                    {% assign show_collapsible_content = false %}
+                    <details class="accordion">
+                      <summary class="accordion__head">
+                        <p class="medium">
+                          {% if title != blank %}
+                            {{ title }}
+                          {% endif %}
+                        </p>
+                      </summary>
+
+                      <div class="accordion__body">
+                        <div class="accordion__body__inner">
+                          {% if content_accordion != blank %}
+                            {{ content_accordion | metafield_tag }}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </details>
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when 'collapsible_content' -%}
+                    {% if block.settings.collapsible_title != blank and show_collapsible_content %}
+                      {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+                      {% assign title = product.metafields.custom[key].value %}
+                        <details class="accordion">
+                          <summary class="accordion__head">
+                            <p class="medium">
+                              {% if title != blank %}
+                                {{ title }}
+                              {% else %}
+                                {{ block.settings.collapsible_title | escape }}
+                              {% endif %}
+                            </p>
+                          </summary>
+
+                          <div class="accordion__body">
+                            <div class="accordion__body__inner">
+                              {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+                              {% assign content_accordion = product.metafields.custom[content_key].value %}
+                              {% if content_accordion != blank %}
+                                {{ content_accordion }}
+                              {% else %}
+                                {{ block.settings.collapsible_content }}
+                              {% endif %}
+                            </div>
+                          </div>
+                        </details>
+                      {% endif %}
+                  {%- endcase -%}
+                {%- endfor -%}
+              </div>
+              {%- if product.description != blank -%}
+                <div class="detail__sidebar__model-size text--body" {{ block.shopify_attributes }}>
+                  {{ product.description }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="detail__sidebar__sticky">
+                <div class="detail__sidebar__sticky__cta">
+                    <div class="detail__sidebar__sticky__cta__content">
+                        <h4>{{ product.title }}</h4>
+                        <div>
+                          <strong>{{ product.selected_or_first_available_variant.price | money }}</strong>
+                          <p>{{ product.selected_or_first_available_variant.title }}</p>
+                        </div>
+                    </div>
+                    {% render 'buy-buttons' %}
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Product details",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "international_sizechart_image",
+      "label": "International Sizechart Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "international_sizechart_mobile_image",
+      "label": "International Sizechart Image For Mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_slider",
+      "label": "Add Slider",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Shiping Info"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "Free next day UK delivery if ordered before 3pm, Mon-Fri"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_title",
+      "name": "Product title",
+      "limit": 1
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_dynamic_checkout",
+        "default": true,
+        "label": "Show dynamic checkout buttons",
+        "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+      }
+    ]
+    },
+    {
+      "type": "collapsible_content",
+      "name": "Collapsible content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collapsible_title",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "collapsible_content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title",
+          "default": "Overview"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_content",
+          "label": "Tab Content (Fallback if no metafield)",
+          "default": "<p>Write your content here...</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_trustpilot",
+          "label": "Enable Trustpilot Widget",
+          "default": false
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,88 @@
+<section class="splitscreen splitscreen--hero">
+    <h1 class="sr-only">Marame Home</h1>
+  {% for block in section.blocks %}
+    {% if block.settings.image != blank %}
+      <div class="splitscreen__item">
+        <a href="{{ block.settings.button_link | default: 'javascript:void(0)' }}" class="splitscreen__item__bg">
+          <img
+            src="{{ block.settings.image | image_url:width:'3000px' }}"
+            alt="{{ block.settings.image.alt }}"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            loading="eager" fetchpriority="high"
+            data-p-speed="0.15"
+          >
+          <span class="sr-only">
+            {{ block.settings.button_label }}
+          </span>
+        </a>
+        {% if block.settings.button_label != blank %}
+          <div class="splitscreen__item__content">
+            <div class="splitscreen__item__content__ctas">
+              <a href="{{ block.settings.button_link | default: 'javascript:void(0)' }}" class="btn btn--underline">
+                <span class="sr-only-explore" style="color: {{ section.settings.text_color }};">
+                  {% comment %} Explore {% endcomment %}
+                  {{ block.settings.button_explore }}
+                </span>
+                <h4 style="color: {{ section.settings.text_color }};">
+                  {{ block.settings.button_label }}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="13" viewBox="0 0 8 13" fill="none">
+                    <path d="M1 1L7 6.5L1 12" stroke="{{ section.settings.text_color }}"/>
+                  </svg>
+                </h4>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</section>
+
+{% schema %}
+{
+  "name": "Home splitscreen ",
+  "class": "home-splitscreen",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2a2a2d"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image"
+        },
+        {
+          "type": "text",
+          "label": "Button Explore",
+          "id": "button_explore"
+        },
+        {
+          "type": "text",
+          "label": "Button label",
+          "id": "button_label"
+        },
+        {
+          "type": "url",
+          "label": "Button link",
+          "id": "button_link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home splitscreen "
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,185 @@
+{% if section.settings.product != blank %}
+  {% assign product = section.settings.product %}
+  {% if product.metafields.custom.buy_the_look != blank %}
+    {% assign btl_products_length = 0 %}
+    {% assign btl_products = product.metafields.custom.buy_the_look.value %}
+    {% for btl_product in btl_products %}
+      {% assign btl_products_length = btl_products_length | plus: 1 %}
+    {% endfor %}
+    
+    <section class="buy-the-look" id="buy_full_look">
+      {% if section.settings.heading != blank %}
+        <h3 class="h4">{{ section.settings.heading }}</h3>
+      {% endif %}
+      <div class="buy-the-look__content{% if btl_products_length > 3 %} buy-the-look__content--vertical{% endif %}">
+          <div class="buy-the-look__content__details">
+          {% for btl_product in btl_products %}
+              {% assign size_option = 'size' %}
+              {% assign size_option_available = false %}
+              {%- for option in btl_product.options_with_values -%}
+                {% assign option_name = option.name | downcase %}
+                {% if option_name == "shoe size" %}
+                  {% assign size_option = 'shoe size' %}
+                {% endif %}
+                {% if option_name == size_option %}
+                  {% assign size_option_available = true %}
+                {% endif %}
+              {%- endfor -%}
+            
+              {% unless btl_product.available %}
+                {% assign size_option_available = false %}
+              {% endunless %}
+            
+            <div class="buy-the-look__content__details__item product--grid--main" data_product_ID="{{ btl_product.id }}">
+              <div class="buy-the-look__content__details__item__img cursor_pointer">
+                <div class="buy-the-look__content__details__item__img__slider">
+                  <div class="swiper-wrapper">
+                    {%- for media in btl_product.media -%}
+                      {%- case media.media_type -%}
+                        {%- when 'image' -%}
+                          <div class="swiper-slide" media_ID="{{ media.id }}" data_alt="{{ media.alt | escape }}">
+                            <img onclick="location.href='{{ btl_product.url }}'"
+                              src="{{ media.src | img_url: 'master' }}"
+                              width="{{ media.width }}"
+                              height="{{ media.height }}"
+                              alt="{{ media.alt | escape }}"
+                              loading="lazy"
+                            >
+                          </div>
+                      {%- endcase -%}
+                    {%- endfor -%}
+                  </div>
+                  <div class="swiper-button-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+                      <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+                    </svg>
+                  </div>
+                  <div class="swiper-button-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+                      <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+                    </svg>
+                  </div>
+                </div>
+                {% render 'wishlist-app-links', linkType: 'list-product', product: btl_product  %}
+                {% for tag in btl_product.tags %}
+                  {% if tag contains "badge_" %}
+                  <div class="product-card__badge pc-{{ tag | handle }}">{{ tag | remove: "badge_" | capitalize }}</div>
+                  {% break %}
+                  {% endif %}
+                {% endfor %}
+
+              </div>
+              <div class="buy-the-look__content__details__item__content">
+                <div class="buy-the-look__content__details__item__content__infos">
+                    <a href="{{ btl_product.url }}" class="buy-the-look__content__details__item__content__infos__deets">
+                      <h5 class="desc">{{ btl_product.title }}</h5>
+                      <p class="price">{{ btl_product.price | money }}</p>
+                    </a>
+                    <button class="buy-the-look__content__details__item__content__infos__add option_control"></button>
+                </div>
+              
+                <div class="buy-the-look__content__details__item__content__add-to-cart">
+                  <div class="buy-the-look__content__details__item__content__add-to-cart__colors">
+                    {% render "metafield-products", card_product: btl_product, query_para: '?view=for-buy-the-look-metafield-color' %}
+                  </div>
+                  
+                  <div class="buy-the-look__content__details__item__content__add-to-cart__cta">
+                      <div class="buy-the-look__content__details__item__content__add-to-cart__cta__sizes">
+                        <div class="size-select" data-recommended="10">
+                          <select class="size-select__select" name="size" aria-label="Select size">
+                          <option value="6">6</option>
+                          <option value="8">8</option>
+                          <option value="10" selected>10</option>
+                          <option value="12">12</option>
+                          <option value="14" disabled>14</option>
+                          <option value="16" disabled>16</option>
+                          </select>
+                          <div class="size-select__options{% unless btl_product.available %} product_not_available hidden{% endunless %}">
+                            {% render 'grid-option-size', card_product: btl_product %}
+                          </div>
+                        </div>
+                        <p class="price">{{ btl_product.price | money }}</p>
+                        {% unless btl_products_length > 3 %}
+                      <div class="successfully_ATC"></div>
+                    {% endunless %}
+                    {% if btl_products_length > 3 %}
+                        <div class="successfully_ATC normal"></div>
+                      {% endif %}
+                      </div>
+                         
+                      <div class="accordion__list">
+                        {%- for i in (1..5) -%}
+                          {% assign key = 'accordion_' | append: forloop.index | append: '_title' %}
+                          {% assign title = btl_product.metafields.custom[key].value %}
+                          {% assign content_key = 'accordion_' | append: forloop.index | append: '_content' %}
+                          {% assign content_accordion = btl_product.metafields.custom[content_key] %}
+                          {%- if title != blank and content_accordion != blank -%}
+                            {% if title != blank %}
+                              <details class="accordion">
+                                <summary class="accordion__head">
+                                  <h5>{{ title }}</h5>
+                                </summary>
+                                <div class="accordion__body">
+                                  <div class="accordion__body__inner">{{ content_accordion | metafield_tag }}</div>
+                                </div>
+                              </details>
+                            {% endif %}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                      <a href="#" class="btn btn--dark atc_JS{% unless btl_product.available %} button_disabled{% endunless %}" disabled>{% if size_option_available or btl_product.available %}ADD TO CART{% else %}OUT OF STOCK - NOTIFY ME{% endif %}</a>
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+          {% endfor %}
+        </div>
+        <div class="buy-the-look__content__full">
+          {% if product.metafields.custom.buy_the_look_image != blank %}
+            <img
+              loading="lazy"
+              src="{{ product.metafields.custom.buy_the_look_image | img_url: "master" }}"
+              alt="{{ product.featured_image.alt }}"
+              width="{{ product.featured_image.width }}"
+              height="{{ product.featured_image.height }}"
+            >
+          {% else %}
+            <img
+              loading="lazy"
+              src="{{ product.featured_image | img_url: "master" }}"
+              alt="{{ product.featured_image.alt }}"
+              width="{{ product.featured_image.width }}"
+              height="{{ product.featured_image.height }}"
+            >
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endif %}
+{% schema %}
+{
+  "name": "Buy the look Index",
+  "class": "buy_the_look",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Buy the look Index"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{%- comment -%}
+  Optional fixed heights for a signup block (0 = keep default aspect ratio / auto).
+  @param scope_id {String} CSS scope, e.g. #msp-hero-12345
+  @param target_selector {String} e.g. .msp-hero__image-wrap
+  @param height_mobile {Number}
+  @param height_desktop {Number}
+  @param use_min_height {Boolean} use min-height instead of height (e.g. intro text block)
+{%- endcomment -%}
+{%- liquid
+  assign height_prop = 'height'
+  assign min_prop = 'min-height'
+  if use_min_height
+    assign height_prop = 'min-height'
+    assign min_prop = 'min-height'
+  endif
+-%}
+{%- if height_mobile > 0 -%}
+  {{ scope_id }} {{ target_selector }} {
+    aspect-ratio: auto !important;
+    {{ height_prop }}: {{ height_mobile }}px;
+    {{ min_prop }}: {{ height_mobile }}px;
+  }
+{%- endif -%}
+{%- if height_desktop > 0 -%}
+  @media screen and (min-width: 990px) {
+    {{ scope_id }} {{ target_selector }} {
+      aspect-ratio: auto !important;
+      {{ height_prop }}: {{ height_desktop }}px;
+      {{ min_prop }}: {{ height_desktop }}px;
+    }
+  }
+{%- endif -%}

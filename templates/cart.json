@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart-items": {
+      "type": "main-cart-items",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "shipping_text": "",
+        "cart_checkbox_text": "We add a subtle touch of our IFRA compliant signature scent to our packages to enhance the unboxing experience. If you'd prefer your parcel to be unscented, simply untick this box.",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "cart-footer": {
+      "type": "main-cart-footer",
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 20,
+        "padding_bottom": 40
+      }
+    },
+    "cart-you-might-like": {
+      "type": "cart-you-might-like",
+      "disabled": true,
+      "settings": {
+        "heading": "YOU MIGHT ALSO LIKE",
+        "men_collection": "mens",
+        "women_collection": "womens",
+        "show_variant_count": false
+      }
+    }
+  },
+  "order": [
+    "cart-items",
+    "cart-footer",
+    "cart-you-might-like"
+  ]
+}

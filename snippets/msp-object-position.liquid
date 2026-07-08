@@ -1,0 +1,14 @@
+{%- comment -%}
+  Resolves object-position for an image block.
+  @param image {Image}
+  @param use_manual_focal {Boolean}
+  @param focal_x {Number}
+  @param focal_y {Number}
+{%- endcomment -%}
+{%- if use_manual_focal -%}
+  {{- focal_x | default: 50 }}% {{ focal_y | default: 50 }}%
+{%- elsif image != blank and image.presentation.focal_point != blank -%}
+  {{- image.presentation.focal_point -}}
+{%- else -%}
+  center center
+{%- endif -%}

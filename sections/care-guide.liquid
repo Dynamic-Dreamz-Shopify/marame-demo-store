@@ -1,0 +1,91 @@
+{% if section.settings.collection_list != blank %}
+  {% assign collection_list = section.settings.collection_list %}
+  <div class="generic-hero">
+    {% if section.settings.heading != blank %}
+      <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+  </div>
+
+  <div class="care-guide">
+    {% if section.settings.information != blank %}
+      <h5>{{ section.settings.information }}</h5>
+    {% endif %}
+    
+    <div class="care-guide__selects">
+      <div class="care-guide__select">
+        <label><p class="bold">Gender</p></label>
+        <div class="care-guide__select__field">
+          <select name="gender">
+            <option value="menswear" data_value="mens" selected>Menswear</option>
+            <option value="womenswear" data_value="womens">Womenswear</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="care-guide__select">
+        <label><p class="bold">Category</p></label>
+        <div class="care-guide__select__field">
+          {% capture categoryData %}
+          {% for collection in collection_list %}
+            <option collection_ID="{{ collection.id }}" value="{{ collection.handle }}" data_gender="{{ collection.handle | split: "-" | first }}" {% if forloop.first %}selected{% endif %}>
+              {{- collection.title -}}
+            </option>
+          {% endfor %}
+          {% endcapture %}
+          <select name="category">{{ categoryData }}</select>
+          <div class="hidden" data-name="category">{{ categoryData }}</div>
+        </div>
+      </div>
+
+      <div class="care-guide__select hidden">
+        <label><p class="bold">Sub Category</p></label>
+        <div class="care-guide__select__field">
+          {% capture subCategoryData %}
+          {% for collection in collection_list %}
+            {% for tag in collection.all_tags %}
+              <option collection_ID="{{ collection.id }}" value="{{ tag | handle }}">{{ tag }}</option>
+            {% endfor %}
+          {% endfor %}
+          {% endcapture %}
+          <select name="sub-category">{{ subCategoryData }}</select>
+          <div class="hidden" data-name="sub-category">{{ subCategoryData }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="products-list"></div>
+    <div class="product-details"></div>
+    
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Care guide",
+  "class": "care-guide-section",
+  "tag": "section",
+  "settings": [
+    {
+     "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "CARE GUIDE"
+    },
+    {
+      "type": "liquid",
+      "id": "information",
+      "label": "Information",
+      "default": "Our products are thoughtfully crafted from premium materials and designed for longevity. To preserve their quality, please follow the care instructions carefully. "
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collection list"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Care guide"
+    }
+  ]
+}
+{% endschema %}

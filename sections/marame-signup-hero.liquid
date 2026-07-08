@@ -1,0 +1,201 @@
+{% render 'msp-assets' %}
+
+{%- assign blend_mode = section.settings.hero_overlay_blend_mode | default: 'lighten' -%}
+
+{%- capture msp_hero_scope -%}#msp-hero-{{ section.id }}{%- endcapture -%}
+{% style %}
+  {% render 'msp-block-height-style',
+    scope_id: msp_hero_scope,
+    target_selector: '.msp-hero__image-wrap',
+    height_mobile: section.settings.block_height_mobile,
+    height_desktop: section.settings.block_height_desktop
+  %}
+{% endstyle %}
+
+<section
+  id="msp-hero-{{ section.id }}"
+  class="msp msp-section msp-section--hero{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: 'signup_hero', zone_label: 'Hero' %}
+>
+  <header class="msp-hero{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}">
+    <div class="msp-hero__image-wrap">
+      <div class="msp-hero__image msp-hero__image--mobile">
+        {% render 'msp-image',
+          image: section.settings.hero_image_mobile,
+          fallback_asset: 'marame-signup-hero-mobile.png',
+          alt: section.settings.hero_image_alt_mobile
+        %}
+      </div>
+      <div class="msp-hero__image msp-hero__image--desktop">
+        {% render 'msp-image',
+          image: section.settings.hero_image_desktop,
+          fallback_asset: 'marame-signup-hero-desktop.png',
+          alt: section.settings.hero_image_alt_desktop
+        %}
+      </div>
+      {%- liquid
+        assign hero_vid_mobile = section.settings.hero_video_mobile
+        if hero_vid_mobile == blank
+          assign hero_vid_mobile = section.settings.hero_video_desktop
+        endif
+      -%}
+      <div class="msp-hero__video-wrap msp-hero__video-wrap--{{ blend_mode }}">
+        {%- if hero_vid_mobile != blank -%}
+          {{
+            hero_vid_mobile
+            | video_tag:
+              class: 'msp-hero__video msp-hero__video--mobile',
+              autoplay: true,
+              loop: true,
+              muted: true,
+              playsinline: true,
+              controls: false,
+              preload: 'metadata'
+          }}
+        {%- endif -%}
+        {%- if section.settings.hero_video_desktop != blank -%}
+          {{
+            section.settings.hero_video_desktop
+            | video_tag:
+              class: 'msp-hero__video msp-hero__video--desktop',
+              autoplay: true,
+              loop: true,
+              muted: true,
+              playsinline: true,
+              controls: false,
+              preload: 'metadata'
+          }}
+        {%- endif -%}
+        {%- if section.settings.hero_overlay_poster != blank -%}
+          {%- if hero_vid_mobile == blank -%}
+            {{
+              section.settings.hero_overlay_poster
+              | image_url: width: 800
+              | image_tag:
+                class: 'msp-hero__overlay-poster msp-hero__overlay-poster--mobile',
+                alt: '',
+                loading: 'eager'
+            }}
+          {%- endif -%}
+          {%- if section.settings.hero_video_desktop == blank -%}
+            {{
+              section.settings.hero_overlay_poster
+              | image_url: width: 1200
+              | image_tag:
+                class: 'msp-hero__overlay-poster msp-hero__overlay-poster--desktop',
+                alt: '',
+                loading: 'eager'
+            }}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </header>
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Hero",
+  "tag": "section",
+  "class": "section-marame-signup-hero",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Block height"
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "label": "Height — mobile (0 = default)",
+      "info": "Default ratio is ~390×270. Raise to make the hero taller on phones (try 300–380).",
+      "min": 0,
+      "max": 600,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_height_desktop",
+      "label": "Height — desktop (0 = default)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_desktop",
+      "label": "Hero image — desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Hero image — mobile"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt_desktop",
+      "label": "Alt — desktop",
+      "default": "Marame collection campaign"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt_mobile",
+      "label": "Alt — mobile",
+      "default": "Marame collection campaign"
+    },
+    {
+      "type": "video",
+      "id": "hero_video_desktop",
+      "label": "Overlay video — desktop"
+    },
+    {
+      "type": "video",
+      "id": "hero_video_mobile",
+      "label": "Overlay video — mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_overlay_poster",
+      "label": "Overlay static fallback (PNG)"
+    },
+    {
+      "type": "select",
+      "id": "hero_overlay_blend_mode",
+      "label": "Overlay blend mode",
+      "options": [
+        { "value": "normal", "label": "None" },
+        { "value": "lighten", "label": "Lighten" },
+        { "value": "screen", "label": "Screen" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft light" }
+      ],
+      "default": "lighten"
+    }
+  ],
+  "presets": [{ "name": "Signup — Hero" }]
+}
+{% endschema %}

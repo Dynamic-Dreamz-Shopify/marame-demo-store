@@ -1,0 +1,589 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "generic_hero_ngpRqm": {
+      "type": "generic-hero",
+      "settings": {
+        "heading": "<h2>Mens Lookbook</h2>"
+      }
+    },
+    "lookbook_inner_6bKmqC": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_Ta74Rp": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-putty-dove-half-zip-full.jpg",
+            "product": "fine-knit-half-zip-jumper",
+            "color_name": "Putty Dove",
+            "product_2": "slim-fit-lyocell-blend-t-shirt",
+            "color_name_2": "White",
+            "product_3": "classic-tapered-chinos",
+            "color_name_3": "Almond Taupe",
+            "product_4": "smart-suede-trainers",
+            "color_name_4": "Grey",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_GnxGNM": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-long-sleeve-logo-tshirt-full.jpg",
+            "product": "garrett-leight-ace-sun",
+            "color_name": "Caramel",
+            "product_2": "long-sleeve-lyocell-blend-logo-t-shirt",
+            "color_name_2": "Olive",
+            "product_3": "casual-linen-blend-trousers",
+            "color_name_3": "Woven Sand",
+            "product_4": "suede-buckled-loafers",
+            "color_name_4": "Grey",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_AiUPwQ": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-navy-half-zip-jumper-full-body.jpg",
+            "product": "fine-knit-half-zip-jumper",
+            "color_name": "Navy",
+            "product_2": "slim-fit-lyocell-blend-t-shirt",
+            "color_name_2": "White",
+            "product_3": "classic-tapered-chinos",
+            "color_name_3": "Navy",
+            "product_4": "smart-leather-trainers-white",
+            "color_name_4": "White",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_Ta74Rp",
+        "block_GnxGNM",
+        "block_AiUPwQ"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Subtle Statements",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_DfRJAg": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_z7QxYe": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-slim-leg-denim-jeans-deep-navy-rear.jpg",
+            "product": "fine-knit-half-zip-jumper",
+            "color_name": "Beige Pearl",
+            "product_2": "slim-leg-jeans",
+            "color_name_2": "Navy Wash Denim",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "garrett-leight-ace-sun",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_NbemP4": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-fine-knit-crew-neck-jumper-putty-dove-full-body.jpg",
+            "product": "fine-knit-crew-neck-jumper",
+            "color_name": "Putty Dove",
+            "product_2": "classic-tapered-chinos",
+            "color_name_2": "Almond Taupe",
+            "product_3": "leather-contrast-trainers-beige-white",
+            "color_name_3": "Beige & White",
+            "product_4": "garrett-leight-kinney-sun",
+            "color_name_4": "Matte Black",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_ApXpW8": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-merino-wool-knit-jumper-wholemeal-full.jpg",
+            "product": "italian-merino-wool-knit-jumper-mens",
+            "color_name": "Wholemeal",
+            "product_2": "classic-tapered-chinos",
+            "color_name_2": "Black",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "garrett-leight-brooks-sun",
+            "color_name_4": "Spotted Brown Shell",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_z7QxYe",
+        "block_NbemP4",
+        "block_ApXpW8"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "AROUND TOWN",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_849fYf": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_3KqUzd": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-straight-leg-denim-jeans-navy-wash-full.jpg",
+            "product": "relaxed-fit-logo-t-shirt",
+            "color_name": "Canyon Clay",
+            "product_2": "straight-leg-jeans",
+            "color_name_2": "Navy Wash Denim",
+            "product_3": "leather-contrast-trainers-beige-white",
+            "color_name_3": "Beige & White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_aTWdk4": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-relaxed-fit-logo-tshirt-olive-full.jpg",
+            "product": "long-sleeve-lyocell-blend-logo-t-shirt",
+            "color_name": "Olive",
+            "product_2": "classic-chino-shorts",
+            "color_name_2": "Ivory Stone",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_NprkzG": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-long-sleeve-lyocell-tshirt-canyon-clay-full.jpg",
+            "product": "long-sleeve-lyocell-blend-t-shirt",
+            "color_name": "Canyon Clay",
+            "product_2": "classic-tapered-chinos",
+            "color_name_2": "Black",
+            "product_3": "leather-contrast-trainers-beige-white",
+            "color_name_3": "Beige & White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_3KqUzd",
+        "block_aTWdk4",
+        "block_NprkzG"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Cool & Casual",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_DjWL8i": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_bPE9VC": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-lounge-shorts-wolf-grey-full.jpg",
+            "product": "relaxed-fit-logo-t-shirt",
+            "color_name": "White",
+            "product_2": "mid-weight-cotton-fleece-lounge-shorts",
+            "color_name_2": "Wolf Green",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_X3zQ3P": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-cotton-fleece-hoodie-black-full.jpg",
+            "product": "100-portuguese-cotton-fleece-hoodie-mens",
+            "color_name": "Black",
+            "product_2": "slim-fit-lyocell-blend-t-shirt",
+            "color_name_2": "White",
+            "product_3": "mid-weight-cotton-fleece-lounge-shorts",
+            "color_name_3": "Black",
+            "product_4": "smart-leather-trainers-white",
+            "color_name_4": "White",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_q4yLeg": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-casual-shorts-barley-green-full.jpg",
+            "product": "long-sleeve-lyocell-blend-logo-t-shirt",
+            "color_name": "White",
+            "product_2": "casual-linen-blend-shorts",
+            "color_name_2": "Barley Green",
+            "product_3": "leather-contrast-trainers-beige-white",
+            "color_name_3": "Beige & White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_bPE9VC",
+        "block_X3zQ3P",
+        "block_q4yLeg"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Slow Sundays",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_jK3JHA": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_HiQmDj": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-linen-blend-trousers-wovern-sand-full.jpg",
+            "product": "slim-fit-lyocell-blend-t-shirt",
+            "color_name": "Canyon Clay",
+            "product_2": "casual-linen-blend-trousers",
+            "color_name_2": "Woven Sand",
+            "product_3": "leather-contrast-trainers-beige-white",
+            "color_name_3": "Beige & White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_UkbFPg": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-casual-blazer-beige-full.jpg",
+            "product": "casual-blazer",
+            "color_name": "Beige Linen",
+            "product_2": "fine-knit-crew-neck-jumper",
+            "color_name_2": "Conker Brown",
+            "product_3": "classic-tapered-chinos",
+            "color_name_3": "Almond Taupe",
+            "product_4": "suede-loafers",
+            "color_name_4": "Burnt Brown",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_mYKbzD": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-merino-cotton-long-sleeve-polo-black-full.jpg",
+            "product": "merino-cotton-long-sleeve-polo",
+            "color_name": "Black",
+            "product_2": "casual-linen-blend-trousers",
+            "color_name_2": "Woven Sand",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_HiQmDj",
+        "block_UkbFPg",
+        "block_mYKbzD"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Effortless Intentions",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_mkkYMH": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_FMjiDe": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-merino-cotton-short-sleeve-polo-brown-cherry-full.jpg",
+            "product": "merino-cotton-open-collar-short-sleeve-polo",
+            "color_name": "Brown Cherry",
+            "product_2": "casual-linen-blend-trousers",
+            "color_name_2": "Woven Sand",
+            "product_3": "suede-buckled-loafers",
+            "color_name_3": "Grey",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_38e4bj": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-casual-blazer-brown-linen-full.jpg",
+            "product": "casual-blazer",
+            "color_name": "Brown Linen",
+            "product_2": "slim-fit-lyocell-blend-t-shirt",
+            "color_name_2": "White",
+            "product_3": "casual-linen-blend-trousers",
+            "color_name_3": "Woven Sand",
+            "product_4": "suede-loafers",
+            "color_name_4": "Burnt Brown",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_fYYQGx": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-linen-blend-trousers-black-full.jpg",
+            "product": "slim-fit-lyocell-blend-t-shirt",
+            "color_name": "Canyon Clay",
+            "product_2": "casual-linen-blend-trousers",
+            "color_name_2": "Black",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "cutler-and-gross-square-sunglasses-1386",
+            "color_name_4": "Honey Havana",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_FMjiDe",
+        "block_38e4bj",
+        "block_fYYQGx"
+      ],
+      "settings": {
+        "title": "UNDERSTATED HOLIDAY",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_C7j697": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_R3U6Uq": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/marame-mens-luxury-loungewear-white-tshirt-light-grey-joggers.jpg",
+            "product": "relaxed-fit-logo-t-shirt",
+            "color_name": "White",
+            "product_2": "100-portuguese-cotton-fleece-joggers-mens",
+            "color_name_2": "Ash White",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_x7rQmp": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-cotton-fleece-hoodie-wolf-grey-full-view.jpg",
+            "product": "100-portuguese-cotton-fleece-hoodie-mens",
+            "color_name": "Wolf Green",
+            "product_2": "mid-weight-cotton-fleece-lounge-shorts",
+            "color_name_2": "Wolf Green",
+            "product_3": "smart-leather-trainers-white",
+            "color_name_3": "White",
+            "product_4": "",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_dhGWLD": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-cotton-fleece-logo-hoodie-smoked-brown-full-view.jpg",
+            "product": "100-portuguese-cotton-fleece-logo-hoodie-mens",
+            "color_name": "Smoked Brown",
+            "product_2": "slim-fit-lyocell-blend-t-shirt",
+            "color_name_2": "White",
+            "product_3": "100-portuguese-cotton-fleece-joggers-mens",
+            "color_name_3": "Smoked Brown",
+            "product_4": "smart-leather-trainers-white",
+            "color_name_4": "White",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_R3U6Uq",
+        "block_x7rQmp",
+        "block_dhGWLD"
+      ],
+      "settings": {
+        "title": "LAZY LUXURY",
+        "title_position": "left"
+      }
+    },
+    "lookbook_inner_Ez3tqf": {
+      "type": "lookbook-inner",
+      "blocks": {
+        "block_77FQ6b": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/summer-dinner-outfit-mens-citrus-cable-knit-shirt.jpg",
+            "product": "cable-knit-short-sleeve-shirt",
+            "color_name": "Citrus",
+            "product_2": "casual-linen-blend-trousers",
+            "color_name_2": "Black",
+            "product_3": "suede-sandals-m",
+            "color_name_3": "Brown",
+            "product_4": "garrett-leight-sherwood-sun-black",
+            "color_name_4": "Black",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_wPJM8J": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/mens-tapered-chinos-ivory-stone-full.jpg",
+            "product": "merino-cotton-open-collar-short-sleeve-polo",
+            "color_name": "Brown Cherry",
+            "product_2": "classic-tapered-chinos",
+            "color_name_2": "Ivory Stone",
+            "product_3": "suede-sandals-m",
+            "color_name_3": "Brown",
+            "product_4": "cutler-and-gross-round-sunglasses-9378",
+            "color_name_4": "",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        },
+        "block_Cm3RHj": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/quiet-luxury-mens-outfit-navy-jumper-chino-shorts.jpg",
+            "product": "fine-knit-crew-neck-jumper",
+            "color_name": "Navy",
+            "product_2": "classic-chino-shorts",
+            "color_name_2": "Almond Taupe",
+            "product_3": "smart-suede-trainers",
+            "color_name_3": "Grey",
+            "product_4": "garrett-leight-kinney-sun",
+            "color_name_4": "Butterscotch",
+            "product_5": "",
+            "color_name_5": "",
+            "product_6": "",
+            "color_name_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_77FQ6b",
+        "block_wPJM8J",
+        "block_Cm3RHj"
+      ],
+      "name": "Lookbook Inner",
+      "settings": {
+        "title": "Coastal Ease",
+        "title_position": "left"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "generic_hero_ngpRqm",
+    "lookbook_inner_6bKmqC",
+    "lookbook_inner_DfRJAg",
+    "lookbook_inner_849fYf",
+    "lookbook_inner_DjWL8i",
+    "lookbook_inner_jK3JHA",
+    "lookbook_inner_mkkYMH",
+    "lookbook_inner_C7j697",
+    "lookbook_inner_Ez3tqf"
+  ]
+}

@@ -1,0 +1,699 @@
+{% render 'mhp-assets' %}
+
+{%- liquid
+  assign slide_count = section.blocks.size
+  assign transition = section.settings.carousel_transition | default: 'push'
+  assign interval_ms = section.settings.carousel_interval | times: 1000
+  assign line1_anim = section.settings.line1_animation | default: 'fade'
+  assign line2_anim = section.settings.line2_animation | default: 'swipe-dissolve'
+  assign page_handle = section.settings.find_out_more_page_handle | default: 'pre-access' | strip | handleize
+  assign preaccess_url = ''
+  if section.settings.find_out_more_url != blank
+    assign preaccess_url = section.settings.find_out_more_url
+  elsif section.settings.find_out_more_page != blank
+    assign preaccess_url = section.settings.find_out_more_page.url
+  elsif page_handle != blank
+    if pages[page_handle] != blank
+      assign preaccess_url = pages[page_handle].url
+    else
+      assign preaccess_url = '/pages/' | append: page_handle
+    endif
+  elsif preaccess_url == blank
+    assign preaccess_url = '/pages/pre-access'
+  endif
+  assign signup_page_handle = section.settings.signup_button_page_handle | default: 'marame-x-melissa-murrell-ss26' | strip | handleize
+  assign signup_label = section.settings.signup_button_label | default: 'Sign up for updates'
+  assign signup_url = ''
+  if section.settings.signup_button_url != blank
+    assign signup_url = section.settings.signup_button_url
+  elsif section.settings.signup_button_page != blank
+    assign signup_url = section.settings.signup_button_page.url
+  elsif signup_page_handle != blank
+    if pages[signup_page_handle] != blank
+      assign signup_url = pages[signup_page_handle].url
+    else
+      assign signup_url = '/pages/' | append: signup_page_handle
+    endif
+  endif
+-%}
+
+{%- capture mhp_hero_scope -%}#mhp-hero-{{ section.id }}{%- endcapture -%}
+{% style %}
+  {% render 'msp-block-height-style',
+    scope_id: mhp_hero_scope,
+    target_selector: '.mhp-hero__carousel',
+    height_mobile: section.settings.carousel_height_mobile,
+    height_desktop: section.settings.carousel_height_desktop
+  %}
+  {{ mhp_hero_scope }} {
+    --mhp-hero-line1-size: {{ section.settings.line1_size_mobile }}px;
+    --mhp-hero-line2-size: {{ section.settings.line2_size_mobile }}px;
+    --mhp-hero-line1-spacing: {{ section.settings.line1_letter_spacing_mobile | times: 0.01 }}em;
+    --mhp-hero-line2-spacing: {{ section.settings.line2_letter_spacing_mobile | times: 0.01 }}em;
+    --mhp-hero-line1-size-desktop: {{ section.settings.line1_size_desktop }}px;
+    --mhp-hero-line2-size-desktop: {{ section.settings.line2_size_desktop }}px;
+    --mhp-hero-line1-spacing-desktop: {{ section.settings.line1_letter_spacing_desktop | times: 0.01 }}em;
+    --mhp-hero-line2-spacing-desktop: {{ section.settings.line2_letter_spacing_desktop | times: 0.01 }}em;
+    --mhp-hero-headline-offset-y: {{ section.settings.headline_offset_y_mobile }}px;
+    --mhp-hero-headline-offset-y-desktop: {{ section.settings.headline_offset_y_desktop }}px;
+    --mhp-hero-line1-offset-y: {{ section.settings.line1_offset_y_mobile }}px;
+    --mhp-hero-line1-offset-y-desktop: {{ section.settings.line1_offset_y_desktop }}px;
+    --mhp-hero-line-gap: {{ section.settings.line_gap_mobile }}px;
+    --mhp-hero-line-gap-desktop: {{ section.settings.line_gap_desktop }}px;
+    --mhp-hero-line1-max-width: {{ section.settings.line1_max_width_mobile }}px;
+    --mhp-hero-line1-max-width-desktop: {{ section.settings.line1_max_width_desktop }}px;
+    --mhp-hero-cta-gap: {{ section.settings.cta_gap_after_headline_mobile }}px;
+    --mhp-hero-cta-gap-desktop: {{ section.settings.cta_gap_after_headline_desktop }}px;
+    --mhp-hero-cta-offset-y: {{ section.settings.cta_offset_y_mobile }}px;
+    --mhp-hero-cta-offset-y-desktop: {{ section.settings.cta_offset_y_desktop }}px;
+    --mhp-hero-cta-size: {{ section.settings.cta_font_size_mobile }}px;
+    --mhp-hero-cta-spacing: {{ section.settings.cta_letter_spacing_mobile | times: 0.01 }}em;
+    --mhp-hero-cta-radius: {{ section.settings.cta_border_radius }}px;
+    --mhp-hero-cta-bg: {{ section.settings.cta_bg_mobile }};
+    --mhp-hero-cta-color: {{ section.settings.cta_text_color_mobile }};
+    --mhp-hero-cta-border: {{ section.settings.cta_border_color }};
+    --mhp-hero-cta-bg-desktop: {{ section.settings.cta_bg_desktop }};
+    --mhp-hero-cta-color-desktop: {{ section.settings.cta_text_color_desktop }};
+  }
+  {{ mhp_hero_scope }} .mhp-hero__headline-line--1 {
+    animation-duration: {{ section.settings.line1_duration }}s;
+  }
+  {{ mhp_hero_scope }} .mhp-hero__headline-line--2 {
+    animation-delay: {{ section.settings.line2_delay }}s;
+    animation-duration: {{ section.settings.line2_duration }}s;
+  }
+{% endstyle %}
+
+<section
+  id="mhp-hero-{{ section.id }}"
+  class="mhp mhp-section mhp-section--hero"
+  data-marame-home-section
+  {% render 'msp-logo-zone-marker', zone_key: 'home_hero', zone_label: 'Hero carousel' %}
+>
+  <div
+    class="mhp-hero mhp-hero--{{ transition }}"
+    data-mhp-hero-carousel
+    data-transition="{{ transition }}"
+    data-interval="{{ interval_ms }}"
+    data-slide-count="{{ slide_count }}"
+  >
+    <div class="mhp-hero__stage">
+      <div class="mhp-hero__carousel" aria-roledescription="carousel" aria-label="Homepage hero">
+        <div class="mhp-hero__track">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'slide' -%}
+              {%- liquid
+                assign focal = block.settings.focal_point | default: 'center center'
+                assign img_mobile = block.settings.image_mobile
+                assign img_desktop = block.settings.image_desktop
+                if img_desktop == blank
+                  assign img_desktop = img_mobile
+                endif
+                if img_mobile == blank
+                  assign img_mobile = img_desktop
+                endif
+              -%}
+              <div
+                class="mhp-hero__slide{% if forloop.first %} is-active{% endif %}"
+                data-mhp-slide
+                {{ block.shopify_attributes }}
+              >
+                {%- liquid
+                  assign hero_img_loading = 'lazy'
+                  assign hero_img_priority = ''
+                  if forloop.first
+                    assign hero_img_loading = 'eager'
+                    assign hero_img_priority = 'high'
+                  endif
+                -%}
+                <div class="mhp-hero__slide-media mhp-hero__slide-media--mobile">
+                  {% render 'mhp-crop-image',
+                    image: img_mobile,
+                    alt: block.settings.image_alt,
+                    object_position: focal,
+                    sizes: '100vw',
+                    widths: '390, 750, 1100, 1440, 1920, 2560',
+                    max_width: 3840,
+                    loading: hero_img_loading,
+                    fetchpriority: hero_img_priority
+                  %}
+                </div>
+                <div class="mhp-hero__slide-media mhp-hero__slide-media--desktop">
+                  {% render 'mhp-crop-image',
+                    image: img_desktop,
+                    alt: block.settings.image_alt,
+                    object_position: focal,
+                    sizes: '100vw',
+                    widths: '390, 750, 1100, 1440, 1920, 2560',
+                    max_width: 3840,
+                    loading: hero_img_loading,
+                    fetchpriority: hero_img_priority
+                  %}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="mhp-hero__content">
+        <div
+          class="mhp-hero__headline mhp-hero__headline--{{ line1_anim }} mhp-hero__headline--line2-{{ line2_anim }}"
+          data-mhp-headline
+        >
+          {%- if section.settings.headline_line1 != blank -%}
+            <p class="mhp-hero__headline-line mhp-hero__headline-line--1">{{ section.settings.headline_line1 | escape | newline_to_br }}</p>
+          {%- endif -%}
+          {%- if section.settings.headline_line2 != blank -%}
+            <p class="mhp-hero__headline-line mhp-hero__headline-line--2">{{ section.settings.headline_line2 }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.find_out_more_label != blank or signup_label != blank -%}
+          <div class="mhp-hero__ctas">
+            {%- if section.settings.find_out_more_label != blank -%}
+              <a href="{{ preaccess_url }}" class="mhp-hero__cta"{% if preaccess_url != blank %} aria-label="{{ section.settings.find_out_more_label | escape }}"{% endif %}>
+                <span class="mhp-hero__cta-label">{{ section.settings.find_out_more_label }}</span>
+                <span class="mhp-hero__cta-icon" aria-hidden="true">
+                  <svg width="6" height="13" viewBox="0 0 6 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 6.5L1 12" stroke="currentColor" stroke-width="1"/>
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+            {%- if signup_label != blank -%}
+              <a
+                href="{{ signup_url }}"
+                class="mhp-hero__cta mhp-hero__cta--signup"
+                {% if signup_url != blank %}aria-label="{{ signup_label | strip_newlines | escape }}"{% endif %}
+              >
+                <span class="mhp-hero__cta-label">{{ signup_label | escape }}</span>
+                <span class="mhp-hero__cta-icon" aria-hidden="true">
+                  <svg width="6" height="13" viewBox="0 0 6 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 6.5L1 12" stroke="currentColor" stroke-width="1"/>
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Hero carousel",
+  "tag": "section",
+  "class": "section-marame-home-hero",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "range",
+      "id": "carousel_height_mobile",
+      "label": "Carousel height — mobile",
+      "info": "0 = default portrait ratio",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "carousel_height_desktop",
+      "label": "Carousel height — desktop",
+      "info": "0 = default landscape ratio",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "carousel_interval",
+      "label": "Seconds between slides",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "carousel_transition",
+      "label": "Slide animation",
+      "options": [
+        { "value": "push", "label": "Push" },
+        { "value": "dissolve", "label": "Dissolve" },
+        { "value": "swipe", "label": "Swipe" }
+      ],
+      "default": "push"
+    },
+    {
+      "type": "header",
+      "content": "Headline — mobile"
+    },
+    {
+      "type": "textarea",
+      "id": "headline_line1",
+      "label": "First line",
+      "default": "new collection",
+      "info": "Can wrap to two lines automatically, or press Enter for a manual line break."
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Second line",
+      "default": "coming soon"
+    },
+    {
+      "type": "range",
+      "id": "line1_size_mobile",
+      "label": "First line size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "line2_size_mobile",
+      "label": "Second line size",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "line1_letter_spacing_mobile",
+      "label": "First line letter spacing",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "line2_letter_spacing_mobile",
+      "label": "Second line letter spacing",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "line1_max_width_mobile",
+      "label": "First line max width — mobile",
+      "min": 160,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 272,
+      "info": "Narrower values wrap long text onto two lines."
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y_mobile",
+      "label": "First line shift up/down — mobile",
+      "info": "Negative moves the first line up (away from “coming soon”). Does not move the second line.",
+      "min": -48,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": -10
+    },
+    {
+      "type": "range",
+      "id": "line_gap_mobile",
+      "label": "Gap between first and second line — mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "headline_offset_y_mobile",
+      "label": "Whole headline shift — mobile",
+      "info": "Moves both lines together. Positive = down, negative = up.",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Headline — desktop"
+    },
+    {
+      "type": "range",
+      "id": "line1_size_desktop",
+      "label": "First line size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "line2_size_desktop",
+      "label": "Second line size",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "line1_letter_spacing_desktop",
+      "label": "First line letter spacing",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "line2_letter_spacing_desktop",
+      "label": "Second line letter spacing",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "line1_max_width_desktop",
+      "label": "First line max width — desktop",
+      "min": 200,
+      "max": 560,
+      "step": 4,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y_desktop",
+      "label": "First line shift up/down — desktop",
+      "min": -48,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": -8
+    },
+    {
+      "type": "range",
+      "id": "line_gap_desktop",
+      "label": "Gap between first and second line — desktop",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = same as mobile."
+    },
+    {
+      "type": "range",
+      "id": "headline_offset_y_desktop",
+      "label": "Whole headline shift — desktop",
+      "info": "Moves both lines together. Positive = down, negative = up.",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line2_delay",
+      "label": "Second line delay",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.4
+    },
+    {
+      "type": "range",
+      "id": "line1_duration",
+      "label": "First line animation duration",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.9
+    },
+    {
+      "type": "range",
+      "id": "line2_duration",
+      "label": "Second line animation duration",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "line1_animation",
+      "label": "First line animation",
+      "options": [
+        { "value": "fade", "label": "Fade in" },
+        { "value": "swipe-up", "label": "Swipe up" },
+        { "value": "dissolve", "label": "Dissolve" }
+      ],
+      "default": "fade"
+    },
+    {
+      "type": "select",
+      "id": "line2_animation",
+      "label": "Second line animation",
+      "options": [
+        { "value": "fade", "label": "Fade in" },
+        { "value": "swipe-dissolve", "label": "Swipe + dissolve" },
+        { "value": "swipe-up", "label": "Swipe up" }
+      ],
+      "default": "swipe-dissolve"
+    },
+    {
+      "type": "header",
+      "content": "Find out more button"
+    },
+    {
+      "type": "text",
+      "id": "find_out_more_label",
+      "label": "Button label",
+      "default": "Find out more"
+    },
+    {
+      "type": "text",
+      "id": "find_out_more_page_handle",
+      "label": "Pre-access page handle",
+      "default": "pre-access",
+      "info": "URL becomes /pages/[handle]. Create the page in Shopify Admin first (see steps in theme editor preview)."
+    },
+    {
+      "type": "page",
+      "id": "find_out_more_page",
+      "label": "Or pick page (optional)",
+      "info": "Only lists pages that already exist in Admin → Pages. If pre-access is missing, create the page first."
+    },
+    {
+      "type": "url",
+      "id": "find_out_more_url",
+      "label": "Or custom link (optional)",
+      "info": "Overrides page handle when set."
+    },
+    {
+      "type": "header",
+      "content": "Sign up button"
+    },
+    {
+      "type": "text",
+      "id": "signup_button_label",
+      "label": "Button label",
+      "default": "Sign up for updates",
+      "info": "Shown below the first button. Kept on one line — use a shorter label if it feels tight on small screens."
+    },
+    {
+      "type": "text",
+      "id": "signup_button_page_handle",
+      "label": "Page handle",
+      "default": "marame-x-melissa-murrell-ss26",
+      "info": "Default: Marame x Melissa Murrell registered interest page."
+    },
+    {
+      "type": "page",
+      "id": "signup_button_page",
+      "label": "Or pick page (optional)"
+    },
+    {
+      "type": "url",
+      "id": "signup_button_url",
+      "label": "Or custom link (optional)",
+      "info": "Overrides page handle when set."
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "Pill corner radius",
+      "min": 4,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_mobile",
+      "label": "Background — mobile",
+      "default": "rgba(255, 255, 255, 0.34)"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color_mobile",
+      "label": "Text — mobile",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_desktop",
+      "label": "Background — desktop",
+      "default": "rgba(255, 255, 255, 0.34)"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color_desktop",
+      "label": "Text — desktop",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Border colour",
+      "default": "rgba(45, 44, 42, 0.15)"
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size_mobile",
+      "label": "Text size — mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "cta_letter_spacing_mobile",
+      "label": "Letter spacing — mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Button position on hero"
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_after_headline_mobile",
+      "label": "Space below headline — mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "cta_offset_y_mobile",
+      "label": "Move button down — mobile",
+      "info": "Extra offset below the headline. Increase to sit the button lower on the carousel.",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_after_headline_desktop",
+      "label": "Space below headline — desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "cta_offset_y_desktop",
+      "label": "Move button down — desktop",
+      "info": "Extra offset below the headline. Increase to sit the button lower on the carousel.",
+      "min": 0,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image — mobile (portrait)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Image — desktop (landscape)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "focal_point",
+          "label": "Crop focal point",
+          "default": "center center",
+          "info": "e.g. center top, 50% 30%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Hero carousel",
+      "blocks": [{ "type": "slide" }, { "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

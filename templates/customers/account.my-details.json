@@ -1,0 +1,64 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-account-details",
+      "settings": {
+        "hero_title": "My Details",
+        "message": "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat, habitasse aenean eget semper potenti vel. Quis et cum nullam lacus dapibus commodo nibh aptent.</p>",
+        "quiz_title": "tailor your experience",
+        "quiz_content": "<p>Retake our short quiz to get tailored fit recommendations and bespoke suggestions for products we know you’ll love.</p>",
+        "quiz_btn": "Get Started",
+        "quiz_btn_url": ""
+      }
+    },
+    "featured_fullscreen_FyULMx": {
+      "type": "featured-fullscreen",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "Men’s autumn lookbook ‘24",
+        "banner_image": "shopify://shop_images/dashboard_fullscreen.jpg",
+        "description": "",
+        "btn_label": "View the lookbook",
+        "btn_link": "",
+        "content_color": "#ffffff"
+      }
+    },
+    "split_screen_F9zkiY": {
+      "type": "split-screen",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Knitwear",
+        "collection_1_image": "shopify://shop_images/splitscreen1.jpg",
+        "collection_1_link": "#",
+        "button_1_text": "View all",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#ffffff",
+        "collection_2": "",
+        "collection_2_title": "Shirts",
+        "collection_2_image": "shopify://shop_images/shirt.jpg",
+        "collection_2_link": "#",
+        "button_2_text": "view all",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_fullscreen_FyULMx",
+    "split_screen_F9zkiY"
+  ]
+}

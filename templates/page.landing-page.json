@@ -1,0 +1,112 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "hero_banner_HQJCBe": {
+      "type": "hero-banner",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "styleguide",
+        "banner_image": "shopify://shop_images/hero.jpg",
+        "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat, habitasse aenean eget semper potenti vel. Quis et cum nullam lacus dapibus commodo nibh aptent.",
+        "btn_label": "View all",
+        "btn_link": "",
+        "content_color": "#fff"
+      }
+    },
+    "split_screen_jzcGQR": {
+      "type": "split-screen",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "knitwear",
+        "collection_1_image": "shopify://shop_images/splitscreen1_a73b6f23-0fcb-4b25-91e3-37749b7eef4e.jpg",
+        "collection_1_link": "shopify://collections/mens",
+        "button_1_text": "men’s lookbook",
+        "secondary__label": "women’s lookbook",
+        "secondary_link": "shopify://collections/womenswear",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#FFFFFF",
+        "collection_2": "",
+        "collection_2_title": "Shirts",
+        "collection_2_image": "shopify://shop_images/shirt.jpg",
+        "collection_2_link": "#",
+        "button_2_text": "discover more",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#FFFFFF"
+      }
+    },
+    "shop_thee_look_UdUm8e": {
+      "type": "shop-thee-look",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "4 in a row (Shop the look)",
+        "collection": "summer-style",
+        "cta_label": "SHOP THE LOOK",
+        "products_per_row": 4,
+        "enable_bg": false,
+        "bg_color": "",
+        "text_color": "#fff"
+      }
+    },
+    "featured_fullscreen_qLVRUi": {
+      "type": "featured-fullscreen",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "Men’s autumn lookbook ‘24",
+        "banner_image": "shopify://shop_images/featured-fullscreen.jpg",
+        "description": "",
+        "btn_label": "View the lookbook",
+        "btn_link": "",
+        "content_color": "#fff"
+      }
+    },
+    "split_screen_rgxiei": {
+      "type": "split-screen",
+      "settings": {
+        "show_logged_in_section": "both",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Jackets & Coats",
+        "collection_1_image": "shopify://shop_images/homepage_in_split_1.jpg",
+        "collection_1_link": "#",
+        "button_1_text": "view all",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#FFFFFF",
+        "collection_2": "",
+        "collection_2_title": "bottoms",
+        "collection_2_image": "shopify://shop_images/homepage_in_split_2.jpg",
+        "collection_2_link": "#",
+        "button_2_text": "view all",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#FFFFFF"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_banner_HQJCBe",
+    "split_screen_jzcGQR",
+    "shop_thee_look_UdUm8e",
+    "featured_fullscreen_qLVRUi",
+    "split_screen_rgxiei"
+  ]
+}

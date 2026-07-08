@@ -1,0 +1,318 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{ 'collection-filter-bar.css' | asset_url | stylesheet_tag }}
+
+<div class="filter-bar">
+    <form class="main-filter-bar" data-filters-options>
+
+        {% for filter in collection.filters %}
+            {% assign current_collection = collection.handle %}
+
+            {% if current_collection contains 'shoes' %}
+                {% if filter.label == 'Size' %}
+                {% continue %}
+                {% endif %}
+            {% endif %}
+
+            <div class="filter-bar-options{% if filter.active_values.size > 0 %} selected{% endif %}" style="--filter-label: '{{ filter.label }}:';" data-filter-col="{{ filter.label }}">
+                {% comment %} <h3>{{ filter.label }}</h3> {% endcomment %}
+                {% capture optionData %}{% endcapture %}
+             
+                {% for filter_value in filter.values %}
+                    {% if current_collection contains 'womens' and filter.label == 'Size' and filter_value.label == 'Double extra large (XXL)' %}
+                        {% continue %}
+                    {% endif %}
+                    {% capture optionData %}
+                    {{- optionData -}}
+                    <li class="custom-filter-li">
+                    <input type="checkbox" data-optname="{{ filter_value.label }}" name="{{ filter.param_name }}" class="custom-filter-checkbox" value="{{ filter_value.value }}" id="filter-{{ filter_value.value }}-{{ forloop.index }}" {% if filter_value.active %} checked{% endif %}>
+                    <label for="filter-{{ filter_value.value }}-{{ forloop.index }}">{{ filter_value.label }}
+                        <span class="tick-svg"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
+                        <path d="M0.765625 2.63086L2.83823 4.15467" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        <path d="M2.83789 4.15474L5.9468 0.345215" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                        </svg></span>
+                    </label>
+                    </li>
+                    {% endcapture %}
+                {% endfor %}
+                <button class="custom-filter-label" data-custom-filter-label><span class="label-text">{{ filter.label }}</span>
+                <span class="btn filter-action-btn" data-filter-action-btn-clear-custom>Clear</span>
+                <span class="label-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                    <path d="M6.86133 1L3.6582 4.20312L0.455079 1" stroke="#262525"/>
+                    </svg>
+                </span>
+                </button>
+                <ul class="custom-filter-ul" data-name="{{ filter.param_name }}">{{ optionData }}
+                    <li class="custom-filter-li filter-li-btns hidden">
+                        <button class="btn filter-action-btn" data-filter-action-btn-clear>Clear</button>
+                        <button class="btn btn--dark filter-action-btn" data-filter-action-btn-view>VIEW</button>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+
+          <ul class="active-filters">
+            {%- for filter in collection.filters -%}
+                {%- for value in filter.active_values -%}
+                        <span>
+                            <li data-filter="{{ filter.label }}">{{ value.label }}</li>
+                            <a href="javascript:void(0);" class="filter-custm-remove" data-value="{{ value.label }}" data-filter="{{ filter.label }}">✕</a>
+                        </span>
+                {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+
+
+        {%- if collection.metafields.custom.collection_filter != blank -%}
+            <div class="filter-bar-options hidden" data-filter-col="{{ filter.label }}">
+                {% capture optionData %}{% endcapture %}
+                {%- for single_collection in collection.metafields.custom.collection_filter.value -%}
+                    {% capture optionData %}
+                    {{- optionData -}}
+                    <li class="custom-filter-li">
+                        <a href="{{ single_collection.url }}">{{ single_collection.title }}</a>
+                        {%if collection.url == single_collection.url %}
+                            <span class="tick-svg"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
+                            <path d="M0.765625 2.63086L2.83823 4.15467" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                            <path d="M2.83789 4.15474L5.9468 0.345215" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                            </svg></span>
+                        {% endif %}                    
+                    </li>
+                    {% endcapture %}
+                {% endfor %}
+                <button class="custom-filter-label" data-custom-filter-label><span class="label-text">{{ collection.title }}</span>
+                <span class="label-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                    <path d="M6.86133 1L3.6582 4.20312L0.455079 1" stroke="#262525"/>
+                    </svg>
+                </span>
+                </button>
+                <ul class="custom-filter-ul" data-name="{{ filter.param_name }}">
+                    <option value="" disabled>Select a Collection</option>
+                    {{ optionData }}
+                    <li class="custom-filter-li filter-li-btns">
+                        <button class="btn filter-action-btn" data-filter-action-btn-clear>Clear</button>
+                        <button class="btn btn--dark filter-action-btn" data-filter-action-btn-view>VIEW</button>
+                    </li>
+                </ul>
+            </div>
+        {%- endif -%}
+        
+        <div class="filter-bar-options" >
+            
+            {% capture optionData %}{% endcapture %}
+            {%- for option in collection.sort_options -%}
+                {% capture optionData %}
+                {{- optionData -}}
+                <li class="custom-filter-li">
+                <input type="radio" name="sort_by" data-optname="{{ option.name }}" class="custom-filter-checkbox" value="{{ option.value }}" id="sortby-{{ option.value }}-{{ forloop.index }}"{% if collection.sort_by != blank %}{% if option.value == collection.sort_by %} selected{% endif %}{% elsif option.value == 'manual' %} selected{% endif %}>
+                <label for="sortby-{{ option.value }}-{{ forloop.index }}">{{ option.name }}
+                    <span class="tick-svg"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
+                    <path d="M0.765625 2.63086L2.83823 4.15467" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <path d="M2.83789 4.15474L5.9468 0.345215" stroke="#2A2A2C" stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                    </svg></span>
+                </label>
+                </li>
+                {% endcapture %}
+            {% endfor %}
+            <button class="custom-filter-label" data-custom-filter-label><span class="label-text">Sort By</span>
+            <span class="label-svg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                <path d="M6.86133 1L3.6582 4.20312L0.455079 1" stroke="#262525"/>
+                </svg>
+            </span>
+            </button>
+            <ul class="custom-filter-ul custom-filter-ul_sortby" data-name="sortby">
+                {{ optionData }}
+            </ul>
+        </div>
+    </form>
+    <div class="listing-hero__view">
+        <h3>View</h3>
+        <div class="listing-hero__view__btns">
+            <button data-column="1">
+                <span></span>
+                <span></span>
+                <span class="sr-only">1 column</span>
+            </button>
+            <button data-column="2">
+                <span></span>
+                <span></span>
+                <span class="sr-only">2 column</span>
+            </button>
+            <button data-column="3">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">3 column</span>
+            </button>
+            <button data-column="4">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">4 column</span>
+            </button>
+            <button data-column="5">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">5 column</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="apply_btn_cstm">Apply Filter</div>
+
+<script>
+    {% comment %} $('body').on('change', '.filter-bar-options select', function() {
+        var form_data = $('[data-filters-options]').serialize(); 
+        var path = window.location.pathname;
+        var paramsup = {
+            type: 'GET',
+            url: path + '?' + form_data + "&blank",
+            success: function(data) { 
+                window.history && window.history.pushState && window.history.pushState("", "", path + '?' + form_data + "&blank");
+                var grid = $(data).find('.listing').html();
+                $('.listing').html(grid);
+
+                load_listing_script();
+                load_init_scripts_script();
+
+                product_grid_size_option();
+                product_grid_ATC();
+                load_more_product_JS();
+                iWish.init();
+                product_media_update();
+                check_size_option();
+                grid_metafield_product();
+                grid_option_controls();
+                
+            },
+            error: function() {
+                // Empty error handler – consider adding at least a console.error
+            }
+        };
+        $.ajax(paramsup);
+        return false;   
+    }); {% endcomment %}
+
+    // label to open UL
+    let filterLabels = document.querySelectorAll("[data-custom-filter-label]");
+    filterLabels.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("label btn clicked",e);
+            if(!e.target.hasAttribute(`data-filter-action-btn-clear-custom`)){
+                this.closest(".filter-bar-options").classList.toggle("active");
+            }
+        });
+    });
+
+    let viewBtns = document.querySelectorAll("[data-filter-action-btn-view]");
+    viewBtns.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("view btn clicked");
+            btn.closest(".filter-bar-options").classList.add("selected");
+            manageFilters();
+        });
+    });
+
+    let clearBtns = document.querySelectorAll("[data-filter-action-btn-clear]");
+    clearBtns.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("view btn clicked");
+            btn.closest(".filter-bar-options").classList.remove("selected");
+            let checkedInputs = btn.closest(".custom-filter-ul").querySelectorAll("input:checked");
+            checkedInputs.forEach((input) => {
+                input.checked = false;
+            });
+            manageFilters();
+        });
+    });
+    let clearBtnsCustom = document.querySelectorAll("[data-filter-action-btn-clear-custom]");
+    clearBtnsCustom.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("clear custom btn clicked");
+            btn.closest(".filter-bar-options").classList.remove("selected");
+            let checkedInputs = btn.closest(".filter-bar-options").querySelectorAll(".custom-filter-ul input:checked");
+            checkedInputs.forEach((input) => {
+                input.checked = false;
+            });
+            manageFilters();
+        });
+    });
+
+    let sortByInputs = document.querySelectorAll(".custom-filter-ul.custom-filter-ul_sortby input");
+    sortByInputs.forEach(function(btn) {
+        btn.addEventListener("change", function(e) {
+            e.preventDefault();
+            console.log("input changed");
+            manageFilters();
+        });
+    });
+
+function manageFilters(){
+    var form_data = $('[data-filters-options]').serialize(); 
+    var path = window.location.pathname;
+    var paramsup = {
+        type: 'GET',
+        url: path + '?' + form_data + "&blank",
+        success: function(data) { 
+            window.history && window.history.pushState && window.history.pushState("", "", path + '?' + form_data + "&blank");
+            var grid = $(data).find('.listing').html();
+            $('.listing').html(grid);
+            
+            document.querySelectorAll(".filter-bar-options.active").forEach((ele) => {
+                ele.classList.remove("active");
+            });
+            fetch(window.location.href, {
+            method: "GET",
+            headers: {
+                "Content-Type": "text/html"
+            }
+            })
+            .then(response => response.text())
+            .then(htmlContent => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, "text/html");
+                const cartDrawerElement = doc.querySelector(".active-filters");
+
+                if (cartDrawerElement) {
+                const currentMessage = document.querySelector(".active-filters");
+                if (currentMessage) {
+                    currentMessage.replaceWith(cartDrawerElement);
+                }
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching and modifying HTML:", error);
+            });
+
+            load_listing_script();
+            load_init_scripts_script();
+
+            product_grid_size_option();
+            product_grid_ATC();
+            load_more_product_JS();
+            iWish.init();
+            product_media_update();
+            check_size_option();
+            grid_metafield_product();
+            grid_option_controls();
+            
+        },
+        error: function() {
+            // Empty error handler – consider adding at least a console.error
+        }
+    };
+    $.ajax(paramsup);
+    return false;
+}
+</script>

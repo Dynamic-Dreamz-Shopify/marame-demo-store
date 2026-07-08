@@ -1,0 +1,15 @@
+{%- comment -%}
+  Short instructions for merchants — theme editor only.
+{%- endcomment -%}
+{%- if request.design_mode -%}
+  {%- assign help_handle = collection.handle | strip | downcase -%}
+  {%- assign help_suffix = template.suffix | default: 'default' -%}
+  <div class="marame-grid-help">
+    <p><strong>{{ collection.title }}</strong> — template <code>{{ help_suffix }}</code></p>
+    <ol>
+      <li>The left sidebar only shows Grid cards saved on this collection’s template file.</li>
+      <li>Drag Grid cards to reorder, then <strong>Save</strong>.</li>
+      <li>New collection? Run <code>scripts/scaffold-collection-template.sh {{ help_handle }}</code>, push the theme, then assign Theme template <code>{{ help_handle }}</code> in admin.</li>
+    </ol>
+  </div>
+{%- endif -%}

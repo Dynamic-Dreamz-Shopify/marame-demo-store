@@ -1,0 +1,758 @@
+{% render 'msp-assets' %}
+
+{%- liquid
+  assign layout = section.settings.layout
+  assign has_visible_block = false
+  assign use_fixed_height = false
+  if section.settings.row_height_mobile > 0 or section.settings.row_height_desktop > 0 or section.settings.row_height_mobile_stacked > 0 or section.settings.row_height_desktop_stacked > 0 or section.settings.row_vh_mobile > 0 or section.settings.row_vh_desktop > 0
+    assign use_fixed_height = true
+  endif
+  assign duo_layout_mobile = section.settings.duo_layout_mobile | default: 'stack'
+  assign duo_layout_desktop = section.settings.duo_layout_desktop | default: 'side_by_side'
+-%}
+
+{% style %}
+  #msp-media-{{ section.id }} {
+    --msp-section-gap-mobile: {{ section.settings.gap_bottom_mobile }}px;
+    --msp-section-gap-desktop: {{ section.settings.gap_bottom_desktop }}px;
+    --msp-row-height-mobile: {% if section.settings.row_vh_mobile > 0 %}{{ section.settings.row_vh_mobile }}vh{% elsif section.settings.row_height_mobile > 0 %}{{ section.settings.row_height_mobile }}px{% else %}auto{% endif %};
+    --msp-row-height-desktop: {% if section.settings.row_vh_desktop > 0 %}{{ section.settings.row_vh_desktop }}vh{% elsif section.settings.row_height_desktop > 0 %}{{ section.settings.row_height_desktop }}px{% else %}auto{% endif %};
+    --msp-row-height-mobile-stacked: {% if section.settings.row_height_mobile_stacked > 0 %}{{ section.settings.row_height_mobile_stacked }}px{% else %}var(--msp-row-height-mobile){% endif %};
+    --msp-row-height-desktop-stacked: {% if section.settings.row_height_desktop_stacked > 0 %}{{ section.settings.row_height_desktop_stacked }}px{% else %}var(--msp-row-height-desktop){% endif %};
+    {% if section.settings.duo_ratio_mobile == '50-50' %}
+      --msp-media-cols-mobile: minmax(0, 1fr) minmax(0, 1fr);
+    {% elsif section.settings.duo_ratio_mobile == '59-41' %}
+      --msp-media-cols-mobile: 59% 41%;
+    {% elsif section.settings.duo_ratio_mobile == '38-62' %}
+      --msp-media-cols-mobile: 38.2% 1fr;
+    {% else %}
+      --msp-media-cols-mobile: minmax(0, 1fr) minmax(0, 1fr);
+    {% endif %}
+    {% if section.settings.duo_ratio == '38-62' %}
+      --msp-media-cols: 38.2% 1fr;
+    {% elsif section.settings.duo_ratio == '59-41' %}
+      --msp-media-cols: 59% 41%;
+    {% elsif section.settings.duo_ratio == '48-52' %}
+      --msp-media-cols: 47.8% 52.2%;
+    {% elsif section.settings.duo_ratio == '50-50' %}
+      --msp-media-cols: 1fr 1fr;
+    {% elsif section.settings.duo_ratio == '67-33' %}
+      --msp-media-cols: 66.3% 1fr;
+    {% else %}
+      --msp-media-cols: 1fr 1fr;
+    {% endif %}
+    {% if layout == 'trio' %}
+      --msp-row-aspect: 1440 / 557;
+    {% elsif layout == 'duo' and section.settings.duo_ratio == '48-52' %}
+      --msp-row-aspect: 1440 / 585;
+    {% elsif layout == 'duo' %}
+      --msp-row-aspect: 390 / 239;
+    {% endif %}
+  }
+{% endstyle %}
+
+{%- assign media_zone_key = section.settings.logo_zone_key | default: 'signup_media' -%}
+<section
+  id="msp-media-{{ section.id }}"
+  class="msp msp-section msp-section--media msp-section-gap{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: media_zone_key, zone_label: section.settings.logo_zone_label %}
+>
+  <div class="msp-media msp-media--{{ layout }}{% if layout == 'duo' or layout == 'trio' %} msp-media--row-unified{% endif %}{% if layout == 'duo' %} msp-media--duo-mobile-{{ duo_layout_mobile }} msp-media--duo-desktop-{{ duo_layout_desktop }}{% endif %}{% if use_fixed_height %} msp-media--fixed-height{% endif %}{% if section.settings.enable_scroll_animations %} msp-media--reveal{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'image' -%}
+          {%- liquid
+            assign show_cell = false
+            if block.settings.show_mobile or block.settings.show_desktop
+              assign show_cell = true
+            endif
+            if block.settings.image == blank and block.settings.fallback_asset == blank
+              assign show_cell = false
+            endif
+          -%}
+          {%- if show_cell -%}
+            {%- assign has_visible_block = true -%}
+            {%- capture aspect -%}{% render 'msp-aspect-ratio', preset: block.settings.frame_preset, width: block.settings.frame_width, height: block.settings.frame_height %}{%- endcapture -%}
+            {%- capture object_position -%}{% render 'msp-object-position', image: block.settings.image, use_manual_focal: block.settings.use_manual_focal, focal_x: block.settings.focal_x, focal_y: block.settings.focal_y %}{%- endcapture -%}
+            <div
+              class="msp-media__cell{% unless block.settings.show_mobile %} msp-media__cell--hide-mobile{% endunless %}{% unless block.settings.show_desktop %} msp-media__cell--hide-desktop{% endunless %}{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}"
+              style="--msp-cell-aspect: {{ aspect | strip }}; --msp-object-position: {{ object_position | strip }};"
+              {{ block.shopify_attributes }}
+            >
+              {% render 'msp-image',
+                image: block.settings.image,
+                fallback_asset: block.settings.fallback_asset,
+                alt: block.settings.alt,
+                object_position: object_position | strip
+              %}
+            </div>
+          {%- endif -%}
+        {%- when 'video' -%}
+          {%- liquid
+            assign show_cell = false
+            if block.settings.show_mobile or block.settings.show_desktop
+              assign show_cell = true
+            endif
+            if block.settings.video == blank and block.settings.poster == blank
+              assign show_cell = false
+            endif
+          -%}
+          {%- if show_cell -%}
+            {%- assign has_visible_block = true -%}
+            {%- capture aspect -%}{% render 'msp-aspect-ratio', preset: block.settings.frame_preset, width: block.settings.frame_width, height: block.settings.frame_height %}{%- endcapture -%}
+            <div
+              class="msp-media__cell msp-media__cell--has-video{% unless block.settings.show_mobile %} msp-media__cell--hide-mobile{% endunless %}{% unless block.settings.show_desktop %} msp-media__cell--hide-desktop{% endunless %}{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}"
+              style="--msp-cell-aspect: {{ aspect | strip }};"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.video != blank -%}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    class: 'msp-media__video',
+                    poster: block.settings.poster,
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: block.settings.show_controls,
+                    preload: 'metadata'
+                }}
+                {%- if block.settings.poster != blank -%}
+                  <img
+                    data-msp-video-poster
+                    class="msp-video-poster-sample"
+                    src="{{ block.settings.poster | image_url: width: 1200 }}"
+                    alt=""
+                    width="1200"
+                    height="675"
+                    crossorigin="anonymous"
+                    hidden
+                  >
+                {%- endif -%}
+              {%- elsif block.settings.poster != blank -%}
+                {{
+                  block.settings.poster
+                  | image_url: width: 1600
+                  | image_tag: class: 'msp-media__img', alt: block.settings.alt, loading: 'lazy'
+                }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+  {%- unless has_visible_block -%}
+    {%- if request.design_mode -%}
+      <p class="msp-section__placeholder">Add image blocks and upload images, or enable mobile/desktop visibility.</p>
+    {%- endif -%}
+  {%- endunless -%}
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Images",
+  "tag": "section",
+  "class": "section-marame-signup-media",
+  "max_blocks": 3,
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Drag blocks to reorder images. Each image crops inside its frame — use the image focal point in the editor. Toggle mobile/desktop per image."
+    },
+    {
+      "type": "text",
+      "id": "row_label",
+      "label": "Row label (theme editor only)",
+      "default": "Image row",
+      "info": "Helps you identify this row when reordering sections."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show this row on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show this row on desktop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Header logo zone"
+    },
+    {
+      "type": "select",
+      "id": "logo_zone_key",
+      "label": "Page block ID (for Header logo section)",
+      "info": "Must match a block in Signup — Header logo. Only change if you duplicated this section.",
+      "options": [
+        { "value": "signup_media_duo_mobile", "label": "Images — mobile duo" },
+        { "value": "signup_media_trio_desktop", "label": "Images — desktop trio" },
+        { "value": "signup_media_lower_mobile", "label": "Images — lower mobile duo" },
+        { "value": "signup_media_embroidery_mobile", "label": "Embroidery — mobile" },
+        { "value": "signup_media_desktop_lower", "label": "Close-up + video — desktop" }
+      ],
+      "default": "signup_media_duo_mobile"
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_label",
+      "label": "Zone label (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Mobile — 2-image row"
+    },
+    {
+      "type": "select",
+      "id": "duo_layout_mobile",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "stack", "label": "Stacked (one above the other)" },
+        { "value": "side_by_side", "label": "Side by side" }
+      ],
+      "default": "stack"
+    },
+    {
+      "type": "select",
+      "id": "duo_ratio_mobile",
+      "label": "Mobile column ratio (side by side only)",
+      "options": [
+        { "value": "50-50", "label": "Equal (50% / 50%)" },
+        { "value": "38-62", "label": "Narrow left (38% / 62%)" },
+        { "value": "59-41", "label": "Wide left (59% / 41%)" }
+      ],
+      "default": "50-50"
+    },
+    {
+      "type": "range",
+      "id": "row_height_mobile",
+      "label": "Row height — mobile (px, side by side)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0,
+      "info": "Height of the row when images are side by side. 0 = auto (frame aspect ratio)."
+    },
+    {
+      "type": "range",
+      "id": "row_height_mobile_stacked",
+      "label": "Each image height — mobile stacked (px)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0,
+      "info": "Min height per image when stacked. 0 = use row height above, or auto."
+    },
+    {
+      "type": "range",
+      "id": "row_vh_mobile",
+      "label": "Row height — mobile (vh, side by side)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 0,
+      "info": "If set (>0), overrides mobile px height for side-by-side layout."
+    },
+    {
+      "type": "header",
+      "content": "Desktop — 2-image row"
+    },
+    {
+      "type": "select",
+      "id": "duo_layout_desktop",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "side_by_side", "label": "Side by side" },
+        { "value": "stack", "label": "Stacked (one above the other)" }
+      ],
+      "default": "side_by_side"
+    },
+    {
+      "type": "range",
+      "id": "row_height_desktop",
+      "label": "Row height — desktop (px, side by side)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0,
+      "info": "Height of the row when images are side by side. 0 = auto."
+    },
+    {
+      "type": "range",
+      "id": "row_height_desktop_stacked",
+      "label": "Each image height — desktop stacked (px)",
+      "min": 0,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "row_vh_desktop",
+      "label": "Row height — desktop (vh, side by side)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 0,
+      "info": "If set (>0), overrides desktop px height for side-by-side layout."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "single", "label": "Single full width" },
+        { "value": "duo", "label": "Two images side by side" },
+        { "value": "trio", "label": "Three images (desktop)" }
+      ],
+      "default": "duo"
+    },
+    {
+      "type": "select",
+      "id": "duo_ratio",
+      "label": "Two-column width ratio",
+      "info": "Only applies to duo layout.",
+      "options": [
+        { "value": "38-62", "label": "Narrow left (38% / 62%)" },
+        { "value": "50-50", "label": "Equal (50% / 50%)" },
+        { "value": "59-41", "label": "Wide left (59% / 41%)" },
+        { "value": "48-52", "label": "Desktop lower row (48% / 52%)" },
+        { "value": "67-33", "label": "Wide left large (67% / 33%)" }
+      ],
+      "default": "38-62"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_mobile",
+      "label": "Space below row — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_desktop",
+      "label": "Space below row — desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_mobile",
+          "label": "Show on mobile",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_desktop",
+          "label": "Show on desktop",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback asset filename",
+          "info": "Optional. Theme asset name if no image uploaded (e.g. marame-signup-grid-fabric-white.png)."
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text"
+        },
+        {
+          "type": "header",
+          "content": "Crop position inside frame"
+        },
+        {
+          "type": "paragraph",
+          "content": "Turn on manual crop to drag the focal point with sliders (e.g. show the face at the top of a portrait). Otherwise use the focal point on the image picker above."
+        },
+        {
+          "type": "checkbox",
+          "id": "use_manual_focal",
+          "label": "Manual crop position",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "focal_x",
+          "label": "Horizontal focus",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "focal_y",
+          "label": "Vertical focus (lower = more top of image)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "select",
+          "id": "frame_preset",
+          "label": "Frame shape (crop box)",
+          "options": [
+            { "value": "tall", "label": "Tall portrait (mobile duo)" },
+            { "value": "tall_desktop", "label": "Tall (desktop trio left)" },
+            { "value": "portrait", "label": "Portrait (desktop trio centre)" },
+            { "value": "square", "label": "Square" },
+            { "value": "wide", "label": "Wide banner" },
+            { "value": "full", "label": "Full width banner" },
+            { "value": "desktop_closeup", "label": "Desktop close-up" },
+            { "value": "desktop_video", "label": "Desktop video frame" },
+            { "value": "custom", "label": "Custom ratio" }
+          ],
+          "default": "tall"
+        },
+        {
+          "type": "number",
+          "id": "frame_width",
+          "label": "Custom frame width",
+          "default": 1,
+          "info": "Only when frame is Custom."
+        },
+        {
+          "type": "number",
+          "id": "frame_height",
+          "label": "Custom frame height",
+          "default": 1
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_mobile",
+          "label": "Show on mobile",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_desktop",
+          "label": "Show on desktop",
+          "default": true
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster (if no video)"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text",
+          "default": "Campaign video"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_controls",
+          "label": "Show controls",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "frame_preset",
+          "label": "Frame shape",
+          "options": [
+            { "value": "wide", "label": "Wide" },
+            { "value": "desktop_video", "label": "Desktop lower right" },
+            { "value": "tall", "label": "Tall" },
+            { "value": "custom", "label": "Custom" }
+          ],
+          "default": "desktop_video"
+        },
+        {
+          "type": "number",
+          "id": "frame_width",
+          "label": "Custom width",
+          "default": 1049
+        },
+        {
+          "type": "number",
+          "id": "frame_height",
+          "label": "Custom height",
+          "default": 585
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "2 images in a row",
+      "settings": {
+        "row_label": "2 images side by side",
+        "layout": "duo",
+        "duo_ratio": "50-50",
+        "row_height_mobile": 280,
+        "row_height_desktop": 400,
+        "show_mobile": true,
+        "show_desktop": true
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": { "frame_preset": "tall", "show_mobile": true, "show_desktop": true, "alt": "Image 1" }
+        },
+        {
+          "type": "image",
+          "settings": { "frame_preset": "tall", "show_mobile": true, "show_desktop": true, "alt": "Image 2" }
+        }
+      ]
+    },
+    {
+      "name": "3 images in a row",
+      "settings": {
+        "row_label": "3 images side by side",
+        "layout": "trio",
+        "row_height_mobile": 0,
+        "row_height_desktop": 480,
+        "show_mobile": false,
+        "show_desktop": true
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": { "frame_preset": "tall_desktop", "show_mobile": false, "show_desktop": true, "alt": "Image 1" }
+        },
+        {
+          "type": "image",
+          "settings": { "frame_preset": "portrait", "show_mobile": false, "show_desktop": true, "alt": "Image 2" }
+        },
+        {
+          "type": "image",
+          "settings": { "frame_preset": "portrait", "show_mobile": false, "show_desktop": true, "alt": "Image 3" }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Mobile 2-up (fabric + portrait)",
+      "settings": {
+        "row_label": "Mobile — 2 images under hero",
+        "show_mobile": true,
+        "show_desktop": false,
+        "layout": "duo",
+        "duo_ratio": "38-62"
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "frame_preset": "tall",
+            "show_mobile": true,
+            "show_desktop": false
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "frame_preset": "tall",
+            "focal_y": 30,
+            "show_mobile": true,
+            "show_desktop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Desktop 3-up (trio)",
+      "settings": {
+        "row_label": "Desktop — fabric, brown top, polo",
+        "show_mobile": false,
+        "show_desktop": true,
+        "layout": "trio"
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "frame_preset": "tall_desktop",
+            "show_mobile": false,
+            "show_desktop": true
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "frame_preset": "portrait",
+            "focal_y": 28,
+            "show_mobile": false,
+            "show_desktop": true
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-portrait-polo.png",
+            "alt": "Model in knit polo",
+            "frame_preset": "portrait",
+            "focal_y": 25,
+            "show_mobile": false,
+            "show_desktop": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Single wide banner",
+      "settings": {
+        "row_label": "Single wide image",
+        "layout": "single",
+        "show_mobile": true,
+        "show_desktop": true
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-closeup.png",
+            "alt": "Campaign close-up",
+            "frame_preset": "wide",
+            "show_mobile": true,
+            "show_desktop": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Mobile lower 2-up",
+      "settings": {
+        "row_label": "Mobile — below signup",
+        "show_mobile": true,
+        "show_desktop": false,
+        "layout": "duo",
+        "duo_ratio": "59-41"
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-result-square.png",
+            "alt": "Collection portrait",
+            "frame_preset": "square",
+            "show_mobile": true,
+            "show_desktop": false
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-orange-skirt.png",
+            "alt": "Orange skirt detail",
+            "frame_preset": "tall",
+            "show_mobile": true,
+            "show_desktop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Embroidery full width",
+      "settings": {
+        "row_label": "Embroidery banner",
+        "layout": "single",
+        "show_mobile": true,
+        "show_desktop": false
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-embroidery.png",
+            "alt": "Marame embroidery detail",
+            "frame_preset": "full",
+            "show_mobile": true,
+            "show_desktop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grid — Desktop close-up + video",
+      "settings": {
+        "row_label": "Desktop — below signup",
+        "show_mobile": false,
+        "show_desktop": true,
+        "layout": "duo",
+        "duo_ratio": "48-52"
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_asset": "marame-signup-grid-closeup.png",
+            "alt": "Campaign close-up",
+            "frame_preset": "desktop_closeup",
+            "show_mobile": false,
+            "show_desktop": true
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "alt": "Campaign video",
+            "frame_preset": "desktop_video",
+            "show_mobile": false,
+            "show_desktop": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "care_guide_HBzX7t": {
+      "type": "care-guide",
+      "settings": {
+        "heading": "CARE GUIDE",
+        "information": "Our products are thoughtfully crafted from premium materials and designed for longevity. To preserve their quality, please follow the care instructions carefully.",
+        "collection_list": [
+          "mens-jacketscoats-blazers",
+          "mens-knitwear",
+          "womens-jacketscoats-blazers",
+          "womens-dresses",
+          "mens-shoes",
+          "womens-shoes",
+          "womens-knitwear",
+          "mens-tops-shirts",
+          "womens-tops-shirts",
+          "mens-bottoms-shorts",
+          "womens-bottoms-shorts",
+          "mens-tops-tshirts",
+          "womens-tops",
+          "mens-hoodies-joggers",
+          "womens-hoodies-joggers",
+          "denim",
+          "denim-1",
+          "mens-bottoms-trousers",
+          "womens-bottoms-trousers",
+          "polos-1"
+        ]
+      }
+    }
+  },
+  "order": [
+    "main",
+    "care_guide_HBzX7t"
+  ]
+}

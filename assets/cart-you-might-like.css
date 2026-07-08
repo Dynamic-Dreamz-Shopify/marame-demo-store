@@ -1,0 +1,40 @@
+.cart-yml-section .cart-product-list{list-style: none;padding: 0;margin: 0;display: flex;flex-wrap: wrap;gap:20px;}
+.cart-yml-section .cart-product-list li.listing__item{width:100%;max-width:calc(25% - 20px * 3 / 4);}
+.cart-yml-section h2{font-size: 28px;font-weight: 500;color: rgba(42, 42, 45, 1);font-family: HelveticaNowProDisplayMedium;line-height: 2.858;}
+
+
+
+.cart-yml-section .product-card__content .pdp-card-option-wrap{display:none;}
+.cart-yml-section .default-card-product .product-card__content__infos h5.desc{font-size:14px;font-weight: 700;font-family: HelveticaNowProDisplayBold;letter-spacing: 0.42px;max-width:100%;}
+.cart-yml-section .default-card-product .product-card__content__infos__deets{flex-direction: column;}
+.cart-yml-section .default-card-product .product-card__content__infos__deets .product-card-pricebox .price{font-size:14px;}
+
+
+
+
+
+@media only screen and (min-width:769px){
+    .cart-yml-section{padding:0px var(--spacer);}
+    .cart-yml-section .product-card__content{padding:0px;}
+}
+
+@media only screen and (max-width:1080px){
+    .cart-yml-section .cart-product-list li.listing__item{width:100%;max-width:calc(33.33% - 20px * 2 / 3);}
+}
+@media only screen and (max-width:768px){
+    .cart-yml-section .cart-product-list li.listing__item{width:100% !important;max-width:calc(50% - 5px / 2);}
+    .cart-yml-section h2{padding:0px 25px;font-size:20px;}
+    .default-card-product .product-card__content{padding:0px 13px;}
+    .cart-yml-section .default-card-product .product-card__content__infos__deets .product-card-pricebox .price,
+    .cart-yml-section .default-card-product .product-card__content__infos h5.desc{font-size:10px;letter-spacing:0.3px;}
+    .cart-yml-section .default-card-product .product-card__content__infos__deets{gap:3px;}
+    .cart-yml-section .cart-product-list{gap:22px 5px;}
+    .cart-yml-section .default-card-product .swiper-pagination{bottom:9px;}
+    .cart-yml-section .default-card-product .swiper-pagination span.swiper-pagination-bullet{width:8px;height:8px;}
+    .cart-yml-section .default-card-product .product-card__content__infos__deets .product-card-pricebox .price{line-height:1;}
+}
+
+
+
+
+

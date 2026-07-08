@@ -1,0 +1,37 @@
+{%- comment -%}
+  Running campaign video (woman on beach / red outfit).
+  @param section {Section}
+  @param class {String} extra classes on wrapper
+{%- endcomment -%}
+{%- liquid
+  assign video = section.settings.running_video
+  assign poster = section.settings.running_video_poster
+  assign video_alt = section.settings.running_video_alt | default: 'Campaign video'
+  assign wrapper_class = class | default: ''
+-%}
+{%- if video != blank or poster != blank -%}
+  <div class="msp-running-video {{ wrapper_class }}">
+    {%- if video != blank -%}
+      {{
+        video
+        | video_tag:
+          class: 'msp-running-video__el',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: section.settings.running_video_show_controls,
+          preload: 'metadata'
+      }}
+    {%- else -%}
+      {{
+        poster
+        | image_url: width: 1600
+        | image_tag:
+          class: 'msp-running-video__el',
+          alt: video_alt,
+          loading: 'lazy'
+      }}
+    {%- endif -%}
+  </div>
+{%- endif -%}

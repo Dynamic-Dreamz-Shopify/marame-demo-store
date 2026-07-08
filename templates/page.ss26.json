@@ -1,0 +1,349 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "signup_hero": {
+      "type": "marame-signup-hero",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "hero_overlay_blend_mode": "lighten"
+      }
+    },
+    "signup_header_control": {
+      "type": "marame-signup-header-control",
+      "blocks": {
+        "zone_hero": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "Hero",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_duo_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_duo_mobile",
+            "zone_label": "Images — mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_intro": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_intro",
+            "zone_label": "Intro text",
+            "logo_style_mobile": "hidden",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        "zone_trio_desktop": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_trio_desktop",
+            "zone_label": "Images — desktop trio",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_video_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_video_mobile",
+            "zone_label": "Video — mobile",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_form": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_form",
+            "zone_label": "Register form",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_lower_mobile": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_lower_mobile",
+            "zone_label": "Lower mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_embroidery": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_embroidery_mobile",
+            "zone_label": "Embroidery",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        "zone_desktop_lower": {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_desktop_lower",
+            "zone_label": "Desktop close-up + video",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "zone_hero",
+        "zone_duo_mobile",
+        "zone_intro",
+        "zone_trio_desktop",
+        "zone_video_mobile",
+        "zone_form",
+        "zone_lower_mobile",
+        "zone_embroidery",
+        "zone_desktop_lower"
+      ],
+      "settings": {
+        "enable_adaptive_header": true,
+        "dark_ratio_threshold_mobile": 45,
+        "dark_ratio_threshold_desktop": 50,
+        "pixel_dark_max_mobile": 150,
+        "pixel_dark_max_desktop": 165,
+        "switch_offset_mobile": 0,
+        "switch_offset_desktop": 0
+      }
+    },
+    "signup_media_duo_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "img_fabric": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "frame_preset": "tall"
+          }
+        },
+        "img_brown": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "frame_preset": "tall",
+            "use_manual_focal": false,
+            "focal_y": 30
+          }
+        }
+      },
+      "block_order": ["img_fabric", "img_brown"],
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": false,
+        "layout": "duo",
+        "duo_ratio": "38-62",
+        "logo_zone_key": "signup_media_duo_mobile"
+      }
+    },
+    "signup_intro": {
+      "type": "marame-signup-intro",
+      "settings": {
+        "headline": "launching june 26",
+        "description": "We are delighted to announce our new Marame Collection range launching this June, co-designed with Melissa Murrell",
+        "show_mobile": true,
+        "show_desktop": true
+      }
+    },
+    "signup_media_trio_desktop": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "trio_fabric": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "fallback_asset": "marame-signup-grid-fabric-white.png",
+            "alt": "White fabric detail",
+            "frame_preset": "tall_desktop"
+          }
+        },
+        "trio_brown": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "fallback_asset": "marame-signup-grid-portrait-brown.png",
+            "alt": "Model in brown top",
+            "frame_preset": "portrait",
+            "focal_y": 28,
+            "use_manual_focal": false
+          }
+        },
+        "trio_polo": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "fallback_asset": "marame-signup-grid-portrait-polo.png",
+            "alt": "Model in knit polo",
+            "frame_preset": "portrait",
+            "focal_y": 25,
+            "use_manual_focal": false
+          }
+        }
+      },
+      "block_order": ["trio_fabric", "trio_brown", "trio_polo"],
+      "settings": {
+        "show_mobile": false,
+        "show_desktop": true,
+        "layout": "trio",
+        "logo_zone_key": "signup_media_trio_desktop"
+      }
+    },
+    "signup_video_mobile": {
+      "type": "marame-signup-video",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": false,
+        "frame_preset": "wide",
+        "alt": "Campaign video",
+        "logo_zone_key": "signup_video_mobile"
+      }
+    },
+    "signup_form": {
+      "type": "marame-signup-form",
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": true,
+        "signup_heading": "register your interests for pre access",
+        "email_placeholder": "enter email",
+        "success_message": "Thank you for registering.",
+        "form_mode": "klaviyo_embed",
+        "klaviyo_form_id": "ShK72R",
+        "klaviyo_embed_code": "<div class=\"klaviyo-form-ShK72R\"></div>",
+        "signup_glass": true
+      }
+    },
+    "signup_media_lower_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "sq": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-result-square.png",
+            "alt": "Collection portrait",
+            "frame_preset": "square"
+          }
+        },
+        "skirt": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-orange-skirt.png",
+            "alt": "Orange skirt detail",
+            "frame_preset": "tall"
+          }
+        }
+      },
+      "block_order": ["sq", "skirt"],
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": false,
+        "layout": "duo",
+        "duo_ratio": "59-41",
+        "logo_zone_key": "signup_media_lower_mobile"
+      }
+    },
+    "signup_media_embroidery_mobile": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "emb": {
+          "type": "image",
+          "settings": {
+            "show_mobile": true,
+            "show_desktop": false,
+            "fallback_asset": "marame-signup-grid-embroidery.png",
+            "alt": "Marame embroidery detail",
+            "frame_preset": "full"
+          }
+        }
+      },
+      "block_order": ["emb"],
+      "settings": {
+        "show_mobile": true,
+        "show_desktop": false,
+        "layout": "single",
+        "logo_zone_key": "signup_media_embroidery_mobile"
+      }
+    },
+    "signup_media_desktop_lower": {
+      "type": "marame-signup-media",
+      "blocks": {
+        "d_closeup": {
+          "type": "image",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "fallback_asset": "marame-signup-grid-closeup.png",
+            "alt": "Campaign close-up",
+            "frame_preset": "desktop_closeup"
+          }
+        },
+        "d_video": {
+          "type": "video",
+          "settings": {
+            "show_mobile": false,
+            "show_desktop": true,
+            "alt": "Campaign video",
+            "frame_preset": "desktop_video"
+          }
+        }
+      },
+      "block_order": ["d_closeup", "d_video"],
+      "settings": {
+        "show_mobile": false,
+        "show_desktop": true,
+        "layout": "duo",
+        "duo_ratio": "48-52",
+        "logo_zone_key": "signup_media_desktop_lower"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "signup_header_control",
+    "signup_hero",
+    "signup_media_duo_mobile",
+    "signup_intro",
+    "signup_media_trio_desktop",
+    "signup_video_mobile",
+    "signup_form",
+    "signup_media_lower_mobile",
+    "signup_media_embroidery_mobile",
+    "signup_media_desktop_lower"
+  ]
+}

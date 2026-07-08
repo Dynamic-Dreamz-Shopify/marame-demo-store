@@ -1,0 +1,482 @@
+<section class="fit-finder row">
+    <div class="fit-finder__bg">
+        {% if section.settings.hero_image %}
+            <img src="{{ section.settings.hero_image | image_url }}" loading="eager" fetchpriority="high" alt="Hero Image" data-p-speed="0.15" />
+        {% endif %}
+    </div>
+    <div class="col--0 col--md--3 col--lg--6"></div>
+    <div class="fit-finder__form col--6 col--md--5 col--lg--6">
+    
+            <form id="fitFinderForm">
+                <!-- Welcome Step -->
+                <div class="step welcome-step">
+                    <div class="step__top">
+                        <strong>Marame Fit Finder</strong>
+                    </div>
+
+                    <div class="step__content">
+                        <h3 class="h1">{{ section.settings.heading }}</h3>
+                        <div class="intro-text">
+                            {{ section.settings.intro_text }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Steps -->
+                <div class="step">
+                    <div class="step__top">
+                        <p>01</p>
+                        <h3 class="h1">Your Height</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__size-buttons">
+                            <button id="feet-inches-btn" class="btn btn--dark btn--rounded">Feet/Inches</button>
+                            <button id="cm-btn" class="btn btn--outline btn--rounded">Centimetres</button>
+                        </div>
+                        <div id="feet-inches-container" class="step__content__input-container active">
+                            <div class="step__content__input-group">
+                                <label for="feet">Feet</label>
+                                <div class="step__content__input-field">
+                                    <input type="text" id="feet" name="height_feet" value="{{ customer.metafields.custom.height_feet | default: 5 }}" />
+                                    <button class="adjust" data-target="feet" data-change="-1">-</button>
+                                    <button class="adjust" data-target="feet" data-change="1">+</button>
+                                </div>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="inches">Inches</label>
+                                <div class="step__content__input-field">
+                                    <input type="text" id="inches" name="height_inches" value="{{ customer.metafields.custom.height_inches | default: 10 }}" />
+                                    <button class="adjust" data-target="inches" data-change="-1">-</button>
+                                    <button class="adjust" data-target="inches" data-change="1">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cm-container" class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <label for="cm">Centimetres</label>
+                                <input type="text" id="cm" name="height_cm" value="{{ customer.metafields.custom.height_cm | default: 177.8 }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>02</p>
+                        <h3 class="h1">Your Date of Birth</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <label for="day-select">Day</label>
+                                <select id="day-select" name="dob_day">
+                                    {% for day in (1..31) %}
+                                        <option value="{{ day }}" {% if customer.metafields.custom.dob_day == day %}selected{% endif %}>{{ day }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="month-select">Month</label>
+                                <select id="month-select" name="dob_month">
+                                    {% assign months = "January,February,March,April,May,June,July,August,September,October,November,December" | split: "," %}
+                                    {% for month in months %}
+                                        <option value="{{ forloop.index }}" {% if customer.metafields.custom.dob_month == forloop.index %}selected{% endif %}>{{ month }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="year-select">Year</label>
+                                <select id="year-select" name="dob_year">
+                                    {% assign current_year = "now" | date: "%Y" | plus: 0 %}
+                                    {% for year in (current_year-100..current_year) reversed %}
+                                        <option value="{{ year }}" {% if customer.metafields.custom.dob_year == year %}selected{% endif %}>{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>03</p>
+                        <h3 class="h1">Your Gender</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="male" name="gender" value="male" {% if customer.metafields.custom.gender == 'male' %}checked{% endif %} />
+                                    <label for="male">Male</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="female" name="gender" value="female" {% if customer.metafields.custom.gender == 'female' %}checked{% endif %} />
+                                    <label for="female">Female</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="other" name="gender" value="other" {% if customer.metafields.custom.gender == 'other' %}checked{% endif %} />
+                                    <label for="other">Other</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="secret" name="gender" value="secret" {% if customer.metafields.custom.gender == 'secret' %}checked{% endif %} />
+                                    <label for="secret">Prefer Not to Say</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>04</p>
+                        <h3 class="h1">How confident are you when selecting your size when shopping online?</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="confident-0" name="confidence_level" value="0" {% if customer.metafields.custom.confidence_level == '0' %}checked{% endif %} />
+                                    <label for="confident-0">Not Confident At All</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="confident-35" name="confidence_level" value="35" {% if customer.metafields.custom.confidence_level == '35' %}checked{% endif %} />
+                                    <label for="confident-35">Slightly Confident</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="confident-75" name="confidence_level" value="75" {% if customer.metafields.custom.confidence_level == '75' %}checked{% endif %} />
+                                    <label for="confident-75">Confident</label>
+                                </div>
+                                <div class="step__content__input-field">
+                                    <input type="radio" id="confident-100" name="confidence_level" value="100" {% if customer.metafields.custom.confidence_level == '100' %}checked{% endif %} />
+                                    <label for="confident-100">Very Confident</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>05</p>
+                        <h3 class="h1">How would you describe the clothes you own?</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <label for="tops-fit">Tops</label>
+                                <select id="tops-fit" name="tops_fit">
+                                    <option value="too_tight" {% if customer.metafields.custom.tops_fit == 'too_tight' %}selected{% endif %}>Too Tight</option>
+                                    <option value="slightly_tight" {% if customer.metafields.custom.tops_fit == 'slightly_tight' %}selected{% endif %}>Slightly Too Tight</option>
+                                    <option value="perfect" {% if customer.metafields.custom.tops_fit == 'perfect' %}selected{% endif %}>Fit Perfectly</option>
+                                    <option value="slightly_large" {% if customer.metafields.custom.tops_fit == 'slightly_large' %}selected{% endif %}>Slightly Large</option>
+                                    <option value="too_large" {% if customer.metafields.custom.tops_fit == 'too_large' %}selected{% endif %}>Too Large</option>
+                                </select>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="bottoms-fit">Bottoms</label>
+                                <select id="bottoms-fit" name="bottoms_fit">
+                                    <option value="too_tight" {% if customer.metafields.custom.bottoms_fit == 'too_tight' %}selected{% endif %}>Too Tight</option>
+                                    <option value="slightly_tight" {% if customer.metafields.custom.bottoms_fit == 'slightly_tight' %}selected{% endif %}>Slightly Too Tight</option>
+                                    <option value="perfect" {% if customer.metafields.custom.bottoms_fit == 'perfect' %}selected{% endif %}>Fit Perfectly</option>
+                                    <option value="slightly_large" {% if customer.metafields.custom.bottoms_fit == 'slightly_large' %}selected{% endif %}>Slightly Large</option>
+                                    <option value="too_large" {% if customer.metafields.custom.bottoms_fit == 'too_large' %}selected{% endif %}>Too Large</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>06</p>
+                        <h3 class="h1">What sizes do you currently wear?</h3>
+                    </div>
+                    <div class="step__content">
+                        <div class="step__content__input-container">
+                            <div class="step__content__input-group">
+                                <label for="size-tops">Tops</label>
+                                <select id="size-tops" name="size_tops">
+                                    <option value="small" {% if customer.metafields.custom.size_tops == 'small' %}selected{% endif %}>Small</option>
+                                    <option value="medium" {% if customer.metafields.custom.size_tops == 'medium' %}selected{% endif %}>Medium</option>
+                                    <option value="large" {% if customer.metafields.custom.size_tops == 'large' %}selected{% endif %}>Large</option>
+                                </select>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="size-bottoms">Bottoms</label>
+                                <select id="size-bottoms" name="size_bottoms">
+                                    <option value="small" {% if customer.metafields.custom.size_bottoms == 'small' %}selected{% endif %}>Small</option>
+                                    <option value="medium" {% if customer.metafields.custom.size_bottoms == 'medium' %}selected{% endif %}>Medium</option>
+                                    <option value="large" {% if customer.metafields.custom.size_bottoms == 'large' %}selected{% endif %}>Large</option>
+                                </select>
+                            </div>
+                            <div class="step__content__input-group">
+                                <label for="size-shoes">Shoes</label>
+                                <select id="size-shoes" name="size_shoes">
+                                    <option value="8.0" {% if customer.metafields.custom.size_shoes == '8.0' %}selected{% endif %}>8.0</option>
+                                    <option value="8.5" {% if customer.metafields.custom.size_shoes == '8.5' %}selected{% endif %}>8.5</option>
+                                    <option value="9" {% if customer.metafields.custom.size_shoes == '9' %}selected{% endif %}>9</option>
+                                    <option value="9.5" {% if customer.metafields.custom.size_shoes == '9.5' %}selected{% endif %}>9.5</option>
+                                    <option value="10" {% if customer.metafields.custom.size_shoes == '10' %}selected{% endif %}>10</option>
+                                    <option value="10.5" {% if customer.metafields.custom.size_shoes == '10.5' %}selected{% endif %}>10.5</option>
+                                    <option value="11" {% if customer.metafields.custom.size_shoes == '11' %}selected{% endif %}>11</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step__top">
+                        <p>07</p>
+                        <h3 class="h1">your body shape</h3>
+                    </div>
+
+                    <div class="step__content">
+                        <p>Select the image that is closest to your body shape:</p>
+                        <!-- Male Images -->
+                        <div id="male-content" class="step__content__input-container">
+                            {% assign selected_male_shapes = customer.metafields.custom.body_shape_male | split: ',' %}
+                    
+                            {% for i in (1..5) %}
+                                {% assign image_key = 'male_image_' | append: i %}
+                                {% if section.settings[image_key] %}
+                                    {% assign i_str = i | downcase | strip %}
+                                    <label class="step__content__img-checkbox">
+                                        <input type="checkbox" name="body_shape_male" value="{{ i }}" {% if selected_male_shapes contains i_str %}checked{% endif %} />
+                                        <img src="{{ section.settings[image_key] | image_url }}" alt="Male Body Shape {{ i }}" />
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    
+                        <!-- Female Images -->
+                        <div id="female-content" class="step__content__input-container">
+                            {% assign selected_female_shapes = customer.metafields.custom.body_shape_female | split: ',' %}
+                    
+                            {% for i in (1..5) %}
+                                {% assign image_key = 'female_image_' | append: i %}
+                                {% if section.settings[image_key] %}
+                                    {% assign i_str = i | downcase | strip %}
+                                    <label class="step__content__img-checkbox">
+                                        <input type="checkbox" name="body_shape_female" value="{{ i }}" {% if selected_female_shapes contains i_str %}checked{% endif %} />
+                                        <img src="{{ section.settings[image_key] | image_url }}" alt="Female Body Shape {{ i }}" />
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- Progress Bar -->
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="nav-buttons">
+                        <a href="#" id="logo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16" fill="none">
+                                <g clip-path="url(#clip0_542_542)">
+                                    <path d="M21.9992 13.5469H19.7147V15.84H21.9992V13.5469Z" fill="#383230" />
+                                    <path d="M8.1795 10.4928H8.15318L3.13202 0.0576262L3.10331 0H0.000671387V15.8328H2.4981V4.4036H2.50766L6.85663 13.3285L6.8662 13.3501H9.46409L13.7891 4.42761V15.8328H16.2866V0H13.2054L8.1795 10.4928Z" fill="#383230" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_542_542">
+                                        <rect width="22" height="15.84" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </a>
+                        <button type="button" id="prevBtn" class="btn btn--dark btn--back">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 5 6 6">
+                                <path d="M4.36844 5H0.296172C0.126927 5 0 5.12693 0 5.28559V9.35787C0 9.5271 0.137505 9.65403 0.30674 9.65403H0.550024C0.719259 9.65403 0.846191 9.51653 0.846191 9.35787V6.43852L5.30983 10.9127C5.42618 11.0291 5.61657 11.0291 5.73292 10.9127L5.91274 10.7329C6.02909 10.6166 6.02909 10.4262 5.91274 10.3098L1.43852 5.84619H4.36844C4.53768 5.84619 4.66461 5.71926 4.66461 5.5606V5.31732C4.66461 5.13751 4.53768 5 4.36844 5Z" fill="white"></path>
+                            </svg>
+                            <p>Back</p>
+                        </button>
+                        <button type="button" id="nextBtn" class="btn btn--dark">
+                            <p>Next</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 5 6 6">
+                                <path d="M1.63156 5H5.70383C5.87307 5 6 5.12693 6 5.28559V9.35787C6 9.5271 5.86249 9.65403 5.69326 9.65403H5.44998C5.28074 9.65403 5.15381 9.51653 5.15381 9.35787V6.43852L0.690172 10.9127C0.573821 11.0291 0.383429 11.0291 0.267078 10.9127L0.0872631 10.7329C-0.0290877 10.6166 -0.0290877 10.4262 0.0872631 10.3098L4.56148 5.84619H1.63156C1.46232 5.84619 1.33539 5.71926 1.33539 5.5606V5.31732C1.33539 5.13751 1.46232 5 1.63156 5Z" fill="white"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- Success Message -->
+            <div id="success-message" style="display:none; color: green; font-weight: bold; margin-bottom: 10px;"></div>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("fitFinderForm");
+    const successMessage = document.getElementById("success-message");
+
+    if (localStorage.getItem("successMessage")) {
+        successMessage.innerText = localStorage.getItem("successMessage");
+        successMessage.style.display = "block";
+        localStorage.removeItem("successMessage");
+        setTimeout(() => { successMessage.style.display = "none"; }, 5000);
+    }
+
+    const customerId = "{{ customer.id }}";
+
+    async function updateMetafield(namespace, key, value) {
+        const metafield = {
+            namespace: namespace,
+            key: key,
+            value: value,
+            type: "single_line_text_field"
+        };
+
+        const response = await fetch(`/admin/api/2024-01/customers/${customerId}/metafields.json`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Shopify-Access-Token": ""
+            },
+            body: JSON.stringify({ metafield })
+        });
+
+        const result = await response.json();
+        console.log("Response:", result);
+
+        if (result.errors) {
+            console.error("Metafield update error:", result.errors);
+            return Promise.reject(result.errors);
+        } else {
+            console.log("Metafield updated successfully!");
+            return Promise.resolve();
+        }
+    }
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Gather form values
+        const gender = document.querySelector('input[name="gender"]:checked')?.value || "";
+        const heightFeet = document.getElementById("feet")?.value || "";
+        const heightInches = document.getElementById("inches")?.value || "";
+        const heightCm = document.getElementById("cm")?.value || "";
+        const dobDay = document.getElementById("day-select")?.value || "";
+        const dobMonth = document.getElementById("month-select")?.value || "";
+        const dobYear = document.getElementById("year-select")?.value || "";
+        const confidenceLevel = document.querySelector('input[name="confidence_level"]:checked')?.value || "";
+        const topsFit = document.getElementById("tops-fit")?.value || "";
+        const bottomsFit = document.getElementById("bottoms-fit")?.value || "";
+        const sizeTops = document.getElementById("size-tops")?.value || "";
+        const sizeBottoms = document.getElementById("size-bottoms")?.value || "";
+        const sizeShoes = document.getElementById("size-shoes")?.value || "";
+        
+        // Get selected body shape (male or female)
+        let bodyShapeMale = [...document.querySelectorAll('input[name="body_shape_male"]:checked')].map(el => el.value).join(",");
+        let bodyShapeFemale = [...document.querySelectorAll('input[name="body_shape_female"]:checked')].map(el => el.value).join(",");
+
+        Promise.all([
+            updateMetafield("custom", "gender", gender),
+            updateMetafield("custom", "height_feet", heightFeet),
+            updateMetafield("custom", "height_inches", heightInches),
+            updateMetafield("custom", "height_cm", heightCm),
+            updateMetafield("custom", "dob_day", dobDay),
+            updateMetafield("custom", "dob_month", dobMonth),
+            updateMetafield("custom", "dob_year", dobYear),
+            updateMetafield("custom", "confidence_level", confidenceLevel),
+            updateMetafield("custom", "tops_fit", topsFit),
+            updateMetafield("custom", "bottoms_fit", bottomsFit),
+            updateMetafield("custom", "size_tops", sizeTops),
+            updateMetafield("custom", "size_bottoms", sizeBottoms),
+            updateMetafield("custom", "size_shoes", sizeShoes),
+            updateMetafield("custom", "body_shape_male", bodyShapeMale),
+            updateMetafield("custom", "body_shape_female", bodyShapeFemale)
+        ]).then(() => {
+            localStorage.setItem("successMessage", "Your details have been saved successfully!");
+            window.location.reload();
+        }).catch(error => {
+            console.error("Error updating metafields:", error);
+        });
+    });
+});
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Fit Finder",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let's Find Your Perfect Fit"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introductory Text",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Let's find your perfect fit!</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "male_image_1",
+      "label": "Male Body Shape Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "male_image_2",
+      "label": "Male Body Shape Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "male_image_3",
+      "label": "Male Body Shape Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "male_image_4",
+      "label": "Male Body Shape Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "male_image_5",
+      "label": "Male Body Shape Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "female_image_1",
+      "label": "Female Body Shape Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "female_image_2",
+      "label": "Female Body Shape Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "female_image_3",
+      "label": "Female Body Shape Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "female_image_4",
+      "label": "Female Body Shape Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "female_image_5",
+      "label": "Female Body Shape Image 5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fit Finder"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,151 @@
+{%- comment -%}
+  @param card_product {Product} from block picker
+  @param color_label {String}
+  @param color_variant {Variant} optional
+  @param grid_index, position_index, color_values, block
+{%- endcomment -%}
+{%- assign resolved_color_variant = color_variant -%}
+{%- assign marame_available_colors = '' -%}
+{%- assign marame_match_note = '' -%}
+
+{%- if card_product != blank -%}
+  {%- assign grid_product = card_product -%}
+  {%- if card_product.handle != blank -%}
+    {%- assign grid_product = all_products[card_product.handle] | default: card_product -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign grid_product = blank -%}
+{%- endif -%}
+
+{%- if resolved_color_variant == blank and grid_product != blank -%}
+  {%- assign target_color = color_label | downcase | strip | replace: '  ', ' ' -%}
+  {%- assign target_key = target_color | handleize -%}
+  {%- assign color_option_position = 1 -%}
+
+  {%- for option in grid_product.options_with_values -%}
+    {%- assign op_name = option.name | downcase -%}
+    {%- if op_name contains 'color' or op_name contains 'colour' -%}
+      {%- assign color_option_position = option.position -%}
+      {%- for value in option.values -%}
+        {%- unless marame_available_colors == '' -%}
+          {%- assign marame_available_colors = marame_available_colors | append: ', ' -%}
+        {%- endunless -%}
+        {%- assign marame_available_colors = marame_available_colors | append: value -%}
+        {%- assign value_down = value | downcase | strip -%}
+        {%- assign value_key = value_down | handleize -%}
+        {%- if resolved_color_variant == blank and target_color != '' -%}
+          {%- if value_key == target_key or value_down == target_color -%}
+            {%- for variant in grid_product.variants -%}
+              {%- if color_option_position == 1 -%}
+                {%- assign vc = variant.option1 | downcase | strip -%}
+              {%- elsif color_option_position == 2 -%}
+                {%- assign vc = variant.option2 | downcase | strip -%}
+              {%- else -%}
+                {%- assign vc = variant.option3 | downcase | strip -%}
+              {%- endif -%}
+              {%- if vc == value_down -%}
+                {%- assign resolved_color_variant = variant -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if resolved_color_variant == blank -%}
+    {%- assign prev_color = '' -%}
+    {%- for variant in grid_product.variants -%}
+      {%- if color_option_position == 1 -%}
+        {%- assign variant_color_raw = variant.option1 -%}
+      {%- elsif color_option_position == 2 -%}
+        {%- assign variant_color_raw = variant.option2 -%}
+      {%- else -%}
+        {%- assign variant_color_raw = variant.option3 -%}
+      {%- endif -%}
+      {%- assign variant_color = variant_color_raw | downcase | strip | replace: '  ', ' ' -%}
+      {%- assign variant_key = variant_color | handleize -%}
+      {%- if target_color != '' -%}
+        {%- if variant_key == target_key or variant_color == target_color or variant_color contains target_color or target_color contains variant_color -%}
+          {%- assign resolved_color_variant = variant -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- elsif forloop.first or variant_color != prev_color -%}
+        {%- assign resolved_color_variant = variant -%}
+        {%- break -%}
+      {%- endif -%}
+      {%- assign prev_color = variant_color -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if resolved_color_variant != blank -%}
+  {%- assign show_card = true -%}
+  {%- unless request.design_mode -%}
+    {%- comment -%}
+      In "blocks" mode, the grid is editorial (merchant-chosen). Don't hide cards just
+      because the selected colour is sold out, otherwise the editor order won't match preview.
+    {%- endcomment -%}
+    {%- if section.settings.marame_hide_sold_out
+      and resolved_color_variant.available == false
+      and section.settings.marame_display_mode != 'blocks'
+    -%}
+      {%- assign show_card = false -%}
+      {%- assign marame_match_note = 'sold-out' -%}
+    {%- endif -%}
+    {%- if section.settings.marame_hide_no_image and resolved_color_variant.featured_media == blank and grid_product.media.size == 0 -%}
+      {%- assign show_card = false -%}
+      {%- assign marame_match_note = 'no-image' -%}
+    {%- endif -%}
+  {%- endunless -%}
+
+  {%- if show_card -%}
+    {%- assign get_i = grid_index | modulo: 5 -%}
+    {%- assign cycle_pos = position_index | modulo: 21 -%}
+    {%- if cycle_pos == 0 -%}{%- assign cycle_pos = 21 -%}{%- endif -%}
+    {%- if cycle_pos == 4 or cycle_pos == 8 or cycle_pos == 16 -%}
+      {%- assign special_class = 'has-metafield' -%}
+    {%- elsif cycle_pos == 15 -%}
+      {%- assign special_class = 'has-metafield-3' -%}
+    {%- else -%}
+      {%- assign special_class = '' -%}
+    {%- endif -%}
+    {%- assign marame_preload_hover = false -%}
+    {%- if position_index <= 12 -%}
+      {%- assign marame_preload_hover = true -%}
+    {%- endif -%}
+    <div class="marame-grid-card-slot" {% if block %}{{ block.shopify_attributes }}{% endif %} style="display: contents;">
+      {%- render 'card-product-merge',
+        card_product: grid_product,
+        color_variant: resolved_color_variant,
+        show_count: section.settings.show_variant_count,
+        get_i: get_i,
+        special_class: special_class,
+        color_values: color_values,
+        lcp_priority: lcp_priority,
+        marame_preload_hover: marame_preload_hover
+      -%}
+    </div>
+  {%- elsif request.design_mode -%}
+    <li class="listing__item marame-grid-editor-placeholder" {{ block.shopify_attributes }} style="grid-column: 1 / -1; padding: 1rem; border: 2px dashed #f90; background: #fffaf0; text-transform: none;">
+      {%- if marame_match_note == 'sold-out' -%}
+        <p><strong>Hidden on storefront:</strong> “{{ color_label }}” on {{ grid_product.title }} is sold out (still shown here in editor).</p>
+      {%- elsif marame_match_note == 'no-image' -%}
+        <p><strong>Hidden on storefront:</strong> “{{ color_label }}” has no featured image (still shown here in editor).</p>
+      {%- else -%}
+        <p><strong>Could not render card</strong> for “{{ color_label }}” on {{ grid_product.title }}.</p>
+      {%- endif -%}
+    </li>
+  {%- endif -%}
+{%- elsif request.design_mode -%}
+  <li class="listing__item marame-grid-editor-placeholder" {{ block.shopify_attributes }} style="grid-column: 1 / -1; padding: 1rem; border: 2px dashed #c00; background: #fff5f5; text-transform: none;">
+    <p><strong>Grid card not shown:</strong> no colour “{{ color_label }}” on {{ grid_product.title | default: 'this product' }}.</p>
+    {%- if marame_available_colors != '' -%}
+      <p>Available colours: {{ marame_available_colors }}.</p>
+    {%- endif -%}
+    {%- if grid_product == blank -%}
+      <p>Select a product on this block.</p>
+    {%- endif -%}
+  </li>
+{%- endif -%}

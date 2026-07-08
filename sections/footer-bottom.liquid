@@ -1,0 +1,213 @@
+{{ 'new-footer.css' | asset_url | stylesheet_tag }}
+<style>
+#footer-bottom-{{ section.id }} {
+background-color: {{ section.settings.background_color }};
+padding-top: {{ section.settings.padding_top }}px;
+padding-bottom: {{ section.settings.padding_bottom }}px;
+padding-left: {{ section.settings.padding_left }}px;
+padding-right: {{ section.settings.padding_right }}px;
+margin-top: {{ section.settings.margin_top }}px;
+margin-bottom: {{ section.settings.margin_bottom }}px;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-grid {
+display: flex;
+flex-direction: row;
+align-items: {{ section.settings.vertical_align }};
+justify-content: space-between;
+gap: {{ section.settings.column_gap }}px;
+width: 100%;
+box-sizing: border-box;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-left {
+flex: 0 0 {{ section.settings.left_width }}%;
+max-width: {{ section.settings.left_width }}%;
+text-align: {{ section.settings.left_align }};
+box-sizing: border-box;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-center {
+flex: 0 0 {{ section.settings.center_width }}%;
+max-width: {{ section.settings.center_width }}%;
+text-align: center;
+box-sizing: border-box;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-right {
+flex: 0 0 {{ section.settings.right_width }}%;
+max-width: {{ section.settings.right_width }}%;
+text-align: {{ section.settings.right_align }};
+box-sizing: border-box;
+}
+#footer-bottom-{{ section.id }} .trustpilot-scale-wrapper {
+display: inline-block;
+transform-origin: {{ section.settings.right_align }} center;
+transform: scale({{ section.settings.widget_scale | divided_by: 100.0 }});
+width: {{ section.settings.widget_scale_width }}%;
+}
+#footer-bottom-{{ section.id }} .footer-copyright {
+color: {{ section.settings.copyright_color }};
+font-size: {{ section.settings.copyright_font_size }}px;
+font-weight: {{ section.settings.copyright_font_weight }};
+letter-spacing: {{ section.settings.copyright_letter_spacing }}px;
+text-transform: {{ section.settings.copyright_text_transform }};
+margin: 0;
+padding: 0;
+}
+#footer-bottom-{{ section.id }} .footer-logo img {
+width: {{ section.settings.logo_width }}px;
+height: auto;
+display: block;
+margin: 0 auto;
+}
+#footer-bottom-{{ section.id }} .footer-logo-text {
+color: {{ section.settings.logo_text_color }};
+font-size: {{ section.settings.logo_text_size }}px;
+font-weight: {{ section.settings.logo_text_weight }};
+letter-spacing: {{ section.settings.logo_text_spacing }}px;
+text-transform: {{ section.settings.logo_text_transform }};
+margin: 0;
+padding: 0;
+}
+@media screen and (max-width: 768px) {
+#footer-bottom-{{ section.id }} {
+padding-top: {{ section.settings.padding_top_mobile }}px !important;
+padding-bottom: {{ section.settings.padding_bottom_mobile }}px !important;
+padding-left: {{ section.settings.padding_left_mobile }}px !important;
+padding-right: {{ section.settings.padding_right_mobile }}px !important;
+margin-top: {{ section.settings.margin_top_mobile }}px !important;
+margin-bottom: {{ section.settings.margin_bottom_mobile }}px !important;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-grid {
+flex-direction: {{ section.settings.mobile_stack }};
+align-items: {{ section.settings.mobile_align }};
+gap: {{ section.settings.mobile_gap }}px;
+}
+#footer-bottom-{{ section.id }} .footer-bottom-left,
+#footer-bottom-{{ section.id }} .footer-bottom-center,
+#footer-bottom-{{ section.id }} .footer-bottom-right {
+flex: 0 0 100%;
+max-width: 100%;
+text-align: {{ section.settings.mobile_text_align }};
+}
+#footer-bottom-{{ section.id }} .trustpilot-scale-wrapper {
+transform: scale({{ section.settings.widget_scale_mobile | divided_by: 100.0 }});
+transform-origin: {{ section.settings.mobile_text_align }} center;
+width: {{ section.settings.widget_scale_width_mobile }}%;
+}
+#footer-bottom-{{ section.id }} .footer-copyright {
+font-size: {{ section.settings.copyright_font_size_mobile }}px;
+}
+#footer-bottom-{{ section.id }} .footer-logo img {
+width: {{ section.settings.logo_width_mobile }}px;
+margin: 0 auto;
+{% if section.settings.mobile_text_align == 'left' %}margin-left: 0;{% endif %}
+{% if section.settings.mobile_text_align == 'right' %}margin-right: 0;{% endif %}
+}
+#footer-bottom-{{ section.id }} .footer-logo-text {
+font-size: {{ section.settings.logo_text_size_mobile }}px;
+}
+}
+</style>
+<section id="footer-bottom-{{ section.id }}">
+<div class="footer-bottom-grid">
+<div class="footer-bottom-left">
+<p class="footer-copyright">
+&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text }}
+</p>
+</div>
+<div class="footer-bottom-center">
+{% if section.settings.logo != blank %}
+<div class="footer-logo">
+<img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ section.settings.logo_alt | default: shop.name }}">
+</div>
+{% elsif section.settings.logo_text != blank %}
+<p class="footer-logo-text">{{ section.settings.logo_text }}</p>
+{% endif %}
+</div>
+<div class="footer-bottom-right">
+<div class="trustpilot-scale-wrapper">
+<div class="trustpilot-widget"
+data-locale="{{ section.settings.locale }}"
+data-template-id="{{ section.settings.template_id }}"
+data-businessunit-id="{{ section.settings.business_unit_id }}"
+data-style-height="{{ section.settings.widget_height }}px"
+data-style-width="100%"
+data-theme="{{ section.settings.widget_theme }}"
+data-stars="{{ section.settings.stars }}">
+<a href="https://www.trustpilot.com/review/{{ section.settings.domain }}" target="_blank" rel="noopener">Trustpilot</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% schema %}
+{
+"name": "Footer Bottom Bar",
+"tag": "div",
+"settings": [
+{"type": "color", "id": "background_color", "label": "Background Colour", "default": "#000000"},
+{"type": "header", "content": "Desktop Spacing"},
+{"type": "range", "id": "padding_top", "label": "Padding Top", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 24},
+{"type": "range", "id": "padding_bottom", "label": "Padding Bottom", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 24},
+{"type": "range", "id": "padding_left", "label": "Padding Left", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 24},
+{"type": "range", "id": "padding_right", "label": "Padding Right", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 24},
+{"type": "range", "id": "margin_top", "label": "Margin Top", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0},
+{"type": "range", "id": "margin_bottom", "label": "Margin Bottom", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0},
+{"type": "header", "content": "Mobile Spacing"},
+{"type": "range", "id": "padding_top_mobile", "label": "Padding Top (mobile)", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 16},
+{"type": "range", "id": "padding_bottom_mobile", "label": "Padding Bottom (mobile)", "min": 0, "max": 800, "step": 8, "unit": "px", "default": 16},
+{"type": "range", "id": "padding_left_mobile", "label": "Padding Left (mobile)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 16},
+{"type": "range", "id": "padding_right_mobile", "label": "Padding Right (mobile)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 16},
+{"type": "range", "id": "margin_top_mobile", "label": "Margin Top (mobile)", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0},
+{"type": "range", "id": "margin_bottom_mobile", "label": "Margin Bottom (mobile)", "min": -400, "max": 400, "step": 8, "unit": "px", "default": 0},
+{"type": "header", "content": "Column Layout — Desktop"},
+{"type": "select", "id": "vertical_align", "label": "Vertical Alignment", "options": [{"value": "flex-start", "label": "Top"}, {"value": "center", "label": "Middle"}, {"value": "flex-end", "label": "Bottom"}], "default": "center"},
+{"type": "range", "id": "column_gap", "label": "Column Gap", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 16},
+{"type": "range", "id": "left_width", "label": "Left Column Width %", "min": 10, "max": 60, "step": 1, "unit": "%", "default": 33},
+{"type": "range", "id": "center_width", "label": "Center Column Width %", "min": 10, "max": 60, "step": 1, "unit": "%", "default": 33},
+{"type": "range", "id": "right_width", "label": "Right Column Width %", "min": 10, "max": 60, "step": 1, "unit": "%", "default": 33},
+{"type": "select", "id": "left_align", "label": "Left Column Text Align", "options": [{"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}], "default": "left"},
+{"type": "select", "id": "right_align", "label": "Right Column Text Align", "options": [{"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}], "default": "right"},
+{"type": "header", "content": "Column Layout — Mobile"},
+{"type": "select", "id": "mobile_stack", "label": "Mobile Stack Direction", "options": [{"value": "column", "label": "Stacked (top to bottom)"}, {"value": "column-reverse", "label": "Stacked (bottom to top)"}, {"value": "row", "label": "Side by side"}], "default": "column"},
+{"type": "select", "id": "mobile_align", "label": "Mobile Alignment", "options": [{"value": "flex-start", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "flex-end", "label": "Right"}], "default": "center"},
+{"type": "select", "id": "mobile_text_align", "label": "Mobile Text Align", "options": [{"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}], "default": "center"},
+{"type": "range", "id": "mobile_gap", "label": "Mobile Gap", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 16},
+{"type": "header", "content": "Copyright — Desktop"},
+{"type": "text", "id": "copyright_text", "label": "Copyright Text", "default": "MARAME. All rights reserved."},
+{"type": "color", "id": "copyright_color", "label": "Copyright Colour", "default": "#666666"},
+{"type": "range", "id": "copyright_font_size", "label": "Font Size", "min": 8, "max": 24, "step": 1, "unit": "px", "default": 11},
+{"type": "select", "id": "copyright_font_weight", "label": "Font Weight", "options": [{"value": "300", "label": "Light"}, {"value": "400", "label": "Regular"}, {"value": "500", "label": "Medium"}, {"value": "600", "label": "Semi Bold"}, {"value": "700", "label": "Bold"}], "default": "400"},
+{"type": "range", "id": "copyright_letter_spacing", "label": "Letter Spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 1},
+{"type": "select", "id": "copyright_text_transform", "label": "Text Transform", "options": [{"value": "none", "label": "None"}, {"value": "uppercase", "label": "Uppercase"}, {"value": "lowercase", "label": "Lowercase"}], "default": "uppercase"},
+{"type": "header", "content": "Copyright — Mobile"},
+{"type": "range", "id": "copyright_font_size_mobile", "label": "Font Size (mobile)", "min": 8, "max": 24, "step": 1, "unit": "px", "default": 10},
+{"type": "header", "content": "Center Logo"},
+{"type": "image_picker", "id": "logo", "label": "Logo Image"},
+{"type": "text", "id": "logo_alt", "label": "Logo Alt Text", "default": "MARAME."},
+{"type": "range", "id": "logo_width", "label": "Logo Width (desktop)", "min": 20, "max": 300, "step": 4, "unit": "px", "default": 100},
+{"type": "range", "id": "logo_width_mobile", "label": "Logo Width (mobile)", "min": 20, "max": 300, "step": 4, "unit": "px", "default": 80},
+{"type": "text", "id": "logo_text", "label": "Logo Text (if no image)", "default": "MARAME."},
+{"type": "color", "id": "logo_text_color", "label": "Logo Text Colour", "default": "#ffffff"},
+{"type": "range", "id": "logo_text_size", "label": "Logo Text Size (desktop)", "min": 10, "max": 60, "step": 1, "unit": "px", "default": 18},
+{"type": "range", "id": "logo_text_size_mobile", "label": "Logo Text Size (mobile)", "min": 10, "max": 60, "step": 1, "unit": "px", "default": 16},
+{"type": "select", "id": "logo_text_weight", "label": "Logo Text Weight", "options": [{"value": "300", "label": "Light"}, {"value": "400", "label": "Regular"}, {"value": "500", "label": "Medium"}, {"value": "600", "label": "Semi Bold"}, {"value": "700", "label": "Bold"}], "default": "700"},
+{"type": "range", "id": "logo_text_spacing", "label": "Logo Letter Spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 4},
+{"type": "select", "id": "logo_text_transform", "label": "Logo Text Transform", "options": [{"value": "none", "label": "None"}, {"value": "uppercase", "label": "Uppercase"}, {"value": "lowercase", "label": "Lowercase"}], "default": "uppercase"},
+{"type": "header", "content": "Trustpilot Widget — Desktop"},
+{"type": "text", "id": "business_unit_id", "label": "Business Unit ID", "default": "6863d52829d0eb9d7940e024"},
+{"type": "text", "id": "template_id", "label": "Template ID", "default": "53aa8807dec7e10d38f59f32"},
+{"type": "text", "id": "domain", "label": "Domain", "default": "marame.com"},
+{"type": "range", "id": "widget_height", "label": "Widget Height", "min": 20, "max": 200, "step": 2, "unit": "px", "default": 52},
+{"type": "range", "id": "widget_scale", "label": "Widget Scale %", "min": 20, "max": 100, "step": 1, "unit": "%", "default": 100},
+{"type": "range", "id": "widget_scale_width", "label": "Widget Container Width %", "min": 50, "max": 200, "step": 2, "unit": "%", "default": 100},
+{"type": "select", "id": "widget_theme", "label": "Widget Theme", "options": [{"value": "dark", "label": "Dark"}, {"value": "light", "label": "Light"}], "default": "dark"},
+{"type": "select", "id": "stars", "label": "Show Stars", "options": [{"value": "1,2,3,4,5", "label": "All"}, {"value": "4,5", "label": "4 and 5 only"}, {"value": "5", "label": "5 only"}], "default": "4,5"},
+{"type": "select", "id": "locale", "label": "Locale", "options": [{"value": "en-GB", "label": "English (UK)"}, {"value": "en-US", "label": "English (US)"}], "default": "en-GB"},
+{"type": "header", "content": "Trustpilot Widget — Mobile"},
+{"type": "range", "id": "widget_scale_mobile", "label": "Widget Scale % (mobile)", "min": 20, "max": 100, "step": 1, "unit": "%", "default": 80},
+{"type": "range", "id": "widget_scale_width_mobile", "label": "Widget Container Width % (mobile)", "min": 50, "max": 200, "step": 2, "unit": "%", "default": 100}
+],
+"presets": [{"name": "Footer Bottom Bar"}]
+}
+{% endschema %}
+
+

@@ -1,0 +1,93 @@
+{% assign size_option = 'size' %}
+{% assign size_index = -1 %}
+
+{%- for option in card_product.options_with_values -%}
+  {% assign option_name = option.name | downcase %}
+  {% if option_name == 'shoe size' %}
+    {% assign size_option = 'shoe size' %}
+  {% endif %}
+  {% if option_name == size_option %}
+    {% assign size_index = forloop.index0 %}
+  {% endif %}
+{%- endfor -%}
+
+{% assign color_index = -1 %}
+
+{%- for option in card_product.options_with_values -%}
+  {% assign option_name = option.name | downcase %}
+  {% if option_name == 'color' or option_name == 'colour' %}
+    {% assign color_index = forloop.index0 %}
+  {% endif %}
+{%- endfor -%}
+
+{% if size_index != -1 %}
+  {% assign size_values = card_product.options_with_values[size_index].values %}
+
+  {% assign valueCounter = 0 %}
+  {% for value in size_values %}
+    {% assign sizeVariant = '' %}
+    {% assign value_downcase = value | downcase | strip %}
+
+    {% for variant in card_product.variants %}
+      {% assign variant_size = variant.options[size_index] | downcase | strip %}
+      {% assign variant_color = variant.options[color_index] | downcase | strip %}
+
+      {% if variant_size == value_downcase and variant_color == selected_color %}
+        {% assign sizeVariant = variant %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign valueCounter = valueCounter | plus: 1 %}
+
+    {% if sizeVariant != blank %}
+      <div
+        class="option{% unless sizeVariant.available %} option--out-of-stock{% endunless %}"
+        data_variant_title="{{ sizeVariant.title }}"
+        data-value="{{ value }}"
+        data_variant_id="{{ sizeVariant.id }}"
+      >
+        <small>{{ value }}</small>
+      </div>
+    {% endif %}
+
+  {% endfor %}
+{% endif %}
+
+{%- form 'product',
+  card_product,
+  class: 'form small_hide large_hide hidden',
+  novalidate: 'novalidate',
+  data-type: 'add-to-cart-form'
+-%}
+  {% if card_product.available %}
+  <input
+    type="hidden"
+    name="id"
+    value="{% if selected_color and color_index != -1 %}
+      {{ card_product.variants | where: 'option' | first }}
+    {% else %}
+      {{ card_product.selected_or_first_available_variant.id }}
+    {% endif %}"
+    class="product-variant-id"
+  >
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+    >
+  <button type="submit" name="add" class="quick-add__submit">
+    <span>{{ 'products.product.add_to_cart' | t }}</span>
+  </button>
+  {% endif %}
+
+  <div
+    class="klaviyo-product-container"
+    id="klaviyo-data-handle-{{ card_product.handle }}"
+    data-klaviyo-handle="{{ card_product.handle }}"
+  >
+    <div class="klaviyo-button-container product-grid-btn">
+      {% comment %} <a class="product-grid-btn klaviyo-bis-trigger" href="#" style="padding: inherit; text-align: center;" data-klaviyo-handle="{{ card_product.handle }}">OUT OF STOCK - NOTIFY ME</a> {% endcomment %}
+    </div>
+  </div>
+{%- endform -%}

@@ -1,0 +1,40 @@
+/* Footer nav + newsletter row — layout variables set in Footer Newsletter section */
+.marame-footer-columns {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.marame-footer-columns > .shopify-section {
+  min-width: 0;
+}
+
+@media screen and (min-width: 990px) {
+  .marame-footer-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--mfn-newsletter-col, 42%));
+    align-items: start;
+    gap: var(--mfn-column-gap, 32px);
+    max-width: var(--mfn-row-max-width, 1440px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--mfn-row-padding-left, 48px);
+    padding-right: var(--mfn-row-padding-right, 48px);
+  }
+
+  .marame-footer-columns > .shopify-section:first-child {
+    grid-column: 1;
+  }
+
+  .marame-footer-columns > .shopify-section:last-child {
+    grid-column: 2;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .marame-footer-columns {
+    display: block;
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

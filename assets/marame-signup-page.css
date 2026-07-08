@@ -1,0 +1,1629 @@
+/* Marame collection signup landing page */
+
+/* Homepage: header.css defaults to white; adaptive JS sets chrome classes */
+body.template-index .header.header--msp-adaptive:not(.header--msp-chrome-black):not(.header--msp-logo-black) {
+  color: #fff;
+}
+
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .account,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .wishlist,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .menu-btn span {
+  color: #2a2a2d !important;
+}
+
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .account,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .wishlist,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .menu-btn span {
+  color: #fff !important;
+}
+
+/* Menu open: force header chrome to black (overrides adaptive white states) */
+body.template-index.marame-drawer-open .header.header--msp-adaptive,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .searchbar__btn,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .searchbar__btn,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .account,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .account,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .wishlist,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .wishlist,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .menu-btn span,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .menu-btn span,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .cart-count,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .cart-count {
+  color: #2a2a2d !important;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__logo svg,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__logo svg,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__logo svg path,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__logo svg path,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__logo svg *,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__logo svg * {
+  fill: #2a2a2d !important;
+  color: #2a2a2d !important;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__logo svg *,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__logo svg * {
+  stroke: none !important;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive .searchbar__btn svg circle,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .searchbar__btn svg circle,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .searchbar__btn svg line,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .searchbar__btn svg line,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart svg path,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart svg path,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart svg rect,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .header__right__bag__cart svg rect,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .account svg path,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .account svg path,
+body.template-index.marame-drawer-open .header.header--msp-adaptive .wishlist svg path,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive .wishlist svg path {
+  stroke: currentColor !important;
+}
+
+/* —— Adaptive header (pre-access + homepage): logo, menu, cart, search —— */
+body.template-pre-access .shopify-section-group-header-group,
+body.template-index .shopify-section-group-header-group {
+  position: relative;
+  z-index: 100;
+}
+
+body.template-pre-access.marame-drawer-open .shopify-section-group-header-group,
+body.template-index.marame-drawer-open .shopify-section-group-header-group {
+  z-index: 10000;
+  background: #fff;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive {
+  top: 0 !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive,
+body.template-index .header.header--msp-adaptive {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  background: transparent;
+}
+
+/* Homepage header bar background modes (set in Header colours section) */
+html[data-msp-header-bar='transparent'] body.template-index .header,
+body.template-index[data-msp-header-bar='transparent'] .header,
+body.template-index .header.header--msp-bar-transparent,
+body.template-index:not(.marame-drawer-open)[data-msp-header-bar='transparent'] .header.header--active,
+body.template-index:not(.marame-drawer-open) .header.header--msp-bar-transparent.header--active,
+body.template-index[data-msp-header-bar='transparent'] .header.header--scrolled,
+body.template-index .header.header--msp-bar-transparent.header--scrolled {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Menu open: header must become a solid white bar (even if header-bar mode is "transparent"). */
+html[data-msp-header-bar='transparent'] body.template-index.marame-drawer-open .header,
+body.template-index.marame-drawer-open[data-msp-header-bar='transparent'] .header,
+body.template-index.marame-drawer-open .header.header--msp-bar-transparent,
+body.template-index.marame-drawer-open[data-msp-header-bar='transparent'] .header.header--active,
+body.template-index.marame-drawer-open .header.header--msp-bar-transparent.header--active {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+
+body.template-index[data-msp-header-bar='white'] .header,
+body.template-index .header.header--msp-bar-white,
+body.template-index[data-msp-header-bar='white'] .header.header--active,
+body.template-index .header.header--msp-bar-white.header--active,
+body.template-index[data-msp-header-bar='white'] .header.header--scrolled,
+body.template-index .header.header--msp-bar-white.header--scrolled {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+
+body.template-index[data-msp-header-bar='black'] .header,
+body.template-index .header.header--msp-bar-black,
+body.template-index[data-msp-header-bar='black'] .header.header--active,
+body.template-index .header.header--msp-bar-black.header--active,
+body.template-index[data-msp-header-bar='black'] .header.header--scrolled,
+body.template-index .header.header--msp-bar-black.header--scrolled {
+  background: #2a2a2d !important;
+  background-color: #2a2a2d !important;
+}
+
+body.template-index[data-msp-header-bar='blur'] .header,
+body.template-index .header.header--msp-bar-blur,
+body.template-index[data-msp-header-bar='blur'] .header.header--active,
+body.template-index .header.header--msp-bar-blur.header--active,
+body.template-index[data-msp-header-bar='blur'] .header.header--scrolled,
+body.template-index .header.header--msp-bar-blur.header--scrolled {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body.template-index .shopify-section.section-header {
+  background: transparent !important;
+}
+
+/* Default on homepage: no frosted bar unless blur mode is selected */
+body.template-index:not([data-msp-header-bar='blur']) .header .header__bg {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.template-index[data-msp-header-bar='transparent'] .header .header__bg,
+body.template-index .header.header--msp-bar-transparent .header__bg,
+body.template-index[data-msp-header-bar='white'] .header .header__bg,
+body.template-index .header.header--msp-bar-white .header__bg,
+body.template-index[data-msp-header-bar='black'] .header .header__bg,
+body.template-index .header.header--msp-bar-black .header__bg {
+  display: none !important;
+}
+
+body.template-index[data-msp-header-bar='blur'] .header .header__bg,
+body.template-index .header.header--msp-bar-blur .header__bg {
+  display: block !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  min-height: 4.5rem;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1 !important;
+  visibility: visible !important;
+  /* Use an opaque white bar (blur was too transparent and made the header appear to disappear). */
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+body.template-index[data-msp-header-bar='blur'] .header .header__nav,
+body.template-index[data-msp-header-bar='blur'] .header .header__logo,
+body.template-index[data-msp-header-bar='blur'] .header .header__right,
+body.template-index .header.header--msp-bar-blur .header__nav,
+body.template-index .header.header--msp-bar-blur .header__logo,
+body.template-index .header.header--msp-bar-blur .header__right {
+  position: relative;
+  z-index: 1;
+}
+
+/* Do NOT keep header transparent when the burger menu is open (causes hero bleed-through). */
+body.template-index:not(.marame-drawer-open)[data-msp-header-bar='transparent'] .header.header--active,
+body.template-index:not(.marame-drawer-open) .header.header--msp-bar-transparent.header--active {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive::before,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body.template-index.marame-drawer-open .header.header--msp-adaptive > *,
+body.template-pre-access.marame-drawer-open .header.header--msp-adaptive > * {
+  position: relative;
+  z-index: 1;
+}
+
+body.template-index.marame-drawer-open[data-msp-header-bar='blur'] .header.header--msp-bar-blur.header--active,
+body.template-index.marame-drawer-open .header.header--msp-bar-blur.header--active {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+
+/* Search overlay: never show in the top bar unless search is open */
+body.template-index:not([data-msp-header-bar='blur']) .header .searchbar .search-modal-overlay,
+body.template-index .header .searchbar .search-modal-overlay {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.template-index .header .search-modal__form:has(.searchbar__input--active) .search-modal-overlay {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+body.template-index .header.header--msp-bar-transparent .search-modal__form:not(:has(.searchbar__input--active)),
+body.template-index .header.header--msp-bar-white .search-modal__form:not(:has(.searchbar__input--active)),
+body.template-index .header.header--msp-bar-black .search-modal__form:not(:has(.searchbar__input--active)) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive .header__logo,
+body.template-index .header.header--msp-adaptive .header__logo {
+  display: block;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.template-pre-access .header.header--msp-adaptive .header__logo svg path,
+body.template-index .header.header--msp-adaptive .header__logo svg path {
+  stroke: none;
+  transition: fill 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.template-pre-access .header.header--msp-adaptive .searchbar__btn,
+body.template-index .header.header--msp-adaptive .searchbar__btn,
+body.template-pre-access .header.header--msp-adaptive .menu-btn span,
+body.template-index .header.header--msp-adaptive .menu-btn span,
+body.template-pre-access .header.header--msp-adaptive .header__right__bag__cart,
+body.template-index .header.header--msp-adaptive .header__right__bag__cart,
+body.template-pre-access .header.header--msp-adaptive .account,
+body.template-index .header.header--msp-adaptive .account,
+body.template-pre-access .header.header--msp-adaptive .wishlist,
+body.template-index .header.header--msp-adaptive .wishlist {
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-white .header__logo,
+body.template-index .header.header--msp-adaptive.header--msp-logo-white .header__logo,
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-white .header__logo svg,
+body.template-index .header.header--msp-adaptive.header--msp-logo-white .header__logo svg,
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-white .header__logo svg path,
+body.template-index .header.header--msp-adaptive.header--msp-logo-white .header__logo svg path {
+  fill: #fff !important;
+  color: #fff !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-black .header__logo,
+body.template-index .header.header--msp-adaptive.header--msp-logo-black .header__logo,
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-black .header__logo svg,
+body.template-index .header.header--msp-adaptive.header--msp-logo-black .header__logo svg,
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-black .header__logo svg path,
+body.template-index .header.header--msp-adaptive.header--msp-logo-black .header__logo svg path {
+  fill: #2a2a2d !important;
+  color: #2a2a2d !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .account,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .account,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .wishlist,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .wishlist,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .menu-btn span,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .menu-btn span,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .cart-count,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .cart-count {
+  color: #fff !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn svg circle,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn svg circle,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn svg line,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .searchbar__btn svg line,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg path,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg rect,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg rect,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .account svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .account svg path,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .wishlist svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .wishlist svg path {
+  stroke: currentColor !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg rect,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-white .header__right__bag__cart svg rect {
+  fill: transparent !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .account,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .account,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .wishlist,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .wishlist,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .menu-btn span,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .menu-btn span,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .cart-count,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .cart-count {
+  color: #2a2a2d !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn svg circle,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn svg circle,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn svg line,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .searchbar__btn svg line,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg path,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg rect,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg rect,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .account svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .account svg path,
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .wishlist svg path,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .wishlist svg path {
+  stroke: currentColor !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg rect,
+body.template-index .header.header--msp-adaptive.header--msp-chrome-black .header__right__bag__cart svg rect {
+  fill: transparent !important;
+}
+
+/* Burger menu panel is always white — drawer links stay dark (not adaptive chrome) */
+body.template-pre-access .header.header--msp-adaptive.header--active .header-drawer,
+body.template-index .header.header--msp-adaptive.header--active .header-drawer {
+  color: #2a2a2d;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__trigger,
+body.template-index .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__trigger,
+body.template-pre-access .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__back,
+body.template-index .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__back,
+body.template-pre-access .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__back p,
+body.template-index .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__back p,
+body.template-pre-access .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__content__wears ul > li > a,
+body.template-index .header.header--msp-adaptive.header--active .header-drawer .header__nav__item__dropdown__content__wears ul > li > a,
+body.template-pre-access .header.header--msp-adaptive.header--active .header-bottom-drawer .account,
+body.template-index .header.header--msp-adaptive.header--active .header-bottom-drawer .account {
+  color: #2a2a2d !important;
+}
+
+body.template-pre-access .header.header--msp-adaptive.header--msp-logo-hidden .header__logo,
+body.template-index .header.header--msp-adaptive.header--msp-logo-hidden .header__logo {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* When the burger menu is open, always show the header chrome (logo must not be hidden). */
+body.marame-drawer-open.template-pre-access .header.header--msp-adaptive.header--msp-logo-hidden .header__logo,
+body.marame-drawer-open.template-index .header.header--msp-adaptive.header--msp-logo-hidden .header__logo {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+body.msp-header-style-white .announcement_bar_row,
+body.msp-header-style-white .announcement_bar_row a,
+body.msp-header-style-white .announcement_bar_row .ai-announcement-bar__message {
+  color: #fff !important;
+}
+
+body.msp-header-style-black .announcement_bar_row,
+body.msp-header-style-black .announcement_bar_row a,
+body.msp-header-style-black .announcement_bar_row .ai-announcement-bar__message {
+  color: #2a2a2d !important;
+}
+
+/* Keep last white/black fill while fading out — do not override path fill when hidden */
+
+.msp-header-control-panel {
+  padding: 0 1rem 1rem;
+}
+
+.msp-header-control-panel__title {
+  margin-bottom: 0.5rem;
+}
+
+.msp-header-control-panel__list {
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.msp {
+  --msp-text: #212121;
+  --msp-border: #2d2c2a;
+  --msp-muted: rgba(0, 0, 0, 0.51);
+  --msp-signup-bg: rgba(255, 255, 255, 0.57);
+  --msp-input-bg: rgba(255, 255, 255, 0.44);
+  background: #fff;
+  color: var(--msp-text);
+}
+
+.msp-section {
+  width: 100%;
+  background: #fff;
+}
+
+.msp-section__placeholder {
+  padding: 1.5rem;
+  text-align: center;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 12px;
+  color: #828282;
+  background: #f7f7f7;
+}
+
+@media screen and (max-width: 989px) {
+  .msp-section--hide-mobile {
+    display: none !important;
+  }
+
+  .msp-media__cell--hide-mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .msp-section--hide-desktop {
+    display: none !important;
+  }
+
+  .msp-media__cell--hide-desktop {
+    display: none !important;
+  }
+}
+
+/* —— Hero —— */
+.msp-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.msp-hero__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 270;
+}
+
+.msp-hero__image {
+  position: absolute;
+  inset: 0;
+}
+
+.msp-hero__image .msp-media__fill,
+.msp-hero__image .msp-media__img,
+.msp-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.msp-hero__image--desktop,
+.msp-hero__video--desktop,
+.msp-hero__overlay-poster--desktop {
+  display: none;
+}
+
+.msp-hero__video-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: lighten;
+}
+
+.msp-hero__video-wrap--normal {
+  mix-blend-mode: normal;
+}
+
+.msp-hero__video-wrap--lighten {
+  mix-blend-mode: lighten;
+}
+
+.msp-hero__video-wrap--screen {
+  mix-blend-mode: screen;
+}
+
+.msp-hero__video-wrap--multiply {
+  mix-blend-mode: multiply;
+}
+
+.msp-hero__video-wrap--overlay {
+  mix-blend-mode: overlay;
+}
+
+.msp-hero__video-wrap--soft-light {
+  mix-blend-mode: soft-light;
+}
+
+.msp-hero__video,
+.msp-hero__overlay-poster {
+  width: min(52%, 185px);
+  height: auto;
+  max-height: 55%;
+  object-fit: contain;
+  mix-blend-mode: inherit;
+  background: transparent;
+}
+
+.msp-hero__overlay-poster {
+  position: relative;
+  z-index: 2;
+}
+
+/* —— Section spacing (from Figma y-positions) —— */
+.msp-section-gap {
+  margin-bottom: var(--msp-section-gap-mobile, 0);
+}
+
+/* —— Typography —— */
+.msp-intro {
+  text-align: center;
+  padding: var(--msp-intro-pad-top-mobile, 4rem) 1.75rem var(--msp-intro-pad-bottom-mobile, 3.5rem);
+  margin-bottom: var(--msp-gap-after-intro-mobile, 0);
+}
+
+.msp-intro__headline {
+  margin: 0 0 var(--msp-headline-body-gap-mobile, 1.75rem);
+  font-family: var(--msp-headline-font-family, HelveticaNowDisplayLight, sans-serif);
+  font-weight: var(--msp-headline-font-weight, 300);
+  font-size: var(--msp-headline-size-mobile, 20px);
+  line-height: var(--msp-headline-line-height, 1);
+  text-transform: var(--msp-intro-headline-transform, uppercase);
+  color: var(--msp-text);
+}
+
+.msp-intro__body {
+  margin: 0 auto;
+  max-width: var(--msp-body-max-width, 20rem);
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 300;
+  font-size: var(--msp-body-size-mobile, 11px);
+  line-height: var(--msp-body-line-height, 20px);
+  text-transform: var(--msp-intro-body-transform, none);
+  color: var(--msp-body-color, #000);
+}
+
+/* Intro + checkerboard + form: mobile/desktop letter-spacing are viewport-specific (see MQ blocks below) */
+
+@media screen and (max-width: 989px) {
+  .msp-intro__headline {
+    letter-spacing: var(--msp-headline-tracking-mobile, 4.2px) !important;
+  }
+
+  .msp-intro__body {
+    letter-spacing: var(--msp-body-tracking-mobile, 1.32px) !important;
+  }
+
+  .msp-checkerboard__headline {
+    letter-spacing: var(--msp-checkerboard-headline-tracking-mobile, 4px) !important;
+  }
+
+  .msp-checkerboard__body {
+    letter-spacing: var(--msp-checkerboard-body-tracking-mobile, 0px) !important;
+  }
+
+  .msp-signup__heading {
+    letter-spacing: var(--msp-signup-heading-tracking-mobile, var(--msp-signup-heading-tracking, 0px)) !important;
+  }
+
+  .msp-signup__field {
+    min-height: var(--msp-input-field-height-mobile, var(--msp-input-field-height, 48px));
+  }
+
+  .msp-signup__input,
+  .msp-signup__field--klaviyo .klaviyo-form input[type='email'] {
+    min-height: var(--msp-input-field-height-mobile, var(--msp-input-field-height, 48px));
+    height: var(--msp-input-field-height-mobile, var(--msp-input-field-height, 48px));
+    letter-spacing: var(--msp-input-letter-spacing-mobile, var(--msp-input-letter-spacing, 3px)) !important;
+  }
+
+  .msp-signup__input::placeholder,
+  .msp-signup__field--klaviyo .klaviyo-form input[type='email']::placeholder {
+    letter-spacing: inherit !important;
+  }
+
+  .msp-signup__submit,
+  .msp-signup__submit--klaviyo {
+    min-height: var(--msp-submit-field-height-mobile, var(--msp-input-field-height-mobile, 48px));
+    height: var(--msp-submit-field-height-mobile, var(--msp-input-field-height-mobile, 48px));
+    letter-spacing: var(--msp-submit-letter-spacing-mobile, var(--msp-submit-letter-spacing, 3px)) !important;
+  }
+}
+
+/* —— Checkerboard (text / image 50-50 rows) —— */
+.msp-checkerboard {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  --msp-checkerboard-scale: var(--msp-checkerboard-scale-mobile, 1);
+}
+
+.msp-checkerboard__row {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'text'
+    'media';
+  align-items: stretch;
+}
+
+.msp-checkerboard__row--text-left,
+.msp-checkerboard__row--image-left {
+  grid-template-areas:
+    'text'
+    'media';
+}
+
+.msp-checkerboard__text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--msp-checkerboard-text-pad-y-mobile, 2.5rem)
+    var(--msp-checkerboard-text-pad-x-mobile, 1.75rem);
+  background: #fff;
+  color: var(--msp-text, #000);
+}
+
+.msp-checkerboard__headline {
+  margin: 0 0 var(--msp-checkerboard-headline-body-gap-mobile, 1.75rem);
+  max-width: var(--msp-checkerboard-body-max-width, 100%);
+  font-family: var(--msp-headline-font-family, HelveticaNowDisplayLight, sans-serif);
+  font-weight: var(--msp-headline-font-weight, 300);
+  font-size: calc(var(--msp-checkerboard-headline-size-mobile, 20px) * var(--msp-checkerboard-scale, 1));
+  line-height: var(--msp-checkerboard-headline-line-height-mobile, var(--msp-checkerboard-headline-line-height, 1));
+  text-transform: var(--msp-checkerboard-headline-transform, uppercase);
+  color: var(--msp-text, #000);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.msp-checkerboard__body {
+  margin: 0;
+  max-width: var(--msp-checkerboard-body-max-width, 100%);
+  width: 100%;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-weight: 300;
+  font-size: calc(var(--msp-checkerboard-body-size-mobile, 11px) * var(--msp-checkerboard-scale, 1));
+  line-height: calc(
+    1em + var(--msp-checkerboard-body-line-break-gap-mobile, var(--msp-checkerboard-body-line-break-gap, 0px))
+  );
+  text-transform: var(--msp-checkerboard-body-transform, none);
+  color: var(--msp-body-color, #000);
+}
+
+.msp-checkerboard__body p,
+.msp-checkerboard__body li,
+.msp-checkerboard__body a,
+.msp-checkerboard__body strong,
+.msp-checkerboard__body em {
+  text-transform: inherit;
+}
+
+.msp-checkerboard__body p {
+  margin: 0 0 var(
+    --msp-checkerboard-body-paragraph-gap-mobile,
+    var(--msp-checkerboard-body-paragraph-gap, 0px)
+  );
+}
+
+.msp-checkerboard__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Double <br> in the editor = one controlled gap (hides blank line from second break) */
+.msp-checkerboard__body br {
+  display: block;
+  line-height: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.msp-checkerboard__body br + br {
+  display: none;
+}
+
+/* Text-block break in editor (<br><br>): gap is 2× “between lines” (see spacing vars in theme) */
+.msp-checkerboard__body br:not(br + br) {
+  margin-bottom: var(
+    --msp-checkerboard-body-paragraph-gap-mobile,
+    var(--msp-checkerboard-body-paragraph-gap, 0px)
+  );
+}
+
+.msp-checkerboard__media {
+  grid-area: media;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--msp-checkerboard-media-min-mobile, 260px);
+  background: #f5f5f5;
+  --msp-object-position: center center;
+}
+
+.msp-checkerboard__media .msp-media__fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.msp-checkerboard__media .msp-media__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: var(--msp-object-position, center center);
+}
+
+/* —— Media grids (fixed frames, images crop inside) —— */
+.msp-media {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.msp-media--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.msp-media--duo {
+  grid-template-columns: var(--msp-media-cols, minmax(0, 38.2%) minmax(0, 1fr));
+}
+
+/* Duo: mobile layout (stack vs side-by-side) + height controls */
+@media screen and (max-width: 989px) {
+  .msp-media--duo.msp-media--duo-mobile-stack {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: row;
+    aspect-ratio: unset;
+    height: auto;
+    min-height: 0;
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-stack .msp-media__cell {
+    aspect-ratio: var(--msp-cell-aspect, 390 / 239);
+    height: auto;
+    align-self: stretch;
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-stack.msp-media--fixed-height .msp-media__cell {
+    min-height: var(--msp-row-height-mobile-stacked, var(--msp-row-height-mobile, auto));
+    height: auto;
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-side_by_side {
+    grid-template-columns: var(--msp-media-cols-mobile, minmax(0, 1fr) minmax(0, 1fr));
+    grid-auto-flow: column;
+    aspect-ratio: unset;
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-side_by_side.msp-media--row-unified .msp-media__cell {
+    aspect-ratio: unset;
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-side_by_side.msp-media--fixed-height {
+    height: var(--msp-row-height-mobile, auto);
+    min-height: var(--msp-row-height-mobile, auto);
+  }
+
+  .msp-media--duo.msp-media--duo-mobile-side_by_side.msp-media--fixed-height .msp-media__cell {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .msp-media--duo.msp-media--duo-desktop-stack {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: row;
+    aspect-ratio: unset;
+    height: auto;
+    min-height: 0;
+  }
+
+  .msp-media--duo.msp-media--duo-desktop-stack .msp-media__cell {
+    aspect-ratio: var(--msp-cell-aspect, 390 / 239);
+    height: auto;
+  }
+
+  .msp-media--duo.msp-media--duo-desktop-stack.msp-media--fixed-height .msp-media__cell {
+    min-height: var(--msp-row-height-desktop-stacked, var(--msp-row-height-desktop, auto));
+    height: auto;
+  }
+
+  .msp-media--duo.msp-media--duo-desktop-side_by_side.msp-media--row-unified {
+    aspect-ratio: var(--msp-row-aspect, 1440 / 585);
+  }
+
+  .msp-media--duo.msp-media--duo-desktop-side_by_side.msp-media--fixed-height {
+    aspect-ratio: unset;
+  }
+}
+
+.msp-media--trio {
+  grid-template-columns: minmax(0, 29.653fr) minmax(0, 39.444fr) minmax(0, 30.903fr);
+}
+
+/* Duo/trio: one shared row height so all cells align (Figma grid) */
+.msp-media--row-unified {
+  aspect-ratio: var(--msp-row-aspect, 390 / 239);
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+
+.msp-media--row-unified .msp-media__cell {
+  aspect-ratio: unset;
+  height: 100%;
+  align-self: stretch;
+}
+
+.msp-media--fixed-height {
+  aspect-ratio: unset;
+  height: var(--msp-row-height-mobile, auto);
+  min-height: var(--msp-row-height-mobile, auto);
+}
+
+@media screen and (min-width: 990px) {
+  .msp-media--fixed-height {
+    height: var(--msp-row-height-desktop, var(--msp-row-height-mobile, auto));
+    min-height: var(--msp-row-height-desktop, var(--msp-row-height-mobile, auto));
+  }
+}
+
+.msp-media__cell {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--msp-cell-aspect, 1 / 1);
+  --msp-object-position: center center;
+  contain: layout;
+  background: #f5f5f5;
+}
+
+.msp-media__fill {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.msp-media__img,
+.msp-media__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: var(--msp-object-position, center center);
+}
+
+.msp-media__cell--has-video {
+  background: #f0f0f0;
+}
+
+/* —— Signup —— */
+.msp-signup-wrap {
+  padding: var(--msp-signup-pad-top-mobile, 2.75rem) 1.25rem var(--msp-signup-pad-bottom-mobile, 2.75rem);
+  margin-top: var(--msp-gap-before-signup-mobile, 0);
+  display: flex;
+  justify-content: var(--msp-signup-align-mobile, var(--msp-signup-align, center));
+}
+
+.msp-signup {
+  width: 100%;
+  max-width: var(--msp-signup-max-width, 390px);
+  padding: 0;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.msp-signup--glass {
+  background: #fff;
+}
+
+.msp-signup__heading {
+  margin: 0 0 1.25rem;
+  padding: 2rem 1.25rem 0;
+  font-family: var(--msp-headline-font-family, HelveticaNowDisplayRegular, sans-serif);
+  font-weight: var(--msp-headline-font-weight, 400);
+  font-size: var(--msp-signup-heading-size-mobile, var(--msp-signup-heading-size, 15px));
+  line-height: var(--msp-signup-heading-line-height-mobile, 20px);
+  text-align: var(--msp-signup-heading-align-mobile, var(--msp-signup-heading-align, center));
+  text-transform: var(--msp-signup-heading-transform, capitalize);
+  color: var(--msp-signup-heading-color, #000);
+}
+
+.msp-signup__form {
+  padding: 0 1.25rem 2rem;
+}
+
+.msp-signup__field {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: var(--msp-input-field-height, 48px);
+  border: 1px solid var(--msp-border);
+  border-radius: var(--msp-input-border-radius, 4px);
+  background: var(--msp-input-bg);
+  overflow: hidden;
+}
+
+.msp-signup__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0 var(--msp-input-padding-x, 1rem);
+  min-height: var(--msp-input-field-height, 48px);
+  font-family: HelveticaNowDisplayRegular, sans-serif;
+  font-size: var(--msp-input-font-size-mobile, var(--msp-input-font-size, 15px));
+  line-height: var(--msp-input-line-height-mobile, var(--msp-input-line-height, 20px));
+  text-align: var(--msp-input-text-align-mobile, var(--msp-input-text-align, center));
+  box-sizing: border-box;
+  text-transform: var(--msp-input-text-transform, capitalize);
+  color: var(--msp-input-color, #000);
+  outline: none;
+}
+
+.msp-signup__input::placeholder {
+  color: var(--msp-muted);
+  text-transform: var(--msp-input-text-transform, capitalize);
+}
+
+.msp-signup__info {
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  flex-shrink: 0;
+}
+
+.msp-signup__info-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.msp-signup__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 0.85rem;
+  padding: 0 var(--msp-input-padding-x, 1rem);
+  border: 1px solid var(--msp-border);
+  border-radius: var(--msp-input-border-radius, 4px);
+  background: var(--msp-button-bg-inactive, #d9d9d9) !important;
+  color: var(--msp-button-color-inactive, #2a2a2d) !important;
+  font-family: HelveticaNowDisplayRegular, sans-serif;
+  font-size: var(--msp-submit-font-size-mobile, var(--msp-submit-font-size, 15px));
+  line-height: var(--msp-submit-line-height-mobile, var(--msp-submit-line-height, 20px));
+  text-transform: var(--msp-submit-text-transform, uppercase);
+  text-align: var(--msp-submit-text-align-mobile, var(--msp-submit-text-align, center));
+  cursor: not-allowed;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.msp-signup__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.msp-signup__embed.is-email-active .msp-signup__submit--klaviyo:not(:disabled),
+.msp-signup__form.is-email-active .msp-signup__submit:not(:disabled),
+.shopify-design-mode .msp-signup__embed .msp-signup__submit--klaviyo,
+.shopify-design-mode .msp-signup__form .msp-signup__submit {
+  background: var(--msp-button-bg, #2a2a2c) !important;
+  color: var(--msp-button-color, #fff) !important;
+  cursor: pointer;
+}
+
+.msp-signup__message {
+  margin: 0.75rem 0 0;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: var(--msp-message-font-size-mobile, var(--msp-message-font-size, 12px));
+  letter-spacing: 0.5px;
+  text-align: center;
+  min-height: 1.2em;
+}
+
+.msp-signup__message--error {
+  color: #c72e2f;
+}
+
+.msp-signup__message--success {
+  color: #1b9500;
+}
+
+/* —— Klaviyo embed (styled to match Figma) —— */
+.msp-signup__embed {
+  padding: 0 1.25rem 2rem;
+}
+
+.msp-signup__field--klaviyo {
+  min-height: var(--msp-input-field-height, 48px);
+  position: relative;
+  align-items: center;
+}
+
+.msp-klaviyo-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.msp-signup__input--overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: transparent;
+}
+
+.msp-signup__field--klaviyo .msp-klaviyo-hidden-label,
+.msp-signup__field--klaviyo .klaviyo-form h1,
+.msp-signup__field--klaviyo .klaviyo-form h2,
+.msp-signup__field--klaviyo .klaviyo-form h3,
+.msp-signup__field--klaviyo .klaviyo-form h4,
+.msp-signup__field--klaviyo .klaviyo-form h5,
+.msp-signup__field--klaviyo .klaviyo-form h6,
+.msp-signup__field--klaviyo .klaviyo-form p {
+  display: none !important;
+}
+
+.msp-signup__field--klaviyo .klaviyo-form div[data-testid='form-row'] {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.msp-signup__field--klaviyo .klaviyo-form input[type='email'] {
+  width: 100% !important;
+  min-height: var(--msp-input-field-height, 48px) !important;
+  height: var(--msp-input-field-height, 48px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 var(--msp-input-padding-x, 1rem) !important;
+  font-family: HelveticaNowDisplayRegular, sans-serif !important;
+  font-size: var(--msp-input-font-size-mobile, var(--msp-input-font-size, 15px)) !important;
+  line-height: var(--msp-input-line-height-mobile, var(--msp-input-line-height, 20px)) !important;
+  text-align: var(--msp-input-text-align-mobile, var(--msp-input-text-align, center)) !important;
+  box-sizing: border-box !important;
+  color: var(--msp-input-color, #000) !important;
+}
+
+/* Typed email must stay as entered — CSS capitalize on emails looks like jOhn@GmAiL.com */
+.msp-signup__input[type='email'],
+.msp-signup__input--overlay,
+.msp-signup__field--klaviyo .klaviyo-form input[type='email'] {
+  text-transform: none !important;
+}
+
+.msp-signup__input[type='email']::placeholder,
+.msp-signup__input--overlay::placeholder,
+.msp-signup__field--klaviyo .klaviyo-form input[type='email']::placeholder {
+  text-transform: var(--msp-input-text-transform, none);
+}
+
+/* Pre-access form: layout defaults only — heights, spacing, colours from section settings */
+body.template-pre-access .msp-signup {
+  --msp-signup-max-width: 560px;
+  max-width: min(560px, 94vw);
+}
+
+body.template-pre-access .msp-signup__submit,
+body.template-pre-access .msp-signup__submit--klaviyo {
+  margin-top: 8px;
+  border: none;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+}
+
+body.template-pre-access .msp-signup__embed .msp-signup__submit--klaviyo,
+body.template-pre-access .msp-signup__form .msp-signup__submit {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.msp-signup__field--klaviyo .klaviyo-form input[type='email']::placeholder {
+  color: var(--msp-muted) !important;
+  opacity: 1 !important;
+}
+
+.msp-signup__field--klaviyo .msp-klaviyo-native-submit,
+.msp-signup__field--klaviyo .klaviyo-form button[type='button'],
+.msp-signup__field--klaviyo .klaviyo-form button[type='submit'] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.msp-signup__submit--klaviyo,
+.msp-signup__form .msp-signup__submit {
+  display: block;
+  width: calc(100% - 2.5rem);
+  margin: 0.85rem 1.25rem 0;
+}
+
+/* Submit stays visible; active state is handled via `.is-email-active`. */
+
+.msp-signup__message--klaviyo {
+  margin: 0.75rem 1.25rem 0;
+  padding: 0 0 1rem;
+}
+
+.msp-signup__message--klaviyo.msp-signup__message--success {
+  color: #1b9500;
+}
+
+.msp-signup__klaviyo-hint {
+  margin: 0.5rem 1.25rem 0;
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #c72e2f;
+}
+
+.msp-media--duo-lower {
+  grid-template-columns: 59% 41%;
+}
+
+/* —— Running campaign video —— */
+.msp-running-video-wrap,
+.msp-media__cell--video-only {
+  width: 100%;
+  min-width: 0;
+}
+
+.msp-media__cell--video-only {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--msp-cell-aspect, 390 / 218);
+  background: #f0f0f0;
+}
+
+.msp-media__cell--video-only .msp-running-video__el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.msp-running-video-wrap--mobile {
+  display: block;
+}
+
+.msp-running-video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.msp-running-video--wide {
+  aspect-ratio: 390 / 218;
+}
+
+.msp-running-video__el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* —— Single landscape image —— */
+.msp-landscape-image {
+  width: 100%;
+  min-width: 0;
+}
+
+.msp-landscape-image__cell {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: var(--msp-landscape-aspect, 16 / 9);
+  background: #f5f5f5;
+  --msp-object-position: center center;
+}
+
+.msp-landscape-image__picture {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.msp-landscape-image__cell .msp-media__fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.msp-landscape-image__cell .msp-media__img,
+.msp-landscape-image__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: var(--msp-object-position, center center);
+}
+
+.msp-landscape-image--fixed-height .msp-landscape-image__cell {
+  aspect-ratio: unset;
+  height: var(--msp-landscape-height-mobile, auto);
+  min-height: var(--msp-landscape-height-mobile, auto);
+}
+
+@media screen and (min-width: 990px) {
+  .msp-landscape-image--fixed-height .msp-landscape-image__cell {
+    height: var(--msp-landscape-height-desktop, var(--msp-landscape-height-mobile, auto));
+    min-height: var(--msp-landscape-height-desktop, var(--msp-landscape-height-mobile, auto));
+  }
+}
+
+/* —— Scroll reveal —— */
+.msp-reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--msp-reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.msp-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msp-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* —— Terms modal —— */
+.msp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.msp-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.msp-modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  max-height: min(80vh, 520px);
+  overflow: auto;
+  padding: 2rem 1.5rem 1.5rem;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.msp-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--msp-text);
+}
+
+.msp-modal__title {
+  margin: 0 0 1rem;
+  font-family: HelveticaNowDisplayRegular, sans-serif;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.msp-modal__content {
+  font-family: HelveticaNowDisplayLight, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0.4px;
+}
+
+.msp-modal__content p {
+  margin: 0 0 0.75rem;
+}
+
+/* —— Desktop —— */
+@media screen and (min-width: 990px) {
+  .msp-checkerboard {
+    --msp-checkerboard-scale: var(--msp-checkerboard-scale-desktop, 1);
+  }
+
+  .msp-hero__image-wrap {
+    aspect-ratio: 1440 / 997;
+  }
+
+  .msp-hero__image--mobile,
+  .msp-hero__video--mobile,
+  .msp-hero__overlay-poster--mobile {
+    display: none;
+  }
+
+  .msp-hero__image--desktop,
+  .msp-hero__video--desktop,
+  .msp-hero__overlay-poster--desktop {
+    display: block;
+  }
+
+  .msp-hero__video,
+  .msp-hero__overlay-poster {
+    width: min(36%, 522px);
+    max-height: 30%;
+  }
+
+  .msp-section-gap {
+    margin-bottom: var(--msp-section-gap-desktop, 0);
+  }
+
+  .msp-intro {
+    padding: var(--msp-intro-pad-top-desktop, 7.5rem) 2rem var(--msp-intro-pad-bottom-desktop, 6rem);
+    margin-bottom: var(--msp-gap-after-intro-desktop, 0);
+  }
+
+  .msp-intro__headline {
+    font-size: var(--msp-headline-size-desktop, 32px);
+    margin-bottom: var(--msp-headline-body-gap-desktop, 1rem);
+    line-height: var(--msp-headline-line-height-desktop, 1);
+    letter-spacing: var(--msp-headline-tracking-desktop, 7px) !important;
+  }
+
+  .msp-intro__body {
+    max-width: var(--msp-body-max-width-desktop, 34rem);
+    font-size: var(--msp-body-size-desktop, 15px);
+    letter-spacing: var(--msp-body-tracking-desktop, 1.8px) !important;
+  }
+
+  .msp-checkerboard__row--text-left {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'text media';
+  }
+
+  .msp-checkerboard__row--image-left {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'media text';
+  }
+
+  .msp-checkerboard__text {
+    padding: var(--msp-checkerboard-text-pad-y-desktop, 4rem)
+      var(--msp-checkerboard-text-pad-x-desktop, 3rem);
+  }
+
+  .msp-checkerboard__headline {
+    font-size: calc(var(--msp-checkerboard-headline-size-desktop, 32px) * var(--msp-checkerboard-scale, 1));
+    line-height: var(--msp-checkerboard-headline-line-height-desktop, var(--msp-checkerboard-headline-line-height-mobile, 1));
+    margin-bottom: var(--msp-checkerboard-headline-body-gap-desktop, 1rem);
+    max-width: var(--msp-checkerboard-body-max-width-desktop, 100%);
+    letter-spacing: var(--msp-checkerboard-headline-tracking-desktop, 7px) !important;
+  }
+
+  .msp-checkerboard__body {
+    max-width: var(--msp-checkerboard-body-max-width-desktop, 26.25rem);
+    font-size: calc(var(--msp-checkerboard-body-size-desktop, 15px) * var(--msp-checkerboard-scale, 1));
+    line-height: calc(
+      1em + var(--msp-checkerboard-body-line-break-gap-desktop, var(--msp-checkerboard-body-line-break-gap-mobile, 0px))
+    ) !important;
+    letter-spacing: var(--msp-checkerboard-body-tracking-desktop, 0px) !important;
+  }
+
+  .msp-checkerboard__body p {
+    margin-bottom: var(
+      --msp-checkerboard-body-paragraph-gap-desktop,
+      var(--msp-checkerboard-body-paragraph-gap-mobile, 0px)
+    );
+  }
+
+  .msp-checkerboard__body br:not(br + br) {
+    margin-bottom: var(
+      --msp-checkerboard-body-paragraph-gap-desktop,
+      var(--msp-checkerboard-body-paragraph-gap-mobile, 0px)
+    );
+  }
+
+  .msp-checkerboard__media {
+    min-height: var(--msp-checkerboard-media-min-desktop, 320px);
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .msp-running-video-wrap--mobile {
+    display: none;
+  }
+
+  .msp-signup-wrap {
+    padding-top: var(--msp-signup-pad-top-desktop, 1.75rem);
+    padding-bottom: var(--msp-signup-pad-bottom-desktop, 4rem);
+    margin-top: var(--msp-gap-before-signup-desktop, 0);
+    justify-content: var(--msp-signup-align-desktop, var(--msp-signup-align-mobile, center));
+  }
+
+  .msp-media--row-unified.msp-media--trio {
+    aspect-ratio: 1440 / 557;
+    grid-template-columns: minmax(0, 29.653fr) minmax(0, 39.444fr) minmax(0, 30.903fr);
+  }
+
+  .msp-media--row-unified.msp-media--duo {
+    aspect-ratio: var(--msp-row-aspect, 1440 / 585);
+  }
+
+  .msp-signup--glass {
+    background: var(--msp-signup-bg);
+    backdrop-filter: blur(4.65px);
+    -webkit-backdrop-filter: blur(4.65px);
+  }
+
+  .msp-signup--glass .msp-signup__heading {
+    padding-top: 2.5rem;
+  }
+
+  .msp-signup__heading {
+    font-size: var(--msp-signup-heading-size-desktop, var(--msp-signup-heading-size-mobile, 15px));
+    line-height: var(--msp-signup-heading-line-height-desktop, var(--msp-signup-heading-line-height-mobile, 20px));
+    letter-spacing: var(--msp-signup-heading-tracking-desktop, 0px) !important;
+    text-align: var(--msp-signup-heading-align-desktop, var(--msp-signup-heading-align-mobile, center));
+  }
+
+  .msp-signup__field {
+    min-height: var(--msp-input-field-height-desktop, var(--msp-input-field-height-mobile, 48px));
+  }
+
+  .msp-signup__input,
+  .msp-signup__field--klaviyo .klaviyo-form input[type='email'] {
+    font-size: var(--msp-input-font-size-desktop, var(--msp-input-font-size-mobile, 15px));
+    line-height: var(--msp-input-line-height-desktop, var(--msp-input-line-height-mobile, 20px));
+    text-align: var(--msp-input-text-align-desktop, var(--msp-input-text-align-mobile, center));
+    min-height: var(--msp-input-field-height-desktop, var(--msp-input-field-height-mobile, 48px));
+    height: var(--msp-input-field-height-desktop, var(--msp-input-field-height-mobile, 48px));
+    letter-spacing: var(--msp-input-letter-spacing-desktop, var(--msp-input-letter-spacing-mobile, 3px)) !important;
+  }
+
+  .msp-signup__field--klaviyo .klaviyo-form input[type='email'] {
+    font-size: var(--msp-input-font-size-desktop, var(--msp-input-font-size-mobile, 15px)) !important;
+    line-height: var(--msp-input-line-height-desktop, var(--msp-input-line-height-mobile, 20px)) !important;
+    text-align: var(--msp-input-text-align-desktop, var(--msp-input-text-align-mobile, center)) !important;
+    min-height: var(--msp-input-field-height-desktop, var(--msp-input-field-height-mobile, 48px)) !important;
+    height: var(--msp-input-field-height-desktop, var(--msp-input-field-height-mobile, 48px)) !important;
+    letter-spacing: var(--msp-input-letter-spacing-desktop, var(--msp-input-letter-spacing-mobile, 3px)) !important;
+  }
+
+  .msp-signup__submit,
+  .msp-signup__submit--klaviyo {
+    font-size: var(--msp-submit-font-size-desktop, var(--msp-submit-font-size-mobile, 15px));
+    line-height: var(--msp-submit-line-height-desktop, var(--msp-submit-line-height-mobile, 20px));
+    text-align: var(--msp-submit-text-align-desktop, var(--msp-submit-text-align-mobile, center));
+    min-height: var(--msp-submit-field-height-desktop, var(--msp-input-field-height-desktop, 48px));
+    height: var(--msp-submit-field-height-desktop, var(--msp-input-field-height-desktop, 48px));
+    letter-spacing: var(--msp-submit-letter-spacing-desktop, var(--msp-submit-letter-spacing-mobile, 3px)) !important;
+  }
+
+  .msp-signup__message {
+    font-size: var(--msp-message-font-size-desktop, var(--msp-message-font-size-mobile, 12px));
+  }
+
+  .msp-media__cell--desktop-closeup {
+    aspect-ratio: 955 / 585;
+  }
+
+  .msp-media__cell--desktop-video {
+    aspect-ratio: 1049 / 585;
+  }
+
+  .msp-media__cell--desktop-video .msp-running-video {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .msp-media__cell--full {
+    aspect-ratio: 1440 / 760;
+  }
+
+  .msp-media--desktop-only.msp-media--duo {
+    grid-template-columns: 47.8% 52.2%;
+  }
+}

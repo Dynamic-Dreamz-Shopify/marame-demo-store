@@ -1,0 +1,31 @@
+{%- comment -%}
+  Resolves one colour-level variant for a product.
+  @param product {Product}
+  @param color_label {String} optional — exact colour option value
+  @output resolved_color_variant {Variant}
+{%- endcomment -%}
+{%- assign resolved_color_variant = blank -%}
+{%- if product != blank -%}
+  {%- assign target_color = color_label | downcase | strip -%}
+  {%- assign color_option_index = 0 -%}
+  {%- for option in product.options -%}
+    {%- assign opt_down = option | downcase -%}
+    {%- if opt_down == 'color' or opt_down == 'colour' -%}
+      {%- assign color_option_index = forloop.index0 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign prev_color = '' -%}
+  {%- for variant in product.variants -%}
+    {%- assign variant_color = variant.options[color_option_index] | downcase | strip -%}
+    {%- if target_color != '' -%}
+      {%- if variant_color == target_color -%}
+        {%- assign resolved_color_variant = variant -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- elsif forloop.first or variant_color != prev_color -%}
+      {%- assign resolved_color_variant = variant -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- assign prev_color = variant_color -%}
+  {%- endfor -%}
+{%- endif -%}

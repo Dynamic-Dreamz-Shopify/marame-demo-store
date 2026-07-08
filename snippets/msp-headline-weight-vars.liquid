@@ -1,0 +1,21 @@
+{%- comment -%}
+  Headline font weight for pre-access sections.
+  @param weight {String} light | regular | bold
+{%- endcomment -%}
+{%- liquid
+  assign w = weight | default: 'light'
+-%}
+{%- case w -%}
+  {%- when 'bold' -%}
+--msp-headline-font-family: HelveticaNowDisplayRegular, sans-serif;
+--msp-headline-font-weight: 700;
+  {%- when 'medium' -%}
+--msp-headline-font-family: HelveticaNowProDisplayMedium, HelveticaNowDisplayRegular, sans-serif;
+--msp-headline-font-weight: 500;
+  {%- when 'regular' -%}
+--msp-headline-font-family: HelveticaNowDisplayRegular, sans-serif;
+--msp-headline-font-weight: 400;
+  {%- else -%}
+--msp-headline-font-family: HelveticaNowDisplayLight, sans-serif;
+--msp-headline-font-weight: 300;
+{%- endcase -%}

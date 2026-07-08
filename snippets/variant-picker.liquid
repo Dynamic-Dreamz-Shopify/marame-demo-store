@@ -1,0 +1,182 @@
+
+
+<script src="{{ "variant-picker.js" | asset_url }}" defer></script>
+
+<variant-picker data-section-id="{{ section_id }}">
+  <div class="meta_product_inner">
+    {% assign selected_variant = product.selected_or_first_available_variant %}
+
+    {% for option in product.options_with_values %}
+      {% assign option_name = option.name | downcase %}
+
+      {% if option_name == 'color' or option_name == 'colour' or option_name == 'colours' or option_name == 'colors' %}
+        {% assign index = forloop.index0 %}
+
+        <div class="meta-color-value">
+          {{ selected_variant.options[index] }}
+        </div>
+
+        <div class="meta-color-select">
+          <div class="meta-color-select__options">
+            {% for option_value in option.values %}
+              <div
+                class="product-variant-swatch{% if selected_variant.options[index] == option_value %} active{% endif %}"
+                data-variant="{{ option_value.variant.id }}"
+                {% if option_value.swatch and option_value.variant.image == blank %}
+                  {% if option_value.swatch.image %}
+                    style="background-image: url({{ option_value.swatch.image | image_url }}); background-size: cover;"
+                  {% elsif option_value.swatch.color %}
+                    style="background-color: rgba({{ option_value.swatch.color.rgba }});"
+                  {% endif %}
+                {% endif %}
+              >
+                {% if option_value.swatch.image %}
+                  <img
+                    src="{{ option_value.swatch.image.src | image_url: width: 100, height: 100 }}"
+                    width=""
+                    height=""
+                  >
+                {% elsif option_value.variant.image %}
+                  <img
+                    src="{{ option_value.variant.image.src | image_url: width: 100, height: 100 }}"
+                    width=""
+                    height=""
+                  >
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      {% else %}
+        {% comment %}
+          <div class="detail__sidebar__sizes option_index">
+            <div class="size-select">
+              <select
+                name="{{ option.name }}"
+                class="product-variant-select"
+                {% if option_name == 'size' -%}
+                  placeholder="Please select a size"
+                {%- endif %}
+              >
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value.variant.id }}"
+                    {% if selected_variant.id == value.variant.id %}selected{% endif %}
+                  >
+                     {% unless value.available %}
+                      <s>{{ option.name }} {{ value }}</s> - out of stock <u>notify me when available</u>
+                    {% endunless %}
+                   {{ option.name }} {{ value }}
+                    {%- if value.variant.inventory_quantity <= 5 and value.variant.inventory_quantity > 0 %}
+                      - only {{ value.variant.inventory_quantity }} left
+                    {%- endif %}
+                  </option>
+                {%- endfor -%}
+                <span class="product-variant-select--icon">
+                  {% render 'icon-chevron-down' %}
+                </span>
+              </select>
+            </div>
+          </div>
+        {% endcomment %}
+        <div class="detail__sidebar__sizes option_index" data-option="option2">
+          <div class="pro-custom-select" data-custom-select-option="{{ option_name }}" data-pro-custom-select>
+            <button class="pro-custom-select-button" data-pro-custom-select-btn>
+              <!-- Please select a size -->
+              <span class="s-text fff"
+                ><span class="opt-value"
+                  ><b>
+                    {{- option.name }}
+                    {{ option.selected_value -}}
+                  </b>
+                  {%- if selected_variant.inventory_quantity <= 5 and selected_variant.inventory_quantity > 0 %}
+                    - only {{ selected_variant.inventory_quantity }} left
+                  {%- endif -%}
+                </span>
+                {%- unless selected_variant.available -%}
+                  <span class="opt-oos">
+                    - out of stock
+                    <a class="button klaviyo-bis-trigger" href="#" data-klaviyo-handle="{{ product.handle }}"
+                      >notify me when available</a
+                    ></span
+                  >
+                {%- endunless -%}
+              </span>
+              <span class="s-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="13" viewBox="0 0 6 13" fill="none">
+                  <path d="M0.177734 0.479492L4.79655 6.866L0.177734 12.7963" stroke="#939393" stroke-width="0.461881"/>
+                </svg>
+              </span>
+            </button>
+            <ul class="pro-custom-select-list lenis" data-pro-custom-select-list>
+              {% comment %} <li class="pro-custom-select-list-item disabled">Please select a size</li> {% endcomment %}
+              {%- for value in option.values -%}
+                <li
+                  class="pro-custom-select-list-item c-option{%- unless value.available %} c-option--out-of-stock{% endunless %}"
+                  data-value="{{- value -}}"
+                  data-pro-custom-select-list-item
+                  data-variant="{{ value.variant.id }}"
+                >
+                  <span class="opt-value"
+                    ><b>
+                      {{- option.name }}
+                      {{ value -}}
+                    </b>
+                    {%- if value.variant.inventory_quantity <= 5 and value.variant.inventory_quantity > 0 %}
+                      - only {{ value.variant.inventory_quantity }} left
+                    {%- endif -%}
+                  </span>
+                  {%- unless value.available -%}
+                    <span class="opt-oos">
+                      - out of stock
+                      <a class="button klaviyo-bis-trigger" href="#" data-klaviyo-handle="{{ product.handle }}"
+                        >notify me when available</a
+                      ></span
+                    >
+                  {%- endunless -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</variant-picker>
+
+{% style %}
+  .product-variant-swatch{
+    width: 87.475px !important;
+    height: 87.475px !important;
+    border-radius: 4.604px;
+    border: 1px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .product-variant-swatch.active{
+    outline: unset;
+    border: 1px solid #000 !important;
+  }
+
+  .product-variant-select{
+    width: 100%;
+    border-radius: 4.64px;
+    background-color: #faf7f5;
+    border: .31px solid #000000;
+    padding: 7px 15px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: none;
+    color: #939393;
+    position:relative;
+  }
+
+  .product-variant-select--icon{
+    position: absolute;
+    right: 0%;
+    top: 0%;
+  }
+{% endstyle %}

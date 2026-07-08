@@ -1,0 +1,98 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<section class="dashboard row">
+  <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+    <ul>
+      <li>
+        <a href="{{ routes.account_url }}"><p>Dashboard</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_url }}?view=orders"><p>order history</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_addresses_url }}">
+          <p>addresses ({{ customer.addresses_count }})</p>
+        </a>
+      </li>
+      {% comment %}
+      <li class="active">
+        <a href="{{ routes.account_url }}?view=my-profile"><p>account details</p></a>
+      </li>
+        <li>
+          <a href="{{ routes.account_url }}?view=my-details"><p>My details</p></a>
+        </li>
+      {% endcomment %}
+      <li>
+        <a href="{{ routes.account_url }}?view=wishlist"><p>MY SAVED ITEMS</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_logout_url }}">
+          <p>{{ 'customer.log_out' | t }}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard__body col--6 col--md--6 col--lg--10">
+    <div class="account-page">
+      <form method="post" action="/account" id="profile-form" return_to="/account?view=my-profile">
+        <div class="field-group">
+          <label for="customer_name">Name</label>
+          <input
+            type="text"
+            id="customer_name"
+            name="customer[name]"
+            value="{{ customer.first_name }} {{ customer.last_name }}"
+          >
+        </div>
+
+        <div class="field-group">
+          <label for="customer_email">Email Address</label>
+          <input type="email" id="customer_email" name="customer[email]" value="{{ customer.email }}">
+        </div>
+        {% comment %}
+          <div class="field-group">
+            <label for="customer_dob">Date of Birth</label>
+            <input type="date" id="customer_dob" name="customer[date_of_birth]" value="" />
+          </div>
+        {% endcomment %}
+
+        <div class="toggle-field">
+          <label class="toggle-switch">
+            <input type="checkbox" name="customer[marketing_consent]" id="marketing_consent"{% if customer.accepts_marketing %} checked{% endif %}>
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Marketing Consent</span>
+        </div>
+
+        <div class="save-btn">
+          <button class="btn btn--dark" type="submit" id="save-btn">Save Changes</button>
+          <a class="btn btn--dark change_password hidden" href="/account/login#recover">Change password</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    const marketing_consent_Checkbox = document.querySelector('#marketing_consent');
+    if (marketing_consent_Checkbox) {
+      marketing_consent_Checkbox.addEventListener('change', function () {
+        if (marketing_consent_Checkbox.checked) {
+          window._klOnsite = window._klOnsite || [];
+          window._klOnsite.push(['openForm', 'XxWi23']);
+        }else{
+          window.open('https://manage.kmail-lists.com/subscriptions/unsubscribe?g=UjCyxa&e={{ customer.email | url_encode }}', '_blank');
+        }
+      });
+    }
+  });
+</script> 
+
+
+{% schema %}
+{
+  "name": "Section name",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+{%- comment -%}
+  Row-level headline typography CSS variables (only when row overrides section).
+  @param block {Block}
+  @param section {Section}
+{%- endcomment -%}
+{%- liquid
+  assign use_section_typography = block.settings.headline_use_section_typography
+  if use_section_typography == nil
+    assign use_section_typography = true
+  endif
+
+  unless use_section_typography
+    assign row_headline_size_mobile = block.settings.headline_size_mobile
+    if row_headline_size_mobile == 0
+      assign row_headline_size_mobile = section.settings.headline_size_mobile
+    endif
+    if row_headline_size_mobile == 0
+      assign row_headline_size_mobile = 20
+    endif
+
+    assign row_headline_size_desktop = block.settings.headline_size_desktop
+    if row_headline_size_desktop == 0
+      assign row_headline_size_desktop = section.settings.headline_size_desktop
+    endif
+    if row_headline_size_desktop == 0
+      assign row_headline_size_desktop = 32
+    endif
+
+    assign row_headline_tracking_mobile = block.settings.headline_tracking_mobile
+    if row_headline_tracking_mobile == 0
+      assign row_headline_tracking_mobile = section.settings.headline_tracking_mobile
+    endif
+
+    assign row_headline_tracking_desktop = block.settings.headline_tracking_desktop
+    if row_headline_tracking_desktop == 0
+      assign row_headline_tracking_desktop = section.settings.headline_tracking_desktop
+    endif
+
+    assign row_headline_line_height_mobile = block.settings.headline_line_height_mobile
+    if row_headline_line_height_mobile == 0
+      assign row_headline_line_height_mobile = block.settings.headline_line_height
+    endif
+    if row_headline_line_height_mobile == 0
+      assign row_headline_line_height_mobile = section.settings.headline_line_height_mobile
+    endif
+    if row_headline_line_height_mobile == 0
+      assign row_headline_line_height_mobile = section.settings.headline_line_height
+    endif
+
+    assign row_headline_line_height_desktop = block.settings.headline_line_height_desktop
+    if row_headline_line_height_desktop == 0
+      assign row_headline_line_height_desktop = block.settings.headline_line_height
+    endif
+    if row_headline_line_height_desktop == 0
+      assign row_headline_line_height_desktop = section.settings.headline_line_height_desktop
+    endif
+    if row_headline_line_height_desktop == 0
+      assign row_headline_line_height_desktop = row_headline_line_height_mobile
+    endif
+  endunless
+-%}
+{%- unless use_section_typography -%}
+--msp-checkerboard-headline-size-mobile: {{ row_headline_size_mobile }}px;
+--msp-checkerboard-headline-size-desktop: {{ row_headline_size_desktop }}px;
+--msp-checkerboard-headline-tracking-mobile: {% render 'msp-tracking-px', value: row_headline_tracking_mobile %}px;
+--msp-checkerboard-headline-tracking-desktop: {% render 'msp-tracking-px', value: row_headline_tracking_desktop %}px;
+--msp-checkerboard-headline-line-height-mobile: {% render 'msp-line-height-value', value: row_headline_line_height_mobile %};
+--msp-checkerboard-headline-line-height-desktop: {% render 'msp-line-height-value', value: row_headline_line_height_desktop %};
+{%- endunless -%}

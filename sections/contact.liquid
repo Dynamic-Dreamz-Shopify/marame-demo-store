@@ -1,0 +1,59 @@
+{% if section.blocks.size > 0 %}
+  <section class="contact">
+    <ul class="contact__list">
+      {% for block in section.blocks %}
+        {% if block.settings.heading != blank %}
+          <li class="contact__item">
+            <h4 class="bold">{{ block.settings.heading }}</h4>
+            {% if block.settings.description != blank %}
+              <h4>{{ block.settings.description }}</h4>
+            {% endif %}
+            {% if block.settings.butto_lable != blank %}
+              <a href="{{ block.settings.button_link | default: 'javascript:void(0)' }}" class="btn btn--outline">{{ block.settings.butto_lable }}</a>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+  
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Heading",
+          "id": "heading"
+        },
+        {
+          "type": "richtext",
+          "label": "Description",
+          "id": "description"
+        },
+        {
+          "type": "text",
+          "label": "Butto Lable",
+          "id": "butto_lable"
+        },
+        {
+          "type": "url",
+          "label": "Button Link",
+          "id": "button_link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}

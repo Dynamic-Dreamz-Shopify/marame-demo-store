@@ -1,0 +1,576 @@
+{% doc %}
+  @prompt
+    Create a custom announcement bar with a vertical drop-in animation effect. Text sections should drop in from the top one at a time on a continuous loop. Each message should stay visible for 3-4 seconds before the next one drops in. Include smooth CSS animations with a natural drop-in easing effect. The code should be customizable so the merchant can easily add or modify announcement messages, adjust timing, and control the animation speed., Are you able to add the static trustpilot widget to the top right hand corner (as we currently have it in our announcement bar), Sorry this is the code for the trustpilot widget for desktop, it should sit neatly right aligned in that banner
+    
+    <!-- TrustBox widget - Micro TrustScore -->
+    <div class="trustpilot-widget" data-locale="en-US" data-template-id="5419b637fa0340045cd0c936" data-businessunit-id="6863d52829d0eb9d7940e024" data-style-height="20px" data-style-width="100%" data-theme="dark" data-token="98037185-ea42-4936-8e58-13ba24d149ef">
+      <a href="https://www.trustpilot.com/review/marame.com" target="_blank" rel="noopener">Trustpilot</a>
+    </div>
+    <!-- End TrustBox widget -->
+    
+    
+    For mobile this shouldn't show
+    
+    , that doesn't seem to have worked, That is better, however it has pushed the main text to the left and the widget doesn't seem to be all on one line, I think the alignment needs bringing further left to allow the full text to fit in, The trustpilot widget still isn't sitting properly and the text still isn't central. The trustpilot widget need to display all on one line, at the moment it looks like the padding area is causing it to drop onto another line, Trust pilot widget still isn't working. Please see below the code from out current website which shows how the trustpilot is coded to sit:
+    
+    <div id="shopify-section-sections--27070618435919__announcement_bar_DwkrAx" class="shopify-section shopify-section-group-header-group announcement_bar_row" style="transform: translateY(0px);">
+      <style>
+        body:has(.top-banner) .header:not(.header--scrolled){top: 40px;}
+          .top-banner__inner {
+          letter-spacing: 3px;
+        }
+    
+        .top-banner {
+            padding: 9px 0;
+            flex-wrap: nowrap;
+        }
+    
+        .top-banner__inner {
+            font-family: 'HelveticaNowDisplayLight';
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 1.8;
+            display: flex;
+            align-items: center;
+            text-transform: none;
+        }
+    
+        .announcement_bar_row {
+            transform: none !important;
+            transition: all .3s ease-in-out;
+        }
+    
+        .template-index:has(.header.header--active) .announcement_bar_row .top-banner-trustpilot_app_div {
+            display: none;
+        }
+    
+        body:has(.header--scrolled) .announcement_bar_row {
+            top: -38px;
+        }
+    
+        .top-banner__inner p {
+            text-transform: none;
+        }
+    
+        .top-banner__inner p:not(:last-of-type) {
+            margin-right: 30px;
+        }
+    
+        .top-banner__inner-text {
+            font-family: 'HelveticaNowDisplayLight';
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 1.8;
+            display: flex;
+            align-items: center;
+            text-transform: none;
+            display: flex;
+        }
+    
+        @media (min-width: 1025px) {
+          .top-banner-trustpilot_app_div {
+              position: absolute !important;
+              top: 50%;
+              right: 25px;
+              transform: translateY(-50%) scale(0.7);
+              width: 400px;
+          }
+        }
+    
+        
+          @media (min-width: 1025px) {
+            .top-banner__inner {
+                animation: marquee 15s linear infinite;
+                padding-left: 0;
+            }
+    
+            .top-banner-trustpilot_app_div {
+                position: u
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    overflow: hidden;
+    position: relative;
+    padding: 9px 0;
+    display: block;
+  }
+  
+  {% comment %} .template-product .ai-announcement-bar-{{ ai_gen_id }} {
+    display: none;
+  } {% endcomment %}
+
+  .ai-announcement-bar__container-{{ ai_gen_id }} {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .ai-announcement-bar__trustpilot-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  @media (min-width: 1025px) {
+    .ai-announcement-bar__trustpilot-{{ ai_gen_id }} {
+      display: block;
+      position: absolute !important;
+      top: 50%;
+      right: 25px;
+      transform: translateY(-50%) scale(0.7);
+      width: 400px;
+      z-index: 10;
+    }
+  }
+
+  .ai-announcement-bar__messages-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    height: 22px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-announcement-bar__message-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    letter-spacing: 3px;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .ai-announcement-bar__message-{{ ai_gen_id }}.active {
+    animation: ai-drop-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .ai-announcement-bar__message-{{ ai_gen_id }}.exit {
+    animation: ai-drop-out-{{ ai_gen_id }} {{ block.settings.animation_duration | times: 0.5 }}s ease-in forwards;
+  }
+
+  @keyframes ai-drop-in-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes ai-drop-out-{{ ai_gen_id }} {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-announcement-bar__link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: underline;
+    margin-left: 8px;
+  }
+
+  .ai-announcement-bar__link-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar__message-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.85 }}px;
+      padding: 0 16px;
+    }
+  }
+{% endstyle %}
+
+<announcement-bar-{{ ai_gen_id }} class="ai-announcement-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-announcement-bar__container-{{ ai_gen_id }}">
+    <div class="ai-announcement-bar__messages-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.message_1 != blank %}
+        <div class="ai-announcement-bar__message-{{ ai_gen_id }}" data-message-index="0">
+          {{ block.settings.message_1 }}
+          {% if block.settings.link_1 != blank %}
+            <a href="{{ block.settings.link_1 }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+              {{ block.settings.link_text_1 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_2 != blank %}
+        <div class="ai-announcement-bar__message-{{ ai_gen_id }}" data-message-index="1">
+          {{ block.settings.message_2 }}
+          {% if block.settings.link_2 != blank %}
+            <a href="{{ block.settings.link_2 }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+              {{ block.settings.link_text_2 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_3 != blank %}
+        <div class="ai-announcement-bar__message-{{ ai_gen_id }}" data-message-index="2">
+          {{ block.settings.message_3 }}
+          {% if block.settings.link_3 != blank %}
+            <a href="{{ block.settings.link_3 }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+              {{ block.settings.link_text_3 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_4 != blank %}
+        <div class="ai-announcement-bar__message-{{ ai_gen_id }}" data-message-index="3">
+          {{ block.settings.message_4 }}
+          {% if block.settings.link_4 != blank %}
+            <a href="{{ block.settings.link_4 }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+              {{ block.settings.link_text_4 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_5 != blank %}
+        <div class="ai-announcement-bar__message-{{ ai_gen_id }}" data-message-index="4">
+          {{ block.settings.message_5 }}
+          {% if block.settings.link_5 != blank %}
+            <a href="{{ block.settings.link_5 }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+              {{ block.settings.link_text_5 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if block.settings.show_trustpilot %}
+      <div class="ai-announcement-bar__trustpilot-{{ ai_gen_id }}">
+        <div class="trustpilot-widget" data-locale="en-US" data-template-id="5419b637fa0340045cd0c936" data-businessunit-id="6863d52829d0eb9d7940e024" data-style-height="20px" data-style-width="100%" data-theme="dark" data-token="98037185-ea42-4936-8e58-13ba24d149ef">
+          <a href="https://www.trustpilot.com/review/marame.com" target="_blank" rel="noopener">Trustpilot</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</announcement-bar-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnnouncementBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.messages = [];
+        this.currentIndex = 0;
+        this.displayDuration = {{ block.settings.display_duration | times: 1000 }};
+        this.animationDuration = {{ block.settings.animation_duration | times: 1000 }};
+        this.intervalId = null;
+        this.trustpilotLoaded = false;
+      }
+
+      connectedCallback() {
+        this.messages = Array.from(this.querySelectorAll('.ai-announcement-bar__message-{{ ai_gen_id }}'));
+        
+        if (this.messages.length === 0) return;
+
+        if (this.messages.length === 1) {
+          this.messages[0].classList.add('active');
+        } else {
+          this.startRotation();
+        }
+
+        this.loadTrustpilot();
+      }
+
+      loadTrustpilot() {
+        if (this.trustpilotLoaded || !{{ block.settings.show_trustpilot | json }}) return;
+
+        const existingScript = document.querySelector('script[src*="trustpilot"]');
+        if (existingScript) {
+          this.trustpilotLoaded = true;
+          if (window.Trustpilot) {
+            window.Trustpilot.loadFromElement(this.querySelector('.trustpilot-widget'), true);
+          }
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+        this.trustpilotLoaded = true;
+      }
+
+      startRotation() {
+        this.showMessage(this.currentIndex);
+
+        this.intervalId = setInterval(() => {
+          this.rotateMessage();
+        }, this.displayDuration + this.animationDuration);
+      }
+
+      showMessage(index) {
+        const message = this.messages[index];
+        if (message) {
+          message.classList.add('active');
+        }
+      }
+
+      hideMessage(index) {
+        const message = this.messages[index];
+        if (message) {
+          message.classList.add('exit');
+          
+          setTimeout(() => {
+            message.classList.remove('active', 'exit');
+          }, this.animationDuration * 0.5);
+        }
+      }
+
+      rotateMessage() {
+        this.hideMessage(this.currentIndex);
+        
+        this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+        
+        setTimeout(() => {
+          this.showMessage(this.currentIndex);
+        }, this.animationDuration * 0.5);
+      }
+
+      disconnectedCallback() {
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+        }
+      }
+    }
+
+    customElements.define('announcement-bar-{{ ai_gen_id }}', AnnouncementBar{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trustpilot"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trustpilot",
+      "label": "Show Trustpilot widget",
+      "default": true,
+      "info": "Displays in top right corner on desktop only"
+    },
+    {
+      "type": "header",
+      "content": "Message 1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_1",
+      "label": "Message",
+      "default": "Free UK delivery on orders over £50"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text_1",
+      "label": "Link text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Message 2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_2",
+      "label": "Message",
+      "default": "New arrivals just dropped"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text_2",
+      "label": "Link text",
+      "default": "View collection"
+    },
+    {
+      "type": "header",
+      "content": "Message 3"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_3",
+      "label": "Message",
+      "default": "Sign up for 10% off your first order"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text_3",
+      "label": "Link text",
+      "default": "Join now"
+    },
+    {
+      "type": "header",
+      "content": "Message 4"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_4",
+      "label": "Message"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text_4",
+      "label": "Link text"
+    },
+    {
+      "type": "header",
+      "content": "Message 5"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_5",
+      "label": "Message"
+    },
+    {
+      "type": "url",
+      "id": "link_5",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text_5",
+      "label": "Link text"
+    },
+    {
+      "type": "header",
+      "content": "Timing"
+    },
+    {
+      "type": "range",
+      "id": "display_duration",
+      "min": 2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Display duration",
+      "default": 3.5,
+      "info": "How long each message stays visible"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "min": 0.3,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "s",
+      "label": "Animation speed",
+      "default": 0.6,
+      "info": "Speed of the drop-in effect"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+{%- comment -%}
+  Marks a page block for adaptive header colour detection (pre-access + homepage).
+  @param zone_key {String} Must match a block in Signup — Header logo section
+  @param zone_label {String} Optional label for theme editor hints
+{%- endcomment -%}
+data-msp-logo-zone="{{ zone_key }}"
+{%- if zone_label != blank -%}
+  data-msp-logo-zone-label="{{ zone_label | escape }}"
+{%- endif -%}

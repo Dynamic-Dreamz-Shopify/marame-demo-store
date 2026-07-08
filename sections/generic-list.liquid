@@ -1,0 +1,54 @@
+<section class="generic-list">
+  <ul class="generic-list__list">
+    {% for block in section.blocks %}
+      <li class="generic-list__item">
+        {% if block.settings.heading != blank %}
+          <div class="generic-list__item__title">
+            <h4>{{ block.settings.heading }}</h4>
+          </div>
+        {% endif %}
+        {% if block.settings.content != blank or block.settings.html != blank %}
+          <div class="generic-list__item__content">
+            {{ block.settings.content }}
+            {{ block.settings.html }}
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Generic list",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "label": "Heading",
+          "id": "heading"
+        },
+        {
+          "type": "richtext",
+          "label": "Content",
+          "id": "content"
+        },
+        {
+          "type": "liquid",
+          "label": "Add Html",
+          "id": "html"
+        },        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Generic list"
+    }
+  ]
+}
+{% endschema %}

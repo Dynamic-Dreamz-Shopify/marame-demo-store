@@ -1,0 +1,79 @@
+<section class="fullscreen row gradient text--white">
+  <!-- Add fullscreen__bg--no-mobile-img class modifier if no mobile image added (to use desktop one) -->
+  <div class="fullscreen__bg fullscreen__bg--no-mobile-img">
+    {% if section.settings.image_desktop != blank %}
+      <img
+        class="fullscreen__bg__desktop{% if section.settings.image_mobile != blank %} small_hide{% endif %}"
+        src="{{ section.settings.image_desktop | img_url: 'master' }}"
+        alt="{{ section.settings.image_desktop.alt }}"
+        width="{{ section.settings.image_desktop.width }}"
+        height="{{ section.settings.image_desktop.height }}"
+        loading="eager" fetchpriority="high"
+        data-p-speed="0.15"
+      >
+    {% endif %}
+    {% if section.settings.image_mobile != blank %}
+      <img
+        class="fullscreen__bg__mobile_ large_hide"
+        src="{{ section.settings.image_mobile | img_url: 'master' }}"
+        alt="{{ section.settings.image_mobile.alt }}"
+        width="{{ section.settings.image_mobile.width }}"
+        height="{{ section.settings.image_mobile.height }}"
+        loading="eager" fetchpriority="high"
+        data-p-speed="0.15"
+      >
+    {% endif %}
+  </div>
+  <div class="fullscreen__content col--6 col--md--3 col--lg--3">
+    {% if section.settings.heading != blank %}
+      <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.button_link != blank %}
+      <div class="splitscreen__item__content__ctas">
+        <a href="{{ section.settings.button_link }}" class="btn btn--underline btn--light">
+          <h4>{{ section.settings.button_label }}</h4>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gender landing banner",
+  "class": "gender-landing-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Image Desktop",
+      "id": "image_desktop"
+    },
+    {
+      "type": "image_picker",
+      "label": "Image Mobile",
+      "id": "image_mobile"
+    },
+    {
+      "type": "inline_richtext",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "text",
+      "label": "Button label",
+      "id": "button_label"
+    },
+    {
+      "type": "url",
+      "label": "Button Link",
+      "id": "button_link"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Gender landing banner"
+    }
+  ]
+}
+{% endschema %}

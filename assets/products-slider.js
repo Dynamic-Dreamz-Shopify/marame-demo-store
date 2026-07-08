@@ -1,0 +1,1 @@
+import{S as t}from"./swiper-core.js";import{inner as i,bp as s}from"./variables.js";import"./script.js";function p(){document.querySelectorAll(".products-slider").forEach(r=>{(r.querySelectorAll(".swiper-slide").length>1||i.w<s.large)&&l(r)})}function l(e){new t(e,{slidesPerView:i.w<s.large?1:3,spaceBetween:10,speed:500})}export{p as default};

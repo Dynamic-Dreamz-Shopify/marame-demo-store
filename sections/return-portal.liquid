@@ -1,0 +1,1115 @@
+{{ 'return-portal.css' | asset_url | stylesheet_tag }}
+{{ 'return-portal.js' | asset_url | script_tag }}
+{% comment %} {{ 'return-portal-new.js' | asset_url | script_tag }} {% endcomment %}
+{% comment %} {{ 'return-portal-php.js' | asset_url | script_tag }} {% endcomment %}
+
+<section class="return-options">
+  <div class="return-options-header">
+    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/9a9246856fb9be5ac8108d8d7e702648dd63507b.png?v=1756815366" alt="Header Logo" width="100%" height="100%">
+  </div>
+  
+  <div class="return-progress-bar">
+    <div class="return-progress-thumb" style="width: 0%;"></div>
+  </div>
+
+  <div class="return-options-steps return-options-1 active">
+    <div class="return-options-title lenis">
+      <h2 class="return-step-title">We’re here to make returns simple</h2>
+      <p class="rte">Something not quite right? Maybe you need a different size, maybe we slipped up (it happens!), or maybe <br> it just wasn’t what you had in mind. Whether you’d like an exchange, refund or store credit, we’ll make it simple, and we’d love your feedback along the way.</p>
+      <div class="return-step-mass hidden">
+        Orders <b>placed before 17th December</b> cannot be processed through our current returns portal due to maintenance. 
+        <br>
+        <br>
+        For orders placed before this time <b>please go to <a href="https://our-returns.dpd.co.uk/MARAME_RETURNS">https://our-returns.dpd.co.uk/MARAME_RETURNS</a></b> to submit your return.
+        <br>
+        <br>
+        If you order was placed after 17th December you can close this message and proceed. Apologies for any inconvenience caused.
+        <br><br>
+        Many thanks,
+        <br>
+        Team MARAME
+      </div>
+      <div class="return-options-info">
+        <div class="return-summary">
+          <h3 class="summary-title">Did you know?</h3>
+        </div>
+
+        <div class="did-you-knows ">
+          <div class="content">
+            <p><strong>Every return costs us around £14 to process,</strong> covering packaging, postage, and people’s time. Across the UK, returns add up to roughly <strong>£7 billion each year</strong>, generating nearly <strong>750,000 tonnes of CO₂</strong> and sending an estimated <strong>23 million garments to landfill</strong> that can’t be resold.</p>
+            <p>That’s why we encourage exchanges and store credit wherever possible, they’re quicker for you, lighter on us, and kinder to the planet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="return-options-start">
+      <button class="return-start" data-return-next-common>Start</button>
+    </div>
+  </div>
+
+  <div class="return-options-steps return-options-2">
+    <div class="return-options-title">
+      <h2 class="return-step-title">Submit your return/exchange</h2>
+      <p class="rte">Where are you returning your item(s) from?</p>
+    </div>
+    <div class="return-from-location-list lenis">
+      <button class="return-from-location-item" data-return-from-location-btn="GREAT BRITAIN">Great Britain</button>
+      <button class="return-from-location-item" data-return-from-location-btn="NORTHERN IRELAND">Northern Ireland/Isle of Wight</button>
+      <button class="return-from-location-item" data-return-from-location-btn="INTERNATIONAL">All Other Countries</button>
+    </div>
+     <div class="navigation">
+      <button class="nav-btn button" data-return-prev-common>Go Back</button>
+      <button class="nav-btn button disabled" data-return-choose-pro-next-step>Next</button>
+    </div>
+  </div>
+
+  <div class="return-options-steps return-options-3 return-choose-option-order-form">
+    <div class="return-options-title">
+      <h2 class="return-step-title">Tell us your order details</h2>
+      <p class="rte">To easily find your order, please input the details as they appeared on your order.</p>
+    </div>
+    <div class="return-order-from lenis" data-order-form-element>
+      <div class="order-email">
+        <label for="order-email">Order Email Address</label>
+        <input type="email" id="order-email" name="order-email" data-order-form-email>
+      </div>
+
+      <div class="order-number">
+        <label for="order-number">Order Number</label>
+        <div class="order-number-boxes">
+          <span class="hash">#</span>
+          <input type="tel" maxlength="1" data-order-form-input-single>
+          <input type="tel" maxlength="1" data-order-form-input-single>
+          <input type="tel" maxlength="1" data-order-form-input-single>
+          <input type="tel" maxlength="1" data-order-form-input-single>
+        </div>
+      </div>
+
+      <div class="order-submit navigation">
+        <button class="nav-btn button" data-return-prev-common>Go Back</button>
+        <button type="submit" class="nav-btn button" data-order-form-submit>
+          <span class="btn-text">Find Your Order</span>
+          <span class="btn-icon return-loader-ele">
+            <svg fill="#ffffff" width="64px" height="64px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>loader</title> <path d="M16 1.25c-0.414 0-0.75 0.336-0.75 0.75v0 8c0 0.414 0.336 0.75 0.75 0.75s0.75-0.336 0.75-0.75v0-8c-0-0.414-0.336-0.75-0.75-0.75v0zM16 21.25c-0.414 0-0.75 0.336-0.75 0.75v0 8c0 0.414 0.336 0.75 0.75 0.75s0.75-0.336 0.75-0.75v0-8c-0-0.414-0.336-0.75-0.75-0.75v0zM10.75 16c-0-0.414-0.336-0.75-0.75-0.75h-8c-0.414 0-0.75 0.336-0.75 0.75s0.336 0.75 0.75 0.75v0h8c0.414-0 0.75-0.336 0.75-0.75v0zM30 15.25h-8c-0.414 0-0.75 0.336-0.75 0.75s0.336 0.75 0.75 0.75v0h8c0.414 0 0.75-0.336 0.75-0.75s-0.336-0.75-0.75-0.75v0zM6.631 5.57c-0.135-0.131-0.319-0.212-0.522-0.212-0.414 0-0.75 0.336-0.75 0.75 0 0.203 0.081 0.387 0.212 0.522l5.657 5.657c0.135 0.13 0.318 0.209 0.52 0.209 0.414 0 0.75-0.336 0.75-0.75 0-0.202-0.080-0.385-0.21-0.52l0 0zM20.773 19.711c-0.136-0.136-0.324-0.22-0.531-0.22-0.415 0-0.751 0.336-0.751 0.751 0 0.207 0.084 0.395 0.22 0.531l5.658 5.658c0.136 0.136 0.324 0.22 0.531 0.22 0.415 0 0.751-0.336 0.751-0.751 0-0.207-0.084-0.395-0.22-0.531v0zM11.228 19.711l-5.657 5.658c-0.136 0.136-0.22 0.324-0.22 0.531 0 0.415 0.336 0.751 0.751 0.751 0.207 0 0.394-0.084 0.53-0.219v0l5.657-5.658c0.136-0.136 0.22-0.324 0.22-0.531 0-0.415-0.336-0.751-0.751-0.751-0.207 0-0.395 0.084-0.53 0.219v0zM20.242 12.508c0 0 0 0 0.001 0 0.207 0 0.395-0.084 0.531-0.22l5.658-5.657c0.136-0.136 0.219-0.323 0.219-0.53 0-0.415-0.336-0.751-0.751-0.751-0.208 0-0.395 0.084-0.531 0.22v0l-5.658 5.657c-0.136 0.136-0.22 0.323-0.22 0.53 0 0.414 0.336 0.75 0.75 0.75 0 0 0.001 0 0.001 0h-0z"></path> </g></svg>
+          </span>
+        </button>
+      </div>
+      <div class="order-submit-err" data-order-form-error>
+        Sorry, we can’t find your order with these details,please ensure you have input the details exactly as they appeared on your order.
+      </div>
+    </div>
+    <div class="return-within-days-popup hidden" data-return-within-days-popup>
+      <div class="return-within-days-popup-overlay"></div>
+      <div class="return-within-days-popup-main">
+        <button class="return-within-days-popup-close" data-return-within-days-popup-close>x</button>
+        <div class="return-within-days-popup-content">
+          <p><b>Unfortunately, you order is outside of our returns period and therefore cannot be returned.</b></p>
+          <p>As per our returns policy, you can only submit a return for items <b>within 14 days of delivery.</b></p>
+          <p>Your item was delivered <b><span data-days-since-order-was-created>17</span> days ago.</b> For more detail, please see our <a href="/pages/returns">returns policy</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="return-options-steps return-options-4 return-choose-option-order-products">
+    <div class="return-options-title">
+      <h2 class="return-step-title" data-order-number>Order#1637</h2>
+      <p class="rte">Choose the product(s) to return or exchange.</p>
+    </div>
+
+    <div class="return-options-order-list lenis" data-return-order-list>
+      <div class="up-down-arrow"></div>
+      {% comment %} {% for order in customer.orders %}
+        <div class="return-options-order{% if forloop.first %} active{% endif %}" data-order-id="{{ order.id }}" data-order-number="{{ order.name }}">
+          <div class="return-order-lineitems-list">
+          {% for line_item in order.line_items %}
+            <div class="return-order-lineitem" 
+              data-id="{{line_item.id }}" 
+              data-lineitem-variant-id="{{ line_item.variant_id }}" 
+              data-lineitem-image="{{ line_item.image | img_url:"100x" }}" 
+              data-lineitem-price="{{ line_item.price }}" 
+              data-lineitem-product-json='{{ line_item.product | json | escape }}' 
+            >
+              <div class="return-order-lineitem-image">
+                <img src="{{ line_item.image | img_url:"100x" }}">
+              </div>
+              <div class="return-order-lineitem-info">
+                <div class="lineitem-info-title">{{ line_item.title }}</div>
+                <div class="lineitem-info-color">{{ line_item.variant.options[0].name | default: "-" }}</div>
+                <div class="lineitem-info-size">{{ line_item.variant.options[1].name | default: "-" }}</div>
+                <div class="lineitem-info-price">{{ line_item.price | money }}</div>
+                <button class="lineitem-info-button" data-return-action-button>RETURN/EXCHANGE</button>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+      {% endfor %} {% endcomment %}
+    </div>
+    <div class="navigation">
+      <button class="nav-btn button" data-return-prev-common>Go Back</button>
+      <button class="nav-btn button disabled" data-return-choose-pro-next>Next</button>
+    </div>
+    <div class="order-submit-err hidden" data-selected-order-form-error>
+      Please select at least one product to return or exchange before proceeding.
+    </div>
+  </div>
+
+  <div class="return-options-steps return-options-6 return-choose-option-single">
+
+    <div class="return-options-row lenis">
+      <div class="return-options-left">
+        <div class="return-options-title-grid">
+          <div class="return-options-title-item">
+          <div class="return-options-title">
+            <h2 class="return-step-title">Choose Your Return Option</h2>
+            <p class="rte">Choose what you’d like us to do with the return</p>
+          </div>
+          </div>
+        </div>
+        <div class="return-option-image-grid">
+          <div class="return-option-image-item">
+            <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+            <span class="tick-icon"></span>
+          </div>
+        </div>
+              
+      {% comment %} <div class="return-options-des">
+        <div class="return-order-lineitem-info">
+          <div class="lineitem-info-title">Italian Knit Cable Shirt</div>
+          <div class="lineitem-info-color"><span>Colour</span><span>Conker Brown</span></div>
+          <div class="lineitem-info-size"><span>Size</span><span>XL</span></div>
+          <div class="lineitem-info-price"><span>Purchase Price</span><span>£1</span></div>
+        </div>
+      </div> {% endcomment %}
+
+        <div class="return-option-grid">
+        <div class="return-option-grid-item">
+          <div class="return-option-row">
+            <div class="return-option-card" data-option="exchange">
+              <div class="return-option-card-inner">
+                <div class="up_div"></div>
+                <h3>Exchange<span class="toggle-icon">+</span></h3>
+                <div class="return-option-price">FREE</div>
+                <ul class="hide">
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Free.svg?v=1758632058">
+                    Free
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Super_fast.svg?v=1758632059">
+                    Fast - next day after we receive
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Spend_and_same_item.svg?v=1758632058">
+                    Same item, different size
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Full_value.svg?v=1758632058">
+                    Full value in new item, no change
+                  </li>
+                </ul>
+              </div>
+              <button class="btn-select button">Choose Exchange 
+                <span class="check">
+                </span>
+              </button>
+            </div>
+
+            <div class="return-option-card" data-option="store-credit">
+              <div class="return-option-card-inner">
+                <div class="up_div"></div>
+                <h3>Store Credit<span class="toggle-icon">+</span></h3>
+                <div class="return-option-price">FREE</div>
+                <ul>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Free.svg?v=1758632058">
+                    Free
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Super_fast.svg?v=1758632059">
+                    Super Fast - credit within 24 hours
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Spend_and_same_item.svg?v=1758632058">
+                    Spend on anything (12 months)
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Full_value.svg?v=1758632058">
+                    Full value as credit
+                  </li>
+                </ul>
+              </div>
+              <button class="btn-select button">Choose Store Credit 
+                <span class="check">
+                  {% comment %} <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/f9ca2e64d255d897c8e5f0090680a1766d368991.png?v=1756876803"> {% endcomment %}
+                </span>
+              </button>
+            </div>
+
+            <div class="return-option-card" data-option="refund">
+              <div class="return-option-card-inner">
+                <div class="up_div"></div>
+                <h3><span class="toggle-icon">+</span>Refund</h3>
+                <div class="return-option-price">£5 FEE</div>
+                <ul class="hide">
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Fee_deducted_and_extra_transport.svg?v=1758632058">
+                    £5 Fee Deducted
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/10-15_working_days.svg?v=1758632058">
+                    10–15 Working Days (depending on card processor)
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Refund_minus.svg?v=1758632058">
+                    Refund minus £5
+                  </li>
+                  <li>
+                    <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Fee_deducted_and_extra_transport.svg?v=1758632058">
+                    Extra transport + packaging = higher impact
+                  </li>
+                </ul>
+              </div>
+              <button class="btn-select button">Choose Refund 
+                <span class="check">
+                  {% comment %} <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/f9ca2e64d255d897c8e5f0090680a1766d368991.png?v=1756876803"> {% endcomment %}
+                </span>
+              </button>
+            </div>
+          </div>
+          <table class="return-table" data-return-table-exchange></table>
+           <table class="return-table" data-return-table-reason></table>
+        </div>
+        </div>
+      </div>
+      <div class="return-options-right">
+        <div class="return-summary">
+          <h3 class="summary-title">What You’re Returning</h3>
+          <table class="return-table" data-return-table>
+          </table>
+        </div>
+
+        <div class="did-you-knows ">
+          <div class="content">
+            If you choose to refund, we apply a single £5 fee to the order. store credit and exchanges are always free of charge
+            {% comment %} <p><strong>Every return costs us around £14 to process,</strong> covering packaging, postage, and people’s time. Across the UK, returns add up to roughly <strong>£7 billion each year,</strong> generating nearly <strong>750,000 tonnes of CO₂,</strong> and sending an estimated <strong>23 million garments to landfill</strong> that can’t be resold.</p>
+            <p>That’s why we encourage exchanges and store credit wherever possible; they’re quicker for you, lighter on us, and kinder to the planet.</p> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} <div class="navigation">
+      <button class="nav-btn button" data-return-prev-common>Go Back</button>
+      <button class="nav-btn back-img-btn" data-back-img>Back Product</button>
+      <button class="nav-btn button disabled" data-return-choose-single-option-next>Next</button>
+      <button class="nav-btn next-image-btn" data-next-img>Next Product</button> 
+    </div>
+     {% endcomment %}
+
+    <div class="navigation">
+      <div class="navigation-error exchange">We are sorry this product didn’t fit, would you like to process an exchange for a larger/smaller size instead?</div>
+      <div class="navigation-error all-fields">Please complete all fields before proceeding</div>
+      <button class="nav-btn button" data-return-prev-common>Go Back</button>
+      <button class="nav-btn back-img-btn" data-back-img>Back Product</button>
+      {% comment %} <button class="nav-btn button disabled" data-return-choose-single-option-next>Next</button> {% endcomment %}
+       {% comment %} <button class="nav-btn button disabled" return-choose-option-reason-next>Next</button>  {% endcomment %}
+       
+      <button class="nav-btn next-image-btn disabled" data-next-img>Next Product</button> 
+      {% comment %} <button class="nav-btn button without_size" data-primary-label="Go Back" data-secondary-label="Yes, change to exchange" return-choose-option-reason-prev>Go Back</button> {% endcomment %}
+      {% comment %} <button class="nav-btn button with_size hidden" data-primary-label="No, continue with current return option" data-secondary-label="Yes, change to exchange" return-choose-option-reason-next>Yes, change to exchange</button> {% endcomment %}
+      <button class="nav-btn button next_btn disabled" data-primary-label="Next" data-secondary-label="No, continue with current return option" return-choose-option-reason-next>Next</button>
+    </div>
+    
+
+     <div class="order-submit-err hidden" data-selected-reason-option>
+      Please select return Option.
+    </div>
+    <div class="order-submit-err hidden" data-selected-reason>
+      Please select return Reason.
+    </div>
+  
+  </div>
+  
+  {% comment %} <div class="return-options-steps return-options-8 return-choose-option-reason">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Let us know what went wrong</h2>
+      <p class="rte">Feedback is really important to us, so please let us know why the item wasn’t right for you</p>
+    </div>
+
+    <div class="return-summary lenis">
+      <table class="return-table" data-return-table-reason>
+        <tr>
+          <td class="product-image">
+            <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+          </td>
+          <td class="product-name">
+            <span class="product-name">High waisted tapered trouser</span>
+            <div class="mob-only">
+              <span class="product-color">Caramel</span>
+              <div class="product-size-price">
+                <span class="product-size">10</span>
+                <span class="product-price">£85.00</span>
+              </div>
+              <select class="return-select-box">
+                <option>Item didn’t fit properly</option>
+                <option>Item didn’t suit me </option>
+                <option>Item was faulty</option>
+                <option>Item was not as described</option>
+                <option>I don’t like the item</option>
+                <option>I was sent the wrong item</option>
+                <option>Other</option>
+              </select>
+              <select class="return-select-box">
+                <option>Too big</option>
+                <option>Too small</option>
+              </select>
+              <select class="return-select-box">
+                <option>Waist</option>
+                <option>Length</option>
+                <option>Chest</option>
+                <option>Neck</option>
+                <option>Hips</option>
+                <option>Arms</option>
+                <option>Width</option>
+                <option>Toe</option>
+                <option>Overall</option>
+              </select>
+            </div>
+          </td>
+          <td class="product-color desk-only">Caramel</td>
+          <td class="product-size desk-only">10</td>
+          <td class="product-price desk-only">£85.00</td>
+          <td class="return-select-box desk-only">
+            <select>
+              <option>Item didn’t fit properly</option>
+              <option>Item didn’t suit me</option>
+              <option>Item was faulty</option>
+              <option>Item was not as described</option>
+              <option>I don’t like the item</option>
+              <option>I was sent the wrong item</option>
+              <option>Other</option>
+            </select>
+          </td>
+          <td class="return-select-box desk-only">
+            <select>
+              <option>Too big</option>
+              <option>Too small</option>
+            </select>
+          </td>
+          <td class="return-select-box desk-only">
+            <select>
+              <option>Waist</option>
+              <option>Length</option>
+              <option>Chest</option>
+              <option>Neck</option>
+              <option>Hips</option>
+              <option>Arms</option>
+              <option>Width</option>
+              <option>Toe</option>
+              <option>Overall</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="product-image">
+            <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+          </td>
+          <td class="product-name">
+            <span class="product-name">High waisted tapered trouser</span>
+            <div class="mob-only">
+              <span class="product-color">Caramel</span>
+              <div class="product-size-price">
+                <span class="product-size">10</span>
+                <span class="product-price">£85.00</span>
+              </div>
+              <select class="return-select-box">
+                <option>Item didn’t fit properly</option>
+                <option>Item didn’t suit me</option>
+                <option>Item was faulty</option>
+                <option>Item was not as described</option>
+                <option>I don’t like the item</option>
+                <option>I was sent the wrong item</option>
+                <option>Other</option>
+
+              </select>
+              <select class="return-select-box">
+                <option>Too big</option>
+                <option>Too small</option>
+              </select>
+              <select class="return-select-box">
+                <option>Waist</option>
+                <option>Length</option>
+                <option>Chest</option>
+                <option>Neck</option>
+                <option>Hips</option>
+                <option>Arms</option>
+                <option>Width</option>
+                <option>Toe</option>
+                <option>Overall</option>
+              </select>
+            </div>
+          </td>
+          <td class="product-color desk-only">CARAMEL</td>
+          <td class="product-size desk-only">10</td>
+          <td class="product-price desk-only">£85.00</td>
+          <td class="return-select-box desk-only">
+            <select>
+              <option>Item didn’t fit properly</option>
+              <option>Item didn’t suit me</option>
+              <option>Item was faulty</option>
+              <option>Item was not as described</option>
+              <option>I don’t like the item</option>
+              <option>I was sent the wrong item</option>
+              <option>Other</option>
+            </select>
+          </td>
+          <td class="return-select-box desk-only">
+            <select class="error">
+              <option>Too big</option>
+              <option>Too small</option>
+            </select>
+          </td>
+          <td class="return-select-box desk-only">
+            <select>
+              <option>Waist</option>
+              <option>Length</option>
+              <option>Chest</option>
+              <option>Neck</option>
+              <option>Hips</option>
+              <option>Arms</option>
+              <option>Width</option>
+              <option>Toe</option>
+              <option>Overall</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <div class="return-form-field">
+        <label for="other-feedback" class="return-form-label">
+          Is there any other feedback about the products that you would like to give us?
+        </label>
+        <textarea id="other-feedback" name="other_feedback" rows="5" placeholder="Type your feedback here..." class="return-form-textarea" maxlength="1000" data-reason-feedback-textarea></textarea>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <div class="navigation-error exchange">We are sorry this product didn’t fit, would you like to process an exchange for a larger/smaller size instead?</div>
+      <div class="navigation-error all-fields">Please complete all fields before proceeding</div>
+      <button class="nav-btn button without_size" data-primary-label="Go Back" data-secondary-label="Yes, change to exchange" return-choose-option-reason-prev>Go Back</button>
+      <button class="nav-btn button with_size hidden" data-primary-label="No, continue with current return option" data-secondary-label="Yes, change to exchange" return-choose-option-reason-next>Yes, change to exchange</button>
+      <button class="nav-btn button next_btn" data-primary-label="Next" data-secondary-label="No, continue with current return option" return-choose-option-reason-next>Next</button>
+    </div>
+  
+  </div> {% endcomment %}
+  
+  <div class="return-options-steps return-options-9 return-choose-option-exchange">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Submit your exchange</h2>
+      <p class="rte">Feedback is really important to us, so please let us know why the item wasn’t right for you</p>
+    </div>
+
+    <div class="return-summary lenis">
+      <table class="return-table" data-return-table-exchange>
+        <tr>
+          <td class="product-image">
+            <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+          </td>
+          <td class="product-name">
+            <span class="product-name">High waisted tapered trouser</span>
+            <div class="mob-only">
+              <span class="product-color">Caramel</span>
+              <div class="product-size-price">
+                <span class="product-size">10</span>
+                <span class="product-price">£85.00</span>
+              </div>
+              <select class="return-select-box">
+                <option>Item didn’t fit properly</option>
+                <option>Item didn’t suit me</option>
+                <option>Item was faulty</option>
+                <option>Item was not as described</option>
+                <option>I don’t like the item</option>
+                <option>I was sent the wrong item</option>
+                <option>Other</option>
+              </select>
+
+              <select class="return-select-box">
+                <option>Too big</option>
+                <option>Too small</option>
+              </select>
+
+              <select class="return-select-box">
+                <option>Waist</option>
+                <option>Length</option>
+                <option>Chest</option>
+                <option>Neck</option>
+                <option>Hips</option>
+                <option>Arms</option>
+                <option>Width</option>
+                <option>Toe</option>
+                <option>Overall</option>
+              </select>
+            </div>
+          </td>
+          <td class="product-color desk-only">Caramel</td>
+          <td class="product-size desk-only">10</td>
+          <td class="product-price desk-only">£85.00</td>
+          <td class="product-return-reason desk-only">
+            <h4>Reason for return</h4>
+            <ul>
+              <li>Item didn’t fit properly</li>
+              <li>Too small</li>
+              <li>Length</li>
+            </ul>
+          </td>
+          <td class="return-select-box desk-only">
+            <select class="return-select-box">
+              <option>Please select a size</option>
+              <option>Size 6</option>
+              <option>Size 8</option>
+              <option>Size 12 - out of stock</option>
+              <option>Size 14</option>
+              <option>Size 16</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <div class="return-form-field">
+        <label for="other-feedback" class="return-form-label">
+          Is there any other feedback about the products that you would like to give us?
+        </label>
+        <textarea id="other-feedback" name="other_feedback" rows="5" placeholder="Type your feedback here..." class="return-form-textarea" maxlength="1000"></textarea>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-exchange-prev>Go Back</button>
+      <button class="nav-btn button disabled" return-choose-option-exchange-next>Next</button>
+    </div>
+  
+  </div>
+
+  {% comment %} <div class="return-options-steps return-options-9 return-choose-option-reason-final">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Let us know what went wrong</h2>
+      <p class="rte">Feedback is really important to us, so please let us know why the item wasn’t right for you</p>
+    </div>
+
+    <div class="return-summary">
+      <table class="return-table" data-return-table-reason-final></table>
+      <div class="return-form-field">
+        <label for="other-feedback" class="return-form-label">
+          Is there any other feedback about the products that you would like to give us?
+        </label>
+        <textarea id="other-feedback" name="other_feedback" rows="5" placeholder="Type your feedback here..." class="return-form-textarea" maxlength="1000"></textarea>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-reason-final-prev>Go Back </button>
+      <button class="nav-btn button disabled" return-choose-option-reason-final-next>NEXT</button>
+    </div>
+  
+  </div> {% endcomment %}
+  
+  <div class="return-options-steps return-options-12 return-choose-option-return-confirmation">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Confirmation of return</h2>
+      <p class="rte">Feedback is really important to us, so please let us know why the item wasn’t right for you</p>
+    </div>
+
+    <div class="return-summary lenis">
+      {% comment %} <table class="return-table" data-return-table-return-confirmation>
+        <tr>
+          <td class="product-image">
+            <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+          </td>
+          <td class="product-name">
+            <span class="product-name">High waisted tapered trouser</span>
+            <div class="mob-only">
+              <span class="product-color">Caramel</span>
+              <div class="product-size-price">
+                <span class="product-size">10</span>
+                <span class="product-price">£85.00</span>
+              </div>
+              <div class="product-return-reason">
+                <h4>Reason for return</h4>
+                <ul>
+                  <li>Item didn’t fit properly</li>
+                  <li>Too small</li>
+                  <li>Length</li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td class="product-color desk-only">Caramel</td>
+          <td class="product-size desk-only">10</td>
+          <td class="product-price desk-only">£85.00</td>
+          <td class="product-return-reason desk-only">
+            <h4>Reason for return</h4>
+            <ul>
+              <li>Item didn’t fit properly</li>
+              <li>Too small</li>
+              <li>Length</li>
+            </ul>
+          </td>
+        </tr>
+      </table> {% endcomment %}
+      <table class="return-table" data-return-table-return-confirmationAll>
+      </table>
+      <table class="return-table confirm-exchange" data-return-table-exchange></table>
+      <div class="return-credit-method">
+        {% comment %} <table class="credit-method-table">
+          <thead>
+            <tr>
+              <th>Credit Method</th>
+              <th>Return Fee</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <label for="original-payment-method" class="credit-option">
+                  <input type="radio" name="credit_method" id="original-payment-method" value="refund" checked/>
+                  <div class="credit-info">
+                    <strong> Refund To Original Payment Method</strong><br>
+                    <small>Can take 10–15 days depending on your card processor</small>
+                  </div>
+                </label>
+              </td>
+              <td>{{ localization.country.currency.symbol }}5.00</td>
+              <td data-return-table-return-confirmation-returntotal>£165*</td>
+            </tr>
+            <tr>
+              <td>
+                <label for="store-credit-option" class="credit-option">
+                  <input type="radio" name="credit_method" id="store-credit-option" value="store-credit"/>
+                  <div class="credit-info">
+                    <strong>Store Credit Option</strong><br>
+                    <small>Arrives within 24 hrs of receipt of the return. Valid for 48 months</small>
+                  </div>
+                </label>
+              </td>
+              <td>Free</td>
+              <td data-return-table-return-confirmation-total>£170*</td>
+            </tr>
+          </tbody>
+        </table> {% endcomment %}
+
+        <table class="credit-method-table">
+          <tbody>
+            <tr class="refund">
+              <td>
+                {% comment %} <label for="original-payment-method" class="credit-option"> {% endcomment %}
+                  {% comment %} <input type="radio" name="credit_method" id="original-payment-method" value="refund" checked/> {% endcomment %}
+                  <div class="credit-info refund">
+                    <strong> Total Refund Value</strong><br>
+                  </div>
+                {% comment %} </label> {% endcomment %}
+              </td>
+              <td data-return-table-return-confirmation-returntotal>£165*</td>
+            </tr>
+            <tr class="store_cradit">
+              <td>
+                {% comment %} <label for="store-credit-option" class="credit-option">
+                  <input type="radio" name="credit_method" id="store-credit-option" value="store-credit"/> {% endcomment %}
+                  <div class="credit-info store_cradit hidden">
+                    <strong> Total  Store Credit Value</strong><br>
+                  </div>
+                {% comment %} </label> {% endcomment %}
+              </td>
+              <td data-return-table-return-confirmation-total class="hidden">£170*</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="change_return_opt_card"></div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-confirm-change>Confirm change</button>
+      <button class="nav-btn button" return-choose-option-return-confirmation-prev>Go Back </button>
+      <button class="nav-btn button" return-choose-option-return-confirmation-next>Next</button>
+      <div class="return-inspection">*Subject to return passing return inspection</div>
+    </div>
+    
+
+    <div class="final-errror hidden" data-error-change-confirm>
+        Please select return option.
+      </div>
+      <div class="final-errror hidden" data-error-change-exchange>
+        Please select size.
+      </div>
+  
+  </div>
+  
+  <div class="return-options-steps return-options-13 return-choose-option-exchange-confirmation">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Confirmation of exchange</h2>
+      <p class="rte">Please check the below details are correct</p>
+    </div>
+
+    <div class="return-summary lenis">
+      <table class="return-table" data-return-table-exchange-confirmation>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th class="desk-only"></th>
+            <th>Size</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="product-image">
+              <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+            </td>
+            <td class="product-name">
+              High Waisted Tapered Trouser
+              <span class="product-color mob-only">Caramel</span>
+            </td>
+            <td class="product-color desk-only">Caramel</td>
+            <td class="product-size">10</td>
+            <td class="product-size">12</td>
+          </tr>
+          <tr>
+            <td class="product-image">
+              <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/de6d24eb156136e7e5edd85e55ca3669e7962062.png?v=1756816336" alt="Product Image" width="100%" height="100%">
+            </td>
+            <td class="product-name">
+              High Waisted Tapered Trouser
+              <span class="product-color mob-only">Stone</span>
+            </td>
+            <td class="product-color desk-only">Stone</td>
+            <td class="product-size">M</td>
+            <td class="product-size">L</td>
+          </tr>
+          <tr>
+            <td class="product-image"></td>
+            <td class="product-name"></td>
+            <td class="product-color"></td>
+            <td class="product-size">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22" viewBox="0 0 30 22" fill="none">
+                <line x1="0.823223" y1="21.8232" x2="16.0503" y2="6.59612" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="15.3174" y1="6.59611" x2="29.4569" y2="20.7356" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="2.999" y1="13.1221" x2="15.2978" y2="0.823236" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="14.7744" y1="0.823223" x2="26.1948" y2="12.2436" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+              </svg>
+              {% comment %} You’re <br> Returning {% endcomment %}
+               Return
+            </td>
+            <td class="product-size">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22" viewBox="0 0 30 22" fill="none">
+                <line x1="0.823223" y1="21.8232" x2="16.0503" y2="6.59612" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="15.3174" y1="6.59611" x2="29.4569" y2="20.7356" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="2.999" y1="13.1221" x2="15.2978" y2="0.823236" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+                <line x1="14.7744" y1="0.823223" x2="26.1948" y2="12.2436" stroke="black" stroke-opacity="0.6" stroke-width="0.5"/>
+              </svg>
+              {% comment %} We’re <br> Sending {% endcomment %}
+               Exchange
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="return-table" data-return-table-exchange></table>
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-exchange-confirmation-prev>Go Back </button>
+      <button class="nav-btn button" return-choose-option-exchange-confirmation-next>Next</button>
+    </div>
+  
+  </div>
+  
+  <div class="return-options-steps return-options-14 return-choose-option-declaration">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Declaration</h2>
+      <p class="rte">Please read the following declaration statements carefully and click the sliders to confirm, understand and acknowledge the below declarations.</p>
+    </div>
+
+    <div class="return-conditions lenis">
+      <table class="return-conditions-table">
+        <tbody>
+          <tr>
+            <td>
+              I confirm that the item(s) I am returning are unworn, unused, in original condition, and free from marks, stains, odours, or make-up (including around the neckline, cuffs, or underarms). All tags, labels, seals and packaging are intact, and the return is being made within 14 days of receipt.
+            </td>
+            <td class="toggle-cell">
+              <label for="unworn-unused" class="switch">
+                <input type="checkbox" id="unworn-unused" />
+                <span class="slider"></span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              I understand that items which are damaged, altered, washed, or missing original packaging may not be eligible for a refund or exchange, and that a £5 fee will be deducted from refunds (not from exchanges or store credit). Refunds may take 10–15 working days from the date Marame receives my return.
+            </td>
+            <td class="toggle-cell">
+              <label for="damaged-altered-washed" class="switch">
+                <input type="checkbox" id="damaged-altered-washed" />
+                <span class="slider"></span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              I acknowledge that I am responsible for the item(s) until received by Marame, and I have read and agree to Marame’s 
+              <a href="/pages/returns" target="_blank">Returns & Exchanges Policy</a>.  
+              I accept that my return may be rejected or adjusted if these conditions are not met.
+            </td>
+            <td class="toggle-cell">
+              <label for="acknowledge" class="switch">
+                <input type="checkbox" id="acknowledge" />
+                <span class="slider"></span>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-declaration-prev>Go Back </button>
+      <button class="nav-btn button disabled" return-choose-option-declaration-next>Next</button>
+    </div>
+  
+  </div>
+
+  <div class="return-options-steps return-options-15 return-choose-option-return-method">
+
+    <div class="return-method-item" data-return-method="dpd">
+      <div class="return-options-title">
+        <h2 class="return-step-title"> Preferred return method</h2>
+        <p class="rte">You can choose to either get a barcode to show at a local drop-off point, or print your own label at home and apply to the parcel.</p>
+      </div>
+
+      <div class="return-conditions lenis">
+        <div class="return-print-options">
+          
+          <div class="return-print-card return-option-selected" data-print="QrCode">
+            <div class="return-option-header">
+              <div class="return-option-text">
+                <h2>Paperless - print in store</h2>
+                <p>No printer required</p>
+                <p>Show your barcode at:</p>
+                <p class="return-option-check">Post Offices</p>
+              </div>
+              <div class="return-option-icon">
+                <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Paperless_-_print_in_store_3cb06715-5e21-4210-b6a8-9c93a46b3e87.webp?v=1761813862" alt="Barcode Icon">
+              </div>
+            </div>
+
+            <div class="return-option-footer">
+              <h3>Your nearest stores</h3>
+              <div class="return-option-locations">
+                <div class="return-option-location">
+                  <h4>Post Office Woburn Sands</h4>
+                  <p>29 High Street<br>milton Keynes<br>2.1km</p>
+                </div>
+                <div class="return-option-divider"></div>
+                <div class="return-option-location">
+                  <h4>Walnut Tree Post Office</h4>
+                  <p>2 Fyfield Barrow<br>milton Keynes<br>3.2km</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="return-print-card" data-print="Label">
+            <div class="return-option-header">
+              <div class="return-option-text">
+                <h2>Print your own label</h2>
+                <p>Printer required</p>
+                <p>Drop off at any location including:</p>
+                <p class="return-option-check">Sainsburys</p>
+                <p class="return-option-check">Co-op</p>
+              </div>
+              <div class="return-option-icon">
+                <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Print_your_own_label_16a1018a-1799-431b-91a5-1c9cffea40b3.webp?v=1761813862" alt="Printer Icon">
+              </div>
+            </div>
+
+            <div class="return-option-footer">
+              <h3>Your nearest drop off locations</h3>
+              <div class="return-option-locations">
+                <div class="return-option-location">
+                  <h4>Post Office Woburn Sands</h4>
+                  <p>29 High Street<br>milton Keynes<br>2.1km</p>
+                </div>
+                <div class="return-option-divider"></div>
+                <div class="return-option-location">
+                  <h4>Co-op</h4>
+                  <p>25-27 High Street<br>milton Keynes<br>2.2km</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% comment %} <div class="return-print-options">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/20c4e89b5322e646d745bb997b710e8fe0172e3e.png?v=1759381327" class="desk" alt="Print">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Group_1321315236.png?v=1759405278" class="mob" alt="Print">
+        </div> {% endcomment %}
+      </div>
+    </div>
+    <div class="return-method-item" data-return-method="post">
+      <div class="return-options-title">
+        <h2 class="return-step-title">You’re Ready To Send!</h2>
+        <p data-location-rte="NORTHERN IRELAND" class="rte">We don’t currently have a free post returns facility in Northern Ireland / Isle of Wight however you can use the postal service of your choice to return the item back to us at your own expense and as a result <b>we waive all return fees for Northern Ireland / Isle of Wight customers.</b> The return address is listed below.</p>
+        <p data-location-rte="INTERNATIONAL" class="rte hidden">All International Returns must be shipped back to us at the customers expense. The return address is listed below. </p>
+      </div>
+
+      <div class="return-method-content">
+        {% comment %} <h4 class="return-method-title">Please post your return to:</h4>
+          <p class="Rte"> Marame Clothing LTD<br>Returns Department<br>3 Willows<br>Mill Farm Courtyard<br>Beachampton<br>MK19 6DS</p> {% endcomment %}
+          <h4 class="return-method-title">Marame Returns</h4>
+          <p class="Rte"> Pro FS, <br>Unit 1 G-Park,<br>Tongwell Street,<br>Fox Milne,<br>Milton Keynes<br>MK15 0DY</p>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-return-method-prev>Go Back</button>
+      <button class="nav-btn button" return-choose-option-return-method-next>Submit Return</button>
+    </div>
+  
+  </div>
+  
+  <div class="return-options-steps return-options-17 return-choose-option-return-prepare-parcel">
+
+    <div class="return-options-title">
+      <h2 class="return-step-title">Prepare your parcel</h2>
+      <p class="rte">Place the item(s) you are returning back in the original box they were sent in, close the box and remove the self adhesive tape, and close/seal.</p>
+    </div>
+
+    <div class="prepare-parcel-steps paperless-return-process lenis active">
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 1</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/1.webp?v=1762836631" alt="Place products in the box">
+        </div>
+      </div>
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 2</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/2.webp?v=1762836631" alt="Remove adhesive tape cover">
+        </div>
+      </div>
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 3</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/3.webp?v=1762836631" alt="Seal the box">
+        </div>
+      </div>
+      <div class="epare-parcel-step" no-northern-ireland-and-international>
+        <p><span>Step</span> 4</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/4.webp?v=1762836631" alt="Apply Postage Label">
+        </div>
+      </div>
+      <div class="epare-parcel-step" no-northern-ireland-and-international>
+        <p><span>Step</span> 5</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/5.webp?v=1762836630" alt="Take to drop-off location">
+        </div>
+      </div>
+    </div>
+    <div class="prepare-parcel-steps print-your-own-label lenis">
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 1</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/1.webp?v=1762836631" alt="Place products in the box">
+        </div>
+      </div>
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 2</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/2.webp?v=1762836631" alt="Remove adhesive tape cover">
+        </div>
+      </div>
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 3</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/3.webp?v=1762836631" alt="Seal the box">
+        </div>
+      </div>
+      <div class="epare-parcel-step">
+        <p><span>Step</span> 4</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/6.webp?v=1762837057" alt="Take to drop-off location">
+        </div>
+      </div>
+      <div class="epare-parcel-step" no-northern-ireland-and-international>
+        <p><span>Step</span> 5</p>
+        <div class="epare-parcel-image">
+          <img src="https://cdn.shopify.com/s/files/1/0934/8877/5503/files/4.webp?v=1762836631" alt="Apply Postage Label">
+        </div>
+      </div>
+    </div>
+
+    <div class="submit--error" data-submit--error></div>
+
+    <div class="navigation">
+      <button class="nav-btn button" return-choose-option-submit-return-prev>Go Back</button>
+      <button class="nav-btn button" return-choose-option-submit-return>Submit Return</button>
+    </div>
+  
+  </div>
+  
+  <div class="return-options-steps return-options-19 return-choose-option-return-thank-you">
+
+    <div class="return-options-title thankyou-mass paperless-thankyou-mass lenis active">
+      <h2 class="return-step-title">Thank You!</h2>
+      <p class="rte">Your return for order number <b data-thank-you-order-number>#1637</b> has been successfully submitted. Your QR code and drop-off instructions have been emailed to your order email address.</p>
+      <p class="rte">Once we receive the return this will be checked over by our team within 24 hours of receipt and we will keep you updated on the outcome of your return via email.</p>
+    </div>
+
+    <div class="return-options-title thankyou-mass print-your-own-thankyou-mass lenis">
+      <h2 class="return-step-title">Thank You!</h2>
+      {% comment %} <p class="rte">Your return for order number <b data-thank-you-order-number>#1637</b> has been successfully submitted. Once we receive the return this will be checked over by our team within 24 hours of receipt and we will keep you updated on outcome of the return via email </p> {% endcomment %}
+      <p class="rte">Your return for order number <b data-thank-you-order-number>#1637</b> has been successfully submitted. </p>
+      <p class="rte">Your postage label has been emailed to your order email address (if you can’t find this please check your junk), you can now print this and apply the label to your box and take your return to a drop off location. Please make sure you remove or cover any previous postage labels. </p>
+      
+    </div>
+
+    <div class="navigation">
+      <a href="/" class="finish-btn button">Finish</a>
+      <a class="finish-btn button" id="downloadPdf" target="_blank" download>Download Label</a>
+    </div>
+  
+  </div>
+</section>
+
+<div class="exchange_fit_popup">
+  <div class="exchange_popup_inner">
+    <div class="content">
+      <p>We are sorry this product didn't fit, would you like to process an exchange for a larger size instead?</p>
+    </div>
+    <div class="exchange_popup_btns">
+      <button class="exchange_yes_btn" data-exchange-yes>Yes</button>
+      <button class="exchange_no_btn" data-exchange-no>No</button>
+    </div>
+  </div>  
+</div>
+
+{% schema %}
+{
+  "name": "Return Portal",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Return Portal"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{%- comment -%}
+  Root gender handle for a collection (mens / womens) from collection.handle.
+  @output marame_collection_gender {String} "mens", "womens", or blank
+{%- endcomment -%}
+{%- assign marame_collection_gender = '' -%}
+{%- assign ch = collection.handle | downcase -%}
+{%- if ch == 'womens' or ch contains 'womens-' or ch contains 'women-' -%}
+  {%- assign marame_collection_gender = 'womens' -%}
+{%- elsif ch == 'mens' or ch contains 'mens-' or ch contains 'menswear' -%}
+  {%- assign marame_collection_gender = 'mens' -%}
+{%- endif -%}

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Merchant-only toolbar — theme editor preview only (never on the live storefront).
+  @param active_set {String}
+{%- endcomment -%}
+{%- if request.design_mode -%}
+  <div class="marame-grid-controls" data-marame-grid-controls data-active-set="{{ active_set }}">
+    <div class="marame-grid-controls__inner">
+      <p class="marame-grid-controls__set">
+        <span class="marame-grid-controls__label">Mode</span>
+        <strong>{% if active_set == 'random' %}Random{% else %}{{ active_set | capitalize }}{% endif %}</strong>
+        <span class="marame-grid-controls__hint">(sidebar → Shown to customers)</span>
+      </p>
+      <button type="button" class="marame-grid-controls__btn" data-marame-shuffle-btn>
+        {% if active_set == 'random' %}Shuffle again{% else %}Shuffle preview{% endif %}
+      </button>
+    </div>
+    <p class="marame-grid-controls__note" data-marame-shuffle-note hidden>
+      {% if active_set == 'random' %}
+        New random order in preview. Customers get a fresh shuffle on every page load automatically.
+      {% else %}
+        Preview only. Drag Grid card blocks in the left sidebar into this order, then Save to keep it.
+      {% endif %}
+    </p>
+  </div>
+{%- endif -%}

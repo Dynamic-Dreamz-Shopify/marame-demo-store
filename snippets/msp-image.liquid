@@ -1,0 +1,69 @@
+{%- comment -%}
+  Image cropped inside parent .msp-media__cell (object-position via --msp-object-position on cell).
+  @param image {Image}
+  @param fallback_asset {String}
+  @param alt {String}
+  @param hidden {Boolean}
+  @param object_position {String} optional e.g. "50% 25%"
+  @param sizes {String} optional responsive sizes hint (default 100vw)
+  @param widths {String} optional srcset widths
+  @param max_width {Number} optional master resize width
+  @param loading {String} optional lazy | eager
+  @param fetchpriority {String} optional high | low | auto
+{%- endcomment -%}
+{%- liquid
+  assign img_alt = alt | default: ''
+  assign has_media = false
+  if image != blank
+    assign has_media = true
+  elsif fallback_asset != blank
+    assign has_media = true
+  endif
+
+  assign img_sizes = sizes | default: '100vw'
+  assign img_widths = widths | default: '390, 750, 1100, 1440, 1920, 2560'
+  assign img_max_width = max_width | default: 3840
+  assign img_loading = loading | default: 'lazy'
+-%}
+{%- unless hidden and has_media == false -%}
+  <div class="msp-media__fill"{% if object_position != blank %} style="--msp-object-position: {{ object_position }};"{% endif %}>
+    {%- if image != blank -%}
+      {%- if fetchpriority != blank -%}
+        {{
+          image
+          | image_url: width: img_max_width
+          | image_tag:
+            class: 'msp-media__img',
+            alt: img_alt,
+            loading: img_loading,
+            fetchpriority: fetchpriority,
+            crossorigin: 'anonymous',
+            widths: img_widths,
+            sizes: img_sizes
+        }}
+      {%- else -%}
+        {{
+          image
+          | image_url: width: img_max_width
+          | image_tag:
+            class: 'msp-media__img',
+            alt: img_alt,
+            loading: img_loading,
+            crossorigin: 'anonymous',
+            widths: img_widths,
+            sizes: img_sizes
+        }}
+      {%- endif -%}
+    {%- elsif fallback_asset != blank -%}
+      <img
+        class="msp-media__img"
+        src="{{ fallback_asset | asset_url }}"
+        alt="{{ img_alt | escape }}"
+        loading="{{ img_loading }}"
+        width="800"
+        height="800"
+        crossorigin="anonymous"
+      >
+    {%- endif -%}
+  </div>
+{%- endunless -%}

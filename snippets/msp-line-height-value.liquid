@@ -1,0 +1,21 @@
+{%- comment -%}
+  Normalizes line-height for CSS (unitless or px).
+  New sliders: 12–80 px. Legacy checkerboard: 80–180 hundredths (100 = 1.0).
+  Values above 80 are treated as legacy hundredths, not px.
+  @param value {Number}
+{%- endcomment -%}
+{%- liquid
+  assign v = value | default: 0 | plus: 0
+  if v > 80
+    assign v = v | divided_by: 100.0
+    assign out = v
+  elsif v >= 12
+    assign out = v | append: 'px'
+  elsif v > 0
+    assign v = v | divided_by: 100.0
+    assign out = v
+  else
+    assign out = '1.2'
+  endif
+-%}
+{{- out -}}

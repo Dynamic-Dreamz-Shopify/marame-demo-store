@@ -1,0 +1,210 @@
+{% if product.metafields.custom.buy_the_look != blank %}
+{% assign btl_products_length = 0 %}
+{% assign btl_products = product.metafields.custom.buy_the_look.value %}
+{% for btl_product in btl_products %}
+  {% assign btl_products_length = btl_products_length | plus: 1 %}
+{% endfor %}
+  
+
+
+{% assign template = template.name %}
+  <section class="buy-the-look buy-the-look-separate{% if template == 'product' and product.gift_card? == false %} pdp-look-section-wrap{% endif %}" id="buy_full_look">
+    {% if section.settings.heading != blank %}
+      <h3 class="h4 section-title-tag">{{ section.settings.heading }}</h3>
+    {% endif %}
+    <div class="buy-the-look__content--main">
+      <div class="buy-the-look__content--item">
+        {% if section.settings.heading != blank %}<h3 class="h4 section-title-tag buy-the-look__content-title">{{ section.settings.heading }}</h3>{% endif %}
+        <div class="buy-the-look___content{% if btl_products_length > 3 %} buy-the-look__content--vertical{% endif %}">
+            <div class="buy-the-look__content___details">
+            {% for btl_product in btl_products %}
+                {% assign size_option = 'size' %}
+                {% assign size_option_available = false %}
+                {%- for option in btl_product.options_with_values -%}
+                  {% assign option_name = option.name | downcase %}
+                  {% if option_name == "shoe size" %}
+                    {% assign size_option = 'shoe size' %}
+                  {% endif %}
+                  {% if option_name == size_option %}
+                    {% assign size_option_available = true %}
+                  {% endif %}
+                {%- endfor -%}
+              
+                {% unless btl_product.available %}
+                  {% assign size_option_available = false %}
+                {% endunless %}
+              
+              <div class="buy-the-look__content__details__item product--grid--main" data_product_ID="{{ btl_product.id }}">
+                <div class="buy-the-look__content__details__item__img cursor_pointer">
+                  <div class="buy-the-look__content__details__item__img__slider">
+                    <div class="swiper-wrapper">
+                      {%- for media in btl_product.media -%}
+                        {%- case media.media_type -%}
+                          {%- when 'image' -%}
+                            <div
+                              class="swiper-slide"
+                              media_ID="{{ media.id }}"
+                              data_alt="{{ media.alt | escape }}"
+                            >
+                              <img onclick="location.href='{{ btl_product.url }}'"
+                                src="{{ media.src | img_url: 'master' }}"
+                                width="{{ media.width }}"
+                                height="{{ media.height }}"
+                                alt="{{ media.alt | escape }}"
+                                loading="lazy"
+                              >
+                            </div>
+                        {%- endcase -%}
+                      {%- endfor -%}
+                    </div>
+                    <div class="swiper-button-prev">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+                        <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+                      </svg>
+                    </div>
+                    <div class="swiper-button-next">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+                        <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+                      </svg>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+                    {% render 'wishlist-app-links', linkType: 'list-product', product: btl_product  %}
+                    {% for tag in btl_product.tags %}
+                      {% if tag contains "badge_" %}
+                      <div class="product-card__badge pc-{{ tag | handle }}">{{ tag | remove: "badge_" | capitalize }}</div>
+                      {% break %}
+                      {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="buy-the-look__content__details__item__content">
+                    <div class="buy-the-look__content__details__item__content__infos">
+                    <a href="{{ btl_product.url }}" class="buy-the-look__content__details__item__content__infos__deets">
+                    <h5 class="desc">{{ btl_product.title }}</h5>
+                    {% comment %} <p class="price">{{ btl_product.price | money }}</p> {% endcomment %}
+                    {% if product.selected_or_first_available_variant.options.size > 0 %}<p class="pro-color">in {{ btl_product.selected_or_first_available_variant.options[0] }}</p>{% endif %}
+                    </a>                 
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% if product.metafields.custom.style_with_product.value != blank %}
+      <div class="buy-the-look__content--item">
+        {% if section.settings.heading2 != blank %}<h3 class="h4 section-title-tag buy-the-look__content-title">{{ section.settings.heading2 }}</h3>{% endif %}
+        <div class="buy-the-look__content-right">
+          <div class="buy-the-look__content___details">
+            {% for btl_product in product.metafields.custom.style_with_product.value %}
+                {% assign size_option = 'size' %}
+                {% assign size_option_available = false %}
+                {%- for option in btl_product.options_with_values -%}
+                  {% assign option_name = option.name | downcase %}
+                  {% if option_name == "shoe size" %}
+                    {% assign size_option = 'shoe size' %}
+                  {% endif %}
+                  {% if option_name == size_option %}
+                    {% assign size_option_available = true %}
+                  {% endif %}
+                {%- endfor -%}
+              
+                {% unless btl_product.available %}
+                  {% assign size_option_available = false %}
+                {% endunless %}
+              
+              <div class="buy-the-look__content__details__item product--grid--main" data_product_ID="{{ btl_product.id }}">
+                <div class="buy-the-look__content__details__item__img cursor_pointer">
+                  <div class="buy-the-look__content__details__item__img__slider">
+                    <div class="swiper-wrapper">
+                      {%- for media in btl_product.media -%}
+                        {%- case media.media_type -%}
+                          {%- when 'image' -%}
+                            <div
+                              class="swiper-slide"
+                              media_ID="{{ media.id }}"
+                              data_alt="{{ media.alt | escape }}"
+                            >
+                              <img onclick="location.href='{{ btl_product.url }}'"
+                                src="{{ media.src | img_url: 'master' }}"
+                                width="{{ media.width }}"
+                                height="{{ media.height }}"
+                                alt="{{ media.alt | escape }}"
+                                loading="lazy"
+                              >
+                            </div>
+                        {%- endcase -%}
+                      {%- endfor -%}
+                    </div>
+                    <div class="swiper-button-prev">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="9" height="19" viewBox="0 0 9 19" fill="none">
+                        <path d="M8.409 1 .999 9.335l7.41 8.335" stroke="#8E8E8E" stroke-width="1.389"/>
+                      </svg>
+                    </div>
+                    <div class="swiper-button-next">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+                        <path d="m1.12 17.939 7.408-8.336L1.12 1.268" stroke="#8E8E8E" stroke-width="1.389"/>
+                      </svg>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+                  {% comment %}
+                  {% if btl_product.featured_media != blank %}
+                    <img onclick="location.href='{{ btl_product.url }}'" src="{{ btl_product.featured_media | img_url: 'master' }}" alt="{{ btl_product.featured_media.alt }}" loading="lazy" width="{{ btl_product.featured_media.width }}" height="{{ btl_product.featured_media.height }}">
+                  {% endif %}
+                    <button class="heartBtn" aria-label="Favorite item">
+                      {% render 'icon-heart' %}
+                    </button>
+                  {% endcomment %}
+                    {% render 'wishlist-app-links', linkType: 'list-product', product: btl_product  %}
+                    {% for tag in btl_product.tags %}
+                      {% if tag contains "badge_" %}
+                      <div class="product-card__badge pc-{{ tag | handle }}">{{ tag | remove: "badge_" | capitalize }}</div>
+                      {% break %}
+                      {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="buy-the-look__content__details__item__content">
+                  <div class="buy-the-look__content__details__item__content__infos">
+                      <a href="{{ btl_product.url }}" class="buy-the-look__content__details__item__content__infos__deets">
+                        <h5 class="desc">{{ btl_product.title }}</h5>
+                        {% comment %} <p class="price">{{ btl_product.price | money }}</p> {% endcomment %}
+                        {% if product.selected_or_first_available_variant.options.size > 0 %}<p class="pro-color">in {{ btl_product.selected_or_first_available_variant.options[0] }}</p>{% endif %}
+                      </a>                 
+                  </div>
+                  </div>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Buy the look",
+  "class": "buy_the_look buy_the_look_separate_new",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "inline_richtext",
+      "label": "Heading 2",
+      "id": "heading2",
+      "default":"STYLE IT WITH"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Buy the look new"
+    }
+  ]
+}
+{% endschema %}

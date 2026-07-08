@@ -1,0 +1,329 @@
+[
+  {
+    "id": "T01_bra_drives_arla_v_neck_up",
+    "product_handle": "the-arla-cashmere-blend-v-neck",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "10",
+      "height_cm": 168,
+      "fit_preference": "regular",
+      "bra_size": "34D",
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "14",
+      "confidence": "high",
+      "secondary_size": "12"
+    },
+    "chart_refs": [
+      "SHORT SLEEVE V NECK JUMPER CHEST: 47.5/49.5/51.5/53.5/55.5/57.5 flat",
+      "UPPER CHEST: 38.5/40.5/42.5/44.5/46.5/48.5 flat"
+    ],
+    "why": "34D estimated bust 96.5cm; required chest 104.5cm with 8cm top ease; UK14 chest circumference 107cm is first pass. Upper-chest derived check also passes at UK14."
+  },
+  {
+    "id": "T02_large_bra_arla_crew",
+    "product_handle": "the-arla-cashmere-blend-crew-neck",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 170,
+      "fit_preference": "regular",
+      "bra_size": "36DD",
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "high",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "SHORT SLEEVE CREW NECK JUMPER CHEST UK18 flat 57.5 = 115cm circumference",
+      "UPPER CHEST UK18 flat 48.5 = 97cm circumference"
+    ],
+    "why": "36DD estimated bust 104.1cm; +8cm ease requires 112.1cm chest, first pass UK18."
+  },
+  {
+    "id": "T03_bust_measure_beats_bra_elevated_crew",
+    "product_handle": "the-elevated-t-shirt-crew",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "10",
+      "height_cm": 165,
+      "fit_preference": "regular",
+      "bra_size": "34B",
+      "bust_cm": 100,
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "14",
+      "confidence": "high",
+      "secondary_size": "12"
+    },
+    "chart_refs": [
+      "ELEVATED CREW T-SHIRT CHEST UK12 flat 53.5 = 107cm; UK14 flat 55.5 = 111cm"
+    ],
+    "why": "max(bustCm 100, bra estimate 91.4) = 100; +8cm ease requires 108cm; UK14 first pass."
+  },
+  {
+    "id": "T04_bandeau_fitted_low_ease",
+    "product_handle": "the-alora-bandeau-top",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "10",
+      "height_cm": 164,
+      "fit_preference": "regular",
+      "bra_size": "32B",
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "medium",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "BANDEAU TOP CHEST UK18 flat 45.5 = 91cm circumference"
+    ],
+    "why": "32B estimated bust 86.4cm; bandeau ease 3cm requires 89.4cm; UK18 is first pass. Confidence medium because bandeau chest is fitted/low-ease and usual size conflicts."
+  },
+  {
+    "id": "T05_cala_shirt_broad_shoulders_between_sizes",
+    "product_handle": "the-cala-shirt",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 171,
+      "fit_preference": "regular",
+      "bra_size": "34C",
+      "bust_cm": 100,
+      "shoulder_profile": "broad"
+    },
+    "expected": {
+      "recommended_size": "12",
+      "confidence": "high",
+      "secondary_size": "14"
+    },
+    "chart_refs": [
+      "CHEESE CLOTH SHIRT CHEST UK8 flat 54 = 108cm; UK12 flat 58 = 116cm; SHOULDER TO SHOULDER exists"
+    ],
+    "why": "Bust passes in UK8, but usual-size anchor and broad-shoulder soft rule keep UK12 as intended fit; UK14 is alternate for more shoulder room."
+  },
+  {
+    "id": "T06_regular_v_neck_close_fit_size_down",
+    "product_handle": "the-melange-t-shirt-v-neck",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 166,
+      "fit_preference": "close",
+      "bra_size": "34B",
+      "shoulder_profile": "narrow"
+    },
+    "expected": {
+      "recommended_size": "10",
+      "confidence": "medium",
+      "secondary_size": "12"
+    },
+    "chart_refs": [
+      "REGULAR V NECK T-SHIRT CHEST UK10 flat 51.5 = 103cm"
+    ],
+    "why": "Bra-derived bust 91.4cm plus close-fit ease 5cm requires 96.4cm, so UK8 technically passes; usual UK12, narrow shoulders and close preference produce UK10 as a conservative size-down, not UK8."
+  },
+  {
+    "id": "T07_amara_linen_trouser_measurements",
+    "product_handle": "the-amara-linen-trouser",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "10",
+      "height_cm": 172,
+      "fit_preference": "regular",
+      "waist_cm": 70,
+      "hip_cm": 104,
+      "trouser_length_issue": "about_right"
+    },
+    "expected": {
+      "recommended_size": "16",
+      "confidence": "high",
+      "secondary_size": "14"
+    },
+    "chart_refs": [
+      "LINEN LOOSE TROUSER WAIST UK16 flat 37 = 74cm; HIP UK14 flat 57 = 114cm"
+    ],
+    "why": "Waist requirement 72cm with 2cm ease first passes at UK16; hip requirement 110cm with 6cm ease passes at UK14; max critical size is UK16."
+  },
+  {
+    "id": "T08_amara_linen_short_hip_drives",
+    "product_handle": "the-amara-linen-short",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 160,
+      "fit_preference": "regular",
+      "waist_cm": 68,
+      "hip_cm": 111
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "high",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "LINEN LOOSE SHORT HIP UK18 flat 62 = 124cm"
+    ],
+    "why": "Hip requirement 117cm with 6cm ease first passes at UK18; hip beats usual size."
+  },
+  {
+    "id": "T09_varo_knit_pant_combined_bucket",
+    "product_handle": "the-varo-knit-pant",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "14",
+      "height_cm": 176,
+      "fit_preference": "regular",
+      "waist_cm": 72,
+      "hip_cm": 94,
+      "trouser_length_issue": "too_short"
+    },
+    "expected": {
+      "recommended_size": "12-14",
+      "confidence": "medium",
+      "secondary_size": "16-18"
+    },
+    "chart_refs": [
+      "KNIT CO-ORD TROUSER LOUNGE SET bucket 12-14: WAIST flat 35 = 70cm, HIP flat 49 = 98cm, INSEAM 78cm"
+    ],
+    "why": "Usual UK14 maps to 12-14 bucket. Waist sits just above relaxed flat waist; length issue shows 16-18 as alternate because inseam grades to 80cm."
+  },
+  {
+    "id": "T10_lior_bias_skirt_waist_and_hip",
+    "product_handle": "the-lior-bias-skirt",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 170,
+      "fit_preference": "regular",
+      "waist_cm": 75,
+      "hip_cm": 100
+    },
+    "expected": {
+      "recommended_size": "14",
+      "confidence": "high",
+      "secondary_size": "12"
+    },
+    "chart_refs": [
+      "LINEN BIAS MAXI SKIRT WAIST UK14 flat 41 = 82cm; HIP UK12 flat 53 = 106cm"
+    ],
+    "why": "Waist requirement 77cm with 2cm ease first passes UK14; hip requirement 106cm passes UK12; max critical size UK14."
+  },
+  {
+    "id": "T11_cala_skirt_no_hip_row",
+    "product_handle": "the-cala-skirt",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 168,
+      "fit_preference": "regular",
+      "waist_cm": 70,
+      "hip_cm": 108
+    },
+    "expected": {
+      "recommended_size": "16",
+      "confidence": "medium",
+      "secondary_size": "14"
+    },
+    "chart_refs": [
+      "CHEESE CLOTH SKIRT WAIST UK16 flat 37 = 74cm; no HIP row"
+    ],
+    "why": "Waist requirement 72cm first passes UK16. Hip is ignored for scoring because no HIP row exists, lowering confidence and showing no-hip-row warning."
+  },
+  {
+    "id": "T12_riva_dress_bust_waist_conflict",
+    "product_handle": "the-riva-dress",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 169,
+      "fit_preference": "regular",
+      "bra_size": "34D",
+      "bust_cm": 98,
+      "waist_cm": 78,
+      "hip_cm": 100,
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "high",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "CHEESE CLOTH DRESS CHEST UK18 flat 50 = 100cm; WAIST UK16 flat 44 = 88cm"
+    ],
+    "why": "Dress bust is restrictive: bust requirement 106cm with 8cm ease exceeds max chest 100cm, so largest size UK18 is recommended with fit warning; waist would pass UK16."
+  },
+  {
+    "id": "T13_elor_jumpsuit_hip_drives",
+    "product_handle": "the-elor-jumpsuit",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "10",
+      "height_cm": 174,
+      "fit_preference": "regular",
+      "bra_size": "34B",
+      "bust_cm": 92,
+      "waist_cm": 74,
+      "hip_cm": 104,
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "high",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "JUMPSUIT HIP UK18 flat 57 = 114cm; CHEST UK14 flat 50 = 100cm"
+    ],
+    "why": "Hip requirement 112cm with 8cm dress/jumpsuit ease first passes UK18; hip beats usual size."
+  },
+  {
+    "id": "T14_eden_blazer_structured_broad_shoulders",
+    "product_handle": "the-eden-shoulder-pad-blazer",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "12",
+      "height_cm": 173,
+      "fit_preference": "regular",
+      "bra_size": "36C",
+      "shoulder_profile": "broad"
+    },
+    "expected": {
+      "recommended_size": "18",
+      "confidence": "medium",
+      "secondary_size": "16"
+    },
+    "chart_refs": [
+      "BLAZER CHEST UK18 flat 59 = 118cm; no SHOULDER TO SHOULDER row"
+    ],
+    "why": "36C estimated bust 99.1cm plus 12cm outerwear ease requires 111.1cm, first pass UK16; broad-shoulder stylist rule nudges structured blazer to UK18 between sizes."
+  },
+  {
+    "id": "T15_maya_beach_dress_two_size",
+    "product_handle": "the-maya-beach-dress",
+    "inputs": {
+      "region": "UK",
+      "usual_size": "14",
+      "height_cm": 171,
+      "fit_preference": "regular",
+      "bra_size": "36D",
+      "shoulder_profile": "regular"
+    },
+    "expected": {
+      "recommended_size": "L/XL",
+      "confidence": "high",
+      "secondary_size": "S/M"
+    },
+    "chart_refs": [
+      "SWIMWEAR COVER UP CHEST S/M flat 56 = 112cm; L/XL flat 60 = 120cm"
+    ],
+    "why": "36D estimated bust 101.6cm plus 10cm cover-up regular ease requires 111.6cm; S/M technically just passes, but usual UK14 maps to L/XL and two-size threshold puts UK14 into L/XL styling."
+  }
+]

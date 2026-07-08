@@ -1,0 +1,34 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "fit-finder": {
+      "type": "fit-finder",
+      "settings": {
+        "hero_image": "shopify://shop_images/sign-hero.jpg",
+        "heading": "Find Your Perfect Fit",
+        "intro_text": "<p>Let's find your perfect fit! Answer a few quick questions.</p>",
+        "male_image_1": "shopify://shop_images/shirt.jpg",
+        "male_image_2": "shopify://shop_images/dashboard_fullscreen.jpg",
+        "male_image_3": "shopify://shop_images/menswear_header_1.jpg",
+        "male_image_4": "shopify://shop_images/homepage_split_1.jpg",
+        "male_image_5": "shopify://shop_images/detail_look_1.png",
+        "female_image_1": "shopify://shop_images/red_knit.jpg",
+        "female_image_2": "shopify://shop_images/two-products_1.jpg",
+        "female_image_3": "shopify://shop_images/smiling-woman-poses_925x_14ecaa8e-2b1e-4b49-bbaf-470b9b3a8407.jpg",
+        "female_image_4": "shopify://shop_images/woman-outside-brownstone_925x_cbc014a2-b37b-4eda-bd6c-71c0ec7249b3.jpg",
+        "female_image_5": "shopify://shop_images/young-hip-woman-at-carnival_925x_710974da-04df-42cc-9917-0b560eca41b7.jpg"
+      }
+    }
+  },
+  "order": [
+    "fit-finder"
+  ]
+}

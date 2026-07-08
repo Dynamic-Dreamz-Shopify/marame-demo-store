@@ -1,0 +1,367 @@
+{% render 'msp-assets' %}
+
+{% style %}
+  #msp-intro-{{ section.id }} {
+    --msp-text: {{ section.settings.color_text }};
+    --msp-body-color: {{ section.settings.color_body }};
+    --msp-headline-size-mobile: {{ section.settings.headline_size_mobile }}px;
+    --msp-headline-size-desktop: {{ section.settings.headline_size_desktop }}px;
+    --msp-headline-tracking-mobile: {% render 'msp-tracking-px', value: section.settings.headline_tracking_mobile %}px;
+    --msp-headline-tracking-desktop: {% render 'msp-tracking-px', value: section.settings.headline_tracking_desktop %}px;
+    --msp-body-size-mobile: {{ section.settings.body_size_mobile }}px;
+    --msp-body-size-desktop: {{ section.settings.body_size_desktop }}px;
+    --msp-body-tracking-mobile: {{ section.settings.body_tracking_mobile }}px;
+    --msp-body-tracking-desktop: {{ section.settings.body_tracking_desktop }}px;
+    --msp-body-max-width: {{ section.settings.body_max_width_mobile }}px;
+    --msp-body-max-width-desktop: {{ section.settings.body_max_width_desktop }}px;
+    --msp-body-line-height: {{ section.settings.body_line_height }}px;
+    --msp-headline-body-gap-mobile: {{ section.settings.headline_body_gap_mobile }}px;
+    --msp-headline-body-gap-desktop: {{ section.settings.headline_body_gap_desktop }}px;
+    --msp-intro-headline-transform: {{ section.settings.headline_text_transform }};
+    --msp-intro-body-transform: {{ section.settings.body_text_transform }};
+    {% render 'msp-headline-weight-vars', weight: section.settings.headline_font_weight %}
+    --msp-intro-pad-top-mobile: {{ section.settings.intro_pad_top_mobile }}px;
+    --msp-intro-pad-bottom-mobile: {{ section.settings.intro_pad_bottom_mobile }}px;
+    --msp-intro-pad-top-desktop: {{ section.settings.intro_pad_top_desktop }}px;
+    --msp-intro-pad-bottom-desktop: {{ section.settings.intro_pad_bottom_desktop }}px;
+    --msp-gap-after-intro-mobile: {{ section.settings.gap_after_intro_mobile }}px;
+    --msp-gap-after-intro-desktop: {{ section.settings.gap_after_intro_desktop }}px;
+  }
+  {%- capture msp_intro_scope -%}#msp-intro-{{ section.id }}{%- endcapture -%}
+  {% render 'msp-block-height-style',
+    scope_id: msp_intro_scope,
+    target_selector: '.msp-intro',
+    height_mobile: section.settings.block_height_mobile,
+    height_desktop: section.settings.block_height_desktop,
+    use_min_height: true
+  %}
+{% endstyle %}
+
+<section
+  id="msp-intro-{{ section.id }}"
+  class="msp msp-section msp-section--intro{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: 'signup_intro', zone_label: 'Intro text' %}
+>
+  <div class="msp-intro{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}">
+    {%- if section.settings.headline != blank -%}
+      <h1 class="msp-intro__headline">{{ section.settings.headline }}</h1>
+    {%- endif -%}
+    {%- if section.settings.description != blank -%}
+      <p class="msp-intro__body">{{ section.settings.description }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Intro text",
+  "tag": "section",
+  "class": "section-marame-signup-intro",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "launching june 26"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We are delighted to announce our new Marame Collection range launching this June, co-designed with Melissa Murrell"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Headline colour",
+      "default": "#212121"
+    },
+    {
+      "type": "color",
+      "id": "color_body",
+      "label": "Body colour",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Block height"
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "label": "Min height — mobile (0 = auto)",
+      "info": "Adds minimum space for the intro text block.",
+      "min": 0,
+      "max": 480,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_height_desktop",
+      "label": "Min height — desktop (0 = auto)",
+      "min": 0,
+      "max": 560,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "intro_pad_top_mobile",
+      "label": "Space above text — mobile",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "intro_pad_bottom_mobile",
+      "label": "Space below text — mobile",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "intro_pad_top_desktop",
+      "label": "Space above text — desktop",
+      "min": 40,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "intro_pad_bottom_desktop",
+      "label": "Space below text — desktop",
+      "min": 24,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "gap_after_intro_mobile",
+      "label": "Extra gap after block — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_after_intro_desktop",
+      "label": "Extra gap after block — desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "headline_text_transform",
+      "label": "Headline letter case",
+      "options": [
+        { "value": "uppercase", "label": "ALL CAPS" },
+        { "value": "none", "label": "Normal (as typed)" },
+        { "value": "capitalize", "label": "Capitalize each word" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "body_text_transform",
+      "label": "Body letter case",
+      "options": [
+        { "value": "none", "label": "Normal (as typed)" },
+        { "value": "uppercase", "label": "ALL CAPS" },
+        { "value": "capitalize", "label": "Capitalize each word" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "label": "Headline size — mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "headline_size_desktop",
+      "label": "Headline size — desktop",
+      "min": 20,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "headline_tracking_mobile",
+      "label": "Headline letter-spacing — mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "info": "Applies below 990px width only (phone + theme editor mobile preview)."
+    },
+    {
+      "type": "range",
+      "id": "headline_tracking_desktop",
+      "label": "Headline letter-spacing — desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 7,
+      "info": "Applies at 990px width and above (theme editor desktop preview)."
+    },
+    {
+      "type": "select",
+      "id": "headline_font_weight",
+      "label": "Headline weight",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "regular", "label": "Regular" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "bold", "label": "Bold" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "range",
+      "id": "headline_body_gap_mobile",
+      "label": "Gap headline to body — mobile",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "headline_body_gap_desktop",
+      "label": "Gap headline to body — desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body size — mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body size — desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_tracking_mobile",
+      "label": "Body letter-spacing — mobile",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "unit": "px",
+      "default": 1.3
+    },
+    {
+      "type": "range",
+      "id": "body_tracking_desktop",
+      "label": "Body letter-spacing — desktop",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "unit": "px",
+      "default": 1.8
+    },
+    {
+      "type": "range",
+      "id": "body_line_height",
+      "label": "Body line height",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "body_max_width_mobile",
+      "label": "Body max width — mobile",
+      "min": 200,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "body_max_width_desktop",
+      "label": "Body max width — desktop",
+      "min": 320,
+      "max": 720,
+      "step": 4,
+      "unit": "px",
+      "default": 544
+    }
+  ],
+  "presets": [{ "name": "Signup — Intro text" }]
+}
+{% endschema %}

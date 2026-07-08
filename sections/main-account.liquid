@@ -1,0 +1,232 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<section class="dashboard row">
+    <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+        <ul>
+            <li class="active">
+                <a href="{{ routes.account_url }}"><p>Dashboard</p></a>
+            </li>
+            <li>
+                <a href="{{ routes.account_url }}?view=orders"><p>order history</p></a>
+            </li>
+            <li>
+                <a href="{{ routes.account_addresses_url }}"><p>addresses ({{ customer.addresses_count }})</p></a>
+            </li>
+            {% comment %}
+            <li>
+              <a href="{{ routes.account_url }}?view=my-profile"><p>account details</p></a>
+            </li>
+              <li>
+                  <a href="{{ routes.account_url }}?view=my-details"><p>My details</p></a>
+              </li>
+            {% endcomment %}
+            <li>
+                <a href="{{ routes.account_url }}?view=wishlist"><p>MY SAVED ITEMS</p></a>
+            </li>
+            <li>
+              <a href="{{ routes.account_logout_url }}"><p>{{ 'customer.log_out' | t }}</p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard__body col--6 col--md--6 col--lg--10 main_account">
+      <div class="dashboard__body__intro">
+          <h1>{{ section.settings.welcome_title }} <span class="dashboard__body__username">{{ customer.first_name }}</span></h1>
+          {%- if section.settings.welcome_message != blank -%}
+            {{ section.settings.welcome_message }}
+          {%- endif -%}
+          <div class="dashboard__body__intro__banner hidden">
+              {%- if section.settings.quiz_title != blank -%}
+                <h3>{{ section.settings.quiz_title }}</h3>
+              {%- endif -%}
+              {%- if section.settings.quiz_content != blank -%}
+                {{ section.settings.quiz_content }}
+              {%- endif -%}
+              {%- if section.settings.quiz_btn != blank -%}
+                <a href="{{ section.settings.quiz_btn_url | default: '#' }}" class="btn btn--light">
+                    <p>{{ section.settings.quiz_btn }}</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 5 6 6">
+                        <path d="M1.63156 5H5.70383C5.87307 5 6 5.12693 6 5.28559V9.35787C6 9.5271 5.86249 9.65403 5.69326 9.65403H5.44998C5.28074 9.65403 5.15381 9.51653 5.15381 9.35787V6.43852L0.690172 10.9127C0.573821 11.0291 0.383429 11.0291 0.267078 10.9127L0.0872631 10.7329C-0.0290877 10.6166 -0.0290877 10.4262 0.0872631 10.3098L4.56148 5.84619H1.63156C1.46232 5.84619 1.33539 5.71926 1.33539 5.5606V5.31732C1.33539 5.13751 1.46232 5 1.63156 5Z" fill="#383230"></path>
+                    </svg>
+                </a>
+              {% endif %}
+          </div>
+      </div>
+      <div class="customer account hidden">
+  
+        <div class="customer-details">
+          <div>
+            <h2>{{ 'customer.account.details' | t }}</h2>
+            {{ customer.default_address | format_address }}
+            <a class="logout" href="{{ routes.account_logout_url }}">
+              {{ 'customer.log_out' | t }}
+            </a>
+          </div>
+          <div id="order_history"> 
+            <h2>Latest orders</h2>
+      
+            {%- if customer.orders.size > 0 -%}
+              <table role="table" class="order-history">
+                <caption class="visually-hidden">
+                  {{ 'customer.orders.title' | t }}
+                </caption>
+                <thead role="rowgroup">
+                  <tr role="row">
+                    <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
+                    <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
+                    <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
+                    <th id="ColumnFulfillment" scope="col" role="columnheader">
+                      {{ 'customer.orders.fulfillment_status' | t }}
+                    </th>
+                    <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
+                  </tr>
+                </thead>
+                <tbody role="rowgroup">
+                  {%- for order in customer.orders limit: 2 -%}
+                    <tr role="row">
+                      <td role="cell" headers="ColumnOrder">
+                        <a href="{{ order.customer_url }}">
+                          {{ order.name }}
+                        </a>
+                      </td>
+                      <td role="cell" headers="ColumnDate">
+                        {{ order.created_at | time_tag: format: 'date' }}
+                      </td>
+                      <td role="cell" headers="ColumnPayment">
+                        {{ order.financial_status_label }}
+                      </td>
+                      <td role="cell" headers="ColumnFulfillment">
+                        {{ order.fulfillment_status_label }}
+                      </td>
+                      <td role="cell" headers="ColumnTotal">
+                        {{ order.total_net_amount | money_with_currency }}
+                      </td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+              <a href="{{ routes.account_url }}?view=orders"><h4>View All</h4></a>
+            {%- else -%}
+              <p>{{ 'customer.orders.none' | t }}</p>
+            {%- endif -%}
+
+          </div>
+        </div>
+      </div>
+      {% if section.settings.you_love_title != blank and section.settings.products_list != blank %}
+      <section class="three-products three-products--no-spacer">
+        <div class="three-products__title">
+            <h3>{{ section.settings.you_love_title }}</h3>
+        </div>
+        <ul class="three-products__list">
+          {%- assign products_list = section.settings.products_list -%}
+          {%- for product in products_list -%}
+            <li class="product-card">
+                <a class="product-card" href="{{ product.url | within: collection }}">
+                    {%- if product.featured_media -%}
+                      <div class="product-card__img">
+                          <img src="{{ product.featured_media | img_url: 'master' }}" alt="{{ product.featured_media.alt | escape }}" width="{{ product.featured_media.width }}" height="{{ product.featured_media.height }}" loading="lazy" />
+                          {%- for tag in product.tags -%}
+                            {% if tag == 'Almost Gone' %}
+                              <small class="label">Almost Gone</small>
+                            {%- endif -%}
+                          {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                    <div class="product-card__content">
+                        <h4 class="product-card__content__desc">{{ product.title }}</h4>
+                        {%- if product.variants.size > 1 -%}
+                          <div class="product-card__content__colors product-card__content__colors--active">
+                              <button aria-label="Select color">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10">
+                                      <circle cx="5.00008" cy="5.00008" r="5.00008" fill="currentColor" stroke="none" />
+                                      <circle cx="9.9996" cy="5.00008" r="4.50008" stroke="currentColor" fill="none" />
+                                  </svg>
+                              </button>
+                              <p>+{{ product.variants.size }}</p>
+                          </div>
+                        {%- endif -%}
+                        <p class="product-card__content__price">{{ product.price | money }}</p>
+                    </div>
+                </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+    </section>
+   {% endif %}                           
+    {% if section.settings.bg_image != blank %}                   
+      <div class="dashboard__bg">
+          <img loading="lazy" src="{{ section.settings.bg_image | img_url: 'master' }}" alt="{{ section.settings.bg_image.alt }}" width="{{ section.settings.bg_image.width }}" height="{{ section.settings.bg_image.height }}" />
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "t:sections.main-account.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image"
+      },
+      {
+       "type": "header",
+        "content": "Welcome content"
+      },
+      {
+        "type": "text",
+        "id": "welcome_title",
+        "label": "Welcome title",
+        "default": "welcome back,"
+      },
+      {
+        "type": "richtext",
+        "id": "welcome_message",
+        "label": "Welcome Message"
+      },
+      {
+        "type": "header",
+        "content": "Quiz content"
+      },
+      {
+        "type": "text",
+        "id": "quiz_title",
+        "label": "Quiz title",
+        "default": "tailor your experience"
+      },
+      {
+        "type": "richtext",
+        "id": "quiz_content",
+        "label": "Quiz content"
+      },
+      {
+        "type": "text",
+        "id": "quiz_btn",
+        "label": "Button Label",
+        "default": "Get Started"
+      },
+      {
+        "type": "url",
+        "id": "quiz_btn_url",
+        "label": "Botton URL"
+      },
+      {
+        "type": "header",
+        "content": "You’ll love Products"
+      },
+      {
+        "type": "text",
+        "id": "you_love_title",
+        "label": "Title",
+        "default": "we think you’ll love"
+      },
+      {
+        "type": "product_list",
+        "id": "products_list",
+        "label": "Products",
+        "limit": 3
+      }
+    ]
+  }
+{% endschema %}

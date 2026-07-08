@@ -1,0 +1,64 @@
+<section class="image-slider-wrapper image-slider-wrapper--dashboard">
+  {% if section.settings.heading != blank %}
+    <h3 class="h4">{{ section.settings.heading }}</h3>
+  {% endif %}
+  <div class="image-slider-container">
+    <div class="image-slider">
+      <div class="swiper-button-prev"></div> 
+      <div class="swiper-button-next"></div>
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% if block.settings.image != blank %}
+            <a href="{{ block.settings.link | default: 'javascript: void(0)' }}" target="_blank" class="swiper-slide">
+              <img
+                class="fullscreen__bg__desktop"
+                src="{{ block.settings.image | img_url: 'master' }}"
+                alt="{{ block.settings.image.alt }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                loading="lazy"
+              >
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dashboard image slider",
+  "class": "dashboard-image-slider",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "label": "Heading",
+      "id": "heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dashboard image slider"
+    }
+  ]
+}
+{% endschema %}

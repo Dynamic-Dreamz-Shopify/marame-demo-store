@@ -1,0 +1,39 @@
+{%- comment -%}
+  Row-level body typography CSS variables (only when row overrides section).
+  When "Match section" is off: 0 on gaps/tracking = 0px (tight). Line height 0 = 18px.
+  @param block {Block}
+  @param section {Section}
+{%- endcomment -%}
+{%- liquid
+  assign use_section_body = block.settings.body_use_section_typography
+  if use_section_body == nil
+    assign use_section_body = true
+  endif
+
+  unless use_section_body
+    assign row_body_line_height_mobile = block.settings.body_line_height_mobile | plus: 0
+    if row_body_line_height_mobile == 0
+      assign row_body_line_height_mobile = block.settings.body_line_height | plus: 0
+    endif
+    if row_body_line_height_mobile == 0
+      assign row_body_line_height_mobile = 18
+    endif
+
+    assign row_body_line_height_desktop = block.settings.body_line_height_desktop | plus: 0
+    if row_body_line_height_desktop == 0
+      assign row_body_line_height_desktop = block.settings.body_line_height | plus: 0
+    endif
+    if row_body_line_height_desktop == 0
+      assign row_body_line_height_desktop = row_body_line_height_mobile
+    endif
+
+    assign row_body_tracking_mobile = block.settings.body_tracking_mobile | plus: 0
+    assign row_body_tracking_desktop = block.settings.body_tracking_desktop | plus: 0
+  endunless
+-%}
+{%- unless use_section_body -%}
+--msp-checkerboard-body-line-height-mobile: {% render 'msp-line-height-value', value: row_body_line_height_mobile %};
+--msp-checkerboard-body-line-height-desktop: {% render 'msp-line-height-value', value: row_body_line_height_desktop %};
+--msp-checkerboard-body-tracking-mobile: {% render 'msp-tracking-px', value: row_body_tracking_mobile %}px;
+--msp-checkerboard-body-tracking-desktop: {% render 'msp-tracking-px', value: row_body_tracking_desktop %}px;
+{%- endunless -%}

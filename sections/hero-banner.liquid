@@ -1,0 +1,93 @@
+{%- assign show_section = false -%}
+
+{%- if section.settings.show_logged_in_section == 'both' -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_in' and customer -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_out' and customer == null -%}
+  {%- assign show_section = true -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  <section class="hero row">
+    <div class="hero__bg" style="opacity: 1; clip-path: inset(0%); overflow: hidden;">
+        <img src="{{ section.settings.banner_image | image_url }}" loading="eager" fetchpriority="high" alt="" data-p-speed="0.15" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(1.045, 1.045); will-change: transform;">
+    </div> 
+    <div class="hero__content col--6 col--md--4 col--lg--3" style="opacity: 1;">
+        <h1>{{ section.settings.title }}</h1>
+        <a href="{{ section.settings.btn_link }}" class="btn btn--underline btn--dark">
+          <h4>{{ section.settings.btn_label }}</h4>
+        </a>
+        <p>{{ section.settings.description }}</p>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Hero banner",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "show_logged_in_section",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "both",
+            "label": "Both"
+          },
+          {
+            "value": "logged_in",
+            "label": "Logged-in Customers Only"
+          },
+          {
+            "value": "logged_out",
+            "label": "Logged-out Customers Only"
+          }
+        ],
+        "default": "both"
+      },
+      {
+        "type": "header",
+        "content": "Section Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Styleguide"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Image"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button link"
+      },
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content color",
+        "default": "#fff"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero banner"
+      }
+    ]
+  }
+{% endschema %}

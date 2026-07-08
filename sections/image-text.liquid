@@ -1,0 +1,48 @@
+<section class="{% if section.settings.custom_class != blank %}{{ section.settings.custom_class }} {% endif %}text-image{% if section.settings.first_image %} text-image--revert{% endif %}">
+  {% if section.settings.content != blank %}
+    <div class="text-image__text">
+      <div class="text-image__text__paragraphs">
+        {{ section.settings.content }}
+      </div>
+    </div>
+  {% endif %}
+  {% if section.settings.image != blank %}
+    <div class="text-image__img {% if section.settings.first_image %} text-image__img--small{% endif %}">
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}">
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Custom class",
+      "id": "custom_class"
+    },
+    {
+      "type": "checkbox",
+      "label": "First Image",
+      "id": "first_image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "label": "Image",
+      "id": "image"
+    },
+    {
+      "type": "richtext",
+      "label": "Content",
+      "id": "content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text"
+    }
+  ]
+}
+{% endschema %}

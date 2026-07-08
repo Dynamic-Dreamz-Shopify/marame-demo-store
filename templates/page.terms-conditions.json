@@ -1,0 +1,350 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "new_generic_hero_8hBj8N": {
+      "type": "new-generic-hero",
+      "disabled": true,
+      "settings": {
+        "heading": "<h2>TERMS & CONDITIONS</h2><h5>Last updated: 25th March 2025</h5><h5>Welcome to marame.com, the official website of Marame. These Terms & Conditions govern your use of this website, your purchase of products, and your relationship with Marame (referred to as “we”, “us”, or “our”). By accessing our site or placing an order, you agree to be legally bound by these Terms & Conditions. If you do not agree, you should not use this website.</h5>"
+      }
+    },
+    "generic_list_JnjnxK": {
+      "type": "generic-list",
+      "blocks": {
+        "block_nfpAVn": {
+          "type": "block",
+          "settings": {
+            "heading": "COMPANY Information",
+            "content": "<h5>Marame Clothing LTD is a registered company in the United Kingdom (Company Registration Number: 14444446). <br/><br/>Registered address: Henge Barn, Pury Hill Business Park, Alderton Road, NN12 7LS. <br/><br/>Email: help@marame.com</h5>",
+            "html": ""
+          }
+        },
+        "block_npPH9Y": {
+          "type": "block",
+          "settings": {
+            "heading": "ORDERS & ACCEPTANCE",
+            "content": "<h5>All orders are subject to availability and confirmation of payment. Once an order is placed, you will receive a confirmation email. This email is an acknowledgement, not acceptance of your order. A contract between us is formed only when your item is dispatched. We reserve the right to refuse or cancel any order at our discretion, for example, if a product is out of stock, pricing is incorrect, or we suspect fraudulent activity.</h5>",
+            "html": ""
+          }
+        },
+        "block_DaPyCP": {
+          "type": "block",
+          "settings": {
+            "heading": "DELIVERY",
+            "content": "<h5><strong>UK Delivery</strong></h5><h5>We offer UK delivery via DPD, with the following options:</h5><h5><strong>Standard Delivery </strong>- £2.95<br/><br/><strong>Next Day Delivery</strong> - £4.95<br/><br/><strong>Free Next Day Delivery</strong> - All orders over £200<br/></h5><h5><em>Orders must be placed by 3pm (Monday–Friday, excluding Bank Holidays) to qualify for Next Day Delivery. Orders placed after 3pm or on weekends/bank holidays will be processed on the next working day.</em></h5><h5>All UK orders are shipped via tracked services, and you will receive tracking details once your order has been dispatched.</h5><h5></h5><h5><strong>International Delivery</strong></h5><h5>We offer worldwide delivery from the United Kingdom with two options depending on your preference:</h5><h5><strong>DAP (Delivered At Place)</strong>: Duties and taxes are payable by the customer upon arrival in the destination country. Our delivery partner will contact you to arrange payment before releasing the goods.<br/></h5><h5><strong>DDP (Delivered Duty Paid):</strong> Duties and taxes are included in the shipping price at checkout. No additional payment is required on delivery.<br/></h5><h5>Estimated delivery timeframes are provided at checkout. Please note that these are estimates only and may vary depending on customs clearance, courier processing times, or events beyond our control. Marame cannot be held responsible for delays caused by external factors.</h5><h5></h5><h5><strong>Excluded Destinations</strong></h5><h5>We are unable to ship to the following countries and territories:</h5><h5>Afghanistan, Albania, Antarctica, Argentina, Ascension Islands, Bangladesh, Belarus, Bosnia & Herzegovina, Brazil, British Indian Ocean Territory, Christmas Islands, Cocos (Keeling) Islands, Cuba, East Timor, Easter Island, Egypt, Falkland Island, French Southern Territories, Ghana, Heard/McDonald Island, India, Indonesia, Iran, Israel, Jordan, Kenya, Kiribati, Kuwait, Marshall Islands, Mexico, Micronesia, Moldova, Myanmar, Nauru, Nigeria, Niue, North Korea, Northern Mariana Islands, Norfolk Island, Occupied Palestinian Territory, Oman, Pakistan, Philippines, Pitcairn Island, Qatar, Russia, Sahara, Samoa, Sao Tome & Principe, Saudi Arabia, Serbia, Sierra Leone, Somalia, South Africa, South Georgia/Sandwich Island, Sri Lanka, St Helena, Sudan, Svalbard & Jan Mayan, Syria, Thailand, Tajikistan, Tokelau, Tonga, Tuvalu, Ukraine, US Minor Outlying Island, Venezuela, Vietnam, Wallis and Futuna Islands, Yemen.</h5><h5></h5><h5><strong>Customs Duties and Taxes</strong></h5><h5>For DAP shipments, the customer is responsible for paying any customs duties, taxes, or handling fees required by their local authority. These charges must be settled before delivery can occur.</h5><h5>For DDP shipments, duties and taxes are included in the shipping price at checkout, and no additional payment is required on delivery.</h5><h5></h5><h5><strong>International Returns</strong></h5><h5>International returns are accepted within 14 days of delivery, provided items are unworn, unwashed, in their original condition, and have all original swing tags attached. Delivery costs are non-refundable, and returns must be sent at the customer’s expense. We recommend using a tracked and insured service to ensure your return reaches us safely.</h5><h5><strong>Currency</strong></h5><h5>Where possible, prices will be displayed in the customer’s local currency. If this is not available, prices will default to GBP (£).</h5><h5></h5><h5><strong>Liability for Delays and Losses</strong></h5><h5>While we work closely with our delivery partners to ensure smooth shipping, Marame is not responsible for delays caused by customs clearance procedures, incorrect shipping information provided at checkout, weather conditions, or unforeseen logistical disruptions beyond our control.</h5><h5></h5><h5><strong>Contact Us</strong></h5><h5>For any questions regarding delivery or international shipping, please contact our Customer Care team at help@marame.com.</h5>",
+            "html": ""
+          }
+        },
+        "block_t8U8kP": {
+          "type": "block",
+          "settings": {
+            "heading": "Swing tags & Tampering",
+            "content": "<h5>Swing tags are attached through buttonholes, zip pulls, or label loops to avoid damaging garments. If a tag has been removed, altered, or there is evidence the item has been worn or tampered with, Marame reserves the right to reject the return.</h5>",
+            "html": ""
+          }
+        },
+        "block_gXtzTh": {
+          "type": "block",
+          "settings": {
+            "heading": "Privacy & Cookies",
+            "content": "<h5>By using our website, placing an order, or creating an account, you agree to the collection, use, and handling of your data in accordance with our Cookies & Privacy Policy.</h5><ul><li><h5>We use cookies and similar tools to personalise your experience, analyse traffic, and offer relevant promotions (with consent)</h5></li><li><h5>You may access, update, or delete your data at any time by contacting us</h5></li><li><h5>Your rights under the UK GDPR are fully supported by Marame</h5></li></ul>",
+            "html": ""
+          }
+        },
+        "block_3Firfq": {
+          "type": "block",
+          "settings": {
+            "heading": "CHANGES TO THESE TERMS",
+            "content": "<h5>We may update these Terms & Conditions from time to time to reflect changes in law, operations, or service offerings. Updates will be published on this page and take effect immediately unless otherwise stated. Your continued use of our website confirms your acceptance of any changes.</h5>",
+            "html": ""
+          }
+        },
+        "block_anBFRp": {
+          "type": "block",
+          "settings": {
+            "heading": "Contact Us",
+            "content": "<h5>If you have any questions about these Terms & Conditions, your order, or your membership, please contact our team:</h5><ul><li><h5>Email: help@marame.com</h5></li><li><h5>Postal Address: Marame, 3 Willows, Mill Farm Courtyard, Beachampton, MK19 6DS</h5></li></ul>",
+            "html": ""
+          }
+        },
+        "block_NPdm8W": {
+          "type": "block",
+          "settings": {
+            "heading": "ELIGIBILITY",
+            "content": "<h5>To place an order with us, you must be at least 18 years old and possess a valid payment method. By ordering, you confirm that all information provided is accurate, current, and complete.</h5>",
+            "html": ""
+          }
+        },
+        "block_eKPXra": {
+          "type": "block",
+          "settings": {
+            "heading": "PRICING & PAYMENT",
+            "content": "<h5>All prices are listed in GBP (£) and include VAT (where applicable). Delivery charges (if any) are displayed at checkout. We reserve the right to change prices at any time, but changes will not affect orders already placed. We accept payment via secure third-party payment providers (e.g. Shopify Payments, Klarna, PayPal). By submitting your payment information, you confirm that you are authorised to use the selected method.</h5>",
+            "html": ""
+          }
+        },
+        "block_UJxjaP": {
+          "type": "block",
+          "settings": {
+            "heading": "Returns & Exchanges",
+            "content": "<h5>You may return eligible items within 14 days of delivery, provided they are:</h5><ul><li><h5>Unworn and unwashed</h5></li><li><h5>In original condition</h5></li><li><h5>Have all original swing tags attached</h5></li></ul><h5><strong>Items bought as gifts between 15 November and 23 December 2025 are eligible for exchange or store credit until 10 January 2026.<br/><br/>For refunds, the standard 14-day return policy still applies.</strong></h5><h5>Returns must be initiated via our Returns Portal. A £5 return fee will be charged on all refunds. Exchanges are available free of charge only for the same item in a different size, or for items that are faulty or incorrect. Items returned outside the return window or in unsuitable condition may be refused. <br/><br/>Refunds are processed within 5–7 working days once returns are received and approved. Original delivery costs are non-refundable unless an item is faulty. International returns are at the customer’s expense and risk.</h5>",
+            "html": ""
+          }
+        },
+        "block_ickBqp": {
+          "type": "block",
+          "settings": {
+            "heading": "PRODUCT DESCRIPTIONS",
+            "content": "<h5>We strive for accuracy in all product descriptions, images, and pricing. However, colours and textures may vary slightly due to lighting or screen settings. Sizing guidance is approximate, and we cannot guarantee perfect fit for all body types.</h5>",
+            "html": ""
+          }
+        },
+        "block_MTyadG": {
+          "type": "block",
+          "settings": {
+            "heading": "Intellectual property",
+            "content": "<h5>All content on marame.com — including but not limited to product designs, text, graphics, images, logos, branding, packaging, and technology — is the exclusive property of Marame Ltd or its licensors.</h5><ul><li><h5>Content may not be reproduced, published, distributed, or exploited for commercial use without express written consent</h5></li><li><h5>All rights reserved under applicable intellectual property laws</h5></li><li><h5>Marame is a registered trademark in the UK and EU. Any unauthorised use or infringement may result in legal action</h5></li></ul>",
+            "html": ""
+          }
+        },
+        "block_ydKWY6": {
+          "type": "block",
+          "settings": {
+            "heading": "LIABILITY",
+            "content": "<h5>To the fullest extent permitted by law, Marame Ltd is not liable for:</h5><ul><li><h5>Indirect, incidental, or consequential damages</h5></li><li><h5>Loss of profits, income, or data</h5></li><li><h5>Delays or failures caused by third-party service providers or external events</h5></li></ul><h5>We do not exclude or limit liability where it would be unlawful to do so, including liability for death or personal injury caused by negligence or for fraud.</h5>",
+            "html": ""
+          }
+        },
+        "block_Qp9qjQ": {
+          "type": "block",
+          "settings": {
+            "heading": "EVENTS BEYOND OUR CONTROL",
+            "content": "<h5>We are not responsible for any failure or delay caused by events beyond our reasonable control, including but not limited to:</h5><ul><li><h5>Industrial action</h5></li><li><h5>Natural disasters</h5></li><li><h5>Transport or courier failures</h5></li><li><h5>Cyber-attacks or internet outages</h5></li><li><h5>Government actions or customs delays</h5></li></ul>",
+            "html": ""
+          }
+        },
+        "block_rb9emQ": {
+          "type": "block",
+          "settings": {
+            "heading": "GOVERNING LAW",
+            "content": "<h5>These Terms & Conditions are governed by and interpreted under the laws of England and Wales. Disputes will be subject to the exclusive jurisdiction of the courts of England and Wales.</h5>",
+            "html": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_nfpAVn",
+        "block_npPH9Y",
+        "block_DaPyCP",
+        "block_t8U8kP",
+        "block_gXtzTh",
+        "block_3Firfq",
+        "block_anBFRp",
+        "block_NPdm8W",
+        "block_eKPXra",
+        "block_UJxjaP",
+        "block_ickBqp",
+        "block_MTyadG",
+        "block_ydKWY6",
+        "block_Qp9qjQ",
+        "block_rb9emQ"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "1767094870fc0d9e3a": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1257a9e_hrGace": {
+          "type": "ai_gen_block_1257a9e",
+          "name": "Customizable title",
+          "settings": {
+            "row_1_text": "Terms & Conditions",
+            "row_2_text": "Last Updated: 8th December 2025",
+            "row_3_text": "",
+            "max_width": 1000,
+            "row_1_font": "sans_serif_n4",
+            "row_1_font_size": 36,
+            "row_1_font_weight": "500",
+            "row_1_letter_spacing": 10,
+            "row_1_text_transform": "none",
+            "row_1_text_align": "left",
+            "row_1_color": "#121212",
+            "row_1_padding_top": 145,
+            "row_1_padding_bottom": 0,
+            "row_1_padding_left": 20,
+            "row_1_padding_right": 0,
+            "row_1_spacing": 20,
+            "row_2_font": "sans_serif_n4",
+            "row_2_font_size": 20,
+            "row_2_font_weight": "100",
+            "row_2_letter_spacing": 0,
+            "row_2_text_transform": "none",
+            "row_2_text_align": "left",
+            "row_2_color": "#121212",
+            "row_2_padding_top": 0,
+            "row_2_padding_bottom": 0,
+            "row_2_padding_left": 20,
+            "row_2_padding_right": 0,
+            "row_2_spacing": 10,
+            "row_3_font": "sans_serif_n4",
+            "row_3_font_size": 18,
+            "row_3_font_weight": "400",
+            "row_3_letter_spacing": 0,
+            "row_3_text_transform": "none",
+            "row_3_text_align": "left",
+            "row_3_color": "#121212",
+            "row_3_padding_top": 0,
+            "row_3_padding_bottom": 0,
+            "row_3_padding_left": 0,
+            "row_3_padding_right": 0,
+            "row_3_spacing": 10,
+            "row_1_mobile_font": "sans_serif_n4",
+            "row_1_mobile_font_size": 20,
+            "row_1_mobile_font_weight": "400",
+            "row_1_mobile_letter_spacing": 0,
+            "row_1_mobile_text_transform": "none",
+            "row_1_mobile_text_align": "left",
+            "row_1_mobile_color": "#121212",
+            "row_1_mobile_padding_top": 85,
+            "row_1_mobile_padding_bottom": 0,
+            "row_1_mobile_padding_left": 25,
+            "row_1_mobile_padding_right": 0,
+            "row_1_mobile_spacing": 5,
+            "row_2_mobile_font": "sans_serif_n4",
+            "row_2_mobile_font_size": 12,
+            "row_2_mobile_font_weight": "100",
+            "row_2_mobile_letter_spacing": 0,
+            "row_2_mobile_text_transform": "none",
+            "row_2_mobile_text_align": "left",
+            "row_2_mobile_color": "#121212",
+            "row_2_mobile_padding_top": 0,
+            "row_2_mobile_padding_bottom": 0,
+            "row_2_mobile_padding_left": 25,
+            "row_2_mobile_padding_right": 0,
+            "row_2_mobile_spacing": 10,
+            "row_3_mobile_font": "sans_serif_n4",
+            "row_3_mobile_font_size": 14,
+            "row_3_mobile_font_weight": "400",
+            "row_3_mobile_letter_spacing": 0,
+            "row_3_mobile_text_transform": "none",
+            "row_3_mobile_text_align": "left",
+            "row_3_mobile_color": "#121212",
+            "row_3_mobile_padding_top": 0,
+            "row_3_mobile_padding_bottom": 0,
+            "row_3_mobile_padding_left": 0,
+            "row_3_mobile_padding_right": 0,
+            "row_3_mobile_spacing": 10
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_460c19e_nynM4T": {
+          "type": "ai_gen_block_460c19e",
+          "settings": {
+            "max_width": 1000,
+            "section_padding_top": 40,
+            "section_padding_bottom": 40,
+            "section_padding_horizontal": 20,
+            "item_padding_vertical": 20,
+            "item_padding_horizontal": 16,
+            "content_padding_bottom": 20,
+            "title_font": "sans_serif_n4",
+            "title_font_size": 16,
+            "title_letter_spacing": 7,
+            "title_text_transform": "none",
+            "title_color": "#121212",
+            "title_bg_color": "#ffffff",
+            "title_hover_color": "#636363",
+            "title_hover_bg_color": "#ffffff",
+            "content_font": "sans_serif_n4",
+            "content_font_size": 14,
+            "content_line_height": 1.6,
+            "content_letter_spacing": 1.5,
+            "content_text_transform": "none",
+            "content_color": "#949494",
+            "content_bg_color": "#ffffff",
+            "content_border_thickness": 0,
+            "content_border_style": "solid",
+            "content_border_color": "#e0e0e0",
+            "icon_size": 20,
+            "icon_color": "#242833",
+            "icon_hover_color": "#000000",
+            "divider_thickness": 1,
+            "divider_style": "solid",
+            "divider_color": "#eceaea",
+            "animation_duration": 0.5,
+            "animation_easing": "ease",
+            "item_1_title": "About Us",
+            "item_1_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Marame Ltd is a company registered in England and Wales.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    <strong style=\"text-transform:none !important; font-size:inherit;\">Registered address:</strong> Henge Barn, Pury Hill Business Park, Alderton Road, Northamptonshire, NN12 7LS.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    <strong style=\"text-transform:none !important; font-size:inherit;\">Company number:</strong> 14444446.\n  </span>\n  <br>\n\n  <span style=\"font-size:0.9em;\">\n    <strong style=\"text-transform:none !important; font-size:inherit;\">VAT number:</strong> GB451 9209 92.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    <strong style=\"text-transform:none !important; font-size:inherit;\">Contact:</strong> <a href=\"mailto:help@marame.com\">help@marame.com</a>\n  </span>\n\n</span>",
+            "item_2_title": "Using Our Website",
+            "item_2_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    You must be at least <strong style=\"text-transform:none !important; font-size:inherit;\">18 years old</strong> to place an order on our website. You agree to use our site only for lawful purposes and in a way that does not infringe the rights of others or restrict their use of the site.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We may suspend or withdraw access to our website at any time without notice for operational, legal, or security reasons.\n  </span>\n\n</span>",
+            "item_3_title": "Products & Availability",
+            "item_3_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    All products are subject to <strong style=\"text-transform:none !important; font-size:inherit;\">availability</strong>. We make every effort to ensure that product descriptions, images, and pricing are accurate, however colours and finishes may vary slightly due to photography and individual screen settings.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We reserve the right to <strong style=\"text-transform:none !important; font-size:inherit;\">discontinue or amend</strong> any product without notice.\n  </span>\n\n</span>",
+            "item_4_title": "Prices & Payment",
+            "item_4_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    All prices are shown in <strong style=\"text-transform:none !important; font-size:inherit;\">GBP</strong> unless stated otherwise and include <strong style=\"text-transform:none !important; font-size:inherit;\">VAT</strong> where applicable. Delivery charges are shown separately at checkout.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We reserve the right to <strong style=\"text-transform:none !important; font-size:inherit;\">change prices</strong> at any time, however any changes will not affect orders that have already been dispatched.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Payment must be made in full at the time of placing your order. We accept the payment methods displayed at checkout.\n  </span>\n\n</span>",
+            "item_5_title": "Placing An Order",
+            "item_5_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    When you place an order, you will receive an <strong style=\"text-transform:none !important; font-size:inherit;\">order confirmation email</strong>. This email acknowledges receipt of your order but does not constitute acceptance.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    A legally binding contract is formed only once your order has been <strong style=\"text-transform:none !important; font-size:inherit;\">dispatched</strong> and you have received a <strong style=\"text-transform:none !important; font-size:inherit;\">dispatch confirmation email</strong>.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We reserve the right to <strong style=\"text-transform:none !important; font-size:inherit;\">refuse or cancel</strong> an order at any time, including where products are unavailable, pricing errors occur, or we suspect fraudulent activity.\n  </span>\n\n</span>",
+            "item_6_title": "Delivery",
+            "item_6_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We offer <strong style=\"text-transform:none !important; font-size:inherit;\">UK and international delivery</strong>. Estimated delivery times are provided as a guide only and are not guaranteed.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Risk of loss or damage passes to you upon <strong style=\"text-transform:none !important; font-size:inherit;\">delivery</strong>. Ownership of goods passes to you once payment has been received in full and the goods have been <strong style=\"text-transform:none !important; font-size:inherit;\">dispatched</strong>.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We are not responsible for delays caused by events outside our reasonable control, including courier delays, customs processes, weather conditions, or industrial action.\n  </span>\n\n</span>",
+            "item_7_title": "International Orders, Duties & Taxes",
+            "item_7_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    For <strong style=\"text-transform:none !important; font-size:inherit;\">international orders</strong>, customs duties, taxes, and import charges may apply depending on the destination country and delivery terms.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Where delivery is made on a <strong style=\"text-transform:none !important; font-size:inherit;\">Delivered At Place (DAP)</strong> basis, you are responsible for paying any applicable duties and taxes. Failure to do so may result in delays, additional charges, or the return or destruction of the shipment, for which we accept no responsibility.\n  </span>\n\n</span>",
+            "item_8_title": "Returns & Exchanges",
+            "item_8_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We accept returns within <strong style=\"text-transform:none !important; font-size:inherit;\">30 days of fulfilment</strong>, provided items are unworn, unused, and returned in their original condition with all tags and packaging intact.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Returns from the UK are <strong style=\"text-transform:none !important; font-size:inherit;\">free of charge</strong>. \n\nWe also offer returns for Store Credit, Exchanges AND Instant Exchanges, where you are able to get a new product shipped out to you prior to returning your original product. We just take an authorisation hold on your card until the product is received in good order. \n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Exchanges are offered for the <strong style=\"text-transform:none !important; font-size:inherit;\">same style of product</strong> for sizing or colour issues, or for faulty items only, and are subject to stock availability.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Items returned that do not meet our return conditions may be refused or returned to you.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Full details are available on our \n    <a href=\"https://marame.com/pages/returns\" style=\"color:inherit; text-decoration:underline;\">\n      <strong style=\"text-transform:none !important; font-size:inherit;\">Returns page</strong></a>, which forms part of these Terms.\n  </span>\n\n</span>",
+            "item_9_title": "Faulty or Incorrect Items",
+            "item_9_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    If you receive a <strong style=\"text-transform:none !important; font-size:inherit;\">faulty or incorrect item</strong>, please contact us within <strong style=\"text-transform:none !important; font-size:inherit;\">48 hours of delivery</strong>, including details of the issue and supporting images where possible.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We will assess the issue and, where appropriate, offer a <strong style=\"text-transform:none !important; font-size:inherit;\">repair, replacement, or refund</strong> in accordance with your statutory rights.\n  </span>\n\n</span>",
+            "item_10_title": "Promotions & Discount Codes",
+            "item_10_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Discount codes are subject to <strong style=\"text-transform:none !important; font-size:inherit;\">specific terms</strong> and may not be combined unless stated otherwise. Codes cannot be applied retrospectively to orders already placed.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We reserve the right to <strong style=\"text-transform:none !important; font-size:inherit;\">withdraw or amend promotions</strong> at any time.\n  </span>\n\n</span>",
+            "item_11_title": "Intellectual Property",
+            "item_11_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    All content on our website, including <strong style=\"text-transform:none !important; font-size:inherit;\">text, images, designs, logos, and trademarks</strong>, is owned by or licensed to <strong style=\"text-transform:none !important; font-size:inherit;\">Marame Ltd</strong>.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    You may not <strong style=\"text-transform:none !important; font-size:inherit;\">copy, reproduce, distribute, or use</strong> any content without our prior written permission.\n  </span>\n\n</span>",
+            "item_12_title": "Liability",
+            "item_12_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Nothing in these Terms limits or excludes our liability for <strong style=\"text-transform:none !important; font-size:inherit;\">death or personal injury</strong> caused by our negligence, for <strong style=\"text-transform:none !important; font-size:inherit;\">fraud</strong>, or for any other liability that cannot be excluded or limited by law.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    To the fullest extent permitted by law, we are not liable for <strong style=\"text-transform:none !important; font-size:inherit;\">indirect, incidental, or consequential losses</strong>, including loss of profits, business interruption, or loss of data.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Our total liability in connection with any order shall not exceed the <strong style=\"text-transform:none !important; font-size:inherit;\">total amount paid for that order</strong>.\n  </span>\n\n</span>",
+            "item_13_title": "Privacy",
+            "item_13_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Your personal data is handled in accordance with our \n    <strong style=\"text-transform:none !important; font-size:inherit;\">Privacy Policy</strong>, \n    which explains how we collect, use, and protect your information.\n  </span>\n\n</span>",
+            "item_14_title": "Changes To These Terms",
+            "item_14_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We may update these <strong style=\"text-transform:none !important; font-size:inherit;\">Terms</strong> from time to time. The version in force at the time you place your order will apply to that purchase.\n  </span>\n\n</span>",
+            "item_15_title": "Governing Law",
+            "item_15_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    These <strong style=\"text-transform:none !important; font-size:inherit;\">Terms</strong> are governed by the laws of <strong style=\"text-transform:none !important; font-size:inherit;\">England and Wales</strong>, and any disputes will be subject to the <strong style=\"text-transform:none !important; font-size:inherit;\">exclusive jurisdiction</strong> of the courts of England and Wales.\n  </span>\n\n</span>",
+            "item_16_title": "",
+            "item_16_content": "",
+            "item_17_title": "",
+            "item_17_content": "",
+            "item_18_title": "",
+            "item_18_content": "",
+            "item_19_title": "",
+            "item_19_content": "",
+            "item_20_title": "",
+            "item_20_content": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1257a9e_hrGace",
+        "ai_gen_block_460c19e_nynM4T"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "new_generic_hero_8hBj8N",
+    "generic_list_JnjnxK",
+    "1767094870fc0d9e3a"
+  ]
+}

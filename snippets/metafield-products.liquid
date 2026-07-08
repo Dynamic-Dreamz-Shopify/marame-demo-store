@@ -1,0 +1,118 @@
+{% assign color_active = false %}
+{% assign option_color = 'color' %}
+<div class="meta-color-select">
+  <div class="meta-color-select__options">
+    {%- unless card_product.has_only_default_variant -%}
+      {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+      {%- assign color_swatch_style = '' -%}
+
+      {%- for option in card_product.options_with_values -%}
+        {% assign option_name = option.name | downcase %}
+        {% if option_name == option_color %}
+          {%- for value in option.values -%}
+            {% assign color_swatch_style = null %}
+            {%- assign swatch = value.swatch -%}
+            {%- assign color_value_downcase = value | downcase -%}
+            {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ';' -%}
+            {%- for color_swatch_item in color_swatch_config -%}
+              {%- assign color_swatch_parts = color_swatch_item | split: ':' -%}
+              {%- assign color_swatch_name = color_swatch_parts.first | downcase | strip -%}
+              {%- if color_value_downcase == color_swatch_name -%}
+                {%- assign color_swatch_value = color_swatch_parts.last | strip -%}
+                {%- if color_swatch_value contains '#' -%}
+                  {%- assign color_swatch_style = 'background-color: ' | append: color_swatch_value | append: ';' -%}
+                {%- elsif images[color_swatch_value] != blank -%}
+                  {%- assign color_swatch_image = images[color_swatch_value] | img_url: '72x72' -%}
+                  {%- assign color_swatch_style = 'background-image: url('
+                    | append: color_swatch_image
+                    | append: ')'
+                    | append: ';'
+                  -%}
+                  {%- elsif swatch.color != blank -%}
+                  {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ')' -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {% assign color_active = true %}
+            {% assign color_swatch_style = color_swatch_style %}
+            {% if forloop.first %}
+              {% break %}
+            {% endif %}
+          {%- endfor -%}
+        {% endif %}
+      {%- endfor -%}
+    {% endunless %}
+    {% comment %} {% if card_product.metafields.custom.swatches_image != blank %}
+      {% assign metafiled_image = card_product.metafields.custom.swatches_image | img_url: 'master' %}
+      {%- assign color_swatch_style = 'background-image: url(' | append: metafiled_image | append: ')' | append: ';' -%}
+    {% endif %} {% endcomment %}
+    <div
+      class="single_product active"
+      data_handle="{{ card_product.url }}"
+      style="{% if color_active %}{{ color_swatch_style }}{% endif %}"
+    ></div>
+    {% if card_product.metafields.custom.similar_products != blank %}
+      {% for meta_product in card_product.metafields.custom.similar_products.value %}
+        {% unless meta_product.handle == card_product.handle %}
+          {%- unless meta_product.has_only_default_variant -%}
+            {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+            {%- assign color_swatch_style = '' -%}
+
+            {%- for option in meta_product.options_with_values -%}
+              {% assign option_name = option.name | downcase %}
+
+              {% if option_name == option_color %}
+                {%- for value in option.values -%}
+                  {% assign color_swatch_style = null %}
+                  {%- assign swatch = value.swatch -%}
+                  {%- assign color_value_downcase = value | downcase -%}
+                  {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ';' -%}
+                  {%- for color_swatch_item in color_swatch_config -%}
+                    {%- assign color_swatch_parts = color_swatch_item | split: ':' -%}
+                    {%- assign color_swatch_name = color_swatch_parts.first | downcase | strip -%}
+                    {%- if color_value_downcase == color_swatch_name -%}
+                      {%- assign color_swatch_value = color_swatch_parts.last | strip -%}
+                      {%- if color_swatch_value contains '#' -%}
+                        {%- assign color_swatch_style = 'background-color: '
+                          | append: color_swatch_value
+                          | append: ';'
+                        -%}
+                      {%- elsif images[color_swatch_value] != blank -%}
+                        {%- assign color_swatch_image = images[color_swatch_value] | img_url: '72x72' -%}
+                        {%- assign color_swatch_style = 'background-image: url('
+                          | append: color_swatch_image
+                          | append: ')'
+                          | append: ';'
+                        -%}
+                        {%- elsif swatch.color != blank -%}
+                        {%- assign color_swatch_style = 'background-color: ' | append: swatch.color | append: ')' -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {% assign color_active = true %}
+                  {% assign color_swatch_style = color_swatch_style %}
+                  {% if forloop.first %}
+                    {% break %}
+                  {% endif %}
+                {%- endfor -%}
+              {% endif %}
+            {%- endfor -%}
+          {%- endunless -%}
+          {% comment %} {% if meta_product.metafields.custom.swatches_image != blank %}
+            {% assign metafiled_image = meta_product.metafields.custom.swatches_image | img_url: 'master' %}
+            {%- assign color_swatch_style = 'background-image: url('
+              | append: metafiled_image
+              | append: ')'
+              | append: ';'
+            -%}
+          {% endif %} {% endcomment %}
+          <div
+            class="single_product"
+            data_handle="{{ meta_product.url }}{% if meta_product.url contains "&" %}{{ query_para | replace: "?","&" }}{% else %}{{ query_para }}{% endif %}"
+            style="{% if color_active %}{{ color_swatch_style }}{% endif %}"
+          ></div>
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>

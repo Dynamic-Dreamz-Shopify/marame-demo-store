@@ -1,0 +1,208 @@
+{% render 'marame-collection-grid-body' %}
+
+{% schema %}
+{
+  "name": "G \u2014 Hoodies & Joggers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "marame_scope_handle",
+      "label": "Collection handle (locked for this grid)",
+      "default": "mens-hoodies-joggers",
+      "info": "Grid for /collections/mens-hoodies-joggers on the merge template."
+    },
+    {
+      "type": "textarea",
+      "id": "marame_scope_extra_handles",
+      "label": "Also show on these collection handles (comma-separated)",
+      "info": "Leave blank for a single collection only. Used for grouped footwear sections."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 2,
+      "max": 44,
+      "step": 2,
+      "default": 10,
+      "label": "Products per page (auto / random mode)",
+      "info": "Used when grid is built automatically from the collection. Each product adds several colour cards."
+    },
+    {
+      "type": "range",
+      "id": "marame_cards_per_page",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "default": 44,
+      "label": "Colour cards per page",
+      "info": "How many variant cards load before View More (Summer/Winter blocks and auto grid). Default 44."
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_count",
+      "default": true,
+      "label": "Show Variants count"
+    },
+    {
+      "type": "checkbox",
+      "id": "marame_native_shuffle",
+      "default": true,
+      "label": "Native variant shuffle (Sezerium replacement)",
+      "info": "Must be ON. Disable the Sezerium app on this draft theme."
+    },
+    {
+      "type": "select",
+      "id": "marame_display_mode",
+      "label": "Which variants to show",
+      "default": "blocks",
+      "options": [
+        {
+          "value": "all",
+          "label": "All products in this collection (auto)"
+        },
+        {
+          "value": "blocks",
+          "label": "Drag & drop Grid cards (manual seasons)"
+        },
+        {
+          "value": "tag",
+          "label": "Only products with a tag"
+        },
+        {
+          "value": "metafield",
+          "label": "Collection metafield (advanced)"
+        },
+        {
+          "value": "manual",
+          "label": "Manual list (below)"
+        }
+      ],
+      "info": "Use \u201cDrag & drop\u201d mode, then add Grid card blocks below. Drag blocks in the left sidebar to reorder \u2014 same idea as Sezerium."
+    },
+    {
+      "type": "header",
+      "content": "Manual ordering"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add Grid card blocks below, then drag them in the left sidebar to set the customer-facing order."
+    },
+    {
+      "type": "select",
+      "id": "marame_tag_mode",
+      "label": "Product tag matching",
+      "default": "collection",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection tag (e.g. womens \u2014 recommended)"
+        },
+        {
+          "value": "collection_or_custom",
+          "label": "Collection tag OR extra tag below"
+        },
+        {
+          "value": "custom",
+          "label": "Extra tag only"
+        }
+      ],
+      "info": "Matches product tags to this page\u2019s collection handle (womens, mens, etc.). Random mode uses all products in the Shopify collection."
+    },
+    {
+      "type": "text",
+      "id": "marame_include_tag",
+      "label": "Extra include tag (optional)",
+      "info": "Optional second tag. Leave empty to use only collection tags (womens, mens, etc.). Only used when tag matching is set to include an extra tag."
+    },
+    {
+      "type": "textarea",
+      "id": "marame_manual_variants",
+      "label": "Manual variant list (when mode = manual)",
+      "info": "One per line: product-handle|colour (e.g. straight-leg-jeans|white) OR variant ID only (e.g. 43901234567890)."
+    },
+    {
+      "type": "checkbox",
+      "id": "marame_hide_sold_out",
+      "default": true,
+      "label": "Hide sold-out colour variants"
+    },
+    {
+      "type": "checkbox",
+      "id": "marame_hide_no_image",
+      "default": true,
+      "label": "Hide colour variants without a featured image"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "grid_variant",
+      "name": "Grid card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "color",
+          "label": "Colour",
+          "info": "Copy from the product\u2019s Colour option in admin (e.g. Chocolate). Partial match works. Leave blank for first colour."
+        },
+        {
+          "type": "text",
+          "id": "collection_handle",
+          "label": "Collection handle (which page uses this card)",
+          "info": "Optional \u2014 scoped to womens."
+        },
+        {
+          "type": "paragraph",
+          "content": "Order is controlled by dragging this block in the left sidebar."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 250
+}
+{% endschema %}

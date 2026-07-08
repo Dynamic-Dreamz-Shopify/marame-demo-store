@@ -1,0 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "lookbook_BNwHUx": {
+      "type": "lookbook",
+      "blocks": {
+        "block_M9zwPx": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/Mens_Lookbook.png",
+            "mb_image": "shopify://shop_images/Mens_Lookbook.png",
+            "button_label": "men",
+            "button_link": "shopify://pages/lookbook-mens"
+          }
+        },
+        "block_4rbdGY": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/Womens_Lookbook.png",
+            "mb_image": "shopify://shop_images/Womens_Lookbook.png",
+            "button_label": "women",
+            "button_link": "shopify://pages/lookbook-womens"
+          }
+        }
+      },
+      "block_order": [
+        "block_M9zwPx",
+        "block_4rbdGY"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "lookbook_BNwHUx"
+  ]
+}

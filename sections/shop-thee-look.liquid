@@ -1,0 +1,301 @@
+{%- assign show_section = false -%}
+
+{%- if section.settings.show_logged_in_section == 'both' -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_in' and customer -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_out' and customer == null -%}
+  {%- assign show_section = true -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {%- assign customer_gender = customer.metafields.custom.gender | default: '' | downcase -%}
+
+  {%- if section.settings.show_for_gender == 'female' and customer_gender != 'female' -%}
+    {%- assign show_section = false -%}
+  {%- elsif section.settings.show_for_gender == 'all' and customer_gender == 'female' and template.name == 'index' -%}
+    {%- assign show_section = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {% assign collection = section.settings.collection %}
+  {% assign collection_image = collection.featured_image %}
+  {% if product.metafields.custom.complete_look_collection_image != blank %}
+    {% assign collection_image = product.metafields.custom.complete_look_collection_image.value %}
+  {% endif %}
+  
+  {% assign collection_title = section.settings.cta_label | default: collection.title %}
+  {% assign collection_url = collection.url %}
+  {% if product.metafields.custom.complete_look_collection_title_url != blank %}
+    {% assign collection_title = product.metafields.custom.complete_look_collection_title_url.value.text %}
+    {% assign collection_url = product.metafields.custom.complete_look_collection_title_url.value.url %}
+  {% endif %}
+
+  <section class="four-products {% if template == 'product' %}bg--neutral-warm text--white{% endif %}{% if section.settings.enable_bg %} background-enabled {% endif %}" {% if section.settings.enable_bg %} style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};" {% endif %}>
+    <div class="four-products__title">
+      {%- if product.metafields.custom.complete_look_section_title != blank -%}
+        <h2>{{ product.metafields.custom.complete_look_section_title.value }}</h2>
+      {%- else -%}
+        <h2>{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+    
+    <div class="row">
+        <div class="four-products__overall col--6 col--md--8 col--lg--3 collection-tile">
+            <div class="four-products__overall__img">
+                <img src="{{ collection_image | img_url: '800x' }}" alt="{{ collection_image.alt | escape }}">
+            </div>
+            <a href="{{ collection_url }}" class="btn btn--underline" {% if section.settings.enable_bg %} style="color: {{ section.settings.text_color }};" {% endif %}>
+              {% if section.settings.enable_bg %}
+                <style>
+                  .background-enabled .btn--underline::after {
+                    background-color: {{ section.settings.text_color }};
+                  }
+                </style>
+              {% endif %}
+              <h4>{{ collection_title }}</h4>
+            </a>
+        </div>
+        <div class="four-products__details products-slider col--6 col--md--8 col--lg--9">
+            <ul class="swiper-wrapper">
+                {% assign products = product.metafields.custom.complete_look_products.value %}
+                {% if products == blank %}
+                  {% assign products = collection.products %}  
+                {% endif %}
+              
+                {% for product in products limit: section.settings.products_per_row %}
+                  {% render 'card-product', 
+                    card_product: product,
+                    class: 'swiper-slide',
+                    title_small: true,
+                    show_count: section.settings.show_variant_count
+                  %} 
+                {% endfor %}
+            </ul>
+
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <a href="{{ collection_url }}" class="btn btn--underline" {% if section.settings.enable_bg %} style="color: {{ section.settings.text_color }};" {% endif %}>
+      <h4>{{ collection_title }}</h4>
+    </a>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Shop the Look",
+  "settings": [
+    {
+      "type": "radio",
+      "id": "show_logged_in_section",
+      "label": "Show Section For",
+      "options": [
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "logged_in",
+          "label": "Logged-in Customers Only"
+        },
+        {
+          "value": "logged_out",
+          "label": "Logged-out Customers Only"
+        }
+      ],
+      "default": "both"
+    },
+    {
+        "type": "radio",
+        "id": "show_for_gender",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "all",
+            "label": "Default"
+          },
+          {
+            "value": "female",
+            "label": "Female Customers Only"
+          }
+        ],
+        "default": "all"
+      },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "FEATURED LOOK FOR YOU"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Collection Link Label",
+      "default": "SHOP THE LOOK"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Products per row"
+    },
+    {
+     "type": "checkbox",
+      "id": "show_variant_count",
+      "label": "Show variant count",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_bg",
+      "label": "Enable Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color"
+    },
+     {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#fff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the Look"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.shop-the-look {
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.collection-image,
+.product-image {
+  aspect-ratio: 332 / 400;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+/ Collection specific styles /
+.collection-link {
+  padding: 5px 0;
+  text-decoration: none;
+  color: rgb(56, 50, 48);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  align-items: center;
+  background-color: transparent;
+  position: relative;
+}
+
+/ Product specific styles /
+.product-link {
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.product-title {
+  font-size: 16px;
+  color: rgb(56, 50, 48);
+  margin: 0;
+  font-weight: normal;
+  flex: 1;
+  padding-right: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-size: 16px;
+  color: #38323080;
+  white-space: nowrap;
+}
+
+.collection-link::after {
+    background-color: #383230;
+    bottom: -.2rem;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    transform-origin: 100%;
+    transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+    width: 100%;
+}
+.collection-link:hover::after {
+    transform: scaleX(0);
+    transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+
+@media screen and (min-width: 769px) {
+    .section-cta {
+        display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    
+    .section-cta,
+    .custom-product-grid {
+        grid-column: span 12; 
+        display: flex;
+        justify-content: center;
+    }
+    .collection-tile .collection-link {
+        display: none;
+    }
+  .product-title,
+  .product-price {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .look-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .collection-tile,
+  .product-tile {
+    aspect-ratio: 1/1.2;
+  }
+}
+</style>

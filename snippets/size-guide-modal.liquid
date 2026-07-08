@@ -1,0 +1,167 @@
+{%- comment -%}
+  Accessible size-guide modal with Size Guide chart + Find Your Size tabs.
+{%- endcomment -%}
+
+{%- capture ss26_pilot_flag -%}
+  {%- render 'size-guide-ss26-pilot-check', product: product -%}
+{%- endcapture -%}
+{%- assign size_guide_pilot = false -%}
+{%- if ss26_pilot_flag contains 'true' -%}
+  {%- assign size_guide_pilot = true -%}
+{%- endif -%}
+
+{%- liquid
+  assign guide = product.metafields.custom.size_guide.value
+  assign enabled = product.metafields.custom.size_guide_enabled
+  assign show_modal = false
+
+  if guide != blank and enabled != false
+    assign show_modal = true
+  elsif size_guide_pilot
+    assign show_modal = true
+  endif
+
+  assign finder_profile = product.metafields.custom.size_finder_profile.value
+  assign finder_enabled = false
+  if product.metafields.custom.size_finder_enabled == true
+    assign finder_enabled = true
+  elsif finder_profile != blank and product.metafields.custom.size_finder_enabled != false
+    assign finder_enabled = true
+  elsif size_guide_pilot
+    assign finder_enabled = true
+  endif
+-%}
+
+{%- if show_modal -%}
+  {%- unless size_guide_pilot and guide == blank -%}
+    {%- render 'size-guide-data', product: product, section: section -%}
+  {%- endunless -%}
+
+  <div
+    class="size-guide"
+    data-size-guide
+    data-section-id="{{ section.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    {% if size_guide_pilot and guide == blank %}
+      data-ss26-bundle-url="{{ 'ss26-size-guides.json' | asset_url }}"
+    {% endif %}
+    hidden
+  >
+    <div
+      class="size-guide__overlay"
+      data-size-guide-overlay
+      aria-hidden="true"
+    ></div>
+
+    <div
+      id="SizeGuideModal-{{ section.id }}"
+      class="size-guide__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="SizeGuideTitle-{{ section.id }}"
+      tabindex="-1"
+    >
+      <div class="size-guide__header">
+        <h2 id="SizeGuideTitle-{{ section.id }}" class="size-guide__title" data-size-guide-title>
+          Size guide
+        </h2>
+        <button
+          type="button"
+          class="size-guide__close"
+          data-size-guide-close
+          aria-label="Close size guide"
+        >
+          <svg width="20" height="20" viewBox="0 0 126 126" fill="none" aria-hidden="true" focusable="false">
+            <path d="M126 110.25L15.7499 0L-0.000137442 15.75L110.25 126L126 110.25Z" fill="currentColor"/>
+            <path d="M110.25 -0.000100856L-0.00012207 110.25L15.7499 126L126 15.7499L110.25 -0.000100856Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="size-guide__tabs" role="tablist" aria-label="Size guide sections">
+        <button
+          type="button"
+          class="size-guide__tab is-active"
+          role="tab"
+          id="SizeGuideTabChart-{{ section.id }}"
+          aria-selected="true"
+          aria-controls="SizeGuidePanelChart-{{ section.id }}"
+          data-size-guide-tab="chart"
+        >
+          Size Guide
+        </button>
+        <button
+          type="button"
+          class="size-guide__tab"
+          role="tab"
+          id="SizeGuideTabFinder-{{ section.id }}"
+          aria-selected="false"
+          aria-controls="SizeGuidePanelFinder-{{ section.id }}"
+          data-size-guide-tab="finder"
+          {% unless finder_enabled %}hidden{% endunless %}
+        >
+          Find Your Size
+        </button>
+      </div>
+
+      <div class="size-guide__body" data-size-guide-body>
+        <div
+          id="SizeGuidePanelChart-{{ section.id }}"
+          class="size-guide__panel is-active"
+          role="tabpanel"
+          aria-labelledby="SizeGuideTabChart-{{ section.id }}"
+          data-size-guide-panel="chart"
+        >
+          <div class="size-guide__image-wrap" data-size-guide-image-wrap hidden></div>
+          <div class="size-guide__intro" data-size-guide-intro hidden></div>
+
+          <div class="size-guide__controls">
+            <div class="size-guide__control">
+              <label class="size-guide__label" for="SizeGuideRegion-{{ section.id }}">Region</label>
+              <select
+                id="SizeGuideRegion-{{ section.id }}"
+                class="size-guide__select"
+                data-size-guide-region
+              ></select>
+            </div>
+
+            <div class="size-guide__control">
+              <span class="size-guide__label" id="SizeGuideUnitLabel-{{ section.id }}">Units</span>
+              <div
+                class="size-guide__unit-toggle"
+                role="group"
+                aria-labelledby="SizeGuideUnitLabel-{{ section.id }}"
+              >
+                <button type="button" class="size-guide__unit-btn is-active" data-size-guide-unit="cm" aria-pressed="true">
+                  CM
+                </button>
+                <button type="button" class="size-guide__unit-btn" data-size-guide-unit="in" aria-pressed="false">
+                  IN
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="size-guide__table-scroll" data-size-guide-table-scroll>
+            <table class="size-guide__table" data-size-guide-table>
+              <thead data-size-guide-thead></thead>
+              <tbody data-size-guide-tbody></tbody>
+            </table>
+          </div>
+
+          <div class="size-guide__notes" data-size-guide-notes hidden></div>
+        </div>
+
+        <div
+          id="SizeGuidePanelFinder-{{ section.id }}"
+          class="size-guide__panel"
+          role="tabpanel"
+          aria-labelledby="SizeGuideTabFinder-{{ section.id }}"
+          data-size-guide-panel="finder"
+          hidden
+        ></div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

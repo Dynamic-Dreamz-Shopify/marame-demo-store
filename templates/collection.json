@@ -1,0 +1,99 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_collection_banner_8kmx3q": {
+      "type": "main-collection-banner",
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 20,
+        "show_variant_count": true,
+        "enable_filtering": false,
+        "filter_type": "horizontal",
+        "enable_sorting": false
+      }
+    },
+    "content_banner_rxpX9W": {
+      "type": "content-banner",
+      "disabled": true,
+      "settings": {
+        "heading": "Committed to quality. We believe in creating garments that endure, using only the highest quality materials that age beautifully over time. Lorem ipsum dolor sit amet consectetur adipiscing elit, libero aenean condimentum pulvinar primis. Venenatis dignissim.",
+        "content": "<p><strong>Marame</strong></p><p>Timeless Luxury.</p>"
+      }
+    },
+    "split_screen_EQ4Gwe": {
+      "type": "split-screen",
+      "disabled": true,
+      "settings": {
+        "show_logged_in_section": "both",
+        "show_for_gender": "all",
+        "title": "FEATURED LOOK FOR YOU",
+        "collection_1": "",
+        "collection_1_title": "Bottoms",
+        "collection_1_image": "shopify://shop_images/ba1853fb857cfe8e9591b14c69096468.png",
+        "collection_1_link": "shopify://collections/mens-bottoms",
+        "button_1_text": "View all",
+        "secondary__label": "",
+        "secondary_link": "",
+        "button_1_color": "#ffffff",
+        "button_1_bg": "#ffffff",
+        "collection_2": "",
+        "collection_2_title": "shirts",
+        "collection_2_image": "shopify://shop_images/674495fce1957cdcf19302cebd4fb073.jpg",
+        "collection_2_link": "shopify://collections/mens-tops-shirts",
+        "button_2_text": "View all",
+        "button_2_color": "#ffffff",
+        "button_2_bg": "#ffffff"
+      }
+    },
+    "17452228599ccba052": {
+      "type": "apps",
+      "blocks": {
+        "mst_wishlist_v3_app_block_list_CTwJwL": {
+          "type": "shopify://apps/mst-wishlist-prime/blocks/v3-app-block-list/7f9269b0-1b45-4d0c-8479-faf04f05d8ac",
+          "settings": {
+            "multi_language": false,
+            "iwish_add_txt": "Add To Wishlist",
+            "iwish_added_txt": "Added To Wishlist",
+            "theme_btn_class": "",
+            "icon_position": "top-right",
+            "icon_style": "custom",
+            "iwish_add_icon_outline": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"26\" height=\"23\" viewbox=\"0 0 26 23\" fill=\"none\"><g clip-path=\"url(#a)\"><path d=\"M6.862.424c2.233-.21 4.27.756 5.645 2.618.088.116.449.764.497.778.068.015.081-.044.109-.08.64-.916 1.042-1.556 1.968-2.21 4.752-3.39 10.295 1.163 9.968 6.835-.306 5.25-6.53 10.624-10.384 13.286-.279.189-1.185.865-1.437.923a1 1 0 0 1-.36.007c-.246-.043-1.097-.669-1.37-.85C7.625 19.084 1.334 13.71.999 8.452.769 4.751 3.24.766 6.863.424\" fill=\"#EFEFEF\"></path><path d=\"M6.905.885c2.06-.194 3.943.692 5.23 2.432l.003.005v.001l.023.035a6 6 0 0 1 .153.25l.06.1c.053.089.11.181.156.253q.035.055.073.106a.7.7 0 0 0 .107.113.5.5 0 0 0 .159.083l.018.006.02.004a.53.53 0 0 0 .583-.264l.001-.002.003-.005.149-.213c.559-.804.924-1.33 1.705-1.881l.001-.001c2.198-1.567 4.553-1.301 6.347.016 1.81 1.33 3.045 3.734 2.891 6.415-.144 2.466-1.69 5.023-3.745 7.333-2.044 2.295-4.531 4.28-6.438 5.597-.065.044-.159.11-.263.185l-.05.036c-.129.09-.273.192-.416.29s-.28.188-.393.255c-.084.05-.132.074-.152.084l-.01.005a.7.7 0 0 1-.154.006l-.024-.01a2 2 0 0 1-.124-.066 7 7 0 0 1-.368-.23 22 22 0 0 1-.46-.316l-.232-.16c-1.917-1.31-4.427-3.292-6.493-5.587-2.078-2.308-3.647-4.868-3.804-7.337-.109-1.743.42-3.562 1.404-4.98S5.26 1.04 6.905.884Zm5.791 2.648z\" stroke=\"#383230\" stroke-opacity=\".33\" stroke-width=\".926\"></path></g><defs><clippath id=\"a\"><path fill=\"#fff\" d=\"M.984.367h24.079v22.227H.984z\"></path></clippath></defs></svg>",
+            "iwish_added_icon_filled": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"26\" height=\"23\" viewbox=\"0 0 26 23\" fill=\"none\"><g clip-path=\"url(#a)\"><path d=\"M6.862.424c2.233-.21 4.27.756 5.645 2.618.088.116.449.764.497.778.068.015.081-.044.109-.08.64-.916 1.042-1.556 1.968-2.21 4.752-3.39 10.295 1.163 9.968 6.835-.306 5.25-6.53 10.624-10.384 13.286-.279.189-1.185.865-1.437.923a1 1 0 0 1-.36.007c-.246-.043-1.097-.669-1.37-.85C7.625 19.084 1.334 13.71.999 8.452.769 4.751 3.24.766 6.863.424\" fill=\"#EFEFEF\"></path><path d=\"M6.905.885c2.06-.194 3.943.692 5.23 2.432l.003.005v.001l.023.035a6 6 0 0 1 .153.25l.06.1c.053.089.11.181.156.253q.035.055.073.106a.7.7 0 0 0 .107.113.5.5 0 0 0 .159.083l.018.006.02.004a.53.53 0 0 0 .583-.264l.001-.002.003-.005.149-.213c.559-.804.924-1.33 1.705-1.881l.001-.001c2.198-1.567 4.553-1.301 6.347.016 1.81 1.33 3.045 3.734 2.891 6.415-.144 2.466-1.69 5.023-3.745 7.333-2.044 2.295-4.531 4.28-6.438 5.597-.065.044-.159.11-.263.185l-.05.036c-.129.09-.273.192-.416.29s-.28.188-.393.255c-.084.05-.132.074-.152.084l-.01.005a.7.7 0 0 1-.154.006l-.024-.01a2 2 0 0 1-.124-.066 7 7 0 0 1-.368-.23 22 22 0 0 1-.46-.316l-.232-.16c-1.917-1.31-4.427-3.292-6.493-5.587-2.078-2.308-3.647-4.868-3.804-7.337-.109-1.743.42-3.562 1.404-4.98S5.26 1.04 6.905.884Zm5.791 2.648z\" stroke=\"#383230\" stroke-opacity=\".33\" stroke-width=\".926\"></path></g><defs><clippath id=\"a\"><path fill=\"#fff\" d=\"M.984.367h24.079v22.227H.984z\"></path></clippath></defs></svg>",
+            "text_font_size": 14,
+            "text_color": "#000000",
+            "text_color_hover": "",
+            "background_color": "rgba(0,0,0,0)",
+            "z_index": 2,
+            "qv_wrapper": "",
+            "qv_button": "",
+            "qv_close_button": ""
+          }
+        }
+      },
+      "block_order": [
+        "mst_wishlist_v3_app_block_list_CTwJwL"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main_collection_banner_8kmx3q",
+    "product-grid",
+    "content_banner_rxpX9W",
+    "split_screen_EQ4Gwe",
+    "17452228599ccba052"
+  ]
+}

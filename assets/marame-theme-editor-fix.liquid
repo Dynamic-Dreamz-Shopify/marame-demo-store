@@ -1,0 +1,34 @@
+{%- comment -%}
+  Theme editor only: allow normal scrolling (no Lenis). CSS targets Shopify's
+  .shopify-design-mode class and our data-shopify-editor flag — never affects the live store.
+{%- endcomment -%}
+{%- if request.design_mode -%}
+  <script>
+    window.__MARAME_NO_LENIS = true;
+  </script>
+  <style>
+    html.shopify-design-mode,
+    html[data-shopify-editor='true'],
+    html.shopify-design-mode.lenis,
+    html[data-shopify-editor='true'].lenis,
+    html.shopify-design-mode.lenis-smooth,
+    html.shopify-design-mode.lenis-scrolling,
+    html.shopify-design-mode.lenis-stopped,
+    html[data-shopify-editor='true'].lenis-smooth,
+    html[data-shopify-editor='true'].lenis-scrolling,
+    html[data-shopify-editor='true'].lenis-stopped {
+      overflow: auto !important;
+      overflow-y: scroll !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    html.shopify-design-mode body,
+    html[data-shopify-editor='true'] body {
+      overflow: auto !important;
+      overflow-y: scroll !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+  </style>
+{%- endif -%}

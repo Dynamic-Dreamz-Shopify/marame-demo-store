@@ -1,0 +1,13 @@
+{%- comment -%}
+  Non-render-blocking stylesheet (P19). Use on collection for below-fold / non-critical CSS.
+  @param stylesheet {String} asset file name, e.g. 'header.css'
+{%- endcomment -%}
+{%- unless stylesheet == blank -%}
+  <link
+    rel="preload"
+    href="{{ stylesheet | asset_url }}"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+  <noscript>{{ stylesheet | asset_url | stylesheet_tag }}</noscript>
+{%- endunless -%}

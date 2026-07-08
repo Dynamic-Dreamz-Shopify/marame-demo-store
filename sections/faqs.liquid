@@ -1,0 +1,50 @@
+{% if section.blocks.size > 0 %}
+  <section class="faqs">
+    <div class="accordion__list">
+      {% for block in section.blocks %}
+        {% if block.settings.question != blank or block.settings.answer != blank %}
+          <details class="accordion">
+            <summary class="accordion__head">
+              <h4 class="regular">{{ block.settings.question }}</h4>
+            </summary>
+            <div class="accordion__body">
+              <div class="accordion__body__inner">
+                <h5>{{ block.settings.answer }}</h5>
+              </div>
+            </div>
+          </details>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faqs",
+      "name": "FAQs",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Question",
+          "id": "question"
+        },
+        {
+          "type": "text",
+          "label": "Answer",
+          "id": "answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs"
+    }
+  ]
+}
+{% endschema %}

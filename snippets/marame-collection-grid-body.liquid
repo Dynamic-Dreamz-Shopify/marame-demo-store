@@ -1,0 +1,1596 @@
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+{% render 'marame-defer-stylesheet', stylesheet: 'component-show-more.css' %}
+{% render 'marame-defer-stylesheet', stylesheet: 'component-swatch-input.css' %}
+{% render 'marame-defer-stylesheet', stylesheet: 'component-swatch.css' %}
+{%- unless collection.template_suffix == 'fragrances' or collection.template_suffix == 'care-guide' -%}
+  {{ 'default-collection.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+
+{% javascript %}
+  document.addEventListener('marame:collection-ready', () => {
+    document.querySelectorAll('.listing__list.marame-collection-loading').forEach((el) => {
+      el.classList.replace('marame-collection-loading', 'marame-collection-loaded');
+    });
+    document.querySelector('#MainContent section.listing')?.classList.remove('marame-listing-swapping');
+    document.querySelectorAll('#MainContent .marame-listing-swap-overlay').forEach((el) => {
+      el.classList.add('hidden');
+      el.setAttribute('aria-hidden', 'true');
+    });
+  });
+{% endjavascript %}
+{% style %}
+  html[data-marame-collection],
+  html[data-marame-collection][data-lenis-prevent] {
+      overflow-x: clip !important;
+      overflow-y: auto !important;
+      height: auto !important;
+      max-width: 100%;
+      overscroll-behavior-y: none;
+      scroll-behavior: auto;
+  }
+  html[data-marame-collection] .announcement_bar_row {
+      transform: none !important;
+      will-change: auto;
+  }
+  html[data-marame-collection] .header {
+      transition: none;
+  }
+  html[data-marame-collection] .filters {
+      transition: none;
+  }
+  html[data-marame-collection] body {
+      overflow-x: clip !important;
+      overflow-y: visible !important;
+      max-width: 100%;
+  }
+  html[data-marame-collection][data-lenis-prevent],
+  html[data-marame-collection] body[data-lenis-prevent] {
+      overflow-x: clip !important;
+      overflow-y: auto !important;
+      height: auto !important;
+      max-width: 100%;
+  }
+  html.marame-collection-filters-open,
+  body.marame-collection-filters-open {
+      overflow: hidden !important;
+  }
+  html[data-marame-collection] main,
+  html[data-marame-collection] section.listing,
+  html[data-marame-collection] section.filters {
+      max-width: 100%;
+      overflow-x: clip;
+  }
+  .marame-collection-loading,
+  .marame-collection-loaded {
+      position: relative;
+      overflow-x: clip;
+      overflow-y: visible;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+  }
+  .listing__list[data-marame-shuffle="true"] {
+      overflow-x: clip;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+  }
+  .listing__list[data-marame-shuffle="true"] > .listing__item {
+      width: 100% !important;
+      min-width: 0;
+      max-width: 100%;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card,
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider {
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider .swiper-wrapper {
+      overflow: hidden;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-wrapper {
+      display: block;
+      position: relative;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-slide {
+      width: 100% !important;
+      box-sizing: border-box;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="primary"] {
+      position: relative;
+      z-index: 1;
+      opacity: 1 !important;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-slide:not([data-marame-slide-role="primary"]):not([data-marame-slide-role="hover"]) {
+      display: none !important;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"] img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+  }
+  {%- comment -%} Stay on primary while hovering until hover image is loaded (marame-hover-show). {%- endcomment -%}
+  .listing__list[data-marame-shuffle="true"] .product-card:hover .product-card__img-slider:not(.marame-hover-show):not(.swiper-initialized) .swiper-slide[data-marame-slide-role="primary"],
+  .listing__list[data-marame-shuffle="true"] .product-card:focus-within .product-card__img-slider:not(.marame-hover-show):not(.swiper-initialized) .swiper-slide[data-marame-slide-role="primary"] {
+      opacity: 1;
+      z-index: 2;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card:hover .product-card__img-slider:not(.marame-hover-show):not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"],
+  .listing__list[data-marame-shuffle="true"] .product-card:focus-within .product-card__img-slider:not(.marame-hover-show):not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"] {
+      opacity: 0;
+      z-index: 0;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card:hover .product-card__img-slider.marame-hover-show:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="primary"],
+  .listing__list[data-marame-shuffle="true"] .product-card:focus-within .product-card__img-slider.marame-hover-show:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="primary"] {
+      opacity: 0;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card:hover .product-card__img-slider.marame-hover-show:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"],
+  .listing__list[data-marame-shuffle="true"] .product-card:focus-within .product-card__img-slider.marame-hover-show:not(.swiper-initialized) .swiper-slide[data-marame-slide-role="hover"] {
+      opacity: 1;
+      z-index: 2;
+      pointer-events: auto;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-button-next,
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-button-prev {
+      z-index: 3;
+      pointer-events: auto;
+  }
+  .listing__list[data-marame-shuffle="true"] .product-card__img-slider:not(.swiper-initialized) .swiper-pagination {
+      display: flex !important;
+      opacity: 1;
+      visibility: visible;
+  }
+  {%- comment -%} Never hide the product list with opacity:0 — preview must show products even if JS fails. {%- endcomment -%}
+  .listing__list.marame-collection-loading,
+  .listing__list.marame-collection-loaded {
+      opacity: 1;
+      visibility: visible;
+      min-height: 50vh;
+  }
+  .listing__list[data-marame-shuffle="true"] > .listing__item.hide {
+      display: block !important;
+  }
+  .listing .listing__more.marame-load-more {
+      display: flex !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] #secondary-filter-panel,
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] #secondary-filter-panel.open {
+      display: none !important;
+      pointer-events: none !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panels__container:has(#secondary-filter-panel.open) #main-filter-panel {
+      display: block !important;
+      position: static !important;
+      visibility: visible !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-entry {
+      list-style: none;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details > summary.filter-panel__item--facet-nav {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details > summary.filter-panel__item--facet-nav::-webkit-details-marker {
+      display: none;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details > summary.filter-panel__item--facet-nav::after {
+      content: "";
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      margin-left: 8px;
+      background-image: url(https://cdn.shopify.com/s/files/1/0934/8877/5503/files/Vector_a4bee618-55ca-4d8a-ac03-f6ffc5f0ce9b.svg?v=1767593564);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transform: rotate(0deg);
+      transition: transform 0.2s ease;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details[open] > summary.filter-panel__item--facet-nav {
+      font-family: 'HelveticaNowProDisplayBold', sans-serif;
+      font-weight: 700;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details[open] > summary.filter-panel__item--facet-nav::after {
+      transform: rotate(180deg);
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details > .filter-panel__list__group {
+      display: block;
+      margin: 0;
+      padding: 0 0 4px;
+      border-bottom: 0.5px solid #E6E0D4;
+      background-color: #F7F5F2;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__item--facet-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px 6px 24px !important;
+      margin: 0 !important;
+      border-bottom: none !important;
+      font-family: 'HelveticaNowDisplayLight', sans-serif;
+      font-weight: 325;
+      font-size: 15px;
+      line-height: 1.2;
+      cursor: pointer;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__item--facet-option::after {
+      display: none !important;
+      content: none !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__item--facet-option:not(:last-child) {
+      border-bottom: none !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] #secondary-filter-options.marame-facet-options {
+      margin-top: 0;
+      padding-top: 0;
+      position: relative;
+      z-index: 2;
+      pointer-events: auto;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details,
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details summary {
+      pointer-events: auto;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-price-block {
+      position: relative;
+      z-index: 1;
+      border-bottom: 0.5px solid #E6E0D4;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-price-block .filter-panel__item.price {
+      pointer-events: none;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-price-block .price-range-slider,
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-price-block .price-filter-form input {
+      pointer-events: auto;
+  }
+  @media screen and (max-width: 1023px) {
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__item--facet-option {
+      padding: 1px 7px 1px 14px !important;
+      font-size: 7px;
+      line-height: 15px;
+    }
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] .marame-facet-details > summary.filter-panel__item--facet-nav::after {
+      width: 6px;
+      height: 6px;
+    }
+  }
+  html[data-marame-collection] .filters.marame-filters-drawer-open .shop_all {
+    filter: none !important;
+  }
+  html[data-marame-collection] .filters.marame-filters-drawer-open .filters_custom {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  html[data-marame-collection]:not([data-marame-filters-drawer="open"]) .new-filters-drawer,
+  html[data-marame-collection]:not([data-marame-filters-drawer="open"]) .filters .new-filters-drawer-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
+  html[data-marame-collection]:not([data-marame-filters-drawer="open"]) .new-filters-drawer {
+    right: -100% !important;
+  }
+  html[data-marame-collection] .filters:not(.marame-filters-drawer-open) .new-filters-drawer-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  html[data-marame-collection] .new-filters-drawer,
+  html[data-marame-collection] .filters .new-filters-drawer-overlay {
+    transition: none !important;
+  }
+  html[data-marame-collection] .filters.marame-filters-drawer-open .new-filters-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    z-index: 9980;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    backdrop-filter: blur(5.6px);
+    -webkit-backdrop-filter: blur(5.6px);
+    background-color: rgba(255, 255, 255, 0.78);
+  }
+  html[data-marame-collection] .new-filters-drawer:not(.marame-drawer-open) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    right: -100% !important;
+  }
+  html[data-marame-collection] .new-filters-drawer.marame-drawer-open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    position: fixed;
+    top: calc(var(--header-height, 72px) + var(--announcement-bar-height, 0px));
+    left: auto;
+    width: 100%;
+    max-width: 495px;
+    height: calc(100dvh - var(--header-height, 72px) - var(--announcement-bar-height, 0px));
+    min-height: 0;
+    max-height: none;
+    padding: 48px 65px 32px;
+    z-index: 9985;
+    align-items: stretch;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  html[data-marame-collection] .new-filters-drawer.marame-drawer-open .cloase_filter_cstm {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    z-index: 3;
+  }
+  html[data-marame-collection] .new-filters-drawer.marame-drawer-open .marame-filters-drawer-tabs:not(.hidden) {
+    flex-shrink: 0;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] #main-filter-panel .filter-panel__header {
+    display: none !important;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panels__trigger {
+    display: none !important;
+  }
+  html[data-marame-collection] .marame-filters-drawer-tabs {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 28px;
+    width: 100%;
+    padding: 0 0 18px;
+    margin: 0 0 4px;
+    border-bottom: 0.5px solid #E6E0D4;
+    box-sizing: border-box;
+  }
+  html[data-marame-collection] .marame-filters-drawer-tabs.hidden {
+    display: none !important;
+  }
+  html[data-marame-collection] .marame-filters-drawer-tab {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: 'HelveticaNowDisplayLight', sans-serif;
+    font-weight: 325;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #2A2A2C;
+    cursor: pointer;
+  }
+  html[data-marame-collection] .marame-filters-drawer-tab.is-active {
+    font-family: 'HelveticaNowProDisplayBold', sans-serif;
+    font-weight: 700;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__left.filters_data:not(.hidden) {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right.filters_data:not(.hidden) {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 0;
+    padding: 16px 0 0;
+    /* Match Filter layout: scrollable body + anchored CTA */
+    overflow: hidden;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right.filters_data:not(.hidden):before {
+    display: none !important;
+    content: none !important;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .c-select.filter {
+    width: 100%;
+    padding: 0;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .c-select .ts-control {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 0;
+    border: none;
+    background: transparent;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .c-select .ts-control .item {
+    font-family: 'HelveticaNowDisplayLight', sans-serif;
+    font-weight: 325;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sort-native {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 0;
+    border: none;
+    background: transparent;
+    font-family: 'HelveticaNowDisplayLight', sans-serif;
+    font-weight: 325;
+    font-size: 15px;
+    line-height: 1.2;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 18px 0 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-option {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 0.5px solid #E6E0D4;
+    text-align: left;
+    padding: 22px 0;
+    margin: 0;
+    width: 100%;
+    font-family: 'HelveticaNowDisplayLight', sans-serif;
+    font-weight: 325;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #2A2A2C;
+    cursor: pointer;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-option.is-selected {
+    font-family: 'HelveticaNowProDisplayBold', sans-serif;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-option:last-child {
+    border-bottom: 0;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-ctas {
+    flex: 0 0 auto;
+    margin-top: 18px;
+    padding: 20px 17px 24px;
+    border-top: 0.5px solid #E6E0D4;
+    background: #fff;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  html[data-marame-collection] .new-filters-drawer .filters__right .marame-sortby-ctas .btn.btn--dark.marame-sortby-apply {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    align-self: stretch;
+  }
+
+  /* Only show Sort Apply when user selected an option */
+  html[data-marame-collection] .new-filters-drawer .filters__right:not(.marame-sortby-has-selection) .marame-sortby-ctas {
+    display: none !important;
+  }
+
+  /* When active (Clear mode), hide the dropdown arrow and keep only the X */
+  html[data-marame-collection] .filters .filters_custom.is-clear-mode .cloase_before_down {
+    display: none !important;
+  }
+  html[data-marame-collection] .filters .filters_custom.is-clear-mode .cloase_after_filter {
+    display: block !important;
+  }
+  html[data-marame-collection] .filters .filters_custom.is-clear-mode p {
+    font-family: 'HelveticaNowProDisplayBold', sans-serif;
+    font-weight: 700;
+  }
+  html[data-marame-collection] .filters .filters_custom.is-clear-mode .cloase_after_filter {
+    width: 12px;
+    height: 12px;
+  }
+  html[data-marame-collection] .filters .filters_custom.is-clear-mode .cloase_after_filter path {
+    stroke-width: 1.2;
+  }
+
+  /* Mobile: Colour facet as native picker (iOS-style select) */
+  @media (max-width: 749px) {
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="colour"] > .marame-mobile-facet-select,
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="size"] > .marame-mobile-facet-select,
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="shoe-size"] > .marame-mobile-facet-select {
+      display: block;
+      width: 100%;
+      min-height: 44px;
+      padding: 12px 16px;
+      margin: 10px 0 0;
+      border: 0.5px solid #E6E0D4;
+      background: #fff;
+      font-family: 'HelveticaNowDisplayLight', sans-serif;
+      font-size: 14px;
+      line-height: 1.2;
+      color: #2A2A2C;
+      -webkit-appearance: menulist;
+      appearance: auto;
+    }
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="colour"] > ul.filter-panel__list__group,
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="size"] > ul.filter-panel__list__group,
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] details.marame-facet-details[data-facet-group="shoe-size"] > ul.filter-panel__list__group {
+      display: none !important;
+    }
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panels__container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] #main-filter-panel.filter-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0 0;
+  }
+  html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__ctas {
+    flex: 0 0 auto;
+    margin-top: auto;
+    width: 100%;
+    background-color: #fff;
+    border-top: 0.5px solid #E6E0D4;
+    padding: 20px 0 0;
+    box-sizing: border-box;
+  }
+  html[data-marame-collection] .marame-facet-details[open] > .filter-panel__list__group {
+    max-height: min(42vh, 380px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  html[data-marame-collection] .marame-listing-swap-overlay {
+    display: none !important;
+  }
+  html[data-marame-collection] #secondary-view-button.marame-filter-apply-busy {
+    opacity: 1;
+    cursor: wait;
+    pointer-events: none;
+  }
+  html[data-marame-collection] .filter-panels.marame-filter-apply-ready #secondary-view-button[aria-disabled="false"],
+  html[data-marame-collection] .filter-panel__ctas:has(.active-filters li) #secondary-view-button {
+    opacity: 1;
+  }
+  @media screen and (max-width: 1023px) {
+    html[data-marame-collection]:not([data-marame-filters-drawer="open"]) .new-filters-drawer {
+      bottom: -100% !important;
+    }
+    html[data-marame-collection] .new-filters-drawer:not(.marame-drawer-open) {
+      bottom: -100% !important;
+    }
+    html[data-marame-collection] .new-filters-drawer.marame-drawer-open {
+      left: 0;
+      right: 0;
+      top: auto;
+      bottom: 0 !important;
+      max-width: none;
+      height: min(92vh, 100dvh);
+      min-height: min(511px, 92vh);
+      padding: 44px 17px 24px;
+    }
+    html[data-marame-collection] .new-filters-drawer.marame-drawer-open .cloase_filter_cstm {
+      top: 14px;
+      right: 17px;
+    }
+    html[data-marame-collection] .filter-panels[data-marame-inline-facets] .filter-panel__ctas {
+      padding: 20px 0 40px;
+    }
+  }
+  .iWishAddColl,
+  .iWishAdd,
+  .iwish-app-block-product,
+  .save_item,
+  .iwishDrawer,
+  .iwishPage {
+      display: none !important;
+      pointer-events: none !important;
+  }
+  .marame-grid-controls {
+      margin: 0 0 1.25rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e5e5e5;
+      background: #fafafa;
+  }
+  .marame-grid-controls__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1rem;
+  }
+  .marame-grid-controls__set {
+      margin: 0;
+      font-size: 0.875rem;
+  }
+  .marame-grid-controls__label {
+      margin-right: 0.35rem;
+      color: #666;
+  }
+  .marame-grid-controls__hint {
+      color: #888;
+      font-weight: normal;
+  }
+  .marame-grid-controls__btn {
+      cursor: pointer;
+      border: 1px solid #2a2a2d;
+      background: #2a2a2d;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+  }
+  .marame-grid-controls__btn:hover {
+      background: #000;
+      border-color: #000;
+  }
+  .marame-grid-controls__note {
+      margin: 0.65rem 0 0;
+      font-size: 0.8125rem;
+      color: #666;
+  }
+  .marame-grid-help {
+      margin: 0 0 1rem;
+      padding: 0.85rem 1rem;
+      background: #f0f4ff;
+      border: 1px solid #c8d4f0;
+      font-size: 0.8125rem;
+      line-height: 1.45;
+  }
+  .marame-grid-help p {
+      margin: 0 0 0.5rem;
+  }
+  .marame-grid-help ol {
+      margin: 0 0 0.5rem 1.1rem;
+      padding: 0;
+  }
+  .marame-grid-help__now {
+      margin: 0;
+  }
+{% endstyle %}
+
+
+{% comment %} {% render 'collection-filter-bar' %} {% endcomment %}
+
+{% assign grid_index = 0 %}
+{%- assign marame_grid_active = false -%}
+{%- if section.settings.marame_native_shuffle -%}
+  {%- assign marame_grid_active = true -%}
+{%- endif -%}
+{%- assign marame_grid_scope = section.settings.marame_scope_handle | strip | downcase -%}
+{%- if section.settings.marame_scope_collection != blank -%}
+  {%- assign marame_grid_scope = section.settings.marame_scope_collection.handle | strip | downcase -%}
+{%- endif -%}
+{%- assign marame_scoped_section = false -%}
+{%- if marame_grid_scope != blank -%}
+  {%- assign marame_scoped_section = true -%}
+{%- endif -%}
+{%- assign marame_scope_page_match = true -%}
+{%- if marame_scoped_section -%}
+  {%- assign marame_scope_page_match = false -%}
+  {%- assign marame_scope_ch = collection.handle | strip | downcase -%}
+  {%- if marame_scope_ch == marame_grid_scope -%}
+    {%- assign marame_scope_page_match = true -%}
+  {%- endif -%}
+  {%- assign marame_scope_extras = section.settings.marame_scope_extra_handles | split: ',' -%}
+  {%- for marame_scope_extra in marame_scope_extras -%}
+    {%- assign marame_scope_eh = marame_scope_extra | strip | downcase -%}
+    {%- if marame_scope_eh != '' and marame_scope_ch == marame_scope_eh -%}
+      {%- assign marame_scope_page_match = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if marame_grid_active -%}
+<script>
+  window.__MARAME_DISABLE_SEZERIUM__ = true;
+  document.documentElement.setAttribute('data-marame-collection', 'true');
+  document.documentElement.dataset.marameFiltersDrawer = 'closed';
+  document.documentElement.classList.remove('lenis-smooth', 'lenis-scrolling');
+</script>
+{%- endif -%}
+
+{%- unless marame_scope_page_match -%}
+  {%- if request.design_mode -%}
+    <div class="marame-grid-editor-placeholder" style="margin:1rem;padding:1rem;border:1px dashed #999;background:#fafafa;font-size:14px;">
+      <p><strong>Product grid ({{ marame_grid_scope }})</strong> — switch preview to that collection to edit these cards. Hidden on {{ collection.title }}.</p>
+    </div>
+  {%- endif -%}
+{%- else -%}
+
+{%- assign marame_filters_active = false -%}
+{%- for filter in collection.filters -%}
+  {%- if filter.type == 'price_range' -%}
+    {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+      {%- assign marame_filters_active = true -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- for value in filter.active_values -%}
+      {%- assign marame_filters_active = true -%}
+      {%- break -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if marame_filters_active -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign marame_paginate_size = section.settings.products_per_page -%}
+{%- if marame_grid_active -%}
+  {%- assign marame_paginate_size = section.settings.marame_cards_per_page | default: 44 -%}
+{%- endif -%}
+{%- paginate collection.products by marame_paginate_size -%}
+  <section class="filters">
+    
+    {% comment %} <span class="shop_all left"><a href="/collections/womens">Shop All</a></span> {% endcomment %}
+    <span class="shop_all left"><a href="/collections/womens">{{ collection.title }}</a></span>
+    <div class="filters_custom right">
+
+      {% assign apply_filter = false %}
+      {%- for filter in collection.filters -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+            {% assign apply_filter = true %}
+          {%- endif -%}
+        {%- else -%}
+          {%- for value in filter.active_values -%}
+            {% assign apply_filter = true %}
+          {%- endfor -%}
+        {%- endif -%}
+      {% endfor %}
+
+      {%- comment -%} Sort should also trigger "clear" state {%- endcomment -%}
+      {%- if collection.sort_by != blank and collection.sort_by != 'manual' -%}
+        {% assign apply_filter = true %}
+      {%- endif -%}
+
+     <button id="secondary-clear-button" class="btn btn--outline {% unless apply_filter %} hidden {% endunless %}">Clear</button><p>Filters/Sort By</p>
+      <svg class="cloase_before_down" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.5 0.5L3.92806 4.1855L7.35611 0.5" stroke="#2A2A2C" stroke-miterlimit="10" stroke-linecap="round"/>
+      </svg> 
+     
+       <svg class="cloase_after_filter" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" {% unless apply_filter %}  style="display: none;" {% endunless %}>
+          <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+          <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+        </svg>
+     
+    </div>
+
+    
+
+    <div class="new-filters-drawer-overlay"></div>
+
+    <div class="new-filters-drawer" data-lenis-prevent>
+      <div class="marame-filters-drawer-tabs hidden" data-marame-drawer-tabs role="tablist" aria-label="Filter and sort">
+        <button type="button" class="marame-filters-drawer-tab is-active" data-marame-drawer-tab="filter" role="tab" aria-selected="true">Filter</button>
+        <button type="button" class="marame-filters-drawer-tab" data-marame-drawer-tab="sort" role="tab" aria-selected="false">Sort By</button>
+      </div>
+      <div class="filters__left filters_data hidden" data-lenis-prevent>
+        <div class="filter-panels" data-marame-inline-facets="true">
+          <button class="filter-panels__trigger" id="filter-trigger-button">
+            <p>Filter</p>
+          </button>
+      
+          <div class="filter-panels__container open" id="filter-panels-container">
+      
+            <div id="main-filter-panel" class="filter-panel">
+              <div class="filter-panel__header">
+                <p>Filter</p>
+                <button id="close-button">
+                  <span class="sr-only">Close</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+                    <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+                  </svg>
+                </button>
+              </div>
+              
+      
+              <div class="marame-price-block">
+                <ul class="filter-panel__list marame-price-list">
+              {%- for filter in collection.filters -%}
+                {%- if filter.type == 'price_range' -%}
+                  {%- assign marame_price_min_display = filter.range_min | divided_by: 100 | round -%}
+                  {%- assign marame_price_max_display = filter.range_max | divided_by: 100 | round -%}
+                  {%- assign marame_price_gte_display = filter.min_value.value | default: filter.range_min | divided_by: 100 | round -%}
+                  {%- assign marame_price_lte_display = filter.max_value.value | default: filter.range_max | divided_by: 100 | round -%}
+                  <li class="filter-panel__item price" data-group="{{ filter.label | downcase | replace: ' ', '-' }}">{{ filter.label }}</li>
+                  <ul id="options-{{ filter.label | downcase | replace: ' ', '-' }}" class="filter-panel__list__groups price_filter" style="display: block;" data-filter-cols="{{ filter.label }}">
+                    <form class="price-filter-form" method="get">
+                      <div class="price-range-slider range-group"
+                          data-range-min="{{ marame_price_min_display }}"
+                          data-range-max="{{ marame_price_max_display }}"
+                          style="--range-min: 0%; --range-max: 100%;">
+                          <input type="range"
+                              id="Mobile-Filter-price-range-min"
+                              class="range"
+                              min="{{ marame_price_min_display }}"
+                              max="{{ marame_price_max_display }}"
+                              value="{{ marame_price_gte_display }}"
+                              step="1">
+
+                          <input type="range"
+                              id="Mobile-Filter-price-range-max"
+                              class="range"
+                              min="{{ marame_price_min_display }}"
+                              max="{{ marame_price_max_display }}"
+                              value="{{ marame_price_lte_display }}"
+                              step="1">
+                      </div>
+
+                      <div class="price_gt">
+                      <span class="currency_sign">{{ cart.currency.symbol }}</span>
+                      <input type="text"
+                              id="Mobile-Filter-Price-GTE"
+                              name="{{ filter.min_value.param_name | default: 'filter.v.price.gte' }}"
+                              value="{{ marame_price_gte_display }}">
+                      </div>
+
+                      <div class="price_lt">
+                      <span class="currency_sign">{{ cart.currency.symbol }}</span>
+                      <input type="text"
+                              id="Mobile-Filter-Price-LTE"
+                              name="{{ filter.max_value.param_name | default: 'filter.v.price.lte' }}"
+                              value="{{ marame_price_lte_display }}">
+                      </div>
+                    </form>
+                    </ul>
+                {%- endif -%}
+              {%- endfor -%}
+                </ul>
+              </div>
+
+              <div id="secondary-filter-options" class="marame-facet-options">
+                <ul class="filter-panel__list marame-facet-nav-list">
+                  {%- for filter in collection.filters -%}
+                    {%- if filter.type == 'list' or filter.type == 'boolean' -%}
+                      {%- assign marame_facet_group = filter.label | downcase | replace: ' ', '-' -%}
+                      <li class="marame-facet-entry">
+                        <details class="marame-facet-details" data-facet-group="{{ marame_facet_group }}">
+                          <summary class="filter-panel__item filter-panel__item--facet-nav" data-group="{{ marame_facet_group }}">{{ filter.label }}</summary>
+                          <ul id="options-{{ marame_facet_group }}" class="filter-panel__list__group" data-filter-cols="{{ filter.label }}">
+                            {%- for value in filter.values -%}
+                              <li class="filter-panel__item filter-panel__item--facet-option{% if value.active %} selected{% endif %}" data-value="{{ filter.param_name }}={{ value.value | url_escape }}" data-filter-cols="{{ filter.label }}" data-optname="{{ value.label }}">
+                              {% if filter.label contains 'Size' or filter.label contains 'Shoe size' %} size -{% endif %} {{ value.label }}
+                                <span class="tick-svg">
+                                  <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0.5625 3.90527L4.3125 8.15527L11.9375 0.530273" stroke="#5AD84F" stroke-width="1.5"/>
+                                  </svg>
+                                </span>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </details>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+
+            <div id="secondary-filter-panel" class="filter-panel marame-filter-panel--legacy" hidden aria-hidden="true">
+              <p id="secondary-panel-title" class="sr-only"></p>
+              <button id="back-button" type="button" class="sr-only" tabindex="-1" aria-hidden="true">Back</button>
+            </div>
+
+            <div class="filter-panel__ctas">
+                <ul class="active-filters">
+                    {%- for filter in collection.filters -%}
+                        {%- for value in filter.active_values -%}
+                                <li>
+                                    <span data-filter="{{ filter.label }}">{{ value.label }}</span>
+                                    <a href="javascript:void(0);" class="filter-custm-remove" data-value="{{ value.label }}" data-filter="{{ filter.label }}">✕</a>
+                                </li>
+                        {%- endfor -%}
+                    {%- endfor -%}
+                  </ul>
+                <button id="secondary-view-button" type="button" class="btn btn--dark">Apply Filter</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="filters__right filters_data hidden" aria-label="Sort products by">
+        <div class="marame-sortby-list" role="list">
+          <button type="button" class="marame-sortby-option" role="listitem" data-marame-sort-value="created-descending">Latest</button>
+          <button type="button" class="marame-sortby-option" role="listitem" data-marame-sort-value="price-descending">Price: High To Low</button>
+          <button type="button" class="marame-sortby-option" role="listitem" data-marame-sort-value="price-ascending">Price: Low To High</button>
+          <button type="button" class="marame-sortby-option" role="listitem" data-marame-sort-value="best-selling">Recommended</button>
+        </div>
+        <div class="marame-sortby-ctas">
+          <button type="button" class="btn btn--dark marame-sortby-apply" aria-disabled="true" disabled>Apply</button>
+        </div>
+      </div>
+      <div class="cloase_filter_cstm">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+          <path d="M1 7L4 4L1 1" stroke="#2A2A2D" stroke-width="0.5"></path>
+          <path d="M7 1L4 4L7 7" stroke="#2A2A2D" stroke-width="0.5"></path>
+        </svg>
+      </div>
+    </div>
+  
+  </section>
+  
+  
+  {%- comment -%}
+    Block matching must be inline here — variables assigned inside {% render %} snippets
+    are not visible in the parent, which broke storefront/preview (0 visible blocks → auto grid).
+  {%- endcomment -%}
+  {%- assign marame_current_handle = collection.handle | strip | downcase -%}
+  {%- if marame_current_handle == blank -%}
+    {%- assign marame_current_handle = request.path | split: '/' | last | strip | downcase -%}
+  {%- endif -%}
+  {%- assign marame_collection_gender = '' -%}
+  {%- assign ch = marame_current_handle -%}
+  {%- if ch == 'womens' or ch contains 'womens-' or ch contains 'women-' -%}
+    {%- assign marame_collection_gender = 'womens' -%}
+  {%- elsif ch == 'mens' or ch contains 'mens-' or ch contains 'menswear' -%}
+    {%- assign marame_collection_gender = 'mens' -%}
+  {%- endif -%}
+  {%- assign marame_is_curated_root = false -%}
+  {%- if marame_current_handle == 'mens' or marame_current_handle == 'womens' -%}
+    {%- assign marame_is_curated_root = true -%}
+  {%- endif -%}
+  {%- assign marame_template_suffix = template.suffix | strip | downcase -%}
+  {%- assign marame_template_dedicated = false -%}
+  {%- if marame_template_suffix != '' and marame_template_suffix == marame_current_handle -%}
+    {%- assign marame_template_dedicated = true -%}
+  {%- endif -%}
+  {%- assign marame_template_mismatch = false -%}
+  {%- assign marame_uses_shared_merge = false -%}
+  {%- if marame_template_suffix == 'merge' -%}
+    {%- assign marame_uses_shared_merge = true -%}
+  {%- elsif marame_template_suffix != '' and marame_template_suffix != marame_current_handle -%}
+    {%- assign marame_template_mismatch = true -%}
+  {%- endif -%}
+  {%- assign marame_admin_store = shop.permanent_domain | split: '.' | first -%}
+  {%- assign marame_total_grid_blocks = section.blocks.size -%}
+
+  {%- assign editor_visible_blocks = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'grid_variant' -%}
+      {%- if marame_scoped_section -%}
+        {%- assign marame_block_match_capture = 'true' -%}
+      {%- else -%}
+      {%- capture marame_block_match_capture -%}
+        {%- render 'marame-grid-block-matches',
+          block: block,
+          current_handle: marame_current_handle,
+          collection_gender: marame_collection_gender,
+          is_curated_root: marame_is_curated_root,
+          template_suffix: marame_template_suffix
+        -%}
+      {%- endcapture -%}
+      {%- endif -%}
+      {%- if marame_block_match_capture contains 'true' -%}
+        {%- assign editor_visible_blocks = editor_visible_blocks | plus: 1 -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign use_metafield_grid = false -%}
+  {%- assign use_editor_blocks = false -%}
+  {%- assign grid_variants = nil -%}
+  {%- if marame_grid_active and section.settings.marame_display_mode == 'metafield' -%}
+    {%- assign grid_variants = collection.metafields.marame.grid_variant_order.value -%}
+    {%- if grid_variants == blank -%}
+      {%- assign grid_variants = collection.metafields.custom.grid_variant_order.value -%}
+    {%- endif -%}
+    {%- if grid_variants != blank and grid_variants.size > 0 -%}
+      {%- assign use_metafield_grid = true -%}
+    {%- endif -%}
+  {%- elsif marame_grid_active and section.settings.marame_display_mode == 'blocks' and editor_visible_blocks > 0 -%}
+    {%- assign use_editor_blocks = true -%}
+  {%- endif -%}
+
+  {%- assign marame_use_auto_grid = false -%}
+  {%- if marame_grid_active and use_editor_blocks == false and use_metafield_grid == false -%}
+    {%- assign marame_use_auto_grid = true -%}
+  {%- endif -%}
+
+  {%- assign use_ordered_grid = false -%}
+  {%- if use_metafield_grid or use_editor_blocks -%}
+    {%- assign use_ordered_grid = true -%}
+  {%- endif -%}
+
+  {%- assign marame_sort_active = false -%}
+  {%- assign marame_sort_by = collection.sort_by | default: 'manual' -%}
+  {%- if marame_sort_by != blank and marame_sort_by != 'manual' -%}
+    {%- assign marame_sort_active = true -%}
+  {%- endif -%}
+
+  {%- comment -%} Facets change collection.products — use auto grid (not static blocks) when filters are applied. {%- endcomment -%}
+  {%- if marame_filters_active and marame_grid_active -%}
+    {%- assign use_editor_blocks = false -%}
+    {%- assign use_metafield_grid = false -%}
+    {%- assign marame_use_auto_grid = true -%}
+    {%- assign use_ordered_grid = false -%}
+  {%- endif -%}
+
+  {%- comment -%} Sort should reflect collection order — use auto grid when sort_by is active. {%- endcomment -%}
+  {%- if marame_sort_active and marame_grid_active -%}
+    {%- assign use_editor_blocks = false -%}
+    {%- assign use_metafield_grid = false -%}
+    {%- assign marame_use_auto_grid = true -%}
+    {%- assign use_ordered_grid = true -%}
+  {%- endif -%}
+
+  {%- assign color_string = '' -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.label == 'Colour' -%}
+      {%- for value in filter.active_values -%}
+        {%- assign val = value.label | downcase -%}
+        {%- unless color_string contains val -%}
+          {%- assign color_string = color_string | append: val | append: ',' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign color_values = color_string | split: ',' -%}
+
+  {%- assign marame_cards_per_page = section.settings.marame_cards_per_page | default: 44 -%}
+  {%- assign marame_page_start = paginate.current_page | minus: 1 | times: marame_cards_per_page -%}
+  {%- assign marame_page_end = marame_page_start | plus: marame_cards_per_page -%}
+  {%- assign marame_grid_total_pages = editor_visible_blocks | divided_by: marame_cards_per_page -%}
+  {%- assign marame_grid_page_remainder = editor_visible_blocks | modulo: marame_cards_per_page -%}
+  {%- if marame_grid_page_remainder > 0 -%}
+    {%- assign marame_grid_total_pages = marame_grid_total_pages | plus: 1 -%}
+  {%- endif -%}
+  {%- if marame_grid_total_pages < 1 -%}
+    {%- assign marame_grid_total_pages = 1 -%}
+  {%- endif -%}
+
+  {%- assign has_grid_content = false -%}
+  {%- if use_metafield_grid -%}
+    {%- assign has_grid_content = true -%}
+  {%- elsif use_editor_blocks and editor_visible_blocks > 0 -%}
+    {%- assign has_grid_content = true -%}
+  {%- elsif marame_use_auto_grid and collection.all_products_count > 0 -%}
+    {%- assign has_grid_content = true -%}
+  {%- elsif collection.products.size > 0 -%}
+    {%- assign has_grid_content = true -%}
+  {%- endif -%}
+
+  {%- comment -%} Grid debug removed (kept for future if needed). {%- endcomment -%}
+
+  <section class="listing">
+    {%- unless has_grid_content -%}
+       <h2 class="h1">
+        {{ 'sections.collection_template.empty' | t -}}
+      </h2>
+    {%- else -%}
+      <ul
+        class="listing__list{% if collection.template_suffix == 'fragrances' %} collection-fragrances-div default-card-product{% endif %}{% if marame_grid_active %} marame-collection-loaded{% endif %}"
+        {% if marame_grid_active %}
+          data-marame-shuffle="true"
+          {% if use_ordered_grid %}
+            data-marame-shuffle-mode="ordered"
+          {% else %}
+            data-marame-shuffle-seed="{{ collection.handle }}-{{ paginate.current_page }}-{{ collection.sort_by | default: 'manual' }}"
+          {% endif %}
+        {% endif %}
+      >
+
+      {%- if request.design_mode -%}
+        {%- if marame_template_mismatch -%}
+          <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 1rem 1.25rem; border: 3px solid #c00; background: #fff5f5; text-transform: none; color: #2a2a2d; font-size: 14px; line-height: 1.5;">
+            <p><strong>This collection uses the “{{ marame_template_suffix }}” template, not its own grid file.</strong></p>
+            <p>Only change Theme template in admin when you are ready to go live — it affects the published store.</p>
+          </li>
+        {%- elsif marame_uses_shared_merge and marame_scoped_section and marame_is_curated_root == false -%}
+          <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 1rem 1.25rem; border: 2px solid #090; background: #f6fff6; text-transform: none; color: #2a2a2d; font-size: 14px; line-height: 1.5;">
+            <p><strong>{{ collection.title }}</strong> — merge template, draft theme only. No Collection admin changes; live theme is unchanged until you publish.</p>
+            <p><strong>Left sidebar:</strong> open the <strong>G — …</strong> section for this page (not the whole template list). {{ editor_visible_blocks }} card{% if editor_visible_blocks != 1 %}s{% endif %} here — drag to reorder.</p>
+            <p><strong>Preview:</strong> use the collection picker at the top to switch pages. Each page has its own <strong>G — …</strong> section on this merge template.</p>
+            {%- if editor_visible_blocks > 0 -%}
+              <p style="margin-bottom:0.25rem;"><strong>Cards for this page only:</strong></p>
+              <ul style="margin:0 0 0 1rem; padding:0; max-height:8rem; overflow:auto;">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'grid_variant' -%}
+                    {%- capture marame_block_match_capture -%}
+                      {%- render 'marame-grid-block-matches',
+                        block: block,
+                        current_handle: marame_current_handle,
+                        collection_gender: marame_collection_gender,
+                        is_curated_root: marame_is_curated_root,
+                        template_suffix: marame_template_suffix
+                      -%}
+                    {%- endcapture -%}
+                    {%- if marame_block_match_capture contains 'true' -%}
+                      <li>{{ block.settings.product.title | default: block.settings.product }} — {{ block.settings.color | default: 'first colour' }}</li>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- else -%}
+              <p style="margin-bottom:0;">No cards for this page yet — preview below uses automatic order until you add Grid cards above.</p>
+            {%- endif -%}
+          </li>
+        {%- elsif marame_uses_shared_merge and marame_is_curated_root -%}
+          <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 0.75rem 1rem; border: 1px dashed #090; background: #f6fff6; text-transform: none;">
+            <p><strong>Women’s shop-all</strong> — {{ editor_visible_blocks }} Grid cards (Collection handle <code>womens</code>). Drag blocks in the left sidebar to reorder.</p>
+          </li>
+        {%- else -%}
+          <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 0.75rem 1rem; border: 1px dashed #090; background: #f6fff6; text-transform: none;">
+            <p><strong>{{ collection.title }}</strong> — template <code>{{ marame_template_suffix | default: 'default' }}</code></p>
+            <p>{{ editor_visible_blocks }} Grid card{% if editor_visible_blocks != 1 %}s{% endif %} on this page. Drag blocks in the left sidebar to reorder.</p>
+          </li>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if request.design_mode and marame_grid_active == false -%}
+        <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 1rem; border: 2px dashed #f90; background: #fffaf0;">
+          <p><strong>Turn on “Native variant shuffle”</strong> in Product grid settings for the Marame collection grid.</p>
+        </li>
+      {%- endif -%}
+      {%- if request.design_mode and marame_use_auto_grid and editor_visible_blocks == 0 and section.settings.marame_display_mode == 'blocks' -%}
+        <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 1rem; border: 2px dashed #09f; background: #f0f8ff;">
+          <p>No Grid cards for <code>{{ marame_current_handle }}</code> yet — showing all products in this collection automatically. Add Grid card blocks and set Collection handle to <code>{{ marame_current_handle }}</code>.</p>
+        </li>
+      {%- endif -%}
+      {%- assign marame_lcp_assigned = false -%}
+      {%- if use_editor_blocks -%}
+        <span class="actived_filter hidden"></span>
+        {%- assign grid_position_index = 0 -%}
+        {%- assign marame_matched_block_index = 0 -%}
+        {%- assign marame_cards_rendered = 0 -%}
+        {%- assign marame_editor_preview_count = 0 -%}
+        {%- assign marame_editor_preview_cap = 36 -%}
+        {%- if request.design_mode and editor_visible_blocks > marame_editor_preview_cap -%}
+          <li class="listing__item marame-grid-editor-placeholder" style="grid-column: 1 / -1; padding: 0.75rem 1rem; border: 1px dashed #999; background: #f7f7f7; text-transform: none;">
+            <p>Theme editor preview shows the first {{ marame_editor_preview_cap }} of {{ editor_visible_blocks }} cards for speed. All {{ editor_visible_blocks }} cards still apply on the live site. Reorder in the left sidebar.</p>
+          </li>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'grid_variant' -%}
+            {%- if marame_scoped_section -%}
+              {%- assign marame_block_match_capture = 'true' -%}
+            {%- else -%}
+            {%- capture marame_block_match_capture -%}
+              {%- render 'marame-grid-block-matches',
+                block: block,
+                current_handle: marame_current_handle,
+                collection_gender: marame_collection_gender,
+                is_curated_root: marame_is_curated_root,
+                template_suffix: marame_template_suffix
+              -%}
+            {%- endcapture -%}
+            {%- endif -%}
+            {%- unless marame_block_match_capture contains 'true' -%}
+              {%- continue -%}
+            {%- endunless -%}
+            {%- assign marame_matched_block_index = marame_matched_block_index | plus: 1 -%}
+            {%- unless request.design_mode -%}
+              {%- if marame_matched_block_index <= marame_page_start -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- if marame_matched_block_index > marame_page_end -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endunless -%}
+            {%- if request.design_mode -%}
+              {%- if marame_editor_preview_count >= marame_editor_preview_cap -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- assign marame_editor_preview_count = marame_editor_preview_count | plus: 1 -%}
+            {%- endif -%}
+            {%- assign card_product = block.settings.product -%}
+            {%- assign grid_position_index = grid_position_index | plus: 1 -%}
+            {%- assign marame_cards_rendered = marame_cards_rendered | plus: 1 -%}
+            {%- assign lcp_priority = false -%}
+            {%- unless marame_lcp_assigned -%}
+              {%- assign lcp_priority = true -%}
+              {%- assign marame_lcp_assigned = true -%}
+            {%- endunless -%}
+            {%- render 'marame-render-collection-grid-card',
+              card_product: card_product,
+              color_label: block.settings.color,
+              grid_index: grid_index,
+              position_index: grid_position_index,
+              color_values: color_values,
+              block: block,
+              lcp_priority: lcp_priority
+            -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif use_metafield_grid -%}
+        <span class="actived_filter hidden"></span>
+        {%- for variant in grid_variants -%}
+          {%- assign card_product = variant.product -%}
+          {%- if card_product != blank -%}
+            {%- assign lcp_priority = false -%}
+            {%- unless marame_lcp_assigned -%}
+              {%- assign lcp_priority = true -%}
+              {%- assign marame_lcp_assigned = true -%}
+            {%- endunless -%}
+            {%- render 'marame-render-collection-grid-card',
+              card_product: card_product,
+              color_variant: variant,
+              grid_index: grid_index,
+              position_index: forloop.index,
+              color_values: color_values,
+              lcp_priority: lcp_priority
+            -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif marame_use_auto_grid or marame_grid_active == false -%}
+       {%- assign marame_cards_rendered = 0 -%}
+       {%- assign marame_stop_grid = false -%}
+       {%- for product in collection.products -%}
+        {%- if marame_stop_grid -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- if marame_grid_active == false -%}
+          {%- comment -%} Legacy collection path: no extra filters {%- endcomment -%}
+        {%- elsif marame_use_auto_grid and marame_filters_active == false and section.settings.marame_tag_mode == 'custom' -%}
+          {%- render 'marame-product-shows-on-grid', product: product, collection: collection -%}
+          {%- unless marame_product_show -%}
+            {%- continue -%}
+          {%- endunless -%}
+        {%- endif -%}
+
+        <span class="actived_filter hidden">
+        {% comment %} {%- for filter in collection.filters -%}
+          {% if filter.label == 'Colour' %}
+            {%for value in filter.values %}
+              {{value.label }}
+            {% endfor %}
+          {% endif %}
+            {%- for value in filter.active_values -%}
+              {% assign op_name_down = value.label | downcase %}
+              <p>{{ op_name_down }}</p>
+              
+            {% endfor %}
+          {% endfor %} {% endcomment %}
+
+        </span>
+        
+        {%- assign color_option_index = 0 -%}
+
+        {%- for option in product.options -%}
+          {% assign color_down = option | downcase  %}
+          {% if color_down == 'color' %}
+            {% assign color_option_index = forloop.index0 %}
+          {% endif %}
+        {%- endfor -%}
+        {%- for variant in product.variants -%}
+          {% assign color_value = variant.options[color_option_index] %}
+          {% if forloop.first or color_value != prev_color %}
+            {% assign show_card = true %}
+            {% assign card_color = color_value | downcase | strip %}
+
+            {% if marame_filters_active and color_values.size > 0 %}
+              {% assign show_card = false %}
+              {% assign card_color_down = card_color | downcase | strip %}
+              {% for cv in color_values %}
+                {% if cv != '' %}
+                  {% assign cv_down = cv | downcase | strip %}
+                  {% if card_color_down == cv_down or card_color_down contains cv_down or cv_down contains card_color_down %}
+                    {% assign show_card = true %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if marame_grid_active %}
+              {% if section.settings.marame_display_mode == 'manual' %}
+                {% assign show_card = false %}
+                {% assign manual_lines = section.settings.marame_manual_variants | newline_to_br | split: '<br />' %}
+                {% for line in manual_lines %}
+                  {% assign line_stripped = line | strip %}
+                  {% if line_stripped != '' %}
+                    {% assign parts = line_stripped | split: '|' %}
+                    {% if parts.size == 1 %}
+                      {% assign line_variant_id = parts[0] | strip %}
+                      {% assign variant_id_str = variant.id | append: '' %}
+                      {% if line_variant_id == variant_id_str %}
+                        {% assign show_card = true %}
+                      {% endif %}
+                    {% elsif parts.size >= 2 %}
+                      {% assign line_handle = parts[0] | strip | downcase %}
+                      {% assign line_color = parts[1] | strip | downcase %}
+                      {% if product.handle == line_handle and card_color == line_color %}
+                        {% assign show_card = true %}
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+              {% if section.settings.marame_hide_sold_out and variant.available == false %}
+                {% assign show_card = false %}
+              {% endif %}
+
+              {% if section.settings.marame_hide_no_image and product.media.size == 0 %}
+                {% assign show_card = false %}
+              {% endif %}
+            {% endif %}
+
+            {% if show_card %}
+              {% assign marame_cards_rendered = marame_cards_rendered | plus: 1 %}
+              {% if marame_grid_active and marame_cards_rendered > marame_cards_per_page %}
+                {% assign marame_stop_grid = true %}
+              {% else %}
+              {% assign get_i = grid_index | modulo: 5 %}
+              {% assign cycle_pos = forloop.index | modulo: 21 %}
+              {% if cycle_pos == 0 %}
+                {% assign cycle_pos = 21 %}
+              {% endif %}
+              {% if cycle_pos == 4 or cycle_pos == 8 or cycle_pos == 16 %}
+                {% assign special_class = 'has-metafield' %}
+              {% elsif cycle_pos == 15 %}
+                {% assign special_class = 'has-metafield-3' %}
+              {% else %}
+                {% assign special_class = '' %}
+              {% endif %}
+              {%- assign lcp_priority = false -%}
+              {%- unless marame_lcp_assigned -%}
+                {%- assign lcp_priority = true -%}
+                {%- assign marame_lcp_assigned = true -%}
+              {%- endunless -%}
+              {%- assign marame_preload_hover = false -%}
+              {%- if marame_cards_rendered < 12 -%}
+                {%- assign marame_preload_hover = true -%}
+              {%- endif -%}
+              {% render 'card-product-merge', card_product: product, color_variant: variant, show_count: section.settings.show_variant_count, get_i: get_i, special_class: special_class, color_values: color_values, lcp_priority: lcp_priority, marame_preload_hover: marame_preload_hover %}
+              {% assign grid_index = grid_index | plus: 1 %}
+              {% endif %}
+            {% endif %}
+            {% assign prev_color = color_value %}
+          {% endif %}
+        {%- endfor -%}
+
+        {% assign prev_color = '' %}
+
+      {%- endfor -%}
+
+      {% comment %} <script type="application/json"
+        class="variant-images-json"
+        data-product-id="{{ product.id }}">
+        {
+        {% for variant in product.variants %}
+          "{{ variant.id }}": {
+            "variant_id":"{{ variant.id }}",
+            "color": "{{ variant.option1 | downcase }}",
+            "options": {{ variant.options | json }},
+            "variant_title": "{{ variant.title | escape }}",
+            "variant_available":"{{variant.available}}",
+            "inventory_quantity":"{{variant.inventory_quantity}}",
+            "images": [
+              {% capture images_json %}{% endcapture %}
+                {% capture images_json %}{% endcapture %}
+
+                {%- assign color_down = variant.option1 | downcase -%}
+
+                {%- comment -%} Featured image first {%- endcomment -%}
+                {% if variant.featured_media %}
+                  {% assign media = variant.featured_media %}
+
+                  {% capture images_json %}
+                  {
+                    "id": "{{ media.id }}",
+                    "src": "{{ media | image_url: width: 600 }}",
+                    "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                    "alt": "{{ media.alt | escape }}",
+                    "width": {{ media.width }},
+                    "height": {{ media.height }}
+                  }
+                  {% endcapture %}
+                {% endif %}
+
+                {%- comment -%}  Other images of same color {%- endcomment -%}
+                {%- for media in product.media -%}
+                  {% if media.media_type == 'image' and media.id != variant.featured_media.id %}
+
+                    {% assign img_color = media.alt
+                      | downcase
+                      | replace: ' | ', '|'
+                      | replace: '| ', '|'
+                      | replace: ' |', '|'
+                      | split: '|'
+                      | last
+                      | strip
+                    %}
+
+                    {% if img_color == color_down %}
+                      {% capture single_image %}
+                      {
+                        "id": "{{ media.id }}",
+                        "src": "{{ media | image_url: width: 600 }}",
+                        "srcset": "{{ media | image_url: width: 400 }} 400w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w",
+                        "alt": "{{ media.alt | escape }}",
+                        "width": {{ media.width }},
+                        "height": {{ media.height }}
+                      }
+                      {% endcapture %}
+
+                      {% capture images_json %}{{ images_json }},{{ single_image }}{% endcapture %}
+                    {% endif %}
+                  {% endif %}
+                {%- endfor -%}
+
+              {{ images_json }}
+            ]
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+        }
+        </script>  {% endcomment %}
+
+      {%- endif -%}
+      </ul>
+
+      {%- if marame_grid_active -%}
+        <script src="{{ 'marame-collection-grid.js' | asset_url }}" defer></script>
+        <script src="{{ 'marame-collection-hover-images.js' | asset_url }}" defer></script>
+      {%- endif -%}
+
+    {%- endunless -%}
+    {%- assign marame_show_view_more = false -%}
+    {%- assign marame_view_more_current = paginate.current_page -%}
+    {%- assign marame_view_more_total = paginate.pages -%}
+    {%- assign marame_view_more_next = paginate.next.url -%}
+    {%- if marame_view_more_next == blank -%}
+      {%- assign marame_view_more_next = collection.url -%}
+    {%- endif -%}
+    {%- if use_editor_blocks and editor_visible_blocks > marame_cards_per_page -%}
+      {%- assign marame_view_more_total = marame_grid_total_pages -%}
+      {%- if marame_view_more_current < marame_view_more_total -%}
+        {%- assign marame_show_view_more = true -%}
+      {%- endif -%}
+    {%- elsif paginate.pages > 1 -%}
+      {%- assign marame_show_view_more = true -%}
+    {%- endif -%}
+    {%- if marame_show_view_more == false and marame_grid_active and marame_use_auto_grid and collection.all_products_count > section.settings.products_per_page -%}
+      {%- assign marame_show_view_more = true -%}
+    {%- endif -%}
+    {%- if marame_show_view_more -%}
+      <div class="listing__more marame-load-more" style="display: flex;">
+          <button id="load_more_product_JS" data_current_page="{{ marame_view_more_current }}" data_total_page="{{ marame_view_more_total }}" data_next_page="{{ marame_view_more_next | split: '&' | first }}">
+          <small>View More</small>
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#BBB" stroke-width=".926" d="m.591.362 4.63 4.168M.591.362l4.63 4.168M.591.362l4.63 4.168m-.619 0L9.233.362M4.602 4.53 9.233.362M4.602 4.53 9.233.362M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126M1.98 4.53l3.473 3.126m-.619 0L8.307 4.53M4.834 7.656 8.307 4.53M4.834 7.656 8.307 4.53"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+ {% render 'color-drawer' %} 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const notify_me_btns = document.querySelectorAll('.notify-button');
+    const bis_form = document.getElementById("bis-form");
+    const klaviyo_cstm_form = document.querySelector('.klaviyo_notify_popup_main');
+
+    {% comment %} console.log('notify_me_btns',notify_me_btns.length); {% endcomment %}
+
+    {% comment %} if(notify_me_btns){
+      notify_me_btns.forEach(function(btn){ {% endcomment %}
+        
+        document.addEventListener('click',function(e){
+          const btn = e.target.closest(".notify-button");
+          {% comment %} console.log("btn:---",btn); {% endcomment %}
+          if (!btn) return;
+        
+        {% comment %} btn.addEventListener('click',function(e) { {% endcomment %}
+          e.preventDefault();
+
+         
+          {% comment %} document.getElementById("success_message").style.display="none" {% endcomment %}
+
+          let variant_id = btn.getAttribute('data-var-id');
+          let product_id = btn.getAttribute('data-product-id');
+
+          console.log("variant_id:--",variant_id);
+          console.log("product_id:--",product_id); 
+
+            const variantEl = btn.closest('.product-card').querySelector('.single_product_new.custom_new.active');
+            console.log('variantEl',variantEl);
+            if (!variantEl) return;
+
+            const productCard = variantEl.closest('.listing__item');
+
+            const get_pro_id = variantEl.dataset.productId;
+            const get_href = variantEl.dataset.href;
+            const selectedColor = variantEl.dataset.color;
+                    
+
+            console.log("get_pro_id:--",get_pro_id);
+            console.log("get_href:--",get_href);
+            console.log("selectedColor:--",selectedColor);
+
+          console.log("bis_form:--",bis_form);
+          bis_form.style.display="block";
+          if(klaviyo_cstm_form){
+            klaviyo_cstm_form.style.display="block";
+          }
+
+          bis_form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let customer_email = document.getElementById('bis_input').value;
+          
+            const options = {
+              method: "POST",
+              headers: {
+                accept: "application/vnd.api+json",
+                revision: "2025-01-15",
+                "content-type": "application/vnd.api+json",
+              },
+              body: `{"data": {"type": "back-in-stock-subscription","attributes": {"channels": ["EMAIL"],"profile": {"data": {"type": "profile","attributes": {"email": "${customer_email}"}}}},"relationships": {"variant": {"data": {"type": "catalog-variant","id": "$shopify:::$default:::${variant_id}"}}}}}`,
+            };
+            const url = 'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=QNV73W';
+            fetch(url, options)
+              .then((res) => console.log(res))
+              .catch((err) => console.error(err));
+            bis_form.style.display = "none";
+            document.getElementById("success_message").style.display="block"
+          });
+
+        {% comment %} }); {% endcomment %}
+         });
+      {% comment %} });
+    } {% endcomment %}
+
+    // Close popup when clicking the X
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.popup_inner::before')) return; // ignore pseudo element
+      if (e.target.matches('.popup_inner::before') || e.target.closest('.popup_inner::before')) {
+        document.querySelector('.klaviyo_notify_popup_main').style.display = 'none';
+      }
+    });
+
+    // Simpler: just attach close to the container click
+    document.addEventListener('click', function (e) {
+      const popup = document.querySelector('.klaviyo_notify_popup_main');
+      if (!popup) return;
+      if (e.target.classList.contains('klaviyo_notify_popup_main')) popup.style.display = 'none';
+    });
+
+    document.querySelector('.popup_close').addEventListener('click', function() {
+      document.querySelector('.klaviyo_notify_popup_main').style.display = 'none';
+    });
+
+  });
+</script>
+
+{%- endunless -%}

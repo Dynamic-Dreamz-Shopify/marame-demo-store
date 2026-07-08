@@ -1,0 +1,439 @@
+{% render 'msp-assets' %}
+
+{%- liquid
+  assign adaptive_on = section.settings.enable_adaptive_header
+  assign header_bar_style = section.settings.header_bar_style | default: 'transparent'
+-%}
+
+{%- if request.page_type == 'index' or request.page_type == 'page' -%}
+  <script>
+    (function () {
+      var style = {{ header_bar_style | json }};
+      var valid = ['transparent', 'white', 'black', 'blur'];
+      if (valid.indexOf(style) < 0) style = 'transparent';
+      document.documentElement.setAttribute('data-msp-header-bar', style);
+      document.body.setAttribute('data-msp-header-bar', style);
+      var header = document.querySelector('.header');
+      if (!header) return;
+      valid.forEach(function (name) {
+        header.classList.remove('header--msp-bar-' + name);
+      });
+      header.classList.add('header--msp-bar-' + style);
+    })();
+  </script>
+  {% style %}
+    body.template-index[data-msp-header-bar='white'] .header,
+    body.template-pre-access[data-msp-header-bar='white'] .header,
+    body.template-index .header.header--msp-bar-white,
+    body.template-pre-access .header.header--msp-bar-white,
+    body.template-index[data-msp-header-bar='white'] .header.header--active,
+    body.template-pre-access[data-msp-header-bar='white'] .header.header--active,
+    body.template-index .header.header--msp-bar-white.header--active,
+    body.template-pre-access .header.header--msp-bar-white.header--active,
+    body.template-index[data-msp-header-bar='white'] .header.header--scrolled,
+    body.template-pre-access[data-msp-header-bar='white'] .header.header--scrolled,
+    body.template-index .header.header--msp-bar-white.header--scrolled {
+      background: #fff !important;
+      background-color: #fff !important;
+    }
+    body.template-index[data-msp-header-bar='black'] .header,
+    body.template-pre-access[data-msp-header-bar='black'] .header,
+    body.template-index .header.header--msp-bar-black,
+    body.template-pre-access .header.header--msp-bar-black,
+    body.template-index[data-msp-header-bar='black'] .header.header--active,
+    body.template-pre-access[data-msp-header-bar='black'] .header.header--active,
+    body.template-index .header.header--msp-bar-black.header--active,
+    body.template-pre-access .header.header--msp-bar-black.header--active,
+    body.template-index[data-msp-header-bar='black'] .header.header--scrolled,
+    body.template-pre-access[data-msp-header-bar='black'] .header.header--scrolled,
+    body.template-index .header.header--msp-bar-black.header--scrolled {
+      background: #2a2a2d !important;
+      background-color: #2a2a2d !important;
+    }
+    body.template-index[data-msp-header-bar='transparent'] .header,
+    body.template-pre-access[data-msp-header-bar='transparent'] .header,
+    body.template-index .header.header--msp-bar-transparent,
+    body.template-pre-access .header.header--msp-bar-transparent,
+    body.template-index[data-msp-header-bar='transparent'] .header.header--active,
+    body.template-pre-access[data-msp-header-bar='transparent'] .header.header--active,
+    body.template-index .header.header--msp-bar-transparent.header--active,
+    body.template-pre-access .header.header--msp-bar-transparent.header--active,
+    body.template-index[data-msp-header-bar='transparent'] .header.header--scrolled,
+    body.template-pre-access[data-msp-header-bar='transparent'] .header.header--scrolled,
+    body.template-index .header.header--msp-bar-transparent.header--scrolled,
+    body.template-index[data-msp-header-bar='blur'] .header,
+    body.template-pre-access[data-msp-header-bar='blur'] .header,
+    body.template-index .header.header--msp-bar-blur,
+    body.template-pre-access .header.header--msp-bar-blur,
+    body.template-index[data-msp-header-bar='blur'] .header.header--active,
+    body.template-pre-access[data-msp-header-bar='blur'] .header.header--active,
+    body.template-index .header.header--msp-bar-blur.header--active,
+    body.template-pre-access .header.header--msp-bar-blur.header--active,
+    body.template-index[data-msp-header-bar='blur'] .header.header--scrolled,
+    body.template-pre-access[data-msp-header-bar='blur'] .header.header--scrolled,
+    body.template-index .header.header--msp-bar-blur.header--scrolled {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+    body.template-index[data-msp-header-bar='transparent'] .header .header__bg,
+    body.template-pre-access[data-msp-header-bar='transparent'] .header .header__bg,
+    body.template-index .header.header--msp-bar-transparent .header__bg,
+    body.template-pre-access .header.header--msp-bar-transparent .header__bg,
+    body.template-index[data-msp-header-bar='white'] .header .header__bg,
+    body.template-pre-access[data-msp-header-bar='white'] .header .header__bg,
+    body.template-index .header.header--msp-bar-white .header__bg,
+    body.template-pre-access .header.header--msp-bar-white .header__bg,
+    body.template-index[data-msp-header-bar='black'] .header .header__bg,
+    body.template-pre-access[data-msp-header-bar='black'] .header .header__bg,
+    body.template-index .header.header--msp-bar-black .header__bg {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    body.template-index[data-msp-header-bar='transparent'] .header .searchbar .search-modal-overlay,
+    body.template-pre-access[data-msp-header-bar='transparent'] .header .searchbar .search-modal-overlay,
+    body.template-index[data-msp-header-bar='white'] .header .searchbar .search-modal-overlay,
+    body.template-pre-access[data-msp-header-bar='white'] .header .searchbar .search-modal-overlay,
+    body.template-index[data-msp-header-bar='black'] .header .searchbar .search-modal-overlay,
+    body.template-pre-access[data-msp-header-bar='black'] .header .searchbar .search-modal-overlay,
+    body.template-index .header.header--msp-bar-transparent .searchbar .search-modal-overlay,
+    body.template-pre-access .header.header--msp-bar-transparent .searchbar .search-modal-overlay,
+    body.template-index .header.header--msp-bar-white .searchbar .search-modal-overlay,
+    body.template-pre-access .header.header--msp-bar-white .searchbar .search-modal-overlay,
+    body.template-index .header.header--msp-bar-black .searchbar .search-modal-overlay {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    body.template-index[data-msp-header-bar='blur'] .header .header__bg,
+    body.template-pre-access[data-msp-header-bar='blur'] .header .header__bg,
+    body.template-index .header.header--msp-bar-blur .header__bg {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      background-color: rgba(255, 255, 255, 0.48) !important;
+      backdrop-filter: blur(2.1px) !important;
+      -webkit-backdrop-filter: blur(2.1px) !important;
+    }
+  {% endstyle %}
+{%- endif -%}
+
+{%- capture logo_zones_json -%}
+[
+{%- assign zone_count = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'logo_zone' and block.settings.zone_key != blank -%}
+    {%- unless zone_count == 0 -%},{%- endunless -%}
+    {
+      "zoneKey": {{ block.settings.zone_key | json }},
+      "label": {{ block.settings.zone_label | default: block.settings.zone_key | json }},
+      "styleMobile": {{ block.settings.logo_style_mobile | default: block.settings.logo_style | default: 'auto' | json }},
+      "styleDesktop": {{ block.settings.logo_style_desktop | default: block.settings.logo_style | default: 'auto' | json }}
+    }
+    {%- assign zone_count = zone_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+]
+{%- endcapture -%}
+
+<div
+  data-msp-header-config
+  data-marame-signup-section
+  data-enabled="{{ adaptive_on }}"
+  data-header-bar-style="{{ header_bar_style }}"
+  data-switch-offset-mobile="{{ section.settings.switch_offset_mobile }}"
+  data-switch-offset-desktop="{{ section.settings.switch_offset_desktop }}"
+  data-dark-ratio-threshold-mobile="{{ section.settings.dark_ratio_threshold_mobile | times: 0.01 }}"
+  data-dark-ratio-threshold-desktop="{{ section.settings.dark_ratio_threshold_desktop | times: 0.01 }}"
+  data-pixel-dark-max-mobile="{{ section.settings.pixel_dark_max_mobile }}"
+  data-pixel-dark-max-desktop="{{ section.settings.pixel_dark_max_desktop }}"
+  hidden
+  aria-hidden="true"
+>
+  <script type="application/json" data-msp-header-zones-json>
+    {{- logo_zones_json | strip -}}
+  </script>
+</div>
+
+{%- if request.design_mode -%}
+  <div class="msp-section msp-header-control-panel">
+    <p class="msp-section__placeholder msp-header-control-panel__title">
+      <strong>Header colours — one row per section block</strong>
+    </p>
+    {%- if section.blocks.size == 0 -%}
+      <p class="msp-section__placeholder">Add blocks below. Set Logo — mobile and Logo — desktop separately for each page section.</p>
+    {%- else -%}
+      <ul class="msp-header-control-panel__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'logo_zone' -%}
+            <li>
+              <span>{{ block.settings.zone_label | default: block.settings.zone_key }}</span>
+              — mobile:
+              <strong>{{ block.settings.logo_style_mobile | default: block.settings.logo_style | default: 'auto' }}</strong>,
+              desktop:
+              <strong>{{ block.settings.logo_style_desktop | default: block.settings.logo_style | default: 'auto' }}</strong>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header colours (adaptive)",
+  "tag": "section",
+  "class": "section-marame-signup-header-control mhp-header-control-section",
+  "enabled_on": { "templates": ["page", "index"] },
+  "limit": 1,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Pre-access and homepage. Controls logo, menu, search, cart, and announcement bar per section block. Set white, black, hidden, or Auto (separate for mobile and desktop). Use the Auto detect sliders below to tune sensitivity — same as pre-access."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_adaptive_header",
+      "label": "Enable adaptive logo",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Top bar background (homepage)"
+    },
+    {
+      "type": "select",
+      "id": "header_bar_style",
+      "label": "Header bar background",
+      "info": "Behind the logo, menu icon, search, and cart. Menu drawer stays white when open.",
+      "options": [
+        { "value": "transparent", "label": "Transparent" },
+        { "value": "white", "label": "Solid white" },
+        { "value": "black", "label": "Solid black" },
+        { "value": "blur", "label": "Frosted blur" }
+      ],
+      "default": "transparent"
+    },
+    {
+      "type": "header",
+      "content": "Auto detect — mobile"
+    },
+    {
+      "type": "range",
+      "id": "dark_ratio_threshold_mobile",
+      "label": "Dark area → white logo (%)",
+      "info": "When logo is Auto on mobile. Try 40–50%.",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "pixel_dark_max_mobile",
+      "label": "Pixel counts as dark below",
+      "min": 70,
+      "max": 220,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "switch_offset_mobile",
+      "label": "Switch position offset",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Auto detect — desktop"
+    },
+    {
+      "type": "range",
+      "id": "dark_ratio_threshold_desktop",
+      "label": "Dark area → white logo (%)",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "pixel_dark_max_desktop",
+      "label": "Pixel counts as dark below",
+      "min": 70,
+      "max": 220,
+      "step": 5,
+      "default": 165
+    },
+    {
+      "type": "range",
+      "id": "switch_offset_desktop",
+      "label": "Switch position offset",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_zone",
+      "name": "Page block",
+      "settings": [
+        {
+          "type": "select",
+          "id": "zone_key",
+          "label": "Page block",
+          "options": [
+            { "value": "signup_hero", "label": "Hero" },
+            { "value": "signup_media_duo_mobile", "label": "Images — mobile duo" },
+            { "value": "signup_intro", "label": "Intro text (white block)" },
+            { "value": "signup_media_trio_desktop", "label": "Images — desktop trio" },
+            { "value": "signup_video_mobile", "label": "Video — mobile" },
+            { "value": "signup_form", "label": "Register form" },
+            { "value": "signup_media_lower_mobile", "label": "Images — lower mobile duo" },
+            { "value": "signup_media_embroidery_mobile", "label": "Embroidery detail — mobile" },
+            { "value": "signup_media_desktop_lower", "label": "Close-up + video — desktop" },
+            { "value": "home_hero", "label": "Home — Hero carousel" },
+            { "value": "home_categories", "label": "Home — Categories" },
+            { "value": "home_portugal", "label": "Home — Portugal video" },
+            { "value": "footer_nav", "label": "Footer navigation (menu)" }
+          ],
+          "default": "signup_hero"
+        },
+        {
+          "type": "text",
+          "id": "zone_label",
+          "label": "Label (optional)",
+          "info": "Shown in this list only. Leave blank to use the page block name."
+        },
+        {
+          "type": "select",
+          "id": "logo_style_mobile",
+          "label": "Logo — mobile",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "white", "label": "White" },
+            { "value": "black", "label": "Black" },
+            { "value": "hidden", "label": "Hidden" }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "select",
+          "id": "logo_style_desktop",
+          "label": "Logo — desktop",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "white", "label": "White" },
+            { "value": "black", "label": "Black" },
+            { "value": "hidden", "label": "Hidden" }
+          ],
+          "default": "auto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Signup — Header logo",
+      "blocks": [
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_hero",
+            "zone_label": "Hero",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_duo_mobile",
+            "zone_label": "Images — mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_intro",
+            "zone_label": "Intro text",
+            "logo_style_mobile": "hidden",
+            "logo_style_desktop": "hidden"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_trio_desktop",
+            "zone_label": "Images — desktop trio",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_video_mobile",
+            "zone_label": "Video — mobile",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_form",
+            "zone_label": "Register form",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_lower_mobile",
+            "zone_label": "Lower mobile duo",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_embroidery_mobile",
+            "zone_label": "Embroidery",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        },
+        {
+          "type": "logo_zone",
+          "settings": {
+            "zone_key": "signup_media_desktop_lower",
+            "zone_label": "Desktop close-up + video",
+            "logo_style_mobile": "auto",
+            "logo_style_desktop": "auto"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

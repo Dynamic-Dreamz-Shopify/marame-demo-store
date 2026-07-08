@@ -1,0 +1,24 @@
+{% if section.settings.heading != blank %}
+  <section class="generic-hero">
+    {{ section.settings.heading }}
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "New generic hero",
+  "settings": [
+    {
+      "type": "richtext",
+      "label": "Heading",
+      "id": "heading"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "New generic hero"
+    }
+  ]
+}
+{% endschema %}

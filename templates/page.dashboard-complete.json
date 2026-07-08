@@ -1,0 +1,150 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "dashboard_complete_BiKgpw": {
+      "type": "dashboard-complete",
+      "blocks": {
+        "block_7eymmx": {
+          "type": "block",
+          "settings": {
+            "text": "dashboard",
+            "link": "shopify://pages/dashboard-complete"
+          }
+        },
+        "block_8Axc39": {
+          "type": "block",
+          "settings": {
+            "text": "order history",
+            "link": "#"
+          }
+        },
+        "block_dbi9zr": {
+          "type": "block",
+          "settings": {
+            "text": "addresses",
+            "link": "#"
+          }
+        },
+        "block_VzGCpk": {
+          "type": "block",
+          "settings": {
+            "text": "account details",
+            "link": "#"
+          }
+        },
+        "block_DaCk6W": {
+          "type": "block",
+          "settings": {
+            "text": "payment info",
+            "link": "#"
+          }
+        },
+        "block_x4MtVB": {
+          "type": "block",
+          "settings": {
+            "text": "MY SAVED ITEMS",
+            "link": "/apps/iwish"
+          }
+        }
+      },
+      "block_order": [
+        "block_7eymmx",
+        "block_8Axc39",
+        "block_dbi9zr",
+        "block_VzGCpk",
+        "block_DaCk6W",
+        "block_x4MtVB"
+      ],
+      "settings": {}
+    },
+    "dashboard_image_slider_BrkdPR": {
+      "type": "dashboard-image-slider",
+      "blocks": {
+        "block_wGbix4": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": "shopify://collections"
+          }
+        },
+        "block_YmByqf": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/detail_look_3.webp",
+            "link": ""
+          }
+        },
+        "block_JUPYNy": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/three-products_2_85784c16-10a9-46a9-b6fd-cffaa8189f18.png",
+            "link": ""
+          }
+        },
+        "block_LLEDVU": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/four-products_2.webp",
+            "link": "shopify://collections"
+          }
+        },
+        "block_XJLbMx": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/detail_look_3.webp",
+            "link": ""
+          }
+        },
+        "block_JA7CNJ": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/three-products_2_85784c16-10a9-46a9-b6fd-cffaa8189f18.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_wGbix4",
+        "block_YmByqf",
+        "block_JUPYNy",
+        "block_LLEDVU",
+        "block_XJLbMx",
+        "block_JA7CNJ"
+      ],
+      "settings": {
+        "heading": "SUGGESTED FOR YOU"
+      }
+    },
+    "dashboard_fullscreen_6FaXib": {
+      "type": "dashboard-fullscreen",
+      "settings": {
+        "image": "shopify://shop_images/marame-magasin_ab091904-e1e8-4c9b-879f-ef1587ce4ec0.webp",
+        "heading": "MENS SUMMER 25 LOOKBOOK",
+        "button_lable": "Discover",
+        "button_url": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "dashboard_complete_BiKgpw",
+    "dashboard_image_slider_BrkdPR",
+    "dashboard_fullscreen_6FaXib"
+  ]
+}

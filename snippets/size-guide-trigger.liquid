@@ -1,0 +1,61 @@
+{%- comment -%}
+  Size Guide + optional Find Your Size links near product title / price.
+{%- endcomment -%}
+
+{%- capture ss26_pilot_flag -%}
+  {%- render 'size-guide-ss26-pilot-check', product: product -%}
+{%- endcapture -%}
+{%- assign size_guide_pilot = false -%}
+{%- if ss26_pilot_flag contains 'true' -%}
+  {%- assign size_guide_pilot = true -%}
+{%- endif -%}
+
+{%- liquid
+  assign guide = product.metafields.custom.size_guide.value
+  assign enabled = product.metafields.custom.size_guide_enabled
+  assign show_trigger = false
+
+  if guide != blank and enabled != false
+    assign show_trigger = true
+  elsif size_guide_pilot
+    assign show_trigger = true
+  endif
+
+  assign finder_profile = product.metafields.custom.size_finder_profile.value
+  assign show_finder_link = false
+  if product.metafields.custom.size_finder_enabled == true
+    assign show_finder_link = true
+  elsif finder_profile != blank and product.metafields.custom.size_finder_enabled != false
+    assign show_finder_link = true
+  elsif size_guide_pilot
+    assign show_finder_link = true
+  endif
+-%}
+
+{% comment %} {%- if show_trigger -%}
+  <div class="size-guide-trigger-wrap">
+    <button
+      type="button"
+      class="size-guide-trigger"
+      data-size-guide-open
+      data-size-guide-tab-target="chart"
+      aria-haspopup="dialog"
+      aria-controls="SizeGuideModal-{{ section.id }}"
+    >
+      Size Guide
+    </button>
+    {%- if show_finder_link -%}
+      <span class="size-guide-trigger-divider" aria-hidden="true">/</span>
+      <button
+        type="button"
+        class="size-guide-trigger size-guide-trigger--finder"
+        data-size-guide-open
+        data-size-guide-tab-target="finder"
+        aria-haspopup="dialog"
+        aria-controls="SizeGuideModal-{{ section.id }}"
+      >
+        Find Your Size
+      </button>
+    {%- endif -%}
+  </div>
+{%- endif -%} {% endcomment %}

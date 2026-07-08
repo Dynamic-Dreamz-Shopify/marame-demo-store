@@ -1,0 +1,514 @@
+footer#footer-alter {
+    color: #FFFFFF;
+    background-color: #262525;
+    padding-top: 122px;
+    gap: 166px;
+    min-height: unset;
+}
+
+footer .footer__lists {
+    max-width: 1434px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 22px;
+    gap: 0;
+    justify-content: flex-start;
+}
+
+footer .footer__list {
+    max-width: 157px;
+    width: 100%;
+}
+
+footer .footer__list .footer__heading > a {
+    font-family: 'HelveticaNowProDisplayMedium';
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+footer .footer__list .footer__heading {
+    margin-bottom: 4px;
+}
+
+footer .footer__list_inner li:not(:last-of-type) {
+    margin-bottom: 4px;
+}
+
+footer .footer__list li > a {
+    font-family: 'HelveticaNowDisplayLight';
+    font-weight: 325;
+    font-size: 11px;
+    line-height: 18px;
+    text-transform: capitalize;
+    color: #FFFFFF;
+}
+
+footer .footer__list:has(h2) .footer__list_inner {
+    column-count: unset;
+}
+
+.footer .reivew-bags-col {
+    max-width: 500px;
+    width: 100%;
+    gap: 0;
+    margin-left: auto;
+    flex: 1;
+}
+
+footer .newsletter-heading h3 {
+    font-family: 'HelveticaNowProDisplayBold';
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1;
+}
+
+footer .newsletter-heading .newsletter-description {
+    font-family: 'HelveticaNowDisplayRegular';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: none;
+    margin-top: 25px;
+}
+
+footer .newsletter-heading .newsletter-description strong {
+    font-family: 'HelveticaNowProDisplayBold';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: none;
+    display: block;
+}
+
+footer#footer-alter .searchbar_form_newsletter {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 0;
+}
+
+footer .klaviyo-form-wrap:has([type="email"]) .klaviyo-form h6 {
+    display: none;
+}
+
+footer .klaviyo-form-wrap input#email_01K0Y28RFH2QB1YNKDMY6ECFF5, 
+footer .klaviyo-form-wrap input#email_01K0Y28RFH2QB1YNKDMY6ECFF5::placeholder {
+    font-family: 'HelveticaNowDisplayLight';
+    font-weight: 325;
+    font-size: 11px;
+    line-height: 1;
+    color: #A1A1A5;
+}
+
+footer .klaviyo-form-wrap input#email_01K0Y28RFH2QB1YNKDMY6ECFF5 {
+    height: 37px !important;
+    padding: 11px 17px 10px !important;
+}
+
+footer .klaviyo-form-wrap .klaviyo-form div[data-testid=form-row]:last-child div.needsclick:last-child button[type=button] {
+    width: 37px !important;
+    min-height: 37px !important;
+    height: 37px !important;
+    top: 0;
+    right: 0;
+}
+
+footer#footer-alter .bottom-new-footer {
+    border-top: 1px solid #FFFFFF;
+    padding: 25px 0 29px;
+}
+
+footer .bottom-block {
+    display: none;
+}
+
+footer#footer-alter .footer-new-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1434px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 22px;
+}
+
+footer .footer-new-wrap small {
+    font-family: 'HelveticaNowDisplayLight';
+    font-weight: 325;
+    font-size: 8px;
+    line-height: 13px;
+    max-width: 234px;
+    width: 20%;
+    text-transform: none;
+}
+
+footer .footer-new-wrap .second-bottom-footer {
+    max-width: 400px;
+    width: 100%;
+}
+
+footer .trustpilot_app_div .trustpilot-widget {
+    height: 18px;
+}
+
+footer .as-seen-in {
+    max-width: 100%;
+    width: 100%;
+}
+
+footer .trustpilot_app_div {
+    max-width: 244px;
+    width: 20%;
+}
+
+/*  */
+
+footer .footer-new-wrap .second-bottom-footer {
+    max-width: 100%;
+    width: 50%;
+}
+
+footer .as-seen-in .as-seen-in__title {
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    margin-bottom: 0;
+    font-family:
+    'HelveticaNowProDisplayBold';
+    font-weight: 700;
+    font-size: 68px;
+    line-height: 1;
+    text-decoration: none;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); /* white outline with opacity */
+    text-align: center;
+}
+
+footer#footer-alter .bottom-new-footer {
+    border-top: none;
+}
+
+footer .as-seen-in:before {
+    background: linear-gradient(180deg, rgba(38, 37, 37, 0) 0%, #262525 42.84%);
+    content: "";
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 1;
+}
+
+footer .as-seen-in {
+    position: relative;
+}
+
+.footer__top .second-bottom-footer {
+    display: none;
+}
+
+/*  */
+
+footer .klaviyo-form-wrap .go3176171171 span {
+    font-weight: HelveticaNowProDisplayBold !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 22px !important;
+    text-transform: none;
+    text-decoration: none;
+    color: #fff !important;
+}
+
+footer .klaviyo-form-wrap .go3176171171 h3 span {
+    font-size: 30px !important;
+    line-height: 1 !important;
+    text-transform: uppercase;
+    padding-bottom: 30px !important;
+}
+
+footer button[aria-label="Copy coupon code"] div {
+    text-align: left;
+    margin-bottom: 0;
+}
+
+footer button[aria-label="Copy coupon code"]:before {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: #2A2A2D;
+    font-family: HelveticaNowDisplayLight;
+    font-weight: 325;
+    font-size: 11px;
+    line-height: 18px;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+}
+
+footer button[aria-label="Copy coupon code"]:after {
+    display: none;
+}
+
+footer .klaviyo-form-wrap .needsclick button[aria-label="Copy coupon code"] {
+    padding: 11px 17px 9px !important;
+}
+
+footer .klaviyo-form-wrap .go3176171171 h4 {
+    font-family: HelveticaNowProDisplayBold !important;
+    font-weight: 700 !important;
+    font-size: 30px !important;
+    line-height: 1;
+    color: #fff;
+}
+
+footer .klaviyo-form-wrap .go3176171171 h5 span {
+    padding-bottom: 0 !important;
+}
+
+footer .klaviyo-form-wrap .go3176171171 h5 {
+    margin-bottom: 25px;
+}
+
+footer .klaviyo-form-wrap .klaviyo-form div[data-testid=form-row]:last-child div.needsclick:last-child button[type=button]:before {
+    display: none;
+}
+
+footer .klaviyo-form-wrap .klaviyo-form div[data-testid=form-row]:last-child div.needsclick:last-child button[type=button] {
+    font-family: 'HelveticaNowDisplayLight' !important;
+    font-weight: 325 !important;
+    font-size: 11px !important;
+    text-decoration: underline;
+    width: 50px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    right: 10px !important;
+}
+
+@media (min-width: 992px) {
+
+    footer .footer__lists,
+    footer#footer-alter .footer-new-wrap {
+        max-width: 100%;
+        padding: 0 70px;
+    }
+}
+
+@media (min-width: 1417px) {
+
+    footer .footer__lists,
+    footer#footer-alter .footer-new-wrap {
+        padding: 0 140px;
+    }
+}
+
+@media (max-width: 991px) {
+    footer#footer-alter {
+        gap: 50px;
+        padding-top: 50px;
+    }
+    
+    footer .footer-new-wrap .second-bottom-footer {
+        order: 1;
+        max-width: 100%;
+        width: 100%;
+        margin-top: 32px;
+    }
+    
+    footer .footer-new-wrap small {
+        width: 50%;
+    }
+    
+    footer .trustpilot_app_div {
+        width: 50%;
+    }
+
+    /*  */
+
+    footer .footer-new-wrap .second-bottom-footer {
+        display: none;
+    }
+
+    .footer__top .second-bottom-footer {
+        display: block;
+        width: 100%;
+    }
+
+    footer .as-seen-in .as-seen-in__title {
+        font-size: 48px;
+    }
+
+    footer#footer-alter {
+        padding-top: 70px;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 h5 span {
+        margin: 0;
+        text-align: left;
+        justify-content: flex-start;
+        max-width: 100%;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 h3 span {
+        margin: 0;
+        max-width: 100%;
+        justify-content: flex-start;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 span {
+        margin: 0;
+        text-align: left;
+        max-width: 100%;
+        justify-content: flex-start;
+        padding-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 767px) {
+    footer .footer__list {
+        max-width: 100%;
+        width: calc(50% - 10px / 2);
+    }
+
+    .footer .reivew-bags-col {
+        max-width: 100%;
+        flex: unset;
+        padding: 59px 0 68px;
+        position: relative;
+        margin-top: 46px;
+    }
+
+    footer .footer__list:nth-child(3) {
+        width: 100%;
+        margin-top: 54px;
+    }
+
+    footer .footer__list:nth-child(3) .footer__list_inner {
+        column-count: 2;
+    }
+
+    footer .footer__lists {
+        padding: 0 45px;
+        flex-direction: unset;
+    }
+
+    .footer .reivew-bags-col:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -45px;
+        right: -45px;
+        border-top: 1px solid #FFFFFF;
+    }
+
+    footer#footer-alter {
+        gap: 0;
+        padding-top: 56px;
+        overflow: hidden;
+    }
+
+    footer#footer-alter .footer__lists {
+        gap: 0;
+        column-gap: 10px;
+    }
+
+    footer .newsletter-heading h3 {
+        font-size: 20px;
+        line-height: 18px;
+    }
+
+    footer .newsletter-heading .newsletter-description {
+        font-size: 11px;
+        line-height: 15px;
+        margin-top: 20px;
+    }
+
+    footer .newsletter-heading .newsletter-description strong {
+        font-size: 11px;
+        line-height: 15px;
+    }
+
+    footer#footer-alter .searchbar_form_newsletter {
+        margin-top: 0;
+    }
+
+    footer#footer-alter .bottom-new-footer {
+        padding: 0 0 44px;
+    }
+
+    footer .footer-new-wrap small {
+        max-width: 100%;
+        width: 100%;
+        order: 1;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    footer .trustpilot_app_div {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    footer .footer-new-wrap .second-bottom-footer {
+        margin-top: 0;
+        padding: 32px 0 31px;
+        position: relative;
+        order: -1;
+        margin-bottom: 30px;
+    }
+
+    footer .footer-new-wrap .second-bottom-footer:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: -45px;
+        right: -45px;
+        border-top: 1px solid #FFFFFF;
+    }
+
+    footer .trustpilot_app_div .trustpilot-widget {
+        height: 18px;
+    }
+
+    footer .footer__list .footer__heading > a {
+        text-decoration: none;
+    }
+
+    footer#footer-alter {
+        padding-top: 76px;
+    }
+
+    /*  */
+
+    footer .klaviyo-form-wrap .go3176171171 h4 {
+        font-size: 20px !important;
+        line-height: 18px;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 h5 span {
+        font-size: 11px !important;
+        line-height: 15px !important;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 h3 span {
+        font-size: 20px !important;
+        line-height: 18px !important;
+    }
+
+    footer .klaviyo-form-wrap .go3176171171 span {
+        font-size: 11px !important;
+        line-height: 15px !important;
+    }
+
+    footer .klaviyo-form-wrap .klaviyo-form div[data-testid=form-row]:last-child div.needsclick:last-child button[type=button] {
+        font-size: 10px !important;
+        width: 50px !important;
+        min-height: 25px !important;
+        height: 25px !important;
+    }
+}

@@ -1,0 +1,522 @@
+{{ 'new-footer.css' | asset_url | stylesheet_tag }}
+<style>
+#footer-nav-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  margin-top: {{ section.settings.margin_top }}px;
+  margin-bottom: {{ section.settings.margin_bottom }}px;
+  position: relative;
+  --footer-nav-gap-top: {{ section.settings.margin_top }}px;
+}
+#footer-nav-{{ section.id }} .inner {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+#footer-nav-{{ section.id }} .col {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+@media screen and (min-width: 769px) {
+  #footer-nav-{{ section.id }} .inner {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 32px;
+    row-gap: 8px;
+    align-items: start;
+  }
+  #footer-nav-{{ section.id }} .inner > .col {
+    flex: unset !important;
+    width: auto !important;
+    max-width: none !important;
+    grid-column: auto !important;
+  }
+  /* Col 3 uses first menu link as title (e.g. Our story) — no separate heading row on desktop */
+  #footer-nav-{{ section.id }} .inner > .col:nth-child(3) .col-heading {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+  #footer-nav-{{ section.id }} .inner > .col:nth-child(3) ul {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+#footer-nav-{{ section.id }} .col ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#footer-nav-{{ section.id }} .footer-nav__link {
+  display: block !important;
+  text-decoration: none !important;
+  line-height: 2 !important;
+}
+@media screen and (min-width: 769px) {
+  #footer-nav-{{ section.id }} .fnw-300 {
+    font-family: HelveticaNowDisplayLight, Helvetica Now Display, sans-serif !important;
+    font-weight: 300 !important;
+  }
+  #footer-nav-{{ section.id }} .fnw-400 {
+    font-family: HelveticaNowDisplayRegular, Helvetica Now Display, sans-serif !important;
+    font-weight: 400 !important;
+  }
+  #footer-nav-{{ section.id }} .fnw-500,
+  #footer-nav-{{ section.id }} .fnw-600 {
+    font-family: HelveticaNowProDisplayMedium, Helvetica Now Display, sans-serif !important;
+    font-weight: 500 !important;
+  }
+  #footer-nav-{{ section.id }} .fnw-700 {
+    font-family: HelveticaNowProDisplayBold, Helvetica Now Display, sans-serif !important;
+    font-weight: 700 !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  #footer-nav-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px !important;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px !important;
+    margin-top: {{ section.settings.margin_top_mobile }}px !important;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px !important;
+    --footer-nav-gap-top: {{ section.settings.margin_top_mobile }}px;
+  }
+  #footer-nav-{{ section.id }} .inner {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+  #footer-nav-{{ section.id }} .inner > .col:nth-child(3) {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  #footer-nav-{{ section.id }} .fnmw-300 {
+    font-family: HelveticaNowDisplayLight, Helvetica Now Display, sans-serif !important;
+    font-weight: 300 !important;
+  }
+  #footer-nav-{{ section.id }} .fnmw-400 {
+    font-family: HelveticaNowDisplayRegular, Helvetica Now Display, sans-serif !important;
+    font-weight: 400 !important;
+  }
+  #footer-nav-{{ section.id }} .fnmw-500,
+  #footer-nav-{{ section.id }} .fnmw-600 {
+    font-family: HelveticaNowProDisplayMedium, Helvetica Now Display, sans-serif !important;
+    font-weight: 500 !important;
+  }
+  #footer-nav-{{ section.id }} .fnmw-700 {
+    font-family: HelveticaNowProDisplayBold, Helvetica Now Display, sans-serif !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* The white strip above the footer is margin space (no element box).
+   This pad extends the adaptive-header zone into that gap so the logo can switch correctly. */
+#footer-nav-{{ section.id }} .footer-nav__zone-pad {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * max(0px, var(--footer-nav-gap-top, 0px)));
+  height: max(0px, var(--footer-nav-gap-top, 0px));
+  pointer-events: none;
+}
+{% for block in section.blocks %}
+  {%- liquid
+    assign first_fw_d = block.settings.first_link_font_weight | default: '700'
+    assign other_fw_d = block.settings.font_weight | default: '400'
+    assign first_fw_m = block.settings.first_link_font_weight_mobile | default: first_fw_d
+    assign other_fw_m = block.settings.font_weight_mobile | default: other_fw_d
+    if block.settings.bold_first_link and block.settings.first_link_font_weight == blank
+      assign first_fw_d = '700'
+    endif
+    capture first_class_d
+      render 'footer-nav-link-weight', weight: first_fw_d
+    endcapture
+    capture other_class_d
+      render 'footer-nav-link-weight', weight: other_fw_d
+    endcapture
+    capture first_class_m
+      render 'footer-nav-link-weight', weight: first_fw_m
+    endcapture
+    capture other_class_m
+      render 'footer-nav-link-weight', weight: other_fw_m
+    endcapture
+  -%}
+  #footer-nav-{{ section.id }} .col-{{ block.id }} .col-heading {
+    display: block !important;
+    visibility: visible !important;
+    color: {{ block.settings.heading_color }} !important;
+    font-family: HelveticaNowDisplayRegular, Helvetica Now Display, sans-serif !important;
+    font-size: {{ block.settings.heading_font_size }}px !important;
+    font-weight: {% if block.settings.heading_bold %}700{% else %}{{ block.settings.heading_font_weight | default: '600' }}{% endif %} !important;
+    letter-spacing: {{ block.settings.heading_letter_spacing }}px !important;
+    text-transform: {{ block.settings.heading_text_transform }} !important;
+    margin-bottom: {{ block.settings.heading_spacing_below }}px !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    text-align: {{ block.settings.desktop_text_align }} !important;
+  }
+  @media screen and (min-width: 769px) {
+    #footer-nav-{{ section.id }} .col-{{ block.id }} {
+      padding-left: {{ block.settings.padding_left }}px !important;
+      padding-right: {{ block.settings.padding_right }}px !important;
+      text-align: {{ block.settings.desktop_text_align }} !important;
+    }
+    #footer-nav-{{ section.id }} .col-{{ block.id }} .footer-nav__link {
+      font-size: {{ block.settings.font_size | default: 13 }}px !important;
+      letter-spacing: {{ block.settings.letter_spacing }}px !important;
+      text-transform: {{ block.settings.text_transform }} !important;
+      color: {{ block.settings.link_color }} !important;
+    }
+    #footer-nav-{{ section.id }} .col-{{ block.id }} ul {
+      text-align: {{ block.settings.desktop_text_align }} !important;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #footer-nav-{{ section.id }} .col-{{ block.id }} {
+      {% if block.settings.mobile_layout == 'full' %}
+        width: 100% !important;
+        flex: 0 0 100% !important;
+      {% else %}
+        flex: 1 !important;
+        min-width: 0 !important;
+      {% endif %}
+      padding-left: {{ block.settings.padding_left_mobile }}px !important;
+      padding-right: {{ block.settings.padding_right_mobile }}px !important;
+      text-align: {{ block.settings.mobile_text_align }} !important;
+    }
+    #footer-nav-{{ section.id }} .col-{{ block.id }} .col-heading {
+      font-size: {{ block.settings.heading_font_size_mobile }}px !important;
+      font-weight: {% if block.settings.heading_bold %}700{% else %}{{ block.settings.heading_font_weight_mobile | default: '600' }}{% endif %} !important;
+      letter-spacing: {{ block.settings.heading_letter_spacing_mobile }}px !important;
+      margin-bottom: {{ block.settings.heading_spacing_below_mobile }}px !important;
+      text-align: {{ block.settings.mobile_text_align }} !important;
+    }
+    #footer-nav-{{ section.id }} .col-{{ block.id }} .footer-nav__link {
+      font-size: {{ block.settings.font_size_mobile | default: 13 }}px !important;
+      letter-spacing: {{ block.settings.letter_spacing_mobile }}px !important;
+      white-space: {{ block.settings.mobile_whitespace }} !important;
+      color: {{ block.settings.link_color }} !important;
+      text-transform: {{ block.settings.text_transform }} !important;
+    }
+    #footer-nav-{{ section.id }} .col-{{ block.id }} ul {
+      text-align: {{ block.settings.mobile_text_align }} !important;
+    }
+  }
+  #footer-nav-{{ section.id }} .col-{{ block.id }} .footer-nav__link {
+    position: relative !important;
+    {% if block.settings.hover_underline %}
+      background-image: linear-gradient({{ block.settings.link_hover_color }}, {{ block.settings.link_hover_color }}) !important;
+      background-size: 0% 1px !important;
+      background-repeat: no-repeat !important;
+      background-position: left bottom !important;
+      transition: color {{ block.settings.hover_transition_speed }}ms ease, background-size {{ block.settings.hover_transition_speed }}ms ease, opacity {{ block.settings.hover_transition_speed }}ms ease !important;
+    {% else %}
+      transition: color {{ block.settings.hover_transition_speed }}ms ease, opacity {{ block.settings.hover_transition_speed }}ms ease !important;
+    {% endif %}
+  }
+  #footer-nav-{{ section.id }} .col-{{ block.id }} .footer-nav__link:hover {
+    color: {{ block.settings.link_hover_color }} !important;
+    {% if block.settings.hover_bold %}
+      font-family: HelveticaNowProDisplayBold, Helvetica Now Display, sans-serif !important;
+      font-weight: 700 !important;
+    {% endif %}
+    {% if block.settings.hover_underline %}
+      background-size: 100% 1px !important;
+    {% endif %}
+    {% if block.settings.hover_opacity %}
+      opacity: 0.6 !important;
+    {% endif %}
+  }
+{% endfor %}
+</style>
+<section
+  id="footer-nav-{{ section.id }}"
+  {% render 'msp-logo-zone-marker', zone_key: 'footer_nav', zone_label: 'Footer navigation' %}
+>
+  <div
+    class="footer-nav__zone-pad"
+    {% render 'msp-logo-zone-marker', zone_key: 'footer_nav', zone_label: 'Footer navigation (gap)' %}
+    aria-hidden="true"
+  ></div>
+  <div class="inner">
+    {% for block in section.blocks %}
+      <div class="col col-{{ block.id }}{% if block.settings.desktop_flex == '0 0 100%' %} col--full-row{% endif %}" {{ block.shopify_attributes }}>
+        {%- assign footer_nav_heading = block.settings.heading | strip -%}
+        {% if footer_nav_heading != blank %}
+          <span class="col-heading">{{ footer_nav_heading }}</span>
+        {% endif %}
+        {% if block.settings.menu != blank %}
+          {%- liquid
+            assign first_fw_d = block.settings.first_link_font_weight | default: '700'
+            assign other_fw_d = block.settings.font_weight | default: '400'
+            assign first_fw_m = block.settings.first_link_font_weight_mobile | default: first_fw_d
+            assign other_fw_m = block.settings.font_weight_mobile | default: other_fw_d
+            if block.settings.bold_first_link and block.settings.first_link_font_weight == blank
+              assign first_fw_d = '700'
+            endif
+            capture first_class_d
+              render 'footer-nav-link-weight', weight: first_fw_d
+            endcapture
+            capture other_class_d
+              render 'footer-nav-link-weight', weight: other_fw_d
+            endcapture
+            capture first_class_m
+              render 'footer-nav-link-weight', weight: first_fw_m
+            endcapture
+            capture other_class_m
+              render 'footer-nav-link-weight', weight: other_fw_m
+            endcapture
+          -%}
+          <ul>
+            {% for link in block.settings.menu.links %}
+              {%- if forloop.first -%}
+                {%- assign fw_d = first_class_d | strip -%}
+                {%- assign fw_m = first_class_m | strip -%}
+              {%- else -%}
+                {%- assign fw_d = other_class_d | strip -%}
+                {%- assign fw_m = other_class_m | strip -%}
+              {%- endif -%}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  class="footer-nav__link fnw-{{ fw_d }} fnmw-{{ fw_m }}"
+                >
+                  {{- link.title | escape -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Footer Nav",
+  "tag": "div",
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background Colour", "default": "#000000" },
+    { "type": "header", "content": "Desktop Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Padding Top", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding Bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "margin_top", "label": "Margin Top", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom", "label": "Margin Bottom", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Mobile Spacing" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding Top (mobile)", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding Bottom (mobile)", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Margin Top (mobile)", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Margin Bottom (mobile)", "min": -200, "max": 200, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "nav_column",
+      "name": "Nav Column",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "First link = category title (e.g. menswear). Leave Heading Text empty."
+        },
+        { "type": "header", "content": "Menu links — Desktop" },
+        {
+          "type": "select",
+          "id": "first_link_font_weight",
+          "label": "First link weight (e.g. menswear)",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Other links weight",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "400"
+        },
+        { "type": "range", "id": "font_size", "label": "Link font size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 13 },
+        { "type": "header", "content": "Menu links — Mobile" },
+        {
+          "type": "select",
+          "id": "first_link_font_weight_mobile",
+          "label": "First link weight (mobile)",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "select",
+          "id": "font_weight_mobile",
+          "label": "Other links weight (mobile)",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "400"
+        },
+        { "type": "range", "id": "font_size_mobile", "label": "Link font size (mobile)", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 13 },
+        { "type": "header", "content": "Heading — Desktop" },
+        { "type": "text", "id": "heading", "label": "Heading Text (optional)" },
+        { "type": "color", "id": "heading_color", "label": "Heading Colour", "default": "#ffffff" },
+        { "type": "range", "id": "heading_font_size", "label": "Heading Font Size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 13 },
+        {
+          "type": "checkbox",
+          "id": "heading_bold",
+          "label": "Bold separate heading",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "heading_font_weight",
+          "label": "Heading font weight",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi Bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "600"
+        },
+        { "type": "range", "id": "heading_spacing_below", "label": "Space below heading", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 16 },
+        { "type": "range", "id": "heading_letter_spacing", "label": "Heading Letter Spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+        {
+          "type": "select",
+          "id": "heading_text_transform",
+          "label": "Heading Text Transform",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "uppercase", "label": "Uppercase" },
+            { "value": "lowercase", "label": "Lowercase" },
+            { "value": "capitalize", "label": "Capitalize" }
+          ],
+          "default": "uppercase"
+        },
+        { "type": "header", "content": "Heading — Mobile" },
+        { "type": "range", "id": "heading_font_size_mobile", "label": "Heading Font Size (mobile)", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 13 },
+        {
+          "type": "select",
+          "id": "heading_font_weight_mobile",
+          "label": "Heading Font Weight (mobile)",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi Bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "600"
+        },
+        { "type": "range", "id": "heading_letter_spacing_mobile", "label": "Heading Letter Spacing (mobile)", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+        { "type": "range", "id": "heading_spacing_below_mobile", "label": "Space below heading (mobile)", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 14 },
+        { "type": "header", "content": "Links — Desktop" },
+        { "type": "color", "id": "link_color", "label": "Link Colour", "default": "#aaaaaa" },
+        { "type": "header", "content": "Link Hover" },
+        { "type": "color", "id": "link_hover_color", "label": "Hover Colour", "default": "#ffffff" },
+        { "type": "checkbox", "id": "hover_underline", "label": "Underline on hover", "default": false },
+        { "type": "checkbox", "id": "hover_bold", "label": "Bold on hover", "default": false },
+        { "type": "checkbox", "id": "hover_opacity", "label": "Reduce opacity on hover", "default": false },
+        { "type": "range", "id": "hover_transition_speed", "label": "Transition Speed", "min": 0, "max": 800, "step": 50, "unit": "ms", "default": 200 },
+        { "type": "range", "id": "letter_spacing", "label": "Link letter spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+        {
+          "type": "select",
+          "id": "text_transform",
+          "label": "Link Text Transform",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "uppercase", "label": "Uppercase" },
+            { "value": "lowercase", "label": "Lowercase" },
+            { "value": "capitalize", "label": "Capitalize" }
+          ],
+          "default": "none"
+        },
+        { "type": "header", "content": "Column — Desktop" },
+        { "type": "range", "id": "padding_left", "label": "Padding Left", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 16 },
+        { "type": "range", "id": "padding_right", "label": "Padding Right", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 16 },
+        {
+          "type": "select",
+          "id": "desktop_text_align",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "desktop_flex",
+          "label": "Desktop column layout",
+          "info": "Use “Full width row below” for Pages (third menu).",
+          "options": [
+            { "value": "1", "label": "Half width (beside other column)" },
+            { "value": "2", "label": "Wide (legacy)" },
+            { "value": "0 0 100%", "label": "Full width row below" }
+          ],
+          "default": "1"
+        },
+        { "type": "header", "content": "Column — Mobile" },
+        {
+          "type": "select",
+          "id": "mobile_layout",
+          "label": "Mobile Layout",
+          "options": [
+            { "value": "half", "label": "Side by side (50%)" },
+            { "value": "full", "label": "Full width (stacked)" }
+          ],
+          "default": "full"
+        },
+        { "type": "range", "id": "padding_left_mobile", "label": "Padding Left (mobile)", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 16 },
+        { "type": "range", "id": "padding_right_mobile", "label": "Padding Right (mobile)", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 16 },
+        {
+          "type": "select",
+          "id": "mobile_text_align",
+          "label": "Text Alignment (mobile)",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        { "type": "range", "id": "letter_spacing_mobile", "label": "Link letter spacing (mobile)", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
+        {
+          "type": "select",
+          "id": "mobile_whitespace",
+          "label": "Mobile Link Wrapping",
+          "options": [
+            { "value": "normal", "label": "Wrap (normal)" },
+            { "value": "nowrap", "label": "No wrap (single line)" }
+          ],
+          "default": "normal"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Footer Nav", "blocks": [{ "type": "nav_column" }, { "type": "nav_column" }, { "type": "nav_column" }] }]
+}
+{% endschema %}

@@ -1,0 +1,172 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<section class="dashboard row">
+  <div class="dashboard__sidebar col--6 col--md--2 col--lg--2">
+    <ul>
+      <li>
+        <a href="{{ routes.account_url }}"><p>Dashboard</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_url }}?view=orders"><p>order history</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_addresses_url }}">
+          <p>addresses ({{ customer.addresses_count }})</p>
+        </a>
+      </li>
+      {% comment %}
+      <li>
+        <a href="{{ routes.account_url }}?view=my-profile"><p>account details</p></a>
+      </li>
+      <li class="active">
+        <a href="{{ routes.account_url }}?view=my-details"><p>My details</p></a>
+      </li>
+      {% endcomment %}
+      <li>
+        <a href="{{ routes.account_url }}?view=wishlist"><p>MY SAVED ITEMS</p></a>
+      </li>
+      <li>
+        <a href="{{ routes.account_logout_url }}"><p>{{ 'customer.log_out' | t }}</p></a>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard__body col--6 col--md--6 col--lg--10">
+    <div class="dashboard__body__intro">
+      <h1>{{ section.settings.hero_title }}</h1>
+      {%- if section.settings.message != blank -%}
+        {{ section.settings.message }}
+      {%- endif -%}
+    </div>
+    {% if customer %}
+      <div class="account-page">
+
+        <form method="post" id="details-form" data-customer-id="{{ customer.id }}">
+          <div class="field-group">
+            <label for="gender">Your Gender</label>
+            <select id="gender" name="gender">
+              <option value="male" {% if customer.metafields.custom.gender == 'male' %}selected{% endif %}>Male</option>
+              <option value="female" {% if customer.metafields.custom.gender == 'female' %}selected{% endif %}>Female</option>
+            </select>
+          </div>
+          
+          <h2>MY FIT</h2>
+
+          <div class="field-group">
+            <label for="size_tops">Top Fit:</label>
+            <select id="size_tops" name="size_tops">
+              <option value="small" {% if customer.metafields.custom.size_tops == 'small' %}selected{% endif %}>Small</option>
+              <option value="medium" {% if customer.metafields.custom.size_tops == 'medium' %}selected{% endif %}>Medium</option>
+              <option value="large" {% if customer.metafields.custom.size_tops == 'large' %}selected{% endif %}>Large</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="size_bottoms">Bottom Fit:</label>
+            <select id="size_bottoms" name="size_bottoms">
+              <option value="small" {% if customer.metafields.custom.size_bottoms == 'small' %}selected{% endif %}>Small</option>
+              <option value="medium" {% if customer.metafields.custom.size_bottoms == 'medium' %}selected{% endif %}>Medium</option>
+              <option value="large" {% if customer.metafields.custom.size_bottoms == 'large' %}selected{% endif %}>Large</option>
+            </select>
+          </div>
+          
+          <div class="field-group" id="cup-size-group">
+            <label for="cup_size">Cup Size:</label>
+            <select id="cup_size" name="cup_size">
+              <option value="A" {% if customer.metafields.custom.cup_size == 'A' %}selected{% endif %}>A</option>
+              <option value="B" {% if customer.metafields.custom.cup_size == 'B' %}selected{% endif %}>B</option>
+              <option value="C" {% if customer.metafields.custom.cup_size == 'C' %}selected{% endif %}>C</option>
+            </select>
+          </div>
+          <div class="field-group">
+              <label for="size_shoes">Shoe Size:</label>
+              <select id="size_shoes" name="size_shoes">
+                <option value="8.0" {% if customer.metafields.custom.size_shoes == '8.0' %}selected{% endif %}>8.0</option>
+                <option value="8.5" {% if customer.metafields.custom.size_shoes == '8.5' %}selected{% endif %}>8.5</option>
+                <option value="9" {% if customer.metafields.custom.size_shoes == '9' %}selected{% endif %}>9</option>
+                <option value="9.5" {% if customer.metafields.custom.size_shoes == '9.5' %}selected{% endif %}>9.5</option>
+                <option value="10" {% if customer.metafields.custom.size_shoes == '10' %}selected{% endif %}>10</option>
+                <option value="10.5" {% if customer.metafields.custom.size_shoes == '10.5' %}selected{% endif %}>10.5</option>
+                <option value="11" {% if customer.metafields.custom.size_shoes == '11' %}selected{% endif %}>11</option>
+              </select>
+          </div>
+
+          <div class="save-btn">
+            <button class="btn btn--dark" type="submit" id="save-btn">Save Changes</button>
+          </div>
+        </form>
+         <!-- Success Message -->
+        <div id="success-message-details" style="display:none;"></div>
+      </div>
+
+    {% else %}
+      <p>Please <a href="{{ routes.account_login_url }}">log in</a> to view this page.</p>
+    {% endif %}
+
+    <div class="dashboard__body__intro">
+      <div class="dashboard__body__intro__banner">
+        {%- if section.settings.quiz_title != blank -%}
+          <h3>{{ section.settings.quiz_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.quiz_content != blank -%}
+          {{ section.settings.quiz_content }}
+        {%- endif -%}
+        {%- if section.settings.quiz_btn != blank -%}
+          <a href="{{ section.settings.quiz_btn_url | default: '#' }}" class="btn btn--light">
+            <p>{{ section.settings.quiz_btn }}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 5 6 6">
+              <path d="M1.63156 5H5.70383C5.87307 5 6 5.12693 6 5.28559V9.35787C6 9.5271 5.86249 9.65403 5.69326 9.65403H5.44998C5.28074 9.65403 5.15381 9.51653 5.15381 9.35787V6.43852L0.690172 10.9127C0.573821 11.0291 0.383429 11.0291 0.267078 10.9127L0.0872631 10.7329C-0.0290877 10.6166 -0.0290877 10.4262 0.0872631 10.3098L4.56148 5.84619H1.63156C1.46232 5.84619 1.33539 5.71926 1.33539 5.5606V5.31732C1.33539 5.13751 1.46232 5 1.63156 5Z" fill="#383230"></path>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "My Details",
+  "settings": [
+    {
+     "type": "header",
+      "content": "Hero Content"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "My Details"
+    },
+    {
+      "type": "richtext",
+      "id": "message",
+      "label": "Message"
+    },
+    {
+      "type": "header",
+      "content": "Quiz content"
+    },
+    {
+      "type": "text",
+      "id": "quiz_title",
+      "label": "Quiz title",
+      "default": "tailor your experience"
+    },
+    {
+      "type": "richtext",
+      "id": "quiz_content",
+      "label": "Quiz content"
+    },
+    {
+      "type": "text",
+      "id": "quiz_btn",
+      "label": "Button Label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "quiz_btn_url",
+      "label": "Botton URL"
+    }
+  ]
+}
+{% endschema %}

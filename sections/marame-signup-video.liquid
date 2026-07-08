@@ -1,0 +1,252 @@
+{% render 'msp-assets' %}
+
+{%- capture video_aspect -%}{% render 'msp-aspect-ratio', preset: section.settings.frame_preset, width: section.settings.frame_width, height: section.settings.frame_height %}{%- endcapture -%}
+{% style %}
+  #msp-video-{{ section.id }} {
+    --msp-section-gap-mobile: {{ section.settings.gap_bottom_mobile }}px;
+    --msp-section-gap-desktop: {{ section.settings.gap_bottom_desktop }}px;
+    --msp-cell-aspect: {{ video_aspect | strip }};
+  }
+  {%- capture msp_video_scope -%}#msp-video-{{ section.id }}{%- endcapture -%}
+  {% render 'msp-block-height-style',
+    scope_id: msp_video_scope,
+    target_selector: '.msp-media__cell--video-only',
+    height_mobile: section.settings.block_height_mobile,
+    height_desktop: section.settings.block_height_desktop
+  %}
+{% endstyle %}
+
+{%- assign video_zone_key = section.settings.logo_zone_key | default: 'signup_video_mobile' -%}
+<section
+  id="msp-video-{{ section.id }}"
+  class="msp msp-section msp-section--video msp-section-gap{% unless section.settings.show_mobile %} msp-section--hide-mobile{% endunless %}{% unless section.settings.show_desktop %} msp-section--hide-desktop{% endunless %}"
+  data-marame-signup-section
+  {% render 'msp-logo-zone-marker', zone_key: video_zone_key, zone_label: section.settings.logo_zone_label %}
+>
+  <div class="msp-running-video-wrap{% if section.settings.enable_scroll_animations %} msp-reveal{% endif %}">
+    <div class="msp-media__cell msp-media__cell--video-only">
+      {%- assign media_mode = section.settings.media_mode | default: 'image' -%}
+      {%- liquid
+        assign image_desktop = section.settings.image_desktop
+        assign image_mobile = section.settings.image_mobile
+        if image_mobile == blank
+          assign image_mobile = image_desktop
+        endif
+        if image_desktop == blank
+          assign image_desktop = image_mobile
+        endif
+      -%}
+
+      {%- if media_mode == 'image' and image_desktop != blank -%}
+        <picture>
+          {%- if section.settings.image_mobile != blank -%}
+            <source media="(max-width: 989px)" srcset="{{ section.settings.image_mobile | image_url: width: 1200 }}">
+          {%- endif -%}
+          {%- if section.settings.image_desktop != blank -%}
+            <source media="(min-width: 990px)" srcset="{{ section.settings.image_desktop | image_url: width: 2000 }}">
+          {%- endif -%}
+          {{
+            image_desktop
+            | image_url: width: 2000
+            | image_tag: class: 'msp-running-video__el', alt: section.settings.alt, loading: 'lazy'
+          }}
+        </picture>
+      {%- elsif section.settings.video != blank -%}
+        {{
+          section.settings.video
+          | video_tag:
+            class: 'msp-running-video__el',
+            poster: section.settings.poster,
+            autoplay: true,
+            loop: true,
+            muted: true,
+            playsinline: true,
+            controls: section.settings.show_controls,
+            preload: 'metadata'
+        }}
+        {%- if section.settings.poster != blank -%}
+          <img
+            data-msp-video-poster
+            class="msp-video-poster-sample"
+            src="{{ section.settings.poster | image_url: width: 1200 }}"
+            alt=""
+            width="1200"
+            height="675"
+            crossorigin="anonymous"
+            hidden
+          >
+        {%- endif -%}
+      {%- elsif section.settings.poster != blank -%}
+        {{
+          section.settings.poster
+          | image_url: width: 1600
+          | image_tag: class: 'msp-running-video__el', alt: section.settings.alt, loading: 'lazy'
+        }}
+      {%- elsif request.design_mode -%}
+        <div class="msp-section__placeholder">Upload a video or poster image.</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Signup — Video",
+  "tag": "section",
+  "class": "section-marame-signup-video",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop",
+      "label": "Show on desktop",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Header logo zone"
+    },
+    {
+      "type": "select",
+      "id": "logo_zone_key",
+      "label": "Page block ID (for Header logo section)",
+      "options": [
+        { "value": "signup_video_mobile", "label": "Video — mobile" }
+      ],
+      "default": "signup_video_mobile"
+    },
+    {
+      "type": "text",
+      "id": "logo_zone_label",
+      "label": "Zone label (optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animations",
+      "label": "Scroll fade-in",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "select",
+      "id": "media_mode",
+      "label": "Show",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Block height"
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "label": "Height — mobile (0 = frame ratio)",
+      "min": 0,
+      "max": 560,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "block_height_desktop",
+      "label": "Height — desktop (0 = frame ratio)",
+      "min": 0,
+      "max": 720,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video file"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster (if no video)"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text",
+      "default": "Campaign video"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show video controls",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "frame_preset",
+      "label": "Frame shape",
+      "options": [
+        { "value": "wide", "label": "Wide (mobile running clip)" },
+        { "value": "desktop_video", "label": "Desktop lower right" },
+        { "value": "tall", "label": "Tall portrait" },
+        { "value": "custom", "label": "Custom ratio" }
+      ],
+      "default": "wide"
+    },
+    {
+      "type": "number",
+      "id": "frame_width",
+      "label": "Custom frame width",
+      "default": 390
+    },
+    {
+      "type": "number",
+      "id": "frame_height",
+      "label": "Custom frame height",
+      "default": 218
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_mobile",
+      "label": "Space below — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom_desktop",
+      "label": "Space below — desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [{ "name": "Signup — Video" }]
+}
+{% endschema %}

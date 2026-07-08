@@ -1,0 +1,435 @@
+{{ 'header.css' | asset_url | stylesheet_tag }}
+
+{% capture search_bar %}
+  <div class="searchbar" data-lenis-prevent>
+    <button class="searchbar__btn 123" aria-label="search">
+        {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M6.27451 11.549C9.18755 11.549 11.549 9.18755 11.549 6.27451C11.549 3.36148 9.18755 1 6.27451 1C3.36148 1 1 3.36148 1 6.27451C1 9.18755 3.36148 11.549 6.27451 11.549Z" stroke="#383230" stroke-miterlimit="10"/>
+            <path d="M10.0547 10.143L13.0002 13.0885" stroke="#383230" stroke-miterlimit="10"/>
+          </svg> {% endcomment %}
+        {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+          <circle cx="7" cy="6" r="5.75" stroke="currentColor" stroke-width="0.5"/>
+          <line x1="3.17678" y1="10.1768" x2="0.176777" y2="13.1768" stroke="currentColor" stroke-width="0.5"/>
+        </svg> {% endcomment %}
+        <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="6" r="5.6" stroke="currentColor" stroke-width="0.8"/>
+          <line x1="3.28284" y1="10.2828" x2="0.282843" y2="13.2828" stroke="currentColor" stroke-width="0.8"/>
+        </svg>
+
+    </button>
+              
+    {%- if settings.predictive_search_enabled -%}
+      <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+    {%- else -%}
+      <search-form class="search-modal__form">
+    {%- endif -%}
+    <div class="search-modal-overlay"></div>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search searchbar__input">
+      <div class="search-form-wrp">
+        <div class="search-icon">
+          <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="6" r="5.6" stroke="currentColor" stroke-width="0.8"/>
+            <line x1="3.28284" y1="10.2828" x2="0.282843" y2="13.2828" stroke="currentColor" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <input
+          class="search__input field__input"
+          id="Search-In-Template"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.search' | t }}"
+          {%- if settings.predictive_search_enabled -%}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results"
+                aria-controls="predictive-search-results"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                autocorrect="off"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+          {%- endif -%}
+        >
+            <button type="reset" class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}" aria-label="{{ 'general.search.reset' | t }}">
+              <svg class="icon icon-close" aria-hidden="true" focusable="false">
+                <use xlink:href="#icon-reset">
+              </svg>
+            </button>
+            {% comment %} <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+              <svg class="icon icon-search" aria-hidden="true" focusable="false">
+                <use href="#icon-search">
+              </svg>
+            </button> {% endcomment %}
+        <div class="search-close">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.2988 19.2988L0.283008 0.283031" stroke="#2A2A2C" stroke-width="0.8"/>
+            <path d="M0.283175 19.2988L19.299 0.283043" stroke="#2A2A2C" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+      {%- if settings.predictive_search_enabled -%}
+        <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+          {% comment %} <div class="predictive-search__loading-state">
+            <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
+          </div> {% endcomment %}
+        </div>
+
+        <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+      {%- endif -%}
+      {% comment %} <button type="button" class="modal__close-button link link--text focus-inset" aria-label="{{ 'accessibility.close' | t }}">
+        <svg class="icon icon-close" aria-hidden="true" focusable="false">
+          <use href="#icon-close">
+        </svg>
+      </button> {% endcomment %}
+    </form>
+    {%- if settings.predictive_search_enabled -%}
+      </predictive-search>
+    {%- else -%}
+      </search-form>
+    {%- endif -%}
+  </div>
+{% endcapture %}
+{%- assign submenu_list = false -%}
+{%- capture Menudata -%}
+  
+  {%- for link in section.settings.menu.links -%}
+    {%- assign parent_active = false -%}
+
+    {%- if request.path == link.url -%}
+      {%- assign parent_active = true -%}
+    {%- endif -%}
+
+    {%- if link.links != blank -%}
+      {%- for childlink in link.links -%}
+        {%- if request.path == childlink.url -%}
+          {%- assign parent_active = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    <li class="header__nav__item{% unless link.links != blank %} no_submenu_added{% endunless %}{% if parent_active %} active{% endif %}">
+      <a
+        href="{{ link.url }}"
+        class="header__nav__item__trigger btn btn--underline{% if parent_active %} active{% endif %}"
+      >
+        {{ link.title }}
+      </a>
+
+      {%- if link.links != blank -%}
+        {%- assign submenu_list = true -%}
+
+        <div class="header__nav__item__dropdown" data-lenis-prevent="">
+          <a href="#" class="header__nav__item__dropdown__back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="8" viewBox="0 0 6 8" fill="none">
+              <path d="M4.67188 7.65625L1.46875 4.45313L4.67187 1.25" stroke="#262525"/>
+            </svg>
+            <p>{{ link.title }}</p>
+          </a>
+
+          <div class="header__nav__item__dropdown__content row">
+            <div
+              class="{% if link.title == 'Womens' %}header__nav__item__dropdown__content__wears--women {% endif %}header__nav__item__dropdown__content__wears col--6 col--md--8 col--lg--6{% if parent_active %} active{% endif %}"
+              style="opacity: 0;"
+            >
+              <ul>
+                {%- for childlink in link.links -%}
+                  <li>
+                    <a
+                      href="{{ childlink.url }}"
+                      class="{% if request.path == childlink.url %}active{% endif %}"
+                    >
+                      {{ childlink.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+{%- endcapture -%}
+<header
+  class="header row{% if section.settings.header_black %} header_black{% endif %}{% if template.name != 'index' and template.name != 'register' and template.name != 'login' and template.suffix != 'landing-page' and template.suffix != 'fit-finder' %} header--dark{% endif %}"
+  style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate3d(0px, 0px, 0px);"
+>
+{%- if submenu_list == true -%}
+  <div class="header__bg"></div>
+{%- endif -%}
+  <nav class="header__nav col--1 col--lg--3">
+    <div class="header-drawer">
+      <ul class="header__nav__list lenis">{{ Menudata }}</ul>
+      <div class="header-bottom-drawer">
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="account">Sign in</a>
+        {%- if localization.available_countries.size > 1 -%}
+          <localization-form class="small-hide medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div>{%- render 'language-localization', localPosition: 'HeaderLanguage' -%}</div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="menu-btn">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    {{ search_bar }}
+    <!--
+      This CTA should be optional for the client, but when it's ON it will appear at both levels not just this one.
+    -->
+    {%- if section.settings.show_find_your_content -%}
+      <a href="{{ section.settings.url | default: '#' }}" class="header__nav__cta header__nav__cta--display">
+        {%- if section.settings.bg_image != blank -%}
+          <img
+            class="header__nav__cta__bg"
+            src="{{ section.settings.bg_image | image_url }}"
+            alt="{{ section.settings.bg_image.alt | default: section.settings.title }}"
+          >
+        {%- endif -%}
+        <svg
+          class="header__nav__cta__arrow"
+          xmlns="http://www.w3.org/2000/svg"
+          width="6"
+          height="6"
+          viewBox="0 0 6 6"
+          fill="none"
+        >
+          <path d="M1.63156 0L5.70383 0C5.87307 0 6 0.126928 6 0.285588V4.35787C6 4.5271 5.86249 4.65403 5.69326 4.65403H5.44998C5.28074 4.65403 5.15381 4.51653 5.15381 4.35787V1.43852L0.690172 5.91274C0.573821 6.02909 0.383429 6.02909 0.267078 5.91274L0.0872631 5.73292C-0.0290877 5.61657 -0.0290877 5.42618 0.0872631 5.30983L4.56148 0.846188L1.63156 0.846188C1.46232 0.846188 1.33539 0.71926 1.33539 0.560599V0.31732C1.33539 0.137506 1.46232 0 1.63156 0Z" fill="#E6E0D4"></path>
+        </svg>
+        {%- if section.settings.find_your_title != blank -%}
+          <h4>{{ section.settings.find_your_title }}</h4>
+        {%- endif -%}
+        {%- if section.settings.small_content != blank -%}
+          <small>{{ section.settings.small_content }}</small>
+        {%- endif -%}
+      </a>
+    {%- endif -%}
+  </nav>
+
+  <a href="{{ shop.url }}" class="header__logo" aria-label="Go home">
+    {% if section.settings.header_logo_svg != blank %}
+      {{ section.settings.header_logo_svg }}
+    {% endif %}
+  </a>
+
+  <div class="header__right col--2">
+    {% comment %} {{ search_bar }} {% endcomment %}
+
+    <a href="" class="wishlist">
+      {% comment %} wishlist {% endcomment %}
+       {% render 'wishlist-icon' %}
+    </a>
+
+    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="account">
+      {% comment %} ACCOUNT {% endcomment %}
+       {% render 'account-icon' %}
+    </a>
+
+    <div class="header__right__bag">
+      <a href="{{ routes.cart_url }}" class="header__right__bag__cart">
+        {% comment %} {% render 'cart-icon' %} {% endcomment %}
+        {% render 'new-cart-icon' %}
+        {%- if cart.item_count < 100 -%}
+          <span class="cart-count{% if cart.item_count >= 10 %} large-numbers{% endif %}" data-cart-item-count>{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+      <div class="header__right__bag__list">
+        {%- for item in cart.items -%}
+          <a class="header__right__bag__item" data-key="{{ item.title }}">
+            <div class="header__right__bag__item__img">
+              <img
+                src="{{ item.image | img_url: 'master' }}"
+                alt="{{ item.variant.featured_media.preview_image.alt }} {{ shop.name }}"
+                width="{{ item.variant.featured_media.preview_image.width }}"
+                height="{{ item.variant.featured_media.preview_image.height }}"
+                loading="lazy"
+              >
+            </div>
+            <div class="header__right__bag__item__content">
+              <div>
+                <p class="title">{{ item.title }}</p>
+              </div>
+              <p class="count">x <span>{{ item.quantity }}</span></p>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+      <button class="cart-drawer__close" type="button" data-cart-drawer-close>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.4765 19.4141L0.460744 0.458297" stroke="#2A2A2C" stroke-width="1.3"/>
+            <path d="M0.46091 19.4141L19.4767 0.458309" stroke="#2A2A2C" stroke-width="1.3"/>
+          </svg>
+      </button>
+    </div>
+
+    {% comment %} <a href="/pages/lookbook">Lookbook1</a> {% endcomment %}
+    {%- if section.settings.other_menu_1 != blank -%}
+      <a href="{{ section.settings.other_menu_url_1 | default: '#' }}">{{ section.settings.other_menu_1 }}</a>
+    {%- endif -%}
+
+    {%- if section.settings.other_menu_2 != blank -%}
+      <a href="{{ section.settings.other_menu_url_2 | default: 'javascript:void(0)' }}">
+        {{- section.settings.other_menu_2 -}}
+      </a>
+    {%- endif -%}
+
+    <div class="menu-btn">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="header__socials col--2">
+    {%- if settings.social_tiktok_link != blank -%}
+      <a href="{{ settings.social_tiktok_link }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M12.8809 3.70812C12.7797 3.6558 12.6811 3.59843 12.5856 3.53625C12.3079 3.35264 12.0533 3.1363 11.8272 2.89187C11.2616 2.24469 11.0503 1.58812 10.9725 1.12844H10.9756C10.9106 0.746875 10.9375 0.5 10.9416 0.5H8.36532V10.4619C8.36532 10.5956 8.36532 10.7278 8.35969 10.8584C8.35969 10.8747 8.35813 10.8897 8.35719 10.9072C8.35719 10.9144 8.35719 10.9219 8.35563 10.9294C8.35563 10.9312 8.35563 10.9331 8.35563 10.935C8.32847 11.2924 8.2139 11.6377 8.02198 11.9405C7.83006 12.2432 7.56668 12.4942 7.255 12.6712C6.93017 12.856 6.56278 12.953 6.18907 12.9525C4.98875 12.9525 4.01594 11.9738 4.01594 10.765C4.01594 9.55625 4.98875 8.5775 6.18907 8.5775C6.41628 8.57729 6.6421 8.61304 6.85813 8.68344L6.86125 6.06031C6.20543 5.9756 5.53917 6.02772 4.90449 6.21339C4.26982 6.39906 3.68052 6.71424 3.17375 7.13906C2.72971 7.52487 2.3564 7.98522 2.07063 8.49937C1.96188 8.68687 1.55157 9.44031 1.50188 10.6631C1.47063 11.3572 1.67907 12.0763 1.77844 12.3734V12.3797C1.84094 12.5547 2.08313 13.1519 2.47782 13.6553C2.79608 14.0591 3.17209 14.4139 3.59375 14.7081V14.7019L3.6 14.7081C4.84719 15.5556 6.23 15.5 6.23 15.5C6.46938 15.4903 7.27125 15.5 8.18188 15.0684C9.19188 14.59 9.76688 13.8772 9.76688 13.8772C10.1342 13.4513 10.4263 12.9659 10.6306 12.4419C10.8638 11.8291 10.9416 11.0941 10.9416 10.8003V5.51531C10.9728 5.53406 11.3891 5.80937 11.3891 5.80937C11.3891 5.80937 11.9888 6.19375 12.9244 6.44406C13.5956 6.62219 14.5 6.65969 14.5 6.65969V4.10219C14.1831 4.13656 13.5397 4.03656 12.8809 3.70812Z" fill="#383230"></path>
+        </svg>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_instagram_link != blank -%}
+      <a href="{{ settings.social_instagram_link }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <g clip-path="url(#clip0_97_8310)">
+            <path d="M7.99998 1.44147C10.1361 1.44147 10.3891 1.4496 11.2327 1.48809C12.0126 1.52369 12.4362 1.65401 12.7182 1.76354C13.0916 1.90867 13.3581 2.08205 13.638 2.36198C13.9179 2.64191 14.0913 2.90844 14.2364 3.28183C14.346 3.56376 14.4763 3.98735 14.5119 4.76731C14.5504 5.61091 14.5585 5.86391 14.5585 8.00002C14.5585 10.1361 14.5504 10.3891 14.5119 11.2327C14.4763 12.0127 14.346 12.4363 14.2364 12.7182C14.0913 13.0916 13.9179 13.3581 13.638 13.638C13.3581 13.918 13.0916 14.0914 12.7182 14.2365C12.4362 14.346 12.0126 14.4763 11.2327 14.5119C10.3892 14.5504 10.1362 14.5586 7.99998 14.5586C5.86375 14.5586 5.61075 14.5504 4.76731 14.5119C3.98732 14.4763 3.56373 14.346 3.28183 14.2365C2.90841 14.0914 2.64188 13.918 2.36195 13.638C2.08202 13.3581 1.90863 13.0916 1.76354 12.7182C1.65398 12.4363 1.52366 12.0127 1.48806 11.2327C1.44957 10.3891 1.44144 10.1361 1.44144 8.00002C1.44144 5.86391 1.44957 5.61091 1.48806 4.76735C1.52366 3.98735 1.65398 3.56376 1.76354 3.28183C1.90863 2.90844 2.08202 2.64191 2.36195 2.36198C2.64188 2.08205 2.90841 1.90867 3.28183 1.76354C3.56373 1.65401 3.98732 1.52369 4.76728 1.48809C5.61088 1.4496 5.86388 1.44147 7.99998 1.44147ZM7.99998 0C5.8273 0 5.5549 0.00920926 4.70161 0.0481422C3.85007 0.0870116 3.26855 0.222229 2.75966 0.420006C2.23359 0.624451 1.78745 0.897997 1.34271 1.34274C0.897966 1.78748 0.624419 2.23363 0.419974 2.7597C0.222197 3.26859 0.0869798 3.8501 0.0481104 4.70164C0.0091775 5.5549 0 5.82733 0 8.00002C0 10.1727 0.0091775 10.4451 0.0481104 11.2984C0.0869798 12.1499 0.222197 12.7314 0.419974 13.2403C0.624419 13.7664 0.897966 14.2125 1.34271 14.6573C1.78745 15.102 2.23359 15.3756 2.75966 15.58C3.26855 15.7778 3.85007 15.913 4.70161 15.9519C5.5549 15.9908 5.8273 16 7.99998 16C10.1727 16 10.4451 15.9908 11.2984 15.9519C12.1499 15.913 12.7314 15.7778 13.2403 15.58C13.7664 15.3756 14.2125 15.102 14.6573 14.6573C15.102 14.2125 15.3755 13.7664 15.58 13.2403C15.7778 12.7314 15.913 12.1499 15.9519 11.2984C15.9908 10.4451 16 10.1727 16 8.00002C16 5.82733 15.9908 5.5549 15.9519 4.70164C15.913 3.8501 15.7778 3.26859 15.58 2.7597C15.3755 2.23363 15.102 1.78748 14.6573 1.34274C14.2125 0.897997 13.7664 0.624451 13.2403 0.420006C12.7314 0.222229 12.1499 0.0870116 11.2984 0.0481422C10.4451 0.00920926 10.1727 0 7.99998 0ZM7.99998 3.89189C5.73114 3.89189 3.89186 5.73117 3.89186 8.00002C3.89186 10.2689 5.73114 12.1081 7.99998 12.1081C10.2688 12.1081 12.1081 10.2689 12.1081 8.00002C12.1081 5.73117 10.2688 3.89189 7.99998 3.89189ZM7.99998 10.6667C6.52723 10.6667 5.3333 9.47277 5.3333 8.00002C5.3333 6.52727 6.52723 5.33333 7.99998 5.33333C9.47273 5.33333 10.6667 6.52727 10.6667 8.00002C10.6667 9.47277 9.47273 10.6667 7.99998 10.6667ZM13.2304 3.72959C13.2304 4.25979 12.8006 4.68961 12.2704 4.68961C11.7402 4.68961 11.3104 4.25979 11.3104 3.72959C11.3104 3.19939 11.7402 2.7696 12.2704 2.7696C12.8006 2.7696 13.2304 3.19939 13.2304 3.72959Z" fill="#383230"></path>
+          </g>
+          <defs>
+            <clipPath id="clip0_97_8310">
+              <rect width="16" height="16" fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+      </a>
+    {%- endif -%}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header alter",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "html",
+      "id": "header_logo_svg",
+      "label": "Logo SVG"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "header_black",
+      "label": "Header Black",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Other menu"
+    },
+    {
+      "type": "text",
+      "id": "other_menu_1",
+      "default": "Lookbook",
+      "label": "Other menu 1"
+    },
+    {
+      "type": "url",
+      "id": "other_menu_url_1",
+      "label": "Other menu URL 1"
+    },
+    {
+      "type": "text",
+      "id": "other_menu_2",
+      "default": "Fit Finder",
+      "label": "Other menu 2"
+    },
+    {
+      "type": "url",
+      "id": "other_menu_url_2",
+      "label": "Other menu URL 2"
+    },
+    {
+      "type": "header",
+      "content": "Find your content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_find_your_content",
+      "label": "Show Find your content",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "find_your_title",
+      "default": "Find your fit",
+      "label": "Title"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "small_content",
+      "label": "Content"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_image",
+      "name": "Menu image",
+      "settings": [
+         {
+          "type": "text",
+          "id": "link_label",
+          "label": "Menu item",
+          "info": "In this menu item, the custom image and details are shown."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "image_title",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

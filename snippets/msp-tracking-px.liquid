@@ -1,0 +1,12 @@
+{%- comment -%}
+  Normalizes letter-spacing theme setting to px.
+  Legacy checkerboard values used ×100 (e.g. 420 = 4.2px). New sliders use px (0–100).
+  @param value {Number}
+{%- endcomment -%}
+{%- liquid
+  assign v = value | default: 0 | plus: 0
+  if v > 100
+    assign v = v | times: 0.01
+  endif
+-%}
+{{- v -}}

@@ -1,0 +1,31 @@
+{%- comment -%}
+  Builds a pipe-separated list of handleized colour keys to match against variant options.
+  @param color_label {String}
+{%- endcomment -%}
+{%- assign marame_target_color = color_label | downcase | strip | replace: '  ', ' ' -%}
+{%- assign marame_target_key = marame_target_color | handleize -%}
+{%- assign marame_color_keys = marame_target_key -%}
+{%- if marame_target_key != '' -%}
+  {%- if marame_target_key == 'off-white' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|white|white-cream|cosy-cream|vanilla-cream' -%}
+  {%- elsif marame_target_key == 'white' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|off-white|white-cream|cotton-cream|cosy-cream|white-cotton-denim|ash-white' -%}
+  {%- elsif marame_target_key == 'cotton-cream' or marame_target_key == 'white-cream' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|white|off-white|cream|cosy-cream|cotton-cream' -%}
+  {%- elsif marame_target_key == 'cosy-cream' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|white|cotton-cream|white-cream|cream|off-white' -%}
+  {%- elsif marame_target_key == 'ash-white' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|white|off-white|white-snow' -%}
+  {%- elsif marame_target_key == 'blue-violet' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|blushing-blue|blue' -%}
+  {%- elsif marame_target_key == 'popping-pink' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|ballet-pink|pink' -%}
+  {%- elsif marame_target_key == 'black-denim' or marame_target_key == 'black-wash-denim' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|black-denim|black-wash-denim|matte-black|black' -%}
+  {%- elsif marame_target_key == 'navy-wash-denim' or marame_target_key == 'deep-navy-wash-denim' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|navy-wash-denim|deep-navy-wash-denim|navy|classic-wash-denim' -%}
+  {%- elsif marame_target_key == 'classic-wash-denim' or marame_target_key == 'light-wash-denim' or marame_target_key == 'blue-wash-denim' -%}
+    {%- assign marame_color_keys = marame_color_keys | append: '|classic-wash-denim|light-wash-denim|blue-wash-denim|deep-wash-denim' -%}
+  {%- endif -%}
+{%- endif -%}
+{{ marame_color_keys }}

@@ -1,0 +1,131 @@
+{%- assign show_section = false -%}
+
+{%- if section.settings.show_logged_in_section == 'both' -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_in' and customer -%}
+  {%- assign show_section = true -%}
+{%- elsif section.settings.show_logged_in_section == 'logged_out' and customer == null -%}
+  {%- assign show_section = true -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  {%- assign customer_gender = customer.metafields.custom.gender | default: '' | downcase -%}
+
+  {%- if section.settings.show_for_gender == 'female' and customer_gender != 'female' -%}
+    {%- assign show_section = false -%}
+  {%- elsif section.settings.show_for_gender == 'all' and customer_gender == 'female' -%}
+    {%- assign show_section = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- if show_section -%}
+  <section class="fullscreen row fullscreen_banner">
+    <div class="fullscreen__bg fullscreen__bg--no-mobile-img" style="">
+        <img class="fullscreen__bg__desktop" src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}" width="{{ section.settings.banner_image.width }}" height="{{ section.settings.banner_image.height }}" loading="lazy" data-p-speed="0.15" style="">
+    </div>
+    <div class="fullscreen__content col--6 col--md--4 col--lg--4" style="opacity: 1;">
+        <h2 class="h1">
+          {{ section.settings.title }}
+          {% if section.settings.show_first_name and customer %}
+            <br>{{ customer.first_name }}
+          {% endif %}
+        </h2>
+        <p>{{ section.settings.description }}</p>
+        <a href="{{ section.settings.btn_link }}" class="btn btn--underline btn--dark">
+          <h4>{{ section.settings.btn_label }}</h4>
+        </a>
+    </div>
+  </section>  
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Fullscreen banner",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "show_logged_in_section",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "both",
+            "label": "Both"
+          },
+          {
+            "value": "logged_in",
+            "label": "Logged-in Customers Only"
+          },
+          {
+            "value": "logged_out",
+            "label": "Logged-out Customers Only"
+          }
+        ],
+        "default": "both"
+      },
+      {
+        "type": "radio",
+        "id": "show_for_gender",
+        "label": "Show Section For",
+        "options": [
+          {
+            "value": "all",
+            "label": "Default"
+          },
+          {
+            "value": "female",
+            "label": "Female Customers Only"
+          }
+        ],
+        "default": "all"
+      },
+      {
+        "type": "header",
+        "content": "Section Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "FEATURED LOOK FOR YOU"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_first_name",
+        "label": "Show first name",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Image"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button link"
+      },
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content color",
+        "default": "#fff"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fullscreen banner"
+      }
+    ]
+  }
+{% endschema %}

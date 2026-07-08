@@ -1,0 +1,13 @@
+{%- comment -%}
+  Outputs font-weight class suffix for footer nav links (e.g. fnw-700).
+  @param weight {String|Number}
+{%- endcomment -%}
+{%- liquid
+  assign w = weight | default: '400' | append: '' | strip
+  case w
+    when '300', '400', '500', '600', '700'
+      echo w
+    else
+      echo '400'
+  endcase
+-%}

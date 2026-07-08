@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "blocks_YXhrTV": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1257a9e_EUG7Kd": {
+          "type": "ai_gen_block_1257a9e",
+          "name": "Customizable title",
+          "settings": {
+            "row_1_text": "Sustainability",
+            "row_2_text": "Built to be worn, not wasted.",
+            "row_3_text": "",
+            "max_width": 1000,
+            "row_1_font": "sans_serif_n4",
+            "row_1_font_size": 36,
+            "row_1_font_weight": "500",
+            "row_1_letter_spacing": 10,
+            "row_1_text_transform": "none",
+            "row_1_text_align": "left",
+            "row_1_color": "#121212",
+            "row_1_padding_top": 145,
+            "row_1_padding_bottom": 0,
+            "row_1_padding_left": 20,
+            "row_1_padding_right": 0,
+            "row_1_spacing": 20,
+            "row_2_font": "sans_serif_n4",
+            "row_2_font_size": 20,
+            "row_2_font_weight": "100",
+            "row_2_letter_spacing": 0,
+            "row_2_text_transform": "none",
+            "row_2_text_align": "left",
+            "row_2_color": "#121212",
+            "row_2_padding_top": 0,
+            "row_2_padding_bottom": 0,
+            "row_2_padding_left": 20,
+            "row_2_padding_right": 0,
+            "row_2_spacing": 10,
+            "row_3_font": "sans_serif_n4",
+            "row_3_font_size": 18,
+            "row_3_font_weight": "400",
+            "row_3_letter_spacing": 0,
+            "row_3_text_transform": "none",
+            "row_3_text_align": "left",
+            "row_3_color": "#121212",
+            "row_3_padding_top": 0,
+            "row_3_padding_bottom": 0,
+            "row_3_padding_left": 0,
+            "row_3_padding_right": 0,
+            "row_3_spacing": 10,
+            "row_1_mobile_font": "sans_serif_n4",
+            "row_1_mobile_font_size": 20,
+            "row_1_mobile_font_weight": "400",
+            "row_1_mobile_letter_spacing": 0,
+            "row_1_mobile_text_transform": "none",
+            "row_1_mobile_text_align": "left",
+            "row_1_mobile_color": "#121212",
+            "row_1_mobile_padding_top": 85,
+            "row_1_mobile_padding_bottom": 0,
+            "row_1_mobile_padding_left": 25,
+            "row_1_mobile_padding_right": 0,
+            "row_1_mobile_spacing": 5,
+            "row_2_mobile_font": "sans_serif_n4",
+            "row_2_mobile_font_size": 12,
+            "row_2_mobile_font_weight": "100",
+            "row_2_mobile_letter_spacing": 0,
+            "row_2_mobile_text_transform": "none",
+            "row_2_mobile_text_align": "left",
+            "row_2_mobile_color": "#121212",
+            "row_2_mobile_padding_top": 0,
+            "row_2_mobile_padding_bottom": 0,
+            "row_2_mobile_padding_left": 25,
+            "row_2_mobile_padding_right": 0,
+            "row_2_mobile_spacing": 10,
+            "row_3_mobile_font": "sans_serif_n4",
+            "row_3_mobile_font_size": 14,
+            "row_3_mobile_font_weight": "400",
+            "row_3_mobile_letter_spacing": 0,
+            "row_3_mobile_text_transform": "none",
+            "row_3_mobile_text_align": "left",
+            "row_3_mobile_color": "#121212",
+            "row_3_mobile_padding_top": 0,
+            "row_3_mobile_padding_bottom": 0,
+            "row_3_mobile_padding_left": 0,
+            "row_3_mobile_padding_right": 0,
+            "row_3_mobile_spacing": 10
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1257a9e_EUG7Kd"
+      ],
+      "name": "Customizable title",
+      "settings": {}
+    },
+    "blocks_tdfNpA": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_460c19e_qity7U": {
+          "type": "ai_gen_block_460c19e",
+          "settings": {
+            "max_width": 1000,
+            "section_padding_top": 40,
+            "section_padding_bottom": 40,
+            "section_padding_horizontal": 20,
+            "item_padding_vertical": 20,
+            "item_padding_horizontal": 16,
+            "content_padding_bottom": 20,
+            "title_font": "sans_serif_n4",
+            "title_font_size": 16,
+            "title_letter_spacing": 7,
+            "title_text_transform": "none",
+            "title_color": "#121212",
+            "title_bg_color": "#ffffff",
+            "title_hover_color": "#636363",
+            "title_hover_bg_color": "#ffffff",
+            "content_font": "sans_serif_n4",
+            "content_font_size": 14,
+            "content_line_height": 1.6,
+            "content_letter_spacing": 1.5,
+            "content_text_transform": "none",
+            "content_color": "#949494",
+            "content_bg_color": "#ffffff",
+            "content_border_thickness": 0,
+            "content_border_style": "solid",
+            "content_border_color": "#e0e0e0",
+            "icon_size": 20,
+            "icon_color": "#242833",
+            "icon_hover_color": "#000000",
+            "divider_thickness": 1,
+            "divider_style": "solid",
+            "divider_color": "#eceaea",
+            "animation_duration": 0.5,
+            "animation_easing": "ease",
+            "item_1_title": "Our Approach To Sustainability",
+            "item_1_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    At Marame, we believe sustainability isn’t a buzzword, it’s a responsibility. But more importantly, it’s a mindset. One that requires looking at the bigger picture, asking difficult questions, and making decisions that balance impact, quality, and long-term wear.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We’ve all experienced buying clothes that get worn a handful of times, then pushed to the back of the wardrobe, donated, binned, or worse, buried in landfill. That, to us, is the most overlooked form of fast fashion. It’s not always about the speed of production or the price point, it’s about making things people fall out of love with too quickly.\n  </span>\n\n</span>",
+            "item_2_title": "Designing For Longevity, Not Trends",
+            "item_2_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    So at Marame, we’ve taken a different approach. Every piece in our collection has been created with the intention of being worn again and again, across seasons, years, and changing trends.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    That means designing clothing that fits well, pairs easily with other wardrobe staples, is built on timeless design principles, and is made from fabrics chosen for durability, comfort, and appearance.\n  </span>\n\n</span>",
+            "item_3_title": "Making Considered Fabric Choices",
+            "item_3_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Sometimes, that means choosing a fabric that isn’t perfect from an eco-certification perspective, but performs in a way that ensures you’ll actually wear the garment.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    For example, some of the most sustainable textiles on the market can look great on paper, but don’t drape well, feel stiff on the body, or struggle to hold shape over time. And if a fabric doesn’t make you feel comfortable and confident, you won’t wear it, and that defeats the point.\n  </span>\n\n</span>",
+            "item_4_title": "Quality Through Testing & Refinement",
+            "item_4_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We spend months testing fabrics for softness, structure, wearability, and longevity. We also reject far more than we accept.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Our priority is to create a piece that looks and feels so good, you’ll keep it for years, because true sustainability starts with not needing to replace it.\n  </span>\n\n</span>",
+            "item_5_title": "Responsible Manufacturing",
+            "item_5_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    Marame only partners with manufacturers who share our values, those who operate responsibly, ethically, and with transparency. That includes fair labour conditions, safe working environments, and sustainable production practices.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    We work with trusted, small-scale production partners in Europe and Asia, chosen not just for their craftsmanship, but for their commitment to long-term impact. We’ve walked the factory floors. We’ve asked hard questions. And we’ve chosen quality over convenience, every time.\n  </span>\n\n</span>",
+            "item_6_title": "Reducing Returns & Overproduction",
+            "item_6_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We also take returns seriously. Every returned item adds to a garment’s carbon footprint, from additional transport emissions to potential repackaging or even disposal.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    That’s why we go to great lengths to get fit right, to provide accurate sizing guidance, and to use drapes and cuts that work across real bodies, not just studio samples.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Our approach is to reduce returns not by discouraging them, but by creating clothing that feels right from the first try-on. We also produce in thoughtful, small batches, based on real demand, not inflated projections. This helps us reduce overproduction and unnecessary waste.\n  </span>\n\n</span>",
+            "item_7_title": "Sustainable Packaging",
+            "item_7_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    All of our packaging is recyclable, reusable, and FSC-certified. We’ve eliminated plastic wherever possible, without compromising on the unboxing experience.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Our labels, tissue paper and boxes have been selected with sustainability in mind, and we’re continuing to push for better materials as new options emerge.\n  </span>\n\n</span>",
+            "item_8_title": "Transparency & Commitment",
+            "item_8_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    We’re not perfect. And we don’t believe any brand is. But what we can promise is transparency, and a genuine commitment to making better choices, not just for the sake of marketing, but because it’s the right thing to do.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Sustainability isn’t one decision, it’s a series of them. Sometimes it means saying no to fast shortcuts. Sometimes it means delaying launch dates to get something right. And often, it means spending more, not less, in pursuit of a garment that will live a long, hardworking life in your wardrobe.\n  </span>\n\n</span>",
+            "item_9_title": "The Brand We Are Building",
+            "item_9_content": "<span style=\"text-transform:none !important;\">\n\n  <span style=\"font-size:0.9em;\">\n    That’s the kind of brand we’re building. One that values wearability over waste, durability over disposability, and quality over quantity.\n  </span>\n  <br><br>\n\n  <span style=\"font-size:0.9em;\">\n    Thank you for caring, and for supporting a slower, more thoughtful way of dressing.\n  </span>\n\n</span>",
+            "item_10_title": "",
+            "item_10_content": "",
+            "item_11_title": "",
+            "item_11_content": "",
+            "item_12_title": "",
+            "item_12_content": "",
+            "item_13_title": "",
+            "item_13_content": "",
+            "item_14_title": "",
+            "item_14_content": "",
+            "item_15_title": "",
+            "item_15_content": "",
+            "item_16_title": "",
+            "item_16_content": "",
+            "item_17_title": "",
+            "item_17_content": "",
+            "item_18_title": "",
+            "item_18_content": "",
+            "item_19_title": "",
+            "item_19_content": "",
+            "item_20_title": "",
+            "item_20_content": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_460c19e_qity7U"
+      ],
+      "name": "Terms accordion",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "blocks_YXhrTV",
+    "blocks_tdfNpA"
+  ]
+}
