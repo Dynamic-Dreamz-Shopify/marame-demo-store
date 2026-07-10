@@ -1,0 +1,406 @@
+{% doc %}
+  @prompt
+    Create two separate announcement bar sections:
+    
+    DESKTOP ANNOUNCEMENT BAR:
+    - Only visible on desktop and tablet (hidden on mobile)
+    - Multiple rotating text messages with links
+    - Customizable background color, text color, font size
+    - Adjustable padding and spacing
+    - Auto-rotation with configurable speed
+    - Text alignment options
+    - Device visibility toggle setting
+    
+    MOBILE ANNOUNCEMENT BAR:
+    - Only visible on mobile devices (hidden on desktop/tablet)
+    - Multiple rotating text messages with links
+    - Option to add Trustpilot widget embed as a message type
+    - Fixed minimum height to prevent size changes during rotation
+    - Proper vertical centering for both text and Trustpilot widget
+    - Text transform options: uppercase, lowercase, sentence case, or normal
+    - Trustpilot widget scale control
+    - Customizable background color, text color, font size
+    - Adjustable padding
+    - Auto-rotation with configurable speed (no delay between transitions)
+    - Text alignment options
+    - Device visibility toggle setting
+    
+    Both sections must have explicit mobile/desktop visibility controls built into their settings., This doesn't look like it's got the ability to add a static trustpilot widget in the top right hand corner of the bar (as it did before), Trustpilot widget isn't displaying, The text needs to still appear in the centre of the screen (irrelevant of the trustpilot widget) but the trustpilot widget still isn't appearing
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-desktop-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ai-announcement-bar-desktop__wrapper-{{ ai_gen_id }} {
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  .ai-announcement-bar-desktop__messages-{{ ai_gen_id }} {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 20px;
+    width: auto;
+    max-width: 60%;
+  }
+
+  .ai-announcement-bar-desktop__message-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    line-height: 1.4;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease-in-out;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .ai-announcement-bar-desktop__message-{{ ai_gen_id }}.active {
+    opacity: 1;
+    position: relative;
+    left: 0;
+    transform: none;
+  }
+
+  .ai-announcement-bar-desktop__message-{{ ai_gen_id }} a {
+    color: {{ block.settings.text_color }};
+    text-decoration: underline;
+  }
+
+  .ai-announcement-bar-desktop__message-{{ ai_gen_id }} a:hover {
+    opacity: 0.8;
+  }
+
+  .ai-announcement-bar-desktop__trustpilot-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%) scale({{ block.settings.trustpilot_scale }});
+    transform-origin: right center;
+    z-index: 10;
+    pointer-events: auto;
+  }
+
+  .ai-announcement-bar-desktop__trustpilot-{{ ai_gen_id }} > * {
+    display: block !important;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-announcement-bar-desktop__messages-{{ ai_gen_id }} {
+      max-width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar-desktop-{{ ai_gen_id }} {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<announcement-bar-desktop-{{ ai_gen_id }}
+  class="ai-announcement-bar-desktop-{{ ai_gen_id }}"
+  data-rotation-speed="{{ block.settings.rotation_speed }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-announcement-bar-desktop__wrapper-{{ ai_gen_id }}">
+    <div class="ai-announcement-bar-desktop__messages-{{ ai_gen_id }}">
+      {% if block.settings.message_1 != blank %}
+        <div class="ai-announcement-bar-desktop__message-{{ ai_gen_id }}" data-message-index="0">
+          {% if block.settings.message_1_link != blank %}
+            <a href="{{ block.settings.message_1_link }}">{{ block.settings.message_1 }}</a>
+          {% else %}
+            {{ block.settings.message_1 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_2 != blank %}
+        <div class="ai-announcement-bar-desktop__message-{{ ai_gen_id }}" data-message-index="1">
+          {% if block.settings.message_2_link != blank %}
+            <a href="{{ block.settings.message_2_link }}">{{ block.settings.message_2 }}</a>
+          {% else %}
+            {{ block.settings.message_2 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_3 != blank %}
+        <div class="ai-announcement-bar-desktop__message-{{ ai_gen_id }}" data-message-index="2">
+          {% if block.settings.message_3_link != blank %}
+            <a href="{{ block.settings.message_3_link }}">{{ block.settings.message_3 }}</a>
+          {% else %}
+            {{ block.settings.message_3 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_4 != blank %}
+        <div class="ai-announcement-bar-desktop__message-{{ ai_gen_id }}" data-message-index="3">
+          {% if block.settings.message_4_link != blank %}
+            <a href="{{ block.settings.message_4_link }}">{{ block.settings.message_4 }}</a>
+          {% else %}
+            {{ block.settings.message_4 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_5 != blank %}
+        <div class="ai-announcement-bar-desktop__message-{{ ai_gen_id }}" data-message-index="4">
+          {% if block.settings.message_5_link != blank %}
+            <a href="{{ block.settings.message_5_link }}">{{ block.settings.message_5 }}</a>
+          {% else %}
+            {{ block.settings.message_5 }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if block.settings.trustpilot_embed != blank %}
+      <div class="ai-announcement-bar-desktop__trustpilot-{{ ai_gen_id }}">
+        {{ block.settings.trustpilot_embed }}
+      </div>
+    {% endif %}
+  </div>
+</announcement-bar-desktop-{{ ai_gen_id }}>
+
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+
+<script>
+  (function() {
+    class AnnouncementBarDesktop{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.messages = [];
+        this.rotationInterval = null;
+        this.trustpilotLoaded = false;
+      }
+
+      connectedCallback() {
+        this.messages = Array.from(this.querySelectorAll('.ai-announcement-bar-desktop__message-{{ ai_gen_id }}'));
+        
+        if (this.messages.length === 0) return;
+
+        if (this.messages.length === 1) {
+          this.messages[0].classList.add('active');
+        } else {
+          this.messages[0].classList.add('active');
+          this.startRotation();
+        }
+
+        this.loadTrustpilot();
+      }
+
+      loadTrustpilot() {
+        const trustpilotContainer = this.querySelector('.ai-announcement-bar-desktop__trustpilot-{{ ai_gen_id }}');
+        if (!trustpilotContainer) return;
+
+        const checkAndLoad = () => {
+          if (window.Trustpilot && window.Trustpilot.loadFromElement) {
+            window.Trustpilot.loadFromElement(trustpilotContainer, true);
+            this.trustpilotLoaded = true;
+          } else if (!this.trustpilotLoaded) {
+            setTimeout(checkAndLoad, 100);
+          }
+        };
+
+        checkAndLoad();
+      }
+
+      startRotation() {
+        const speed = parseInt(this.dataset.rotationSpeed) * 1000;
+        
+        this.rotationInterval = setInterval(() => {
+          this.messages[this.currentIndex].classList.remove('active');
+          this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+          this.messages[this.currentIndex].classList.add('active');
+        }, speed);
+      }
+
+      disconnectedCallback() {
+        if (this.rotationInterval) {
+          clearInterval(this.rotationInterval);
+        }
+      }
+    }
+
+    customElements.define('announcement-bar-desktop-{{ ai_gen_id }}', AnnouncementBarDesktop{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement - Desktop",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "paragraph",
+      "content": "This announcement bar is only visible on desktop and tablet devices (hidden on mobile)."
+    },
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_1",
+      "label": "Message 1",
+      "default": "Free UK delivery on orders over £200"
+    },
+    {
+      "type": "url",
+      "id": "message_1_link",
+      "label": "Message 1 link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_2",
+      "label": "Message 2",
+      "default": "Shop our new collection"
+    },
+    {
+      "type": "url",
+      "id": "message_2_link",
+      "label": "Message 2 link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_3",
+      "label": "Message 3"
+    },
+    {
+      "type": "url",
+      "id": "message_3_link",
+      "label": "Message 3 link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_4",
+      "label": "Message 4"
+    },
+    {
+      "type": "url",
+      "id": "message_4_link",
+      "label": "Message 4 link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message_5",
+      "label": "Message 5"
+    },
+    {
+      "type": "url",
+      "id": "message_5_link",
+      "label": "Message 5 link"
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot widget"
+    },
+    {
+      "type": "paragraph",
+      "content": "Paste your Trustpilot TrustBox widget code below. The widget will appear in the top right corner."
+    },
+    {
+      "type": "html",
+      "id": "trustpilot_embed",
+      "label": "Trustpilot embed code"
+    },
+    {
+      "type": "range",
+      "id": "trustpilot_scale",
+      "min": 0.5,
+      "max": 1,
+      "step": 0.1,
+      "label": "Trustpilot scale",
+      "default": 0.8
+    },
+    {
+      "type": "header",
+      "content": "Rotation"
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotation speed",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement - Desktop"
+    }
+  ]
+}
+{% endschema %}

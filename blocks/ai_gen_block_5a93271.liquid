@@ -1,0 +1,741 @@
+{% doc %}
+  @prompt
+    Create a logo carousel block with customizable SVG color controls. Add color picker settings that allow changing:
+    1. The fill color of the SVG background image
+    2. The fill color/tint of the logo images
+    
+    The block should include:
+    - A color picker for the background SVG fill color with opacity control
+    - A color picker for logo tint color with opacity control
+    - Settings to toggle these color overlays on/off
+    - CSS filters or SVG manipulation to apply the selected colors to the images
+    - All existing logo carousel functionality (animation, spacing, sizing)
+    
+    Make sure the color controls work with both the background image and individual logos, allowing independent color customization of each element., I need to be able to add additional logos (6 isn't enough) , I don't need a header section and I need to make sure the animation seamlessly 'rotates' so when carousel runs out, it repeats seamlessly with the same spacing, I need to actually change the COLOUR of the Background SVG, rather than the full background, Can you add the ability to increase the height of the section, Can you change it so I can adjust each individual logo size, I need to be able to change the background colour size too please, the opacity isn't working on the background image, I still can't change the opacity of the background image SVG and the colour change is change the whole block as opposed to the outline of the word (almost like there no transparency on the image), It's not the background opacity I want to change, it's the IMAGE, Can you make this mobile only, desktop will need its own seperate design, Can you add a little blur behind the logos so that the background image behind the logos doesn't interfere with them, The logo backdrop blur is now not showing the background image behind at all?, Can you shift the Backgroup image up, so it sit just up from centre whereas the logos sit centrally. Or just give me the ability to adjust the position of the background image, Can you change the logo backdrop blur to transparency rather than opacity/blur, The logo backdrop section, needs to have a transparency setting can you also bring layout section to the top
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% assign logo_count = 0 %}
+{% assign total_width = 0 %}
+{% for i in (1..12) %}
+  {% assign logo_key = 'logo_' | append: i %}
+  {% assign width_key = 'logo_' | append: i | append: '_width' %}
+  {% assign spacing_key = 'logo_spacing' %}
+  
+  {% if block.settings[logo_key] %}
+    {% assign logo_count = logo_count | plus: 1 %}
+    {% assign logo_width = block.settings[width_key] %}
+    {% assign total_width = total_width | plus: logo_width | plus: block.settings.logo_spacing %}
+  {% endif %}
+{% endfor %}
+
+{% style %}
+  .ai-logo-carousel-{{ ai_gen_id }} {
+    display: none;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: {{ block.settings.section_padding }}px 0;
+    background-color: {{ block.settings.background_color }};
+    min-height: {{ block.settings.section_height }}px;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-logo-carousel-{{ ai_gen_id }} {
+      display: flex;
+    }
+  }
+
+  .ai-logo-carousel-background-{{ ai_gen_id }} {
+    position: absolute;
+    top: {{ block.settings.background_vertical_position }}%;
+    left: {{ block.settings.background_horizontal_position }}%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    width: {{ block.settings.background_width }}%;
+    height: {{ block.settings.background_height }}%;
+    opacity: {{ block.settings.background_image_opacity | divided_by: 100.0 }};
+  }
+
+  .ai-logo-carousel-background-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    {% if block.settings.enable_background_tint %}
+      filter: brightness(0) saturate(100%) invert({{ block.settings.background_invert }}%) sepia(100%) saturate(10000%) hue-rotate({{ block.settings.background_hue }}deg);
+    {% endif %}
+  }
+
+  .ai-logo-carousel-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .ai-logo-carousel-track-container-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .ai-logo-carousel-backdrop-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    {% if block.settings.enable_logo_backdrop %}
+      background: {{ block.settings.backdrop_color }};
+      opacity: {{ block.settings.backdrop_opacity | divided_by: 100.0 }};
+      border-radius: {{ block.settings.backdrop_radius }}px;
+    {% endif %}
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ai-logo-carousel-track-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.logo_spacing }}px;
+    width: max-content;
+    position: relative;
+    z-index: 1;
+    padding: {{ block.settings.backdrop_padding }}px 0;
+  }
+
+  {% if logo_count > 0 %}
+    .ai-logo-carousel-track-{{ ai_gen_id }} {
+      animation: ai-logo-scroll-{{ ai_gen_id }} {{ block.settings.animation_speed }}s linear infinite;
+      will-change: transform;
+    }
+  {% endif %}
+
+  {% if block.settings.pause_on_hover %}
+    .ai-logo-carousel-track-{{ ai_gen_id }}:hover {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  .ai-logo-carousel-item-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: {{ block.settings.logo_height }}px;
+    position: relative;
+  }
+
+  {% for i in (1..12) %}
+    {% assign width_key = 'logo_' | append: i | append: '_width' %}
+    .ai-logo-carousel-item-{{ ai_gen_id }}-{{ i }} {
+      width: {{ block.settings[width_key] }}px;
+    }
+  {% endfor %}
+
+  .ai-logo-carousel-item-{{ ai_gen_id }} img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .ai-logo-carousel-item-{{ ai_gen_id }} svg {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  {% if block.settings.enable_logo_tint %}
+    .ai-logo-carousel-item-{{ ai_gen_id }}::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ block.settings.logo_tint_color }};
+      mix-blend-mode: multiply;
+      opacity: {{ block.settings.logo_tint_opacity | divided_by: 100.0 }};
+      pointer-events: none;
+    }
+
+    .ai-logo-carousel-item-{{ ai_gen_id }} img {
+      filter: grayscale({{ block.settings.logo_grayscale }}%);
+    }
+  {% endif %}
+
+  {% if logo_count > 0 %}
+    @keyframes ai-logo-scroll-{{ ai_gen_id }} {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-{{ total_width }}px);
+      }
+    }
+  {% endif %}
+{% endstyle %}
+
+<logo-carousel-{{ ai_gen_id }} class="ai-logo-carousel-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.background_image %}
+    <div class="ai-logo-carousel-background-{{ ai_gen_id }}">
+      <img
+        src="{{ block.settings.background_image | image_url: width: 2000 }}"
+        alt="{{ block.settings.background_image.alt | escape }}"
+        loading="lazy"
+        width="{{ block.settings.background_image.width }}"
+        height="{{ block.settings.background_image.height }}"
+      >
+    </div>
+  {% endif %}
+
+  <div class="ai-logo-carousel-wrapper-{{ ai_gen_id }}">
+    <div class="ai-logo-carousel-track-container-{{ ai_gen_id }}">
+      {% if block.settings.enable_logo_backdrop %}
+        <div class="ai-logo-carousel-backdrop-{{ ai_gen_id }}"></div>
+      {% endif %}
+      
+      <div class="ai-logo-carousel-track-{{ ai_gen_id }}">
+        {% for i in (1..12) %}
+          {% assign logo_key = 'logo_' | append: i %}
+          {% assign logo = block.settings[logo_key] %}
+          
+          {% if logo %}
+            <div class="ai-logo-carousel-item-{{ ai_gen_id }} ai-logo-carousel-item-{{ ai_gen_id }}-{{ i }}">
+              <img
+                src="{{ logo | image_url: width: 400 }}"
+                alt="{{ logo.alt | escape }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {% for i in (1..12) %}
+          {% assign logo_key = 'logo_' | append: i %}
+          {% assign logo = block.settings[logo_key] %}
+          
+          {% if logo %}
+            <div class="ai-logo-carousel-item-{{ ai_gen_id }} ai-logo-carousel-item-{{ ai_gen_id }}-{{ i }}">
+              <img
+                src="{{ logo | image_url: width: 400 }}"
+                alt="{{ logo.alt | escape }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</logo-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LogoCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('.ai-logo-carousel-track-{{ ai_gen_id }}');
+      }
+    }
+
+    customElements.define('logo-carousel-{{ ai_gen_id }}', LogoCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Logo carousel (mobile)",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section height",
+      "min": 100,
+      "max": 600,
+      "step": 50,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing",
+      "label": "Logo spacing",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "background_image_opacity",
+      "label": "Image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "Controls the transparency of the background image itself"
+    },
+    {
+      "type": "range",
+      "id": "background_width",
+      "label": "Image width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "background_height",
+      "label": "Image height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "background_vertical_position",
+      "label": "Vertical position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50,
+      "info": "0% = top, 50% = center, 100% = bottom"
+    },
+    {
+      "type": "range",
+      "id": "background_horizontal_position",
+      "label": "Horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50,
+      "info": "0% = left, 50% = center, 100% = right"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_background_tint",
+      "label": "Enable background color change",
+      "default": false,
+      "info": "Works best with transparent SVG or PNG images"
+    },
+    {
+      "type": "range",
+      "id": "background_invert",
+      "label": "Background brightness",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "0% = black, 100% = white"
+    },
+    {
+      "type": "range",
+      "id": "background_hue",
+      "label": "Background hue",
+      "min": 0,
+      "max": 360,
+      "step": 10,
+      "unit": "°",
+      "default": 0,
+      "info": "Rotate color: 0° = red, 120° = green, 240° = blue"
+    },
+    {
+      "type": "header",
+      "content": "Logo backdrop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_logo_backdrop",
+      "label": "Enable logo backdrop",
+      "default": false,
+      "info": "Adds a solid background behind logos"
+    },
+    {
+      "type": "color",
+      "id": "backdrop_color",
+      "label": "Backdrop color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "backdrop_opacity",
+      "label": "Backdrop opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "backdrop_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "backdrop_padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Logo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_1_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_2_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_3",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_3_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_4",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_4_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_5",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_5_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_6",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_6_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_7",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_7_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_8",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_8_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_9",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_9_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_10",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_10_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 11"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_11",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_11_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo 12"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_12",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_12_width",
+      "label": "Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Logo color overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_logo_tint",
+      "label": "Enable logo color overlay",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "logo_tint_color",
+      "label": "Logo overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "logo_tint_opacity",
+      "label": "Logo overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "logo_grayscale",
+      "label": "Logo grayscale",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo carousel (mobile)"
+    }
+  ]
+}
+{% endschema %}

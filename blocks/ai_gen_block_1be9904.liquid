@@ -1,0 +1,966 @@
+{% doc %}
+  @prompt
+    Create an image carousel block with smooth, flicker-free transitions between slides using CSS transitions and proper image preloading. Use fade or slide animations with no flickering or jumping. Include multiple slides with individual images and clickable links for each slide. Include separate aspect ratio controls for desktop and mobile (options like square, portrait, landscape, 16:9, 4:3, 3:2, 21:9, original). Include comprehensive customization settings for the text overlay on each slide: font family selection, font size slider, font weight options (light, normal, medium, bold), text color picker, background color/opacity for text container, horizontal and vertical position controls (top/center/bottom and left/center/right), padding controls (top, bottom, left, right), margin/spacing controls, letter spacing, line height, and text transform options (uppercase, lowercase, capitalize). The carousel should have navigation arrows and dots, autoplay options, transition speed control, and allow merchants to add multiple slides where each slide has an image, link URL, and fully customizable overlay text styling.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-carousel-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+  }
+
+  .ai-carousel-slides-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: {{ block.settings.desktop_aspect_ratio }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-carousel-slides-{{ ai_gen_id }} {
+      aspect-ratio: {{ block.settings.mobile_aspect_ratio }};
+    }
+  }
+
+  .ai-carousel-slide-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity {{ block.settings.transition_speed }}ms ease-in-out, visibility {{ block.settings.transition_speed }}ms ease-in-out;
+    will-change: opacity;
+  }
+
+  .ai-carousel-slide-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .ai-carousel-slide-link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .ai-carousel-slide-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-carousel-slide-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-carousel-slide-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-carousel-text-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    display: flex;
+    align-items: {{ block.settings.text_vertical_position }};
+    justify-content: {{ block.settings.text_horizontal_position }};
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .ai-carousel-text-container-{{ ai_gen_id }} {
+    background-color: {{ block.settings.text_bg_color }};
+    padding: {{ block.settings.text_padding_top }}px {{ block.settings.text_padding_right }}px {{ block.settings.text_padding_bottom }}px {{ block.settings.text_padding_left }}px;
+    margin: {{ block.settings.text_margin_top }}px {{ block.settings.text_margin_right }}px {{ block.settings.text_margin_bottom }}px {{ block.settings.text_margin_left }}px;
+  }
+
+  .ai-carousel-text-{{ ai_gen_id }} {
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    font-size: {{ block.settings.text_font_size }}px;
+    color: {{ block.settings.text_color }};
+    letter-spacing: {{ block.settings.text_letter_spacing }}px;
+    line-height: {{ block.settings.text_line_height }};
+    text-transform: {{ block.settings.text_transform }};
+    margin: 0;
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: {{ block.settings.arrow_bg_color }};
+    color: {{ block.settings.arrow_color }};
+    border: none;
+    width: {{ block.settings.arrow_size }}px;
+    height: {{ block.settings.arrow_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    opacity: {{ block.settings.arrow_opacity }};
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }}:hover {
+    opacity: 1;
+    background-color: {{ block.settings.arrow_hover_bg_color }};
+  }
+
+  .ai-carousel-nav-prev-{{ ai_gen_id }} {
+    left: {{ block.settings.arrow_offset }}px;
+  }
+
+  .ai-carousel-nav-next-{{ ai_gen_id }} {
+    right: {{ block.settings.arrow_offset }}px;
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }} svg {
+    width: calc({{ block.settings.arrow_size }}px * 0.5);
+    height: calc({{ block.settings.arrow_size }}px * 0.5);
+  }
+
+  .ai-carousel-dots-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: {{ block.settings.dots_offset }}px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: {{ block.settings.dots_spacing }}px;
+    z-index: 3;
+  }
+
+  .ai-carousel-dot-{{ ai_gen_id }} {
+    width: {{ block.settings.dots_size }}px;
+    height: {{ block.settings.dots_size }}px;
+    border-radius: 50%;
+    background-color: {{ block.settings.dots_color }};
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: {{ block.settings.dots_opacity }};
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+  }
+
+  .ai-carousel-dot-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.dots_active_color }};
+    opacity: 1;
+  }
+
+  .ai-carousel-dot-{{ ai_gen_id }}:hover {
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-carousel-nav-{{ ai_gen_id }} {
+      width: calc({{ block.settings.arrow_size }}px * 0.8);
+      height: calc({{ block.settings.arrow_size }}px * 0.8);
+    }
+
+    .ai-carousel-nav-prev-{{ ai_gen_id }} {
+      left: calc({{ block.settings.arrow_offset }}px * 0.5);
+    }
+
+    .ai-carousel-nav-next-{{ ai_gen_id }} {
+      right: calc({{ block.settings.arrow_offset }}px * 0.5);
+    }
+
+    .ai-carousel-text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.text_font_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<image-carousel-{{ ai_gen_id }} class="ai-carousel-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-carousel-slides-{{ ai_gen_id }}">
+    {% for i in (1..6) %}
+      {% liquid
+        assign slide_enabled_key = 'slide_' | append: i | append: '_enabled'
+        assign slide_image_key = 'slide_' | append: i | append: '_image'
+        assign slide_link_key = 'slide_' | append: i | append: '_link'
+        assign slide_text_key = 'slide_' | append: i | append: '_text'
+
+        assign slide_enabled = block.settings[slide_enabled_key]
+        assign slide_image = block.settings[slide_image_key]
+        assign slide_link = block.settings[slide_link_key]
+        assign slide_text = block.settings[slide_text_key]
+      %}
+
+      {% if slide_enabled %}
+        <div class="ai-carousel-slide-{{ ai_gen_id }}{% if forloop.first %} active{% endif %}" data-slide-index="{{ forloop.index }}">
+          {% if slide_link != blank %}
+            <a href="{{ slide_link }}" class="ai-carousel-slide-link-{{ ai_gen_id }}">
+          {% else %}
+            <div class="ai-carousel-slide-link-{{ ai_gen_id }}">
+          {% endif %}
+            {% if slide_image %}
+              <img
+                src="{{ slide_image | image_url: width: 2000 }}"
+                srcset="{{ slide_image | image_url: width: 500 }} 500w,
+                        {{ slide_image | image_url: width: 1000 }} 1000w,
+                        {{ slide_image | image_url: width: 1500 }} 1500w,
+                        {{ slide_image | image_url: width: 2000 }} 2000w"
+                sizes="100vw"
+                alt="{{ slide_image.alt | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="{{ slide_image.width }}"
+                height="{{ slide_image.height }}"
+                class="ai-carousel-slide-image-{{ ai_gen_id }}"
+              >
+            {% else %}
+              <div class="ai-carousel-slide-placeholder-{{ ai_gen_id }}">
+                {{ 'hero-apparel-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+
+            {% if slide_text != blank %}
+              <div class="ai-carousel-text-overlay-{{ ai_gen_id }}">
+                <div class="ai-carousel-text-container-{{ ai_gen_id }}">
+                  <p class="ai-carousel-text-{{ ai_gen_id }}">{{ slide_text }}</p>
+                </div>
+              </div>
+            {% endif %}
+          {% if slide_link != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if block.settings.show_arrows %}
+    <button class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-prev-{{ ai_gen_id }}" aria-label="Previous slide">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-next-{{ ai_gen_id }}" aria-label="Next slide">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  {% endif %}
+
+  {% if block.settings.show_dots %}
+    <div class="ai-carousel-dots-{{ ai_gen_id }}"></div>
+  {% endif %}
+</image-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ImageCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.autoplayInterval = null;
+        this.isTransitioning = false;
+      }
+
+      connectedCallback() {
+        this.slides = Array.from(this.querySelectorAll('.ai-carousel-slide-{{ ai_gen_id }}'));
+        this.prevButton = this.querySelector('.ai-carousel-nav-prev-{{ ai_gen_id }}');
+        this.nextButton = this.querySelector('.ai-carousel-nav-next-{{ ai_gen_id }}');
+        this.dotsContainer = this.querySelector('.ai-carousel-dots-{{ ai_gen_id }}');
+
+        if (this.slides.length === 0) return;
+
+        this.preloadImages();
+        this.createDots();
+        this.setupEventListeners();
+
+        {% if block.settings.autoplay %}
+          this.startAutoplay();
+        {% endif %}
+      }
+
+      preloadImages() {
+        this.slides.forEach((slide, index) => {
+          const img = slide.querySelector('.ai-carousel-slide-image-{{ ai_gen_id }}');
+          if (img && index > 0) {
+            const preloadImg = new Image();
+            preloadImg.src = img.src;
+          }
+        });
+      }
+
+      createDots() {
+        if (!this.dotsContainer) return;
+
+        this.dotsContainer.innerHTML = '';
+        this.slides.forEach((slide, index) => {
+          const dot = document.createElement('button');
+          dot.classList.add('ai-carousel-dot-{{ ai_gen_id }}');
+          if (index === 0) dot.classList.add('active');
+          dot.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+          dot.addEventListener('click', () => this.goToSlide(index));
+          this.dotsContainer.appendChild(dot);
+        });
+        this.dots = Array.from(this.dotsContainer.querySelectorAll('.ai-carousel-dot-{{ ai_gen_id }}'));
+      }
+
+      setupEventListeners() {
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', () => this.prevSlide());
+        }
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', () => this.nextSlide());
+        }
+
+        this.addEventListener('mouseenter', () => this.pauseAutoplay());
+        this.addEventListener('mouseleave', () => {
+          {% if block.settings.autoplay %}
+            this.startAutoplay();
+          {% endif %}
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        this.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        this.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          this.handleSwipe(touchStartX, touchEndX);
+        });
+      }
+
+      handleSwipe(startX, endX) {
+        const threshold = 50;
+        if (startX - endX > threshold) {
+          this.nextSlide();
+        } else if (endX - startX > threshold) {
+          this.prevSlide();
+        }
+      }
+
+      goToSlide(index) {
+        if (this.isTransitioning || index === this.currentIndex) return;
+
+        this.isTransitioning = true;
+
+        this.slides[this.currentIndex].classList.remove('active');
+        if (this.dots && this.dots[this.currentIndex]) {
+          this.dots[this.currentIndex].classList.remove('active');
+        }
+
+        this.currentIndex = index;
+
+        this.slides[this.currentIndex].classList.add('active');
+        if (this.dots && this.dots[this.currentIndex]) {
+          this.dots[this.currentIndex].classList.add('active');
+        }
+
+        setTimeout(() => {
+          this.isTransitioning = false;
+        }, {{ block.settings.transition_speed }});
+
+        this.resetAutoplay();
+      }
+
+      nextSlide() {
+        const nextIndex = (this.currentIndex + 1) % this.slides.length;
+        this.goToSlide(nextIndex);
+      }
+
+      prevSlide() {
+        const prevIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prevIndex);
+      }
+
+      startAutoplay() {
+        this.pauseAutoplay();
+        this.autoplayInterval = setInterval(() => {
+          this.nextSlide();
+        }, {{ block.settings.autoplay_speed }});
+      }
+
+      pauseAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+
+      resetAutoplay() {
+        {% if block.settings.autoplay %}
+          this.startAutoplay();
+        {% endif %}
+      }
+
+      disconnectedCallback() {
+        this.pauseAutoplay();
+      }
+    }
+
+    customElements.define('image-carousel-{{ ai_gen_id }}', ImageCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Image carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "desktop_aspect_ratio",
+      "label": "Desktop aspect ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "16 / 9", "label": "Widescreen (16:9)" },
+        { "value": "21 / 9", "label": "Ultrawide (21:9)" },
+        { "value": "3 / 2", "label": "Classic (3:2)" },
+        { "value": "auto", "label": "Original" }
+      ],
+      "default": "16 / 9"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile aspect ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "16 / 9", "label": "Widescreen (16:9)" },
+        { "value": "21 / 9", "label": "Ultrawide (21:9)" },
+        { "value": "3 / 2", "label": "Classic (3:2)" },
+        { "value": "auto", "label": "Original" }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "header",
+      "content": "Carousel behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "default": 5000
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Transition speed",
+      "min": 300,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Navigation arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow size",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "arrow_offset",
+      "label": "Arrow offset from edge",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "arrow_opacity",
+      "label": "Arrow opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.7
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Arrow background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "arrow_hover_bg_color",
+      "label": "Arrow hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Navigation dots"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "dots_size",
+      "label": "Dot size",
+      "min": 6,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "dots_spacing",
+      "label": "Dot spacing",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "dots_offset",
+      "label": "Dots offset from bottom",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "dots_opacity",
+      "label": "Dot opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5
+    },
+    {
+      "type": "color",
+      "id": "dots_color",
+      "label": "Dot color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "dots_active_color",
+      "label": "Active dot color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text overlay style"
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font",
+      "default": "helvetica_n3"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_bg_color",
+      "label": "Background color",
+      "default": "rgba(0,0,0,0.5)"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "text_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Text position"
+    },
+    {
+      "type": "select",
+      "id": "text_vertical_position",
+      "label": "Vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_horizontal_position",
+      "label": "Horizontal position",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Text padding"
+    },
+    {
+      "type": "range",
+      "id": "text_padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "text_padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "text_padding_left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "text_padding_right",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Text margin"
+    },
+    {
+      "type": "range",
+      "id": "text_margin_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_margin_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_margin_left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_margin_right",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Slide 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_1_enabled",
+      "label": "Enable slide 1",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_1_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "header",
+      "content": "Slide 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_2_enabled",
+      "label": "Enable slide 2",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "header",
+      "content": "Slide 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_3_enabled",
+      "label": "Enable slide 3",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "header",
+      "content": "Slide 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_4_enabled",
+      "label": "Enable slide 4",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_4_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_4_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "header",
+      "content": "Slide 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_5_enabled",
+      "label": "Enable slide 5",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_5_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_5_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "header",
+      "content": "Slide 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_6_enabled",
+      "label": "Enable slide 6",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "slide_6_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "slide_6_text",
+      "label": "Overlay text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image carousel"
+    }
+  ]
+}
+{% endschema %}

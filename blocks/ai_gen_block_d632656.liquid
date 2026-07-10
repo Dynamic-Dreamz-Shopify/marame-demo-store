@@ -1,0 +1,389 @@
+{% doc %}
+  @prompt
+    Regenerate the current YouTube video block but add padding controls for all four sides (top, bottom, left, right) as customizable settings in the block schema. The block should include: video URL input, video title, desktop width, background color, border radius, shadow properties, and padding settings (top, bottom, left, right) that merchants can adjust in the theme editor., Can you add a different padding option / layout option for mobile devices, desktop is perfect, Can you make it so that the mobile URL preview is portrait?
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-youtube-video-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-youtube-video-wrapper-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_left }}px;
+    padding-right: {{ block.settings.padding_right }}px;
+    box-shadow: {{ block.settings.shadow_horizontal }}px {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+  }
+
+  .ai-youtube-video-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 16px 0;
+    text-align: {{ block.settings.title_alignment }};
+  }
+
+  .ai-youtube-video-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: {{ block.settings.video_border_radius }}px;
+  }
+
+  .ai-youtube-video-container-{{ ai_gen_id }} iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .ai-youtube-video-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-youtube-video-placeholder-{{ ai_gen_id }} svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.3;
+  }
+
+  .ai-youtube-video-placeholder-text-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-youtube-video-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-youtube-video-wrapper-{{ ai_gen_id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+      padding-left: {{ block.settings.padding_left_mobile }}px;
+      padding-right: {{ block.settings.padding_right_mobile }}px;
+    }
+
+    .ai-youtube-video-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.85 }}px;
+    }
+
+    .ai-youtube-video-container-{{ ai_gen_id }} {
+      padding-bottom: 177.78%;
+    }
+  }
+{% endstyle %}
+
+<youtube-video-{{ ai_gen_id }}
+  class="ai-youtube-video-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-youtube-video-wrapper-{{ ai_gen_id }}">
+    {% if block.settings.video_title != blank %}
+      <h2 class="ai-youtube-video-title-{{ ai_gen_id }}">{{ block.settings.video_title }}</h2>
+    {% endif %}
+
+    <div class="ai-youtube-video-container-{{ ai_gen_id }}">
+      {% if block.settings.video_url != blank %}
+        {% assign video_id = block.settings.video_url | split: 'v=' | last | split: '&' | first %}
+        {% if video_id == block.settings.video_url %}
+          {% assign video_id = block.settings.video_url | split: 'youtu.be/' | last | split: '?' | first %}
+        {% endif %}
+        <iframe
+          src="https://www.youtube.com/embed/{{ video_id }}"
+          title="{{ block.settings.video_title | escape }}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      {% else %}
+        <div class="ai-youtube-video-placeholder-{{ ai_gen_id }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          <div class="ai-youtube-video-placeholder-text-{{ ai_gen_id }}">
+            Add a YouTube video URL
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</youtube-video-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class YouTubeVideo{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const iframe = this.querySelector('iframe');
+        if (iframe) {
+          iframe.addEventListener('load', () => {
+            iframe.setAttribute('aria-label', 'YouTube video player');
+          });
+        }
+      }
+    }
+
+    customElements.define('youtube-video-{{ ai_gen_id }}', YouTubeVideo{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "YouTube video",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "YouTube URL",
+      "placeholder": "https://www.youtube.com/watch?v=..."
+    },
+    {
+      "type": "text",
+      "id": "video_title",
+      "label": "Video title"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "video_border_radius",
+      "label": "Video border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Desktop padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "range",
+      "id": "shadow_horizontal",
+      "label": "Horizontal offset",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical",
+      "label": "Vertical offset",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "label": "Blur",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.1
+    }
+  ],
+  "presets": [
+    {
+      "name": "YouTube video"
+    }
+  ]
+}
+{% endschema %}
