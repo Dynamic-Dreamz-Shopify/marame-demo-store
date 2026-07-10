@@ -1,0 +1,689 @@
+{% doc %}
+  @prompt
+    Create a free text section with title and subheading fields that includes complete customization options:
+    - Separate text input fields for title and subheading
+    - Typography controls for both title and subheading including: font family picker, font size, font weight (light, normal, medium, semibold, bold), letter spacing, line height, text transform (none, uppercase, lowercase, capitalize)
+    - Color pickers for title color and subheading color
+    - Text alignment options (left, center, right, justify)
+    - Padding controls for top, bottom, left, and right
+    - Margin controls for spacing around the section
+    - Width and positioning options (full width, centered with max-width control, custom positioning)
+    - Animation options including: fade in, slide up, slide down, slide left, slide right, animation duration, animation delay
+    - Background color option for the text container
+    - Individual spacing control between title and subheading
+    - Mobile responsive settings with separate font sizes for mobile if needed
+    - Option to show or hide title and subheading independently, Can I have a content section underneath the subheading as well please, Can the content field be like the sub heading and title heading box with a seperate section for the typography
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.container_bg_color }};
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_left }}px;
+    padding-right: {{ block.settings.padding_right }}px;
+    margin-top: {{ block.settings.margin_top }}px;
+    margin-bottom: {{ block.settings.margin_bottom }}px;
+  }
+
+  .ai-text-section__wrapper-{{ ai_gen_id }} {
+    {% if block.settings.width_style == 'centered' %}
+      max-width: {{ block.settings.max_width }}px;
+      margin-left: auto;
+      margin-right: auto;
+    {% elsif block.settings.width_style == 'full' %}
+      width: 100%;
+    {% endif %}
+  }
+
+  .ai-text-section__content-{{ ai_gen_id }} {
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-text-section__title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.title_font.family }}, {{ block.settings.title_font.fallback_families }};
+    font-weight: {{ block.settings.title_font.weight }};
+    font-size: {{ block.settings.title_font_size }}px;
+    color: {{ block.settings.title_color }};
+    letter-spacing: {{ block.settings.title_letter_spacing }}px;
+    line-height: {{ block.settings.title_line_height }};
+    text-transform: {{ block.settings.title_text_transform }};
+    margin: 0;
+    margin-bottom: {{ block.settings.title_subheading_spacing }}px;
+  }
+
+  .ai-text-section__subheading-{{ ai_gen_id }} {
+    font-family: {{ block.settings.subheading_font.family }}, {{ block.settings.subheading_font.fallback_families }};
+    font-weight: {{ block.settings.subheading_font.weight }};
+    font-size: {{ block.settings.subheading_font_size }}px;
+    color: {{ block.settings.subheading_color }};
+    letter-spacing: {{ block.settings.subheading_letter_spacing }}px;
+    line-height: {{ block.settings.subheading_line_height }};
+    text-transform: {{ block.settings.subheading_text_transform }};
+    margin: 0;
+    margin-bottom: {{ block.settings.subheading_content_spacing }}px;
+  }
+
+  .ai-text-section__body-{{ ai_gen_id }} {
+    font-family: {{ block.settings.content_font.family }}, {{ block.settings.content_font.fallback_families }};
+    font-weight: {{ block.settings.content_font.weight }};
+    font-size: {{ block.settings.content_font_size }}px;
+    color: {{ block.settings.content_color }};
+    letter-spacing: {{ block.settings.content_letter_spacing }}px;
+    line-height: {{ block.settings.content_line_height }};
+    text-transform: {{ block.settings.content_text_transform }};
+    margin: 0;
+  }
+
+  {% if block.settings.animation_enabled %}
+    .ai-text-section__content-{{ ai_gen_id }} {
+      opacity: 0;
+      animation: ai-text-section-{{ block.settings.animation_type }}-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out {{ block.settings.animation_delay }}s forwards;
+    }
+
+    @keyframes ai-text-section-fade-in-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes ai-text-section-slide-up-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes ai-text-section-slide-down-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes ai-text-section-slide-left-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes ai-text-section-slide-right-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-text-section__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size_mobile }}px;
+    }
+
+    .ai-text-section__subheading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subheading_font_size_mobile }}px;
+    }
+
+    .ai-text-section__body-{{ ai_gen_id }} {
+      font-size: {{ block.settings.content_font_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<free-text-section-{{ ai_gen_id }} class="ai-text-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-text-section__wrapper-{{ ai_gen_id }}">
+    <div class="ai-text-section__content-{{ ai_gen_id }}">
+      {% if block.settings.show_title and block.settings.title != blank %}
+        <h2 class="ai-text-section__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      {% endif %}
+
+      {% if block.settings.show_subheading and block.settings.subheading != blank %}
+        <p class="ai-text-section__subheading-{{ ai_gen_id }}">{{ block.settings.subheading }}</p>
+      {% endif %}
+
+      {% if block.settings.show_content and block.settings.content != blank %}
+        <p class="ai-text-section__body-{{ ai_gen_id }}">{{ block.settings.content }}</p>
+      {% endif %}
+    </div>
+  </div>
+</free-text-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FreeTextSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    customElements.define('free-text-section-{{ ai_gen_id }}', FreeTextSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Free text section",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Text",
+      "default": "Your heading text"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subheading",
+      "label": "Show subheading",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Text",
+      "default": "Add your subheading text here to provide additional context or information."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "Show content",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "content",
+      "label": "Text",
+      "default": "Add your main content here. You can include multiple paragraphs and formatting."
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Font",
+      "default": "helvetica_n3"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Subheading typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "subheading_font",
+      "label": "Font",
+      "default": "helvetica_n3"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_letter_spacing",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "select",
+      "id": "subheading_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Content typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "content_font",
+      "label": "Font",
+      "default": "helvetica_n3"
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_font_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "content_letter_spacing",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.6
+    },
+    {
+      "type": "select",
+      "id": "content_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "width_style",
+      "label": "Width style",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full width"
+        },
+        {
+          "value": "centered",
+          "label": "Centered with max width"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 400,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "title_subheading_spacing",
+      "label": "Title to subheading spacing",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_content_spacing",
+      "label": "Subheading to content spacing",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding left",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding right",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "container_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "animation_enabled",
+      "label": "Enable animation",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Animation type",
+      "options": [
+        {
+          "value": "fade-in",
+          "label": "Fade in"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide right"
+        }
+      ],
+      "default": "fade-in"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Animation duration",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "s",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "Animation delay",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "s",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Free text section"
+    }
+  ]
+}
+{% endschema %}

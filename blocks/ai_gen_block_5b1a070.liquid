@@ -1,0 +1,424 @@
+{% doc %}
+  @prompt
+    Create a desktop-only announcement bar with rotating text messages centered across the full width and a Trustpilot widget absolutely positioned on the right.
+    
+    CRITICAL LAYOUT STRUCTURE:
+    - The text messages container must span 100% width of the announcement bar
+    - Text must be centered across the ENTIRE bar width, completely independent of the Trustpilot widget
+    - Trustpilot widget must use CSS position: absolute to overlay on the right side WITHOUT affecting text centering
+    - The widget should not take up layout space - it should sit on top of the bar on the right side
+    - Desktop and tablet only (completely hidden on mobile with CSS media queries)
+    
+    TEXT MESSAGE FEATURES:
+    - Multiple rotating messages with customizable links
+    - Text centered across full 100% width
+    - Auto-rotation with configurable speed (minimal delay between transitions)
+    - Text transform options: uppercase, lowercase, sentence case, normal
+    - Customizable font size and text color
+    - Proper vertical centering
+    
+    TRUSTPILOT WIDGET REQUIREMENTS:
+    - Must use position: absolute or position: fixed to overlay on right side
+    - Toggle to show/hide widget
+    - Embed code field that accepts full HTML including script tags (do NOT sanitize)
+    - Include Trustpilot JavaScript library in the section code
+    - Scale/size control
+    - Right padding control to adjust distance from edge
+    - Widget must actually render and display
+    
+    STYLING CONTROLS:
+    - Background color
+    - Text color
+    - Horizontal and vertical padding for the bar
+    - Fixed bar height to prevent size changes
+    - Device visibility toggle
+    
+    CRITICAL: The text centering must be mathematically perfect across the full bar width. The Trustpilot widget must be positioned absolutely so it does not affect the text layout at all.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+    display: block;
+    height: {{ block.settings.bar_height }}px;
+  }
+
+  .ai-announcement-bar-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ block.settings.vertical_padding }}px {{ block.settings.horizontal_padding }}px;
+  }
+
+  .ai-announcement-messages-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ai-announcement-message-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    text-transform: {{ block.settings.text_transform }};
+    white-space: nowrap;
+    padding: 0 20px;
+  }
+
+  .ai-announcement-message-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ai-announcement-message-{{ ai_gen_id }} a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ai-announcement-message-{{ ai_gen_id }} a:hover {
+    text-decoration: underline;
+  }
+
+  .ai-announcement-trustpilot-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    right: {{ block.settings.trustpilot_right_padding }}px;
+    transform: translateY(-50%) scale({{ block.settings.trustpilot_scale }});
+    transform-origin: center right;
+    pointer-events: auto;
+    z-index: 10;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-announcement-bar-{{ ai_gen_id }} {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<announcement-bar-{{ ai_gen_id }}
+  class="ai-announcement-bar-{{ ai_gen_id }}"
+  data-rotation-speed="{{ block.settings.rotation_speed }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-announcement-bar-container-{{ ai_gen_id }}">
+    <div class="ai-announcement-messages-{{ ai_gen_id }}">
+      {% if block.settings.message_1 != blank %}
+        <div class="ai-announcement-message-{{ ai_gen_id }}" data-message-index="0">
+          {% if block.settings.message_1_link != blank %}
+            <a href="{{ block.settings.message_1_link }}">{{ block.settings.message_1 }}</a>
+          {% else %}
+            {{ block.settings.message_1 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_2 != blank %}
+        <div class="ai-announcement-message-{{ ai_gen_id }}" data-message-index="1">
+          {% if block.settings.message_2_link != blank %}
+            <a href="{{ block.settings.message_2_link }}">{{ block.settings.message_2 }}</a>
+          {% else %}
+            {{ block.settings.message_2 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_3 != blank %}
+        <div class="ai-announcement-message-{{ ai_gen_id }}" data-message-index="2">
+          {% if block.settings.message_3_link != blank %}
+            <a href="{{ block.settings.message_3_link }}">{{ block.settings.message_3 }}</a>
+          {% else %}
+            {{ block.settings.message_3 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_4 != blank %}
+        <div class="ai-announcement-message-{{ ai_gen_id }}" data-message-index="3">
+          {% if block.settings.message_4_link != blank %}
+            <a href="{{ block.settings.message_4_link }}">{{ block.settings.message_4 }}</a>
+          {% else %}
+            {{ block.settings.message_4 }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.message_5 != blank %}
+        <div class="ai-announcement-message-{{ ai_gen_id }}" data-message-index="4">
+          {% if block.settings.message_5_link != blank %}
+            <a href="{{ block.settings.message_5_link }}">{{ block.settings.message_5 }}</a>
+          {% else %}
+            {{ block.settings.message_5 }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if block.settings.show_trustpilot and block.settings.trustpilot_embed != blank %}
+      <div class="ai-announcement-trustpilot-{{ ai_gen_id }}">
+        {{ block.settings.trustpilot_embed }}
+      </div>
+    {% endif %}
+  </div>
+</announcement-bar-{{ ai_gen_id }}>
+
+<script src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+
+<script>
+  (function() {
+    class AnnouncementBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.messages = [];
+        this.rotationInterval = null;
+      }
+
+      connectedCallback() {
+        this.messages = Array.from(this.querySelectorAll('.ai-announcement-message-{{ ai_gen_id }}'));
+        
+        if (this.messages.length === 0) {
+          return;
+        }
+
+        this.messages[0].classList.add('active');
+
+        if (this.messages.length > 1) {
+          const rotationSpeed = parseInt(this.dataset.rotationSpeed) || 3000;
+          this.startRotation(rotationSpeed);
+        }
+      }
+
+      startRotation(speed) {
+        this.rotationInterval = setInterval(() => {
+          this.messages[this.currentIndex].classList.remove('active');
+          this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+          this.messages[this.currentIndex].classList.add('active');
+        }, speed);
+      }
+
+      disconnectedCallback() {
+        if (this.rotationInterval) {
+          clearInterval(this.rotationInterval);
+        }
+      }
+    }
+
+    customElements.define('announcement-bar-{{ ai_gen_id }}', AnnouncementBar{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement Trustpilot",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "text",
+      "id": "message_1",
+      "label": "Message 1",
+      "default": "Free UK delivery on orders over £200"
+    },
+    {
+      "type": "url",
+      "id": "message_1_link",
+      "label": "Message 1 link"
+    },
+    {
+      "type": "text",
+      "id": "message_2",
+      "label": "Message 2",
+      "default": "Shop our new collection"
+    },
+    {
+      "type": "url",
+      "id": "message_2_link",
+      "label": "Message 2 link"
+    },
+    {
+      "type": "text",
+      "id": "message_3",
+      "label": "Message 3",
+      "default": "Premium quality apparel"
+    },
+    {
+      "type": "url",
+      "id": "message_3_link",
+      "label": "Message 3 link"
+    },
+    {
+      "type": "text",
+      "id": "message_4",
+      "label": "Message 4"
+    },
+    {
+      "type": "url",
+      "id": "message_4_link",
+      "label": "Message 4 link"
+    },
+    {
+      "type": "text",
+      "id": "message_5",
+      "label": "Message 5"
+    },
+    {
+      "type": "url",
+      "id": "message_5_link",
+      "label": "Message 5 link"
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "min": 1000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Rotation speed",
+      "default": 3000
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot widget"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trustpilot",
+      "label": "Show Trustpilot widget",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "trustpilot_embed",
+      "label": "Trustpilot embed code"
+    },
+    {
+      "type": "range",
+      "id": "trustpilot_scale",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "label": "Widget scale",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "trustpilot_right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Distance from right edge",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "Normal"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Sentence case"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Bar height",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Trustpilot"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,743 @@
+{% doc %}
+  @prompt
+    Create a centered accordion section for terms and conditions pages with the following features:
+    - Multiple collapsible accordion items that expand/collapse on click
+    - Only one section open at a time, clicking another closes the previous one
+    - Smooth expand and collapse animations
+    - Fully customizable styling options including: accordion header background color, accordion header text color, accordion header hover background color, accordion header hover text color, content background color, content text color, border colors and width, border radius for rounded corners
+    - Complete typography controls including: font family picker, font size, font weight, letter spacing, line height, text alignment (left, center, right)
+    - Separate typography settings for accordion headers and content text
+    - Icon or indicator (plus/minus or chevron) that rotates when accordion opens
+    - Centered layout with maximum width control
+    - Padding and spacing controls for headers and content areas
+    - Mobile responsive with appropriate touch targets
+    - Clean, modern design similar to Reiss terms page accordion style, Can you add some flexiblity around how the boxes seperate, rather than just full border edges, maybe options to just have line spacers or other options. I will also need full section padding options, Can you increase the ability to letter space up to 20 rather than 5, When I change the font, it doesn't seem to be changing it, can you make sure it's not linking to our custom store font
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-accordion-container-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px {{ block.settings.section_padding_horizontal }}px {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-accordion-wrapper-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-accordion-item-{{ ai_gen_id }} {
+    {% if block.settings.separator_style == 'full_border' %}
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+      border-radius: {{ block.settings.border_radius }}px;
+      margin-bottom: {{ block.settings.item_spacing }}px;
+    {% elsif block.settings.separator_style == 'bottom_border' %}
+      border-bottom: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% elsif block.settings.separator_style == 'bottom_line' %}
+      position: relative;
+      padding-bottom: {{ block.settings.item_spacing }}px;
+    {% elsif block.settings.separator_style == 'none' %}
+      margin-bottom: {{ block.settings.item_spacing }}px;
+    {% endif %}
+    overflow: hidden;
+  }
+
+  {% if block.settings.separator_style == 'bottom_line' %}
+    .ai-accordion-item-{{ ai_gen_id }}:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: {{ block.settings.line_indent }}%;
+      right: {{ block.settings.line_indent }}%;
+      height: {{ block.settings.border_width }}px;
+      background-color: {{ block.settings.border_color }};
+    }
+  {% endif %}
+
+  .ai-accordion-header-{{ ai_gen_id }} {
+    width: 100%;
+    background-color: {{ block.settings.header_bg_color }};
+    color: {{ block.settings.header_text_color }};
+    padding: {{ block.settings.header_padding_vertical }}px {{ block.settings.header_padding_horizontal }}px;
+    border: none;
+    text-align: {{ block.settings.header_text_align }};
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: {{ block.settings.header_font.family }}, {{ block.settings.header_font.fallback_families }};
+    font-weight: {{ block.settings.header_font.weight }};
+    font-style: {{ block.settings.header_font.style }};
+    font-size: {{ block.settings.header_font_size }}px;
+    letter-spacing: {{ block.settings.header_letter_spacing }}px;
+    line-height: {{ block.settings.header_line_height }};
+    min-height: 48px;
+  }
+
+  .ai-accordion-header-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.header_hover_bg_color }};
+    color: {{ block.settings.header_hover_text_color }};
+  }
+
+  .ai-accordion-header-title-{{ ai_gen_id }} {
+    flex-grow: 1;
+    text-align: {{ block.settings.header_text_align }};
+  }
+
+  .ai-accordion-icon-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    color: currentColor;
+  }
+
+  .ai-accordion-header-{{ ai_gen_id }}.active .ai-accordion-icon-{{ ai_gen_id }} {
+    transform: rotate({{ block.settings.icon_rotation }}deg);
+  }
+
+  .ai-accordion-content-wrapper-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .ai-accordion-content-{{ ai_gen_id }} {
+    background-color: {{ block.settings.content_bg_color }};
+    color: {{ block.settings.content_text_color }};
+    padding: 0 {{ block.settings.content_padding_horizontal }}px;
+    font-family: {{ block.settings.content_font.family }}, {{ block.settings.content_font.fallback_families }};
+    font-weight: {{ block.settings.content_font.weight }};
+    font-style: {{ block.settings.content_font.style }};
+    font-size: {{ block.settings.content_font_size }}px;
+    letter-spacing: {{ block.settings.content_letter_spacing }}px;
+    line-height: {{ block.settings.content_line_height }};
+    text-align: {{ block.settings.content_text_align }};
+  }
+
+  .ai-accordion-content-inner-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding_vertical }}px 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-accordion-container-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top_mobile }}px {{ block.settings.section_padding_horizontal_mobile }}px {{ block.settings.section_padding_bottom_mobile }}px;
+    }
+
+    .ai-accordion-header-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.header_font_size }}px * 0.9);
+      padding: {{ block.settings.header_padding_vertical | times: 0.8 }}px {{ block.settings.header_padding_horizontal | times: 0.8 }}px;
+    }
+
+    .ai-accordion-content-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.content_font_size }}px * 0.9);
+      padding: 0 {{ block.settings.content_padding_horizontal | times: 0.8 }}px;
+    }
+
+    .ai-accordion-content-inner-{{ ai_gen_id }} {
+      padding: {{ block.settings.content_padding_vertical | times: 0.8 }}px 0;
+    }
+  }
+{% endstyle %}
+
+<ai-accordion-{{ ai_gen_id }} class="ai-accordion-container-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-accordion-wrapper-{{ ai_gen_id }}">
+    {% for i in (1..10) %}
+      {% assign title_key = 'accordion_title_' | append: i %}
+      {% assign content_key = 'accordion_content_' | append: i %}
+      {% assign title = block.settings[title_key] %}
+      {% assign content = block.settings[content_key] %}
+      
+      {% if title != blank %}
+        <div class="ai-accordion-item-{{ ai_gen_id }}" data-accordion-item>
+          <button 
+            class="ai-accordion-header-{{ ai_gen_id }}"
+            aria-expanded="false"
+            data-accordion-header
+          >
+            <span class="ai-accordion-header-title-{{ ai_gen_id }}">{{ title }}</span>
+            {% if block.settings.icon_style == 'plus' %}
+              <svg class="ai-accordion-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            {% elsif block.settings.icon_style == 'chevron' %}
+              <svg class="ai-accordion-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            {% elsif block.settings.icon_style == 'arrow' %}
+              <svg class="ai-accordion-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+              </svg>
+            {% endif %}
+          </button>
+          <div class="ai-accordion-content-wrapper-{{ ai_gen_id }}" data-accordion-content>
+            <div class="ai-accordion-content-{{ ai_gen_id }}">
+              <div class="ai-accordion-content-inner-{{ ai_gen_id }}">
+                {{ content }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</ai-accordion-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiAccordion{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.headers = this.querySelectorAll('[data-accordion-header]');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.headers.forEach((header) => {
+          header.addEventListener('click', () => {
+            const item = header.closest('[data-accordion-item]');
+            const content = item.querySelector('[data-accordion-content]');
+            const isActive = header.classList.contains('active');
+
+            this.headers.forEach((otherHeader) => {
+              if (otherHeader !== header) {
+                const otherItem = otherHeader.closest('[data-accordion-item]');
+                const otherContent = otherItem.querySelector('[data-accordion-content]');
+                otherHeader.classList.remove('active');
+                otherHeader.setAttribute('aria-expanded', 'false');
+                otherContent.style.maxHeight = null;
+              }
+            });
+
+            if (isActive) {
+              header.classList.remove('active');
+              header.setAttribute('aria-expanded', 'false');
+              content.style.maxHeight = null;
+            } else {
+              header.classList.add('active');
+              header.setAttribute('aria-expanded', 'true');
+              content.style.maxHeight = content.scrollHeight + 'px';
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('ai-accordion-{{ ai_gen_id }}', AiAccordion{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Terms accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_horizontal",
+      "label": "Horizontal padding (desktop)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_horizontal_mobile",
+      "label": "Horizontal padding (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "select",
+      "id": "separator_style",
+      "label": "Separator style",
+      "options": [
+        { "value": "full_border", "label": "Full border box" },
+        { "value": "bottom_border", "label": "Bottom border only" },
+        { "value": "bottom_line", "label": "Bottom line (indented)" },
+        { "value": "none", "label": "No separator" }
+      ],
+      "default": "full_border"
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Space between items",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "info": "Only applies to full border box style"
+    },
+    {
+      "type": "range",
+      "id": "line_indent",
+      "label": "Line indent",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "Only applies to bottom line style"
+    },
+    {
+      "type": "header",
+      "content": "Accordion header style"
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "header_hover_bg_color",
+      "label": "Hover background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "header_hover_text_color",
+      "label": "Hover text",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "header_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Accordion header typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "header_font",
+      "label": "Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "header_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "header_text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "header_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "header_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Accordion content style"
+    },
+    {
+      "type": "color",
+      "id": "content_bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "content_text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Accordion content typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "content_font",
+      "label": "Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "content_text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "content_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.6
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "Icon style",
+      "options": [
+        { "value": "plus", "label": "Plus/Minus" },
+        { "value": "chevron", "label": "Chevron" },
+        { "value": "arrow", "label": "Arrow" }
+      ],
+      "default": "plus"
+    },
+    {
+      "type": "range",
+      "id": "icon_rotation",
+      "label": "Icon rotation when open",
+      "min": 0,
+      "max": 180,
+      "step": 45,
+      "unit": "deg",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 1"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_1",
+      "label": "Title",
+      "default": "Shipping Information"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_1",
+      "label": "Content",
+      "default": "<p>We offer free standard shipping on all orders over £50. Orders are typically processed within 1-2 business days and delivered within 3-5 business days.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 2"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_2",
+      "label": "Title",
+      "default": "Returns & Exchanges"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_2",
+      "label": "Content",
+      "default": "<p>We accept returns within 30 days of delivery. Items must be unworn, unwashed, and in original condition with tags attached. Return shipping is free for UK customers.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 3"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_3",
+      "label": "Title",
+      "default": "Payment Methods"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_3",
+      "label": "Content",
+      "default": "<p>We accept all major credit cards, PayPal, Apple Pay, and Google Pay. All transactions are secure and encrypted.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 4"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_4",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_4",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 5"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_5",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_5",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 6"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_6",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_6",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 7"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_7",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_7",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 8"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_8",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_8",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 9"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_9",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_9",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Accordion item 10"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title_10",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content_10",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Terms accordion"
+    }
+  ]
+}
+{% endschema %}

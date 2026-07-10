@@ -1,0 +1,821 @@
+{% doc %}
+  @prompt
+    Create a logo carousel section for mobile with the following features:
+    - Infinite auto-scrolling carousel that continuously loops logos
+    - Multiple logo upload blocks (ability to add/remove logos)
+    - Customizable scroll speed control
+    - Logo size/height control
+    - Spacing between logos control
+    - Background color picker with opacity/transparency control (including fully transparent option)
+    - Padding controls (top, bottom, left, right)
+    - Negative top margin control to pull section upward and overlap content above it
+    - Z-index control for layering over other sections
+    - Smooth, seamless animation with no gaps
+    - Mobile responsive
+    - Option to pause on hover
+    - Grayscale/color filter options for logos
+    - Logo alignment options
+    - Container max-width control
+    - All logos should maintain aspect ratio and be clickable with URL fields, I need to be able to have this section with a transparent background and sitting over another section, I need the ability to change the logo size. I also need the ability to add an image that sits behind the logo carousel, which will be a transparent SVG (with no background) and it will sit behind the logo carousel, I need to also be able to change the vertical position of this SVG and the opacity, Can you please add the ability to change the size of each individual logo 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-logo-carousel-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    {% if block.settings.background_opacity > 0 %}
+      background-color: {{ block.settings.background_color }};
+    {% endif %}
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_left }}px;
+    padding-right: {{ block.settings.padding_right }}px;
+    margin-top: {{ block.settings.margin_top | times: -1 }}px;
+    position: relative;
+    z-index: {{ block.settings.z_index }};
+  }
+
+  {% if block.settings.background_opacity > 0 and block.settings.background_opacity < 100 %}
+    .ai-logo-carousel-{{ ai_gen_id }}::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: {{ block.settings.background_color }};
+      opacity: {{ block.settings.background_opacity | divided_by: 100.0 }};
+      z-index: -1;
+      pointer-events: none;
+    }
+  {% elsif block.settings.background_opacity == 100 %}
+    .ai-logo-carousel-{{ ai_gen_id }} {
+      background-color: {{ block.settings.background_color }};
+    }
+  {% endif %}
+
+  .ai-logo-carousel-bg-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: {{ block.settings.bg_image_vertical_position }}%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    max-width: {{ block.settings.bg_image_max_width }}px;
+    opacity: {{ block.settings.bg_image_opacity | divided_by: 100.0 }};
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .ai-logo-carousel-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_max_width }}px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ai-logo-carousel-track-{{ ai_gen_id }} {
+    display: flex;
+    align-items: {{ block.settings.logo_alignment }};
+    gap: {{ block.settings.logo_spacing }}px;
+    animation: ai-logo-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+    width: max-content;
+  }
+
+  {% if block.settings.pause_on_hover %}
+    .ai-logo-carousel-{{ ai_gen_id }}:hover .ai-logo-carousel-track-{{ ai_gen_id }} {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  .ai-logo-carousel-item-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-logo-carousel-link-{{ ai_gen_id }} {
+    display: block;
+    line-height: 0;
+  }
+
+  .ai-logo-carousel-image-{{ ai_gen_id }} {
+    height: {{ block.settings.logo_height }}px;
+    width: auto;
+    max-width: {{ block.settings.logo_max_width }}px;
+    object-fit: contain;
+    {% if block.settings.logo_filter == 'grayscale' %}
+      filter: grayscale(100%);
+    {% elsif block.settings.logo_filter == 'grayscale_hover' %}
+      filter: grayscale(100%);
+      transition: filter 0.3s ease;
+    {% endif %}
+  }
+
+  {% for i in (1..10) %}
+    {% assign size_key = 'logo_size_' | append: i %}
+    {% if block.settings[size_key] %}
+      .ai-logo-carousel-image-{{ ai_gen_id }}-{{ i }} {
+        height: {{ block.settings[size_key] }}px;
+      }
+      @media screen and (max-width: 749px) {
+        .ai-logo-carousel-image-{{ ai_gen_id }}-{{ i }} {
+          height: {{ block.settings[size_key] | times: 0.8 }}px;
+        }
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% if block.settings.logo_filter == 'grayscale_hover' %}
+    .ai-logo-carousel-link-{{ ai_gen_id }}:hover .ai-logo-carousel-image-{{ ai_gen_id }} {
+      filter: grayscale(0%);
+    }
+  {% endif %}
+
+  .ai-logo-carousel-placeholder-{{ ai_gen_id }} {
+    height: {{ block.settings.logo_height }}px;
+    width: {{ block.settings.logo_height | times: 1.5 }}px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .ai-logo-carousel-placeholder-{{ ai_gen_id }} svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  @keyframes ai-logo-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-logo-carousel-image-{{ ai_gen_id }} {
+      height: {{ block.settings.logo_height | times: 0.8 }}px;
+      max-width: {{ block.settings.logo_max_width | times: 0.8 }}px;
+    }
+
+    .ai-logo-carousel-placeholder-{{ ai_gen_id }} {
+      height: {{ block.settings.logo_height | times: 0.8 }}px;
+      width: {{ block.settings.logo_height | times: 1.2 }}px;
+    }
+
+    .ai-logo-carousel-bg-image-{{ ai_gen_id }} {
+      max-width: {{ block.settings.bg_image_max_width | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<logo-carousel-{{ ai_gen_id }} class="ai-logo-carousel-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.background_image %}
+    <img
+      src="{{ block.settings.background_image | image_url: width: 2000 }}"
+      alt="{{ block.settings.background_image.alt | escape }}"
+      class="ai-logo-carousel-bg-image-{{ ai_gen_id }}"
+      loading="lazy"
+      width="{{ block.settings.background_image.width }}"
+      height="{{ block.settings.background_image.height }}"
+    >
+  {% endif %}
+
+  <div class="ai-logo-carousel-container-{{ ai_gen_id }}">
+    <div class="ai-logo-carousel-track-{{ ai_gen_id }}">
+      {% assign has_logos = false %}
+      {% for i in (1..10) %}
+        {% assign logo_key = 'logo_' | append: i %}
+        {% assign url_key = 'logo_url_' | append: i %}
+        {% assign new_tab_key = 'logo_new_tab_' | append: i %}
+        
+        {% if block.settings[logo_key] %}
+          {% assign has_logos = true %}
+        {% endif %}
+      {% endfor %}
+
+      {% if has_logos %}
+        {% for loop_iteration in (1..2) %}
+          {% for i in (1..10) %}
+            {% assign logo_key = 'logo_' | append: i %}
+            {% assign url_key = 'logo_url_' | append: i %}
+            {% assign new_tab_key = 'logo_new_tab_' | append: i %}
+            
+            {% if block.settings[logo_key] %}
+              <div class="ai-logo-carousel-item-{{ ai_gen_id }}">
+                {% if block.settings[url_key] != blank %}
+                  <a href="{{ block.settings[url_key] }}" class="ai-logo-carousel-link-{{ ai_gen_id }}" {% if block.settings[new_tab_key] %}target="_blank" rel="noopener"{% endif %}>
+                {% else %}
+                  <div class="ai-logo-carousel-link-{{ ai_gen_id }}">
+                {% endif %}
+                  <img
+                    src="{{ block.settings[logo_key] | image_url: width: 400 }}"
+                    alt="{{ block.settings[logo_key].alt | escape }}"
+                    class="ai-logo-carousel-image-{{ ai_gen_id }} ai-logo-carousel-image-{{ ai_gen_id }}-{{ i }}"
+                    loading="lazy"
+                    width="{{ block.settings[logo_key].width }}"
+                    height="{{ block.settings[logo_key].height }}"
+                  >
+                {% if block.settings[url_key] != blank %}
+                  </a>
+                {% else %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        {% for loop_iteration in (1..2) %}
+          {% for i in (1..6) %}
+            <div class="ai-logo-carousel-item-{{ ai_gen_id }}">
+              <div class="ai-logo-carousel-link-{{ ai_gen_id }}">
+                <div class="ai-logo-carousel-placeholder-{{ ai_gen_id }}">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</logo-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LogoCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('.ai-logo-carousel-track-{{ ai_gen_id }}');
+        this.adjustAnimation();
+      }
+
+      adjustAnimation() {
+        if (!this.track) return;
+        
+        const trackWidth = this.track.scrollWidth / 2;
+        const containerWidth = this.offsetWidth;
+        
+        if (trackWidth < containerWidth) {
+          this.track.style.animation = 'none';
+        }
+      }
+    }
+
+    customElements.define('logo-carousel-{{ ai_gen_id }}', LogoCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Logo carousel",
+  "tag": null,
+  "class": "logo-carousel-block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Carousel settings"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Default logo height",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo max width",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing between logos",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "logo_filter",
+      "label": "Logo filter",
+      "options": [
+        {
+          "value": "none",
+          "label": "Color"
+        },
+        {
+          "value": "grayscale",
+          "label": "Grayscale"
+        },
+        {
+          "value": "grayscale_hover",
+          "label": "Grayscale with color on hover"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "logo_alignment",
+      "label": "Logo alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_max_width",
+      "min": 200,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Background image max width",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "bg_image_vertical_position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background image vertical position",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background image opacity",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background opacity",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Left padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Right padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Negative top margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Z-index",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Logo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_1",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_1",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_1",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_2",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_2",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_2",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_3",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_3",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_3",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_3",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_4",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_4",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_4",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_4",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_5",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_5",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_5",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_5",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_6",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_6",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_6",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_6",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_7",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_7",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_7",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_7",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_8",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_8",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_8",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_8",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_9",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_9",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_9",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_9",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_10",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_10",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 60
+    },
+    {
+      "type": "url",
+      "id": "logo_url_10",
+      "label": "Logo link"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_new_tab_10",
+      "label": "Open in new tab",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo carousel"
+    }
+  ]
+}
+{% endschema %}
